@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -68,6 +69,12 @@ public class PreSetValidationStrategy extends UpdateValueStrategy {
 
 		if (serviceReference == null) {
 			return strategy.validateBeforeSet(value);
+		}
+
+		if (eStructuralFeature.isUnsettable() && SetCommand.UNSET_VALUE == value) {
+			/* we are dealing with an unsettable feature and the unset value */
+			/* we need to validate the default value instead of the unset value */
+			value = eStructuralFeature.getDefaultValue();
 		}
 
 		try {
