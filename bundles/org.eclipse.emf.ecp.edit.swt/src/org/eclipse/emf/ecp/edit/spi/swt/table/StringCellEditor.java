@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class StringCellEditor extends StringBasedCellEditor {
 
+	private EStructuralFeature eStructuralFeature;
+
 	/**
 	 * Default constructor.
 	 */
@@ -76,7 +78,7 @@ public class StringCellEditor extends StringBasedCellEditor {
 	 */
 	@Override
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
-
+		eStructuralFeature = feature;
 	}
 
 	/**
@@ -113,7 +115,7 @@ public class StringCellEditor extends StringBasedCellEditor {
 	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
-		return null;
+		return withPreSetValidation(eStructuralFeature, new UpdateValueStrategy());
 	}
 
 	/**

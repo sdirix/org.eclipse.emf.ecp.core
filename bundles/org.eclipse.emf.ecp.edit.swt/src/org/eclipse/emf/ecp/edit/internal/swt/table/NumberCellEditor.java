@@ -161,7 +161,6 @@ public class NumberCellEditor extends StringBasedCellEditor {
 	}
 
 	private EStructuralFeature eStructuralFeature;
-	private ViewModelContext viewModelContext;
 	@Deprecated
 	private ViewLocaleService localeService;
 	private EMFFormsLocaleProvider localeProvider;
@@ -206,7 +205,6 @@ public class NumberCellEditor extends StringBasedCellEditor {
 	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 		this.eStructuralFeature = eStructuralFeature;
-		this.viewModelContext = viewModelContext;
 		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_numberical"); //$NON-NLS-1$
 		localeService = viewModelContext.getService(ViewLocaleService.class);
 		localeProvider = viewModelContext.getService(EMFFormsLocaleProvider.class);
@@ -265,7 +263,7 @@ public class NumberCellEditor extends StringBasedCellEditor {
 	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
-		return new TargetToModelStrategy(databindingContext);
+		return withPreSetValidation(eStructuralFeature, new TargetToModelStrategy(databindingContext));
 	}
 
 	/**

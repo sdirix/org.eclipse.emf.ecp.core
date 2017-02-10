@@ -11,7 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.PreSetValidationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
@@ -24,7 +27,7 @@ import org.eclipse.swt.widgets.Composite;
  */
 public abstract class StringBasedCellEditor extends TextCellEditor implements ECPCellEditor {
 
-	private Object initialValue;
+	private String initialValue;
 
 	/**
 	 * Default constructor.
@@ -90,5 +93,18 @@ public abstract class StringBasedCellEditor extends TextCellEditor implements EC
 		if (text.getText() != null) {
 			text.setSelection(text.getText().length());
 		}
+	}
+
+	/**
+	 * Create a {@link PreSetValidationStrategy}.
+	 *
+	 * @param feature the feature the cell editor is bound against
+	 * @param delegate a delegate {@link UpdateValueStrategy}
+	 *
+	 * @return a {@link PreSetValidationStrategy}
+	 *
+	 */
+	protected UpdateValueStrategy withPreSetValidation(EStructuralFeature feature, UpdateValueStrategy delegate) {
+		return new PreSetValidationStrategy(null, feature, delegate);
 	}
 }
