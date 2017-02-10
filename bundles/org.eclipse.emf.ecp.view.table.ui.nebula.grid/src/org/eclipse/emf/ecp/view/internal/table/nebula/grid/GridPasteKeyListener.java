@@ -212,7 +212,7 @@ public class GridPasteKeyListener implements KeyListener {
 								feature, cellValue);
 							valid = diag.getSeverity() == Diagnostic.OK;
 							if (!valid) {
-								invalidValues.add(extractDiagnosticMessage(diag));
+								invalidValues.add(extractDiagnosticMessage(diag, feature, cellValue));
 							}
 						}
 
@@ -282,7 +282,7 @@ public class GridPasteKeyListener implements KeyListener {
 		value.setValue(convertedValue);
 	}
 
-	private static String extractDiagnosticMessage(Diagnostic diag) {
+	protected String extractDiagnosticMessage(Diagnostic diag, EStructuralFeature feature, String value) {
 		return diag.getChildren().get(0).getMessage();
 	}
 
