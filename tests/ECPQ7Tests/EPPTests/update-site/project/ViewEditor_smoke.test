@@ -253,7 +253,7 @@ with [get-view "EMF Forms Preview" | get-label -after [get-label "View Editor Pr
     get-property className | equals "org.eclipse.swt.widgets.Label" | verify-true
     get-property caption | equals "" | verify-true
     get-property backgroundColor | equals "#FFFFFF" | verify-true
-    get-property foregroundColor | equals "#4C4C4C" | verify-true
+    get-property foregroundColor | equals "#000000" | verify-true
     get-property "getFont().getFontData().FontData[0].getStyle()" | equals 0 | verify-true
     get-property "getFont().getFontData().FontData[0].getHeight()" | equals 11 | verify-true
     get-property "getStyle()" | contains "SEPARATOR" | verify-true
