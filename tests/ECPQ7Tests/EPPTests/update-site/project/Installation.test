@@ -27,7 +27,7 @@ get-window Install | get-tree | get-item "All SDKs  \\(install one of these\\)/E
     | verify-true
 with [get-window Install] {
     with [get-tree] {
-        get-item "All SDKs  \\(install one of these\\)/EMF Forms SDK" | check
+        get-item "All SDKs  \\(install one of these\\)/ECP SDK 3.x" | check
     }
     with [get-button "Next >"] {
         click
