@@ -282,6 +282,14 @@ public class GridPasteKeyListener implements KeyListener {
 		value.setValue(convertedValue);
 	}
 
+	/**
+	 * Creates the message for the given {@link Diagnostic} which will be displayed to the user.
+	 * 
+	 * @param diag the diagnostic with the original error message
+	 * @param feature the validated feature
+	 * @param value the validated value
+	 * @return the display string
+	 */
 	protected String extractDiagnosticMessage(Diagnostic diag, EStructuralFeature feature, String value) {
 		return diag.getChildren().get(0).getMessage();
 	}

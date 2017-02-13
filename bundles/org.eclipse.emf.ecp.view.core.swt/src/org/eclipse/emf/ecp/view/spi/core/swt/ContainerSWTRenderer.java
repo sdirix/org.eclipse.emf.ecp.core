@@ -210,6 +210,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * Returns the {@link EMFFormsDatabinding}.
 	 *
 	 * @return The {@link EMFFormsDatabinding}
+	 * @since 1.12
 	 */
 	protected EMFFormsDatabinding getEMFFormsDatabinding() {
 		// Method is eventually needed to check the validity of controls that are to be rendered.

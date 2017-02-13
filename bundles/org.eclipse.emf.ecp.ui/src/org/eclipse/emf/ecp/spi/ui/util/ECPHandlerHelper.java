@@ -467,6 +467,7 @@ public final class ECPHandlerHelper {
 	 *            the view that requested the open model element
 	 * @param ecpProject the {@link ECPProject} of the model element
 	 * @param contextMap context map
+	 * @since 1.12
 	 */
 	public static void openModelElement(final Object modelElement, ECPProject ecpProject,
 		Map<Object, Object> contextMap) {
