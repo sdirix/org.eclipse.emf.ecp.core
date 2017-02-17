@@ -232,13 +232,15 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 			.extendedMargins(computeLeftMargin(), 0, 0, 0)
 			.applyTo(composite);
 
-		expandableComposite = new ExpandableComposite(
-			composite, SWT.NONE, ExpandableComposite.TWISTIE);
-		expandableComposite.setExpanded(!getVElement().isCollapsed());
+		setExpandableComposite(new ExpandableComposite(
+			composite, SWT.NONE, ExpandableComposite.TWISTIE));
+		getExpandableComposite().setExpanded(!getVElement().isCollapsed());
 		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
 			: getVElement().getName();
-		expandableComposite.setText(text);
-		initExpandableComposite(expandableComposite);
+		getExpandableComposite().setText(text);
+		initExpandableComposite(getExpandableComposite());
+
+		StaticTooltipHelper.addToolStaticTipFromAnnotation(getVElement(), getExpandableComposite());
 
 		return composite;
 	}
@@ -281,13 +283,13 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	@Override
 	protected void applyEnable() {
-		expandableComposite.setEnabled(getVElement().isEnabled());
+		getExpandableComposite().setEnabled(getVElement().isEnabled());
 	}
 
 	@Override
 	protected void applyReadOnly() {
 		super.applyReadOnly();
-		expandableComposite.getParent().setEnabled(true);
+		getExpandableComposite().getParent().setEnabled(true);
 	}
 
 	@Override
@@ -334,8 +336,22 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		}
 		getControls().values().iterator().next().getParent()
 			.layout(false);
-		expandableComposite.setExpanded(!getVElement()
+		getExpandableComposite().setExpanded(!getVElement()
 			.isCollapsed());
+	}
+
+	/**
+	 * @return the expandableComposite
+	 */
+	protected ExpandableComposite getExpandableComposite() {
+		return expandableComposite;
+	}
+
+	/**
+	 * @param expandableComposite the expandableComposite to set
+	 */
+	protected void setExpandableComposite(ExpandableComposite expandableComposite) {
+		this.expandableComposite = expandableComposite;
 	}
 
 }

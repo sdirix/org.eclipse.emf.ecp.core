@@ -70,6 +70,7 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
 			: getVElement().getName();
 		label.setText(text);
+		StaticTooltipHelper.addToolStaticTipFromAnnotation(getVElement(), label);
 
 		return composite;
 	}
