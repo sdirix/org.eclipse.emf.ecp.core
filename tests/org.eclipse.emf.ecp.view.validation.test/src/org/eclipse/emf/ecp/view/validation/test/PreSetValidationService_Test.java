@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.validation.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -36,7 +37,8 @@ public class PreSetValidationService_Test {
 	public void violateMaxLength() {
 		final Diagnostic result = service.validate(
 			TestPackage.eINSTANCE.getPerson_FirstName(),
-			"more than 10 chars");
+			"more than 10 chars",
+			null);
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
@@ -44,7 +46,8 @@ public class PreSetValidationService_Test {
 	public void maxLength() {
 		final Diagnostic result = service.validate(
 			TestPackage.eINSTANCE.getPerson_FirstName(),
-			"valid");
+			"valid",
+			null);
 		assertEquals(result.getSeverity(), Diagnostic.OK);
 	}
 
@@ -52,33 +55,34 @@ public class PreSetValidationService_Test {
 	public void enums() {
 		final Diagnostic result = service.validate(
 			TestPackage.eINSTANCE.getPerson_Gender(),
-			Gender.MALE);
+			Gender.MALE,
+			null);
 		assertEquals(result.getSeverity(), Diagnostic.OK);
 	}
 
 	@Test
 	public void pattern() {
 		final Diagnostic result = service.validate(
-			TestPackage.eINSTANCE.getPerson_LastName(), "VALID");
+			TestPackage.eINSTANCE.getPerson_LastName(), "VALID", null);
 		assertEquals(result.getSeverity(), Diagnostic.OK);
 	}
 
 	@Test
 	public void invalidPattern() {
 		final Diagnostic result = service.validate(
-			TestPackage.eINSTANCE.getPerson_LastName(), "invalid");
+			TestPackage.eINSTANCE.getPerson_LastName(), "invalid", null);
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
 	@Test
 	public void validEnum() {
-		final Diagnostic result = service.validate(TestPackage.eINSTANCE.getPerson_Gender(), "Male");
+		final Diagnostic result = service.validate(TestPackage.eINSTANCE.getPerson_Gender(), "Male", null);
 		assertEquals(result.getSeverity(), Diagnostic.OK);
 	}
 
 	@Test
 	public void invalidEnum() {
-		final Diagnostic result = service.validate(TestPackage.eINSTANCE.getPerson_Gender(), "Mal");
+		final Diagnostic result = service.validate(TestPackage.eINSTANCE.getPerson_Gender(), "Mal", null);
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
@@ -87,7 +91,8 @@ public class PreSetValidationService_Test {
 		final PreSetValidationServiceImpl s = new PreSetValidationServiceImpl();
 		s.addConstraintValidator(TestPackage.eINSTANCE.getCustomDataType(), new IFeatureConstraint() {
 			@Override
-			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value) {
+			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value,
+				Map<Object, Object> context) {
 				final EClassifier eType = eStructuralFeature.getEType();
 
 				if (!TestPackage.eINSTANCE.getCustomDataType().isInstance(eType)
@@ -101,7 +106,7 @@ public class PreSetValidationService_Test {
 		});
 
 		final Diagnostic result = s.validate(
-			TestPackage.eINSTANCE.getPerson_Custom(), "FOO");
+			TestPackage.eINSTANCE.getPerson_Custom(), "FOO", null);
 		assertEquals(result.getSeverity(), Diagnostic.OK);
 	}
 
@@ -110,7 +115,8 @@ public class PreSetValidationService_Test {
 		final PreSetValidationServiceImpl s = new PreSetValidationServiceImpl();
 		s.addConstraintValidator(TestPackage.eINSTANCE.getCustomDataType(), new IFeatureConstraint() {
 			@Override
-			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value) {
+			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value,
+				Map<Object, Object> context) {
 
 				if (value.equals("FOO")) {
 					return new BasicDiagnostic();
@@ -122,7 +128,7 @@ public class PreSetValidationService_Test {
 		});
 
 		final Diagnostic result = s.validate(
-			TestPackage.eINSTANCE.getPerson_Custom(), "BAR");
+			TestPackage.eINSTANCE.getPerson_Custom(), "BAR", null);
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
@@ -134,8 +140,8 @@ public class PreSetValidationService_Test {
 
 	@Test
 	public void strictPhoneNumberPattern() {
-		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+");
-		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+123");
+		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+", null);
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+123", null);
 		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
 		assertEquals(valid.getSeverity(), Diagnostic.OK);
 	}
@@ -149,8 +155,8 @@ public class PreSetValidationService_Test {
 	@Test
 	public void strictMinLength() {
 		// min length of three
-		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getWriter_Initials(), "");
-		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getWriter_Initials(), "foo");
+		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getWriter_Initials(), "", null);
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getWriter_Initials(), "foo", null);
 		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
 		assertEquals(valid.getSeverity(), Diagnostic.OK);
 	}
@@ -165,9 +171,9 @@ public class PreSetValidationService_Test {
 	@Test
 	public void strictMinInclusive() {
 		// min length of three
-		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(-1));
-		final Diagnostic minValid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(0));
-		final Diagnostic maxValid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(100));
+		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(-1), null);
+		final Diagnostic minValid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(0), null);
+		final Diagnostic maxValid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(100), null);
 		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
 		assertEquals(minValid.getSeverity(), Diagnostic.OK);
 		assertEquals(maxValid.getSeverity(), Diagnostic.OK);
@@ -187,7 +193,7 @@ public class PreSetValidationService_Test {
 	@Test
 	public void multiEnum() {
 		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getComputer_Colors(),
-			Arrays.asList(Color.GREEN, Color.BLUE));
+			Arrays.asList(Color.GREEN, Color.BLUE), null);
 		assertEquals(valid.getSeverity(), Diagnostic.OK);
 	}
 }

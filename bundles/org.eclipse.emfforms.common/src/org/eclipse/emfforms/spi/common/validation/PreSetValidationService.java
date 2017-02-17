@@ -24,6 +24,16 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public interface PreSetValidationService extends IFeatureConstraint {
 
 	/**
+	 * Validate a given value against constraints defined by the {@link org.eclipse.emf.ecore.EDataType EDataType}
+	 * of the {@link EStructuralFeature}.
+	 *
+	 * @param eStructuralFeature the feature that defines any constraints
+	 * @param value the value to be validated
+	 * @return a {@link Diagnostic} describing any potential errors
+	 */
+	Diagnostic validate(EStructuralFeature eStructuralFeature, Object value);
+
+	/**
 	 * Add a custom {@link IFeatureConstraint}.
 	 *
 	 * @param eDataType a custom {@link EDataType}

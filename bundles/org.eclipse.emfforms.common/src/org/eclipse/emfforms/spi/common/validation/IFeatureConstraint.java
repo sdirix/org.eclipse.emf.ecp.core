@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.common.validation;
 
+import java.util.Map;
+
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -28,7 +30,8 @@ public interface IFeatureConstraint {
 	 *
 	 * @param eStructuralFeature the feature that defines any constraints
 	 * @param value the value to be validated
+	 * @param context the validation context, may be <code>null</code>
 	 * @return a {@link Diagnostic} describing any potential errors
 	 */
-	Diagnostic validate(EStructuralFeature eStructuralFeature, Object value);
+	Diagnostic validate(EStructuralFeature eStructuralFeature, Object value, Map<Object, Object> context);
 }

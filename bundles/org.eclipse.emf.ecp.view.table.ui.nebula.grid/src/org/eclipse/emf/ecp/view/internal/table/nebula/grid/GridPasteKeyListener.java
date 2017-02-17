@@ -12,9 +12,12 @@
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EEnum;
@@ -208,8 +211,10 @@ public class GridPasteKeyListener implements KeyListener {
 						boolean valid = convertedValue != null;
 
 						if (preSetValidationService != null) {
+							final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
+							context.put("rootEObject", IObserving.class.cast(value).getObserved());//$NON-NLS-1$
 							final Diagnostic diag = preSetValidationService.validate(
-								feature, cellValue);
+								feature, cellValue, context);
 							valid = diag.getSeverity() == Diagnostic.OK;
 							if (!valid) {
 								invalidValues.add(extractDiagnosticMessage(diag, feature, cellValue));
@@ -284,7 +289,7 @@ public class GridPasteKeyListener implements KeyListener {
 
 	/**
 	 * Creates the message for the given {@link Diagnostic} which will be displayed to the user.
-	 * 
+	 *
 	 * @param diag the diagnostic with the original error message
 	 * @param feature the validated feature
 	 * @param value the validated value

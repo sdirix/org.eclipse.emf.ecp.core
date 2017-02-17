@@ -58,15 +58,13 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	private static final String ESCAPED_MULTI_LITERAL_SEP = "\\|"; //$NON-NLS-1$
 	private Map<EDataType, Set<IFeatureConstraint>> extensions = new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.common.validation.IFeatureConstraint#validate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      java.lang.Object)
-	 */
 	@Override
 	public Diagnostic validate(final EStructuralFeature eStructuralFeature, Object value) {
+		return validate(eStructuralFeature, value, null);
+	}
+
+	@Override
+	public Diagnostic validate(final EStructuralFeature eStructuralFeature, Object value, Map<Object, Object> context) {
 		return validate(
 			new PreSetValidator() {
 				@Override
@@ -78,7 +76,8 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 				}
 			},
 			eStructuralFeature,
-			value);
+			value,
+			context);
 	}
 
 	/**
@@ -98,11 +97,13 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 		return validate(
 			new DynamicLoosePatternEValidator(new LooseEValidator(), (EDataType) eType),
 			eStructuralFeature,
-			value);
+			value,
+			null);
 	}
 
 	@SuppressWarnings("unchecked")
-	private Diagnostic validate(PreSetValidator validator, EStructuralFeature eStructuralFeature, Object value) {
+	private Diagnostic validate(PreSetValidator validator, EStructuralFeature eStructuralFeature, Object value,
+		Map<Object, Object> context) {
 		final EClassifier eType = eStructuralFeature.getEType();
 
 		if (!EDataType.class.isInstance(eType) || EDataType.class.cast(eType).getEPackage() == EcorePackage.eINSTANCE) {
@@ -129,14 +130,13 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 		}
 
 		if (validator != null) {
-			final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
 			validator.validate(eDataType, value, diagnostics, context);
 		}
 
 		final Set<IFeatureConstraint> featureConstraints = extensions.get(eType);
 		if (featureConstraints != null) {
 			for (final IFeatureConstraint constraint : featureConstraints) {
-				final Diagnostic result = constraint.validate(eStructuralFeature, value);
+				final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
 				if (result.getSeverity() == Diagnostic.OK) {
 					continue;
 				}
