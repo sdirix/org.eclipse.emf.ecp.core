@@ -10,7 +10,7 @@
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
 
-package org.eclipse.emf.ecp.ide.util;
+package org.eclipse.emf.ecp.ide.internal;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;

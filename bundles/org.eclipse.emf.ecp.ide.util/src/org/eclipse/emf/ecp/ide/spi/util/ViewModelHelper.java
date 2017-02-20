@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ide.util;
+package org.eclipse.emf.ecp.ide.spi.util;
 
 import java.io.IOException;
 import java.util.HashMap;

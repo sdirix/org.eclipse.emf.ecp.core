@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.emf2web.json.controller.JsonGenerationController;
 import org.eclipse.emf.ecp.emf2web.ui.handler.AbstractSchemaExportCommandHandler;
 import org.eclipse.emf.ecp.emf2web.ui.json.Activator;
 import org.eclipse.emf.ecp.emf2web.ui.json.internal.messages.Messages;
-import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
+import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;

@@ -10,7 +10,7 @@
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - refactorings
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ide.util;
+package org.eclipse.emf.ecp.ide.spi.util;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.ide.util.Activator;
+import org.eclipse.emf.ecp.ide.internal.Activator;
 
 /**
  * Helper methods for dealing with ecores.
