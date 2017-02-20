@@ -64,7 +64,7 @@ public abstract class StringBasedCellEditor extends TextCellEditor implements EC
 	public void activate(ColumnViewerEditorActivationEvent event) {
 		initialValue = text.getText();
 		if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
-			&& Character.isLetterOrDigit(event.character)
+			&& isPrintable(event.character)
 			&& (getStyle() & SWT.READ_ONLY) == 0) {
 
 			doSetValue(String.valueOf(event.character));
@@ -106,5 +106,21 @@ public abstract class StringBasedCellEditor extends TextCellEditor implements EC
 	 */
 	protected UpdateValueStrategy withPreSetValidation(EStructuralFeature feature, UpdateValueStrategy delegate) {
 		return new PreSetValidationStrategy(null, feature, delegate);
+	}
+
+	/**
+	 * Determines whether the given character is printable.
+	 * Mimics behavior of Nebula's LetterOrDigitKeyEventMatcher.
+	 *
+	 *
+	 * @param character the character to be checked
+	 * @return {@code true}, if the character can be printed, {@code false} otherwise
+	 */
+	protected boolean isPrintable(char character) {
+		return Character.isLetterOrDigit(character)
+			|| Character
+				.valueOf(character)
+				.toString()
+				.matches("[\\.:,;\\-_#\'+*~!?§$%&/()\\[\\]\\{\\}=\\\\\"]"); //$NON-NLS-1$
 	}
 }
