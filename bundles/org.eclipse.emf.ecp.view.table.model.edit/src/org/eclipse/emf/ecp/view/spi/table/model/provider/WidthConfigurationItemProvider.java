@@ -17,9 +17,11 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -51,7 +53,7 @@ public class WidthConfigurationItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public WidthConfigurationItemProvider(AdapterFactory adapterFactory) {
@@ -62,7 +64,7 @@ public class WidthConfigurationItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,7 +83,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Column Domain Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addColumnDomainReferencePropertyDescriptor(Object object) {
@@ -104,7 +106,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Weight feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addWeightPropertyDescriptor(Object object) {
@@ -112,8 +114,7 @@ public class WidthConfigurationItemProvider
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_WidthConfiguration_weight_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_weight_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				getString("_UI_WidthConfiguration_weight_description"), //$NON-NLS-1$
 				VTablePackage.Literals.WIDTH_CONFIGURATION__WEIGHT,
 				true,
 				false,
@@ -127,7 +128,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Min Width feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addMinWidthPropertyDescriptor(Object object) {
@@ -135,8 +136,7 @@ public class WidthConfigurationItemProvider
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_WidthConfiguration_minWidth_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_minWidth_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				getString("_UI_WidthConfiguration_minWidth_description"), //$NON-NLS-1$
 				VTablePackage.Literals.WIDTH_CONFIGURATION__MIN_WIDTH,
 				true,
 				false,
@@ -150,7 +150,7 @@ public class WidthConfigurationItemProvider
 	 * This returns WidthConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -163,12 +163,25 @@ public class WidthConfigurationItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		final VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
-		return getString("_UI_WidthConfiguration_type") + " " + widthConfiguration.getWeight(); //$NON-NLS-1$ //$NON-NLS-2$
+		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainReference();
+		String label;
+		if (columnDomainReference == null) {
+			label = "<none>"; //$NON-NLS-1$
+		} else {
+			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+			final IItemLabelProvider adapt = (IItemLabelProvider) composedAdapterFactory.adapt(columnDomainReference,
+				IItemLabelProvider.class);
+			label = adapt == null ? "<none>" : adapt.getText(columnDomainReference); //$NON-NLS-1$
+			composedAdapterFactory.dispose();
+		}
+
+		return getString("_UI_WidthConfiguration_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -176,7 +189,7 @@ public class WidthConfigurationItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -197,7 +210,7 @@ public class WidthConfigurationItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -209,7 +222,7 @@ public class WidthConfigurationItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
