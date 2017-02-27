@@ -31,21 +31,20 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl#getChildItems <em>Child Items</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl#isCollapsed <em>Collapsed</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class VSectionImpl extends VContainerImpl implements VSection
-{
+public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * The cached value of the '{@link #getChildItems() <em>Child Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getChildItems()
 	 * @generated
 	 * @ordered
@@ -55,7 +54,7 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	 * The default value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -65,7 +64,7 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	 * The cached value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -75,37 +74,33 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VSectionImpl()
-	{
+	protected VSectionImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VSectionPackage.Literals.SECTION;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EList<VSection> getChildItems()
-	{
-		if (childItems == null)
-		{
+	public EList<VSection> getChildItems() {
+		if (childItems == null) {
 			childItems = new EObjectContainmentEList<VSection>(VSection.class, this,
 				VSectionPackage.SECTION__CHILD_ITEMS);
 		}
@@ -115,43 +110,38 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean isCollapsed()
-	{
+	public boolean isCollapsed() {
 		return collapsed;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setCollapsed(boolean newCollapsed)
-	{
-		final boolean oldCollapsed = collapsed;
+	public void setCollapsed(boolean newCollapsed) {
+		boolean oldCollapsed = collapsed;
 		collapsed = newCollapsed;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VSectionPackage.SECTION__COLLAPSED, oldCollapsed,
 				collapsed));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			return ((InternalEList<?>) getChildItems()).basicRemove(otherEnd, msgs);
 		}
@@ -161,14 +151,12 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			return getChildItems();
 		case VSectionPackage.SECTION__COLLAPSED:
@@ -180,15 +168,13 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			getChildItems().clear();
 			getChildItems().addAll((Collection<? extends VSection>) newValue);
@@ -203,14 +189,12 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			getChildItems().clear();
 			return;
@@ -224,14 +208,12 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			return childItems != null && !childItems.isEmpty();
 		case VSectionPackage.SECTION__COLLAPSED:
@@ -243,17 +225,15 @@ public class VSectionImpl extends VContainerImpl implements VSection
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) {
+	public String toString() {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (collapsed: "); //$NON-NLS-1$
 		result.append(collapsed);
 		result.append(')');

@@ -30,21 +30,19 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class CategorizableElementItemProvider
-	extends ElementItemProvider
-{
+	extends ElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public CategorizableElementItemProvider(AdapterFactory adapterFactory)
-	{
+	public CategorizableElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -52,14 +50,12 @@ public class CategorizableElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addLabelObjectPropertyDescriptor(object);
@@ -71,19 +67,16 @@ public class CategorizableElementItemProvider
 	 * This adds a property descriptor for the Label Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected void addLabelObjectPropertyDescriptor(Object object)
-	{
+	protected void addLabelObjectPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CategorizableElement_labelObject_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature", "_UI_CategorizableElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_CategorizableElement_type"), //$NON-NLS-1$
 				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL_OBJECT,
 				false,
 				false,
@@ -101,14 +94,12 @@ public class CategorizableElementItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VCategorizableElement) object).getLabel();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_CategorizableElement_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_CategorizableElement_type") : //$NON-NLS-1$
 			getString("_UI_CategorizableElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -117,16 +108,14 @@ public class CategorizableElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCategorizableElement.class))
-		{
+		switch (notification.getFeatureID(VCategorizableElement.class)) {
 		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL_OBJECT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -139,12 +128,11 @@ public class CategorizableElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

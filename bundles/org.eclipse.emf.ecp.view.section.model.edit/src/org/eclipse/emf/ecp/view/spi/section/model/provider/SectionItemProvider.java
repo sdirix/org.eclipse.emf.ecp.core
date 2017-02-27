@@ -54,8 +54,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addCollapsedPropertyDescriptor(object);
@@ -67,14 +66,12 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * This adds a property descriptor for the Collapsed feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected void addCollapsedPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addCollapsedPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Section_collapsed_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Section_collapsed_feature", "_UI_Section_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -92,14 +89,13 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
 		Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VSectionPackage.Literals.SECTION__CHILD_ITEMS);
 		}
@@ -108,7 +104,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -122,7 +118,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 	/**
 	 * This returns Section.gif.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,8 +139,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_Section_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_Section_type") : //$NON-NLS-1$
 			getString("_UI_Section_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -153,15 +148,14 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VSection.class))
-		{
+		switch (notification.getFeatureID(VSection.class)) {
 		case VSectionPackage.SECTION__COLLAPSED:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -184,15 +178,11 @@ public class SectionItemProvider extends ContainerItemProvider {
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CONTAINER__CHILDREN,
-				VSectionFactory.eINSTANCE.createSectionedArea()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+			VSectionFactory.eINSTANCE.createSectionedArea()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VSectionPackage.Literals.SECTION__CHILD_ITEMS,
-				VSectionFactory.eINSTANCE.createSection()));
+		newChildDescriptors.add(createChildParameter(VSectionPackage.Literals.SECTION__CHILD_ITEMS,
+			VSectionFactory.eINSTANCE.createSection()));
 	}
 
 }

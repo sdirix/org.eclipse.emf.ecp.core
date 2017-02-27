@@ -43,7 +43,7 @@ public interface VViewPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNAME = "model"; //$NON-NLS-1$
@@ -52,7 +52,7 @@ public interface VViewPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/170"; //$NON-NLS-1$
@@ -61,7 +61,7 @@ public interface VViewPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.model"; //$NON-NLS-1$
@@ -70,7 +70,7 @@ public interface VViewPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	VViewPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl.init();
@@ -79,7 +79,7 @@ public interface VViewPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl <em>Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getElement()
 	 * @generated
@@ -91,7 +91,7 @@ public interface VViewPackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDiagnosticImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDiagnostic()
 	 * @generated
@@ -102,7 +102,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostics</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -112,7 +112,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Diagnostic</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -122,7 +122,7 @@ public interface VViewPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl <em>View</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getView()
 	 * @generated
@@ -133,7 +133,7 @@ public interface VViewPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl <em>Control</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getControl()
 	 * @generated
@@ -145,7 +145,7 @@ public interface VViewPackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getAttachment()
 	 * @generated
@@ -156,18 +156,18 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Attachment</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int ATTACHMENT_FEATURE_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
-	 * <em>Domain Model Reference</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain Model
+	 * Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReference()
 	 * @generated
@@ -189,7 +189,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -200,7 +200,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Feature Path Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeaturePathDomainModelReference()
 	 * @generated
@@ -222,7 +222,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -232,7 +232,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -242,7 +242,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Feature Path Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -252,7 +252,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -273,7 +273,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -283,7 +283,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -293,7 +293,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -303,7 +303,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -313,7 +313,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -325,7 +325,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -335,7 +334,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -345,7 +344,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -366,7 +365,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -376,7 +375,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -386,7 +385,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -396,7 +395,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -406,7 +405,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -418,7 +417,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -428,7 +426,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Root EClass</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -438,7 +436,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -478,11 +476,11 @@ public interface VViewPackage extends EPackage {
 	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl
-	 * <em>Contained Element</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl <em>Contained
+	 * Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainedElement()
 	 * @generated
@@ -493,7 +491,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -514,7 +512,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -524,7 +522,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -534,7 +532,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -544,7 +542,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -554,7 +552,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -566,7 +564,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -576,7 +573,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Contained Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -587,7 +584,7 @@ public interface VViewPackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainer()
 	 * @generated
@@ -598,7 +595,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -619,7 +616,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -629,7 +626,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -639,7 +636,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -649,7 +646,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -659,7 +656,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -671,7 +668,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -681,7 +677,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -691,15 +687,15 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Container</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int CONTAINER_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl
-	 * <em>Contained Container</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl <em>Contained
+	 * Container</em>}' class.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.4
@@ -793,7 +789,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -825,7 +820,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -846,7 +841,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -856,7 +851,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -866,7 +861,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -876,7 +871,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -886,7 +881,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -898,7 +893,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -908,7 +902,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -918,7 +912,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -928,15 +922,15 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int CONTROL_FEATURE_COUNT = CONTAINED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
-	 * <em>Model Properties</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties <em>Model
+	 * Properties</em>}' class.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
@@ -1005,8 +999,8 @@ public interface VViewPackage extends EPackage {
 	int VIEW_MODEL_LOADING_PROPERTIES_FEATURE_COUNT = VIEW_MODEL_PROPERTIES_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
-	 * <em>String To Object Map Entry</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl <em>String
+	 * To Object Map Entry</em>}' class.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
@@ -1090,7 +1084,7 @@ public interface VViewPackage extends EPackage {
 	 * enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
@@ -1098,8 +1092,8 @@ public interface VViewPackage extends EPackage {
 	int LABEL_ALIGNMENT = 14;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
-	 * <em>Date Time Display Type</em>}' enum.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType <em>Date Time Display
+	 * Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.8
@@ -1126,7 +1120,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Element</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
@@ -1138,7 +1132,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getName()
 	 * @see #getElement()
@@ -1165,7 +1159,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Visible</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Visible</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isVisible()
 	 * @see #getElement()
@@ -1178,7 +1172,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Enabled</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Enabled</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEnabled()
 	 * @see #getElement()
@@ -1191,7 +1185,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Readonly</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Readonly</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly()
 	 * @see #getElement()
@@ -1200,11 +1194,11 @@ public interface VViewPackage extends EPackage {
 	EAttribute getElement_Readonly();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference '<em>Diagnostic</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic()
 	 * @see #getElement()
@@ -1213,11 +1207,11 @@ public interface VViewPackage extends EPackage {
 	EReference getElement_Diagnostic();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference list '<em>Attachments</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments()
 	 * @see #getElement()
@@ -1232,7 +1226,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Uuid</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getUuid()
 	 * @see #getElement()
@@ -1244,7 +1237,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic <em>Diagnostic</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Diagnostic</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic
 	 * @generated
@@ -1252,11 +1245,11 @@ public interface VViewPackage extends EPackage {
 	EClass getDiagnostic();
 
 	/**
-	 * Returns the meta object for the attribute list '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostics <em>Diagnostics</em>}'.
+	 * Returns the meta object for the attribute list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostics <em>Diagnostics</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute list '<em>Diagnostics</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostics()
 	 * @see #getDiagnostic()
@@ -1268,7 +1261,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VView <em>View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>View</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView
 	 * @generated
@@ -1276,11 +1269,11 @@ public interface VViewPackage extends EPackage {
 	EClass getView();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass
-	 * <em>Root EClass</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass <em>Root
+	 * EClass</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the reference '<em>Root EClass</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass()
 	 * @see #getView()
@@ -1289,11 +1282,11 @@ public interface VViewPackage extends EPackage {
 	EReference getView_RootEClass();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference list '<em>Children</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getChildren()
 	 * @see #getView()
@@ -1302,8 +1295,8 @@ public interface VViewPackage extends EPackage {
 	EReference getView_Children();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath
-	 * <em>Ecore Path</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore
+	 * Path</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.3
@@ -1316,8 +1309,8 @@ public interface VViewPackage extends EPackage {
 	EAttribute getView_EcorePath();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading Properties</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
@@ -1330,11 +1323,11 @@ public interface VViewPackage extends EPackage {
 	EReference getView_LoadingProperties();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement
-	 * <em>Contained Element</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement <em>Contained
+	 * Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Contained Element</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
@@ -1345,7 +1338,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VControl <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Control</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
@@ -1353,11 +1346,11 @@ public interface VViewPackage extends EPackage {
 	EClass getControl();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model Reference</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference()
 	 * @see #getControl()
@@ -1379,9 +1372,9 @@ public interface VViewPackage extends EPackage {
 	EClass getViewModelLoadingProperties();
 
 	/**
-	 * Returns the meta object for the map '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getInheritableProperties
-	 * <em>Inheritable Properties</em>}'.
+	 * Returns the meta object for the map
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getInheritableProperties <em>Inheritable
+	 * Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
@@ -1394,9 +1387,9 @@ public interface VViewPackage extends EPackage {
 	EReference getViewModelLoadingProperties_InheritableProperties();
 
 	/**
-	 * Returns the meta object for the map '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties
-	 * <em>Non Inheritable Properties</em>}'.
+	 * Returns the meta object for the map
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties <em>Non
+	 * Inheritable Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
@@ -1409,8 +1402,8 @@ public interface VViewPackage extends EPackage {
 	EReference getViewModelLoadingProperties_NonInheritableProperties();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
-	 * <em>Model Properties</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties <em>Model
+	 * Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
@@ -1422,8 +1415,8 @@ public interface VViewPackage extends EPackage {
 	EClass getViewModelProperties();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
-	 * <em>Date Time Display Attachment</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment <em>Date
+	 * Time Display Attachment</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.8
@@ -1435,8 +1428,8 @@ public interface VViewPackage extends EPackage {
 	EClass getDateTimeDisplayAttachment();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display Type</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.8
@@ -1492,7 +1485,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainer <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
@@ -1500,11 +1493,11 @@ public interface VViewPackage extends EPackage {
 	EClass getContainer();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VContainer#getChildren <em>Children</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VContainer#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference list '<em>Children</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer#getChildren()
 	 * @see #getContainer()
@@ -1513,8 +1506,8 @@ public interface VViewPackage extends EPackage {
 	EReference getContainer_Children();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer
-	 * <em>Contained Container</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer <em>Contained
+	 * Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.4
@@ -1530,7 +1523,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Label Alignment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Label Alignment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment()
 	 * @see #getControl()
@@ -1539,11 +1532,11 @@ public interface VViewPackage extends EPackage {
 	EAttribute getControl_LabelAlignment();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment
-	 * <em>Label Alignment</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label
+	 * Alignment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for enum '<em>Label Alignment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @generated
@@ -1551,8 +1544,8 @@ public interface VViewPackage extends EPackage {
 	EEnum getLabelAlignment();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
-	 * <em>Date Time Display Type</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType <em>Date Time
+	 * Display Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.8
@@ -1564,9 +1557,9 @@ public interface VViewPackage extends EPackage {
 	EEnum getDateTimeDisplayType();
 
 	/**
-	 * Returns the meta object for data type '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
-	 * <em>Domain Model Reference Change Listener</em>}'.
+	 * Returns the meta object for data type
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener <em>Domain Model Reference Change
+	 * Listener</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.3
@@ -1579,11 +1572,11 @@ public interface VViewPackage extends EPackage {
 	EDataType getDomainModelReferenceChangeListener();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
-	 * <em>Domain Model Reference</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain
+	 * Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @generated
@@ -1591,8 +1584,8 @@ public interface VViewPackage extends EPackage {
 	EClass getDomainModelReference();
 
 	/**
-	 * Returns the meta object for the attribute list '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener</em>}'.
+	 * Returns the meta object for the attribute list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.3
@@ -1609,7 +1602,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Feature Path Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Feature Path Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
 	 * @generated
@@ -1617,12 +1610,12 @@ public interface VViewPackage extends EPackage {
 	EClass getFeaturePathDomainModelReference();
 
 	/**
-	 * Returns the meta object for the reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature
-	 * <em>Domain Model EFeature</em>}'.
+	 * Returns the meta object for the reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature <em>Domain
+	 * Model EFeature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the reference '<em>Domain Model EFeature</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature()
 	 * @see #getFeaturePathDomainModelReference()
@@ -1631,12 +1624,12 @@ public interface VViewPackage extends EPackage {
 	EReference getFeaturePathDomainModelReference_DomainModelEFeature();
 
 	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath
 	 * <em>Domain Model EReference Path</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the reference list '<em>Domain Model EReference Path</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath()
 	 * @see #getFeaturePathDomainModelReference()
@@ -1648,7 +1641,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VAttachment <em>Attachment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Attachment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VAttachment
 	 * @generated
@@ -1659,7 +1652,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -1682,11 +1675,11 @@ public interface VViewPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl <em>Element</em>
-		 * }' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl
+		 * <em>Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getElement()
 		 * @generated
@@ -1697,7 +1690,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute ELEMENT__NAME = eINSTANCE.getElement_Name();
@@ -1716,7 +1709,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Visible</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute ELEMENT__VISIBLE = eINSTANCE.getElement_Visible();
@@ -1725,7 +1718,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Enabled</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute ELEMENT__ENABLED = eINSTANCE.getElement_Enabled();
@@ -1734,7 +1727,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Readonly</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute ELEMENT__READONLY = eINSTANCE.getElement_Readonly();
@@ -1743,7 +1736,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Diagnostic</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference ELEMENT__DIAGNOSTIC = eINSTANCE.getElement_Diagnostic();
@@ -1752,7 +1745,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Attachments</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference ELEMENT__ATTACHMENTS = eINSTANCE.getElement_Attachments();
@@ -1763,7 +1756,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.9
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute ELEMENT__UUID = eINSTANCE.getElement_Uuid();
@@ -1773,7 +1765,7 @@ public interface VViewPackage extends EPackage {
 		 * <em>Diagnostic</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDiagnosticImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDiagnostic()
 		 * @generated
@@ -1784,7 +1776,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Diagnostics</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute DIAGNOSTIC__DIAGNOSTICS = eINSTANCE.getDiagnostic_Diagnostics();
@@ -1794,7 +1786,7 @@ public interface VViewPackage extends EPackage {
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getView()
 		 * @generated
@@ -1805,7 +1797,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Root EClass</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference VIEW__ROOT_ECLASS = eINSTANCE.getView_RootEClass();
@@ -1814,7 +1806,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference VIEW__CHILDREN = eINSTANCE.getView_Children();
@@ -1844,7 +1836,7 @@ public interface VViewPackage extends EPackage {
 		 * <em>Contained Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainedElement()
 		 * @generated
@@ -1852,11 +1844,11 @@ public interface VViewPackage extends EPackage {
 		EClass CONTAINED_ELEMENT = eINSTANCE.getContainedElement();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl <em>Control</em>
-		 * }' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl
+		 * <em>Control</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getControl()
 		 * @generated
@@ -1867,15 +1859,15 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference CONTROL__DOMAIN_MODEL_REFERENCE = eINSTANCE.getControl_DomainModelReference();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
-		 * <em>Model Loading Properties</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl <em>Model Loading
+		 * Properties</em>}' class.
 		 * <!-- begin-user-doc -->
 		 *
 		 * @since 1.7
@@ -1909,8 +1901,8 @@ public interface VViewPackage extends EPackage {
 			.getViewModelLoadingProperties_NonInheritableProperties();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
-		 * <em>Model Properties</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties <em>Model
+		 * Properties</em>}' class.
 		 * <!-- begin-user-doc -->
 		 *
 		 * @since 1.7
@@ -1922,9 +1914,9 @@ public interface VViewPackage extends EPackage {
 		EClass VIEW_MODEL_PROPERTIES = eINSTANCE.getViewModelProperties();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
-		 * <em>Date Time Display Attachment</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl <em>Date Time Display
+		 * Attachment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 *
 		 * @since 1.8
@@ -1983,7 +1975,7 @@ public interface VViewPackage extends EPackage {
 		 * <em>Container</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainer()
 		 * @generated
@@ -1994,7 +1986,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference CONTAINER__CHILDREN = eINSTANCE.getContainer_Children();
@@ -2016,17 +2008,17 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment
-		 * <em>Label Alignment</em>}' enum.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label
+		 * Alignment</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getLabelAlignment()
 		 * @generated
@@ -2034,8 +2026,8 @@ public interface VViewPackage extends EPackage {
 		EEnum LABEL_ALIGNMENT = eINSTANCE.getLabelAlignment();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
-		 * <em>Date Time Display Type</em>}' enum.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType <em>Date Time
+		 * Display Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 *
 		 * @since 1.8
@@ -2059,11 +2051,11 @@ public interface VViewPackage extends EPackage {
 		EDataType DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = eINSTANCE.getDomainModelReferenceChangeListener();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
-		 * <em>Domain Model Reference</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain
+		 * Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReference()
 		 * @generated
@@ -2081,12 +2073,12 @@ public interface VViewPackage extends EPackage {
 		EAttribute DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = eINSTANCE.getDomainModelReference_ChangeListener();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
-		 * <em>Feature Path Domain Model Reference</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl <em>Feature Path Domain
+		 * Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeaturePathDomainModelReference()
 		 * @generated
@@ -2097,7 +2089,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model EFeature</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = eINSTANCE
@@ -2107,7 +2099,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model EReference Path</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = eINSTANCE
@@ -2118,7 +2110,7 @@ public interface VViewPackage extends EPackage {
 		 * <em>Attachment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getAttachment()
 		 * @generated

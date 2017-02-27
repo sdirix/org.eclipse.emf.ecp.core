@@ -28,25 +28,23 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getGroupType <em>Group Type</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getLabelAlignment <em>Label Alignment
- *        </em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getLabelAlignment <em>Label
+ *        Alignment</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#isCollapsed <em>Collapsed</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
-public class VGroupImpl extends VContainedContainerImpl implements VGroup
-{
+public class VGroupImpl extends VContainedContainerImpl implements VGroup {
 	/**
 	 * The default value of the '{@link #getGroupType() <em>Group Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getGroupType()
 	 * @generated
 	 * @ordered
@@ -58,7 +56,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getGroupType()
 	 * @generated
 	 * @ordered
@@ -70,7 +67,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -82,7 +78,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -95,7 +90,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -107,7 +101,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -117,23 +110,21 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VGroupImpl()
-	{
+	protected VGroupImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VGroupPackage.Literals.GROUP;
 	}
 
@@ -142,12 +133,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public GroupType getGroupType()
-	{
+	public GroupType getGroupType() {
 		return groupType;
 	}
 
@@ -156,18 +145,15 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setGroupType(GroupType newGroupType)
-	{
-		final GroupType oldGroupType = groupType;
+	public void setGroupType(GroupType newGroupType) {
+		GroupType oldGroupType = groupType;
 		groupType = newGroupType == null ? GROUP_TYPE_EDEFAULT : newGroupType;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__GROUP_TYPE, oldGroupType,
 				groupType));
-		}
 	}
 
 	/**
@@ -175,12 +161,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public GroupLabelAlignment getLabelAlignment()
-	{
+	public GroupLabelAlignment getLabelAlignment() {
 		return labelAlignment;
 	}
 
@@ -189,18 +173,15 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setLabelAlignment(GroupLabelAlignment newLabelAlignment)
-	{
-		final GroupLabelAlignment oldLabelAlignment = labelAlignment;
+	public void setLabelAlignment(GroupLabelAlignment newLabelAlignment) {
+		GroupLabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
-		}
 	}
 
 	/**
@@ -208,12 +189,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public boolean isCollapsed()
-	{
+	public boolean isCollapsed() {
 		return collapsed;
 	}
 
@@ -222,31 +201,26 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setCollapsed(boolean newCollapsed)
-	{
-		final boolean oldCollapsed = collapsed;
+	public void setCollapsed(boolean newCollapsed) {
+		boolean oldCollapsed = collapsed;
 		collapsed = newCollapsed;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__COLLAPSED, oldCollapsed,
-				collapsed));
-		}
+		if (eNotificationRequired())
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__COLLAPSED, oldCollapsed, collapsed));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			return getGroupType();
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
@@ -260,14 +234,12 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			setGroupType((GroupType) newValue);
 			return;
@@ -284,14 +256,12 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			setGroupType(GROUP_TYPE_EDEFAULT);
 			return;
@@ -308,14 +278,12 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			return groupType != GROUP_TYPE_EDEFAULT;
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
@@ -329,17 +297,15 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) {
+	public String toString() {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (groupType: "); //$NON-NLS-1$
 		result.append(groupType);
 		result.append(", labelAlignment: "); //$NON-NLS-1$

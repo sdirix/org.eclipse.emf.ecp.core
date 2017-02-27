@@ -27,17 +27,16 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage
  * @generated
  */
-public class SectionAdapterFactory extends AdapterFactoryImpl
-{
+public class SectionAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected static VSectionPackage modelPackage;
@@ -46,13 +45,11 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public SectionAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public SectionAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VSectionPackage.eINSTANCE;
 		}
 	}
@@ -63,19 +60,16 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -85,61 +79,52 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected SectionSwitch<Adapter> modelSwitch =
-		new SectionSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseSectionedArea(VSectionedArea object)
-			{
-				return createSectionedAreaAdapter();
-			}
+	protected SectionSwitch<Adapter> modelSwitch = new SectionSwitch<Adapter>() {
+		@Override
+		public Adapter caseSectionedArea(VSectionedArea object) {
+			return createSectionedAreaAdapter();
+		}
 
-			@Override
-			public Adapter caseSection(VSection object)
-			{
-				return createSectionAdapter();
-			}
+		@Override
+		public Adapter caseSection(VSection object) {
+			return createSectionAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(VContainer object)
-			{
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(VContainer object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -150,13 +135,12 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea
 	 * @generated
 	 */
-	public Adapter createSectionedAreaAdapter()
-	{
+	public Adapter createSectionedAreaAdapter() {
 		return null;
 	}
 
@@ -167,13 +151,12 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSection
 	 * @generated
 	 */
-	public Adapter createSectionAdapter()
-	{
+	public Adapter createSectionAdapter() {
 		return null;
 	}
 
@@ -184,13 +167,12 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -201,13 +183,12 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -218,13 +199,12 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
 		return null;
 	}
 
@@ -233,12 +213,11 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

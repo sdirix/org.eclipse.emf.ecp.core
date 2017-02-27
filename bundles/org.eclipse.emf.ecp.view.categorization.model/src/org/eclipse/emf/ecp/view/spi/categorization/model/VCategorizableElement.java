@@ -23,18 +23,17 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject <em>Label Object
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject <em>Label
+ * Object</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizableElement()
  * @model abstract="true"
  * @generated
  */
-public interface VCategorizableElement extends VElement
-{
+public interface VCategorizableElement extends VElement {
 
 	/**
 	 * Returns the value of the '<em><b>Label Object</b></em>' reference.
@@ -44,7 +43,7 @@ public interface VCategorizableElement extends VElement
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Label Object</em>' reference.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizableElement_LabelObject()
 	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
