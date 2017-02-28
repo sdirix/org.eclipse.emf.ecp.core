@@ -21,6 +21,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
  * The following features are implemented:
  * </p>
  * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl#getTooltip <em>Tooltip</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl#getChildItems <em>Child Items</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl#isCollapsed <em>Collapsed</em>}</li>
  * </ul>
@@ -41,10 +44,32 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
  */
 public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
+	 * The default value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTooltip()
+	 * @generated
+	 * @ordered
+	 * @since 1.13
+	 */
+	protected static final String TOOLTIP_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTooltip()
+	 * @generated
+	 * @ordered
+	 * @since 1.13
+	 */
+	protected String tooltip = TOOLTIP_EDEFAULT;
+	/**
 	 * The cached value of the '{@link #getChildItems() <em>Child Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChildItems()
 	 * @generated
 	 * @ordered
@@ -54,7 +79,7 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	 * The default value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -64,7 +89,7 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	 * The cached value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -74,7 +99,7 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VSectionImpl() {
@@ -84,7 +109,7 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,7 +120,36 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	@Override
+	public void setTooltip(String newTooltip) {
+		final String oldTooltip = tooltip;
+		tooltip = newTooltip;
+		if (eNotificationRequired()) {
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VSectionPackage.SECTION__TOOLTIP, oldTooltip, tooltip));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -110,7 +164,7 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -121,22 +175,23 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setCollapsed(boolean newCollapsed) {
-		boolean oldCollapsed = collapsed;
+		final boolean oldCollapsed = collapsed;
 		collapsed = newCollapsed;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VSectionPackage.SECTION__COLLAPSED, oldCollapsed,
 				collapsed));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,12 +206,14 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case VSectionPackage.SECTION__TOOLTIP:
+			return getTooltip();
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			return getChildItems();
 		case VSectionPackage.SECTION__COLLAPSED:
@@ -168,13 +225,16 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case VSectionPackage.SECTION__TOOLTIP:
+			setTooltip((String) newValue);
+			return;
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			getChildItems().clear();
 			getChildItems().addAll((Collection<? extends VSection>) newValue);
@@ -189,12 +249,15 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case VSectionPackage.SECTION__TOOLTIP:
+			setTooltip(TOOLTIP_EDEFAULT);
+			return;
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			getChildItems().clear();
 			return;
@@ -208,12 +271,14 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case VSectionPackage.SECTION__TOOLTIP:
+			return TOOLTIP_EDEFAULT == null ? tooltip != null : !TOOLTIP_EDEFAULT.equals(tooltip);
 		case VSectionPackage.SECTION__CHILD_ITEMS:
 			return childItems != null && !childItems.isEmpty();
 		case VSectionPackage.SECTION__COLLAPSED:
@@ -225,16 +290,57 @@ public class VSectionImpl extends VContainerImpl implements VSection {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == VHasTooltip.class) {
+			switch (derivedFeatureID) {
+			case VSectionPackage.SECTION__TOOLTIP:
+				return VViewPackage.HAS_TOOLTIP__TOOLTIP;
+			default:
+				return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == VHasTooltip.class) {
+			switch (baseFeatureID) {
+			case VViewPackage.HAS_TOOLTIP__TOOLTIP:
+				return VSectionPackage.SECTION__TOOLTIP;
+			default:
+				return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (collapsed: "); //$NON-NLS-1$
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (tooltip: "); //$NON-NLS-1$
+		result.append(tooltip);
+		result.append(", collapsed: "); //$NON-NLS-1$
 		result.append(collapsed);
 		result.append(')');
 		return result.toString();

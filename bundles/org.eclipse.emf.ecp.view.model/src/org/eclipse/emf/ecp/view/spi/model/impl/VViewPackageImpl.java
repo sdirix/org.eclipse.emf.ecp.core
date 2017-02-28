@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -37,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
@@ -114,6 +114,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EClass dateTimeDisplayAttachmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass hasTooltipEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -236,9 +244,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 				: new VViewPackageImpl());
 
 		isInited = true;
-
-		// Initialize simple dependencies
-		EcorePackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theViewPackage.createPackageContents();
@@ -546,6 +551,26 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getHasTooltip() {
+		return hasTooltipEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getHasTooltip_Tooltip() {
+		return (EAttribute) hasTooltipEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
@@ -814,6 +839,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		dateTimeDisplayAttachmentEClass = createEClass(DATE_TIME_DISPLAY_ATTACHMENT);
 		createEAttribute(dateTimeDisplayAttachmentEClass, DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE);
 
+		hasTooltipEClass = createEClass(HAS_TOOLTIP);
+		createEAttribute(hasTooltipEClass, HAS_TOOLTIP__TOOLTIP);
+
 		// Create enums
 		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
 		dateTimeDisplayTypeEEnum = createEEnum(DATE_TIME_DISPLAY_TYPE);
@@ -966,6 +994,11 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEAttribute(getDateTimeDisplayAttachment_DisplayType(), this.getDateTimeDisplayType(), "displayType", null, //$NON-NLS-1$
 			0, 1, VDateTimeDisplayAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(hasTooltipEClass, VHasTooltip.class, "HasTooltip", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getHasTooltip_Tooltip(), ecorePackage.getEString(), "tooltip", null, 0, 1, VHasTooltip.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment"); //$NON-NLS-1$

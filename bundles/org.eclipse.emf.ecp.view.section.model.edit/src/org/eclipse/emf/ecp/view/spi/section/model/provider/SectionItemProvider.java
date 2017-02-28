@@ -57,9 +57,33 @@ public class SectionItemProvider extends ContainerItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addTooltipPropertyDescriptor(object);
 			addCollapsedPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Tooltip feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addTooltipPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_HasTooltip_tooltip_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_HasTooltip_tooltip_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_HasTooltip_type"), //$NON-NLS-1$
+				VViewPackage.Literals.HAS_TOOLTIP__TOOLTIP,
+				true,
+				true,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -156,6 +180,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VSection.class)) {
+		case VSectionPackage.SECTION__TOOLTIP:
 		case VSectionPackage.SECTION__COLLAPSED:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

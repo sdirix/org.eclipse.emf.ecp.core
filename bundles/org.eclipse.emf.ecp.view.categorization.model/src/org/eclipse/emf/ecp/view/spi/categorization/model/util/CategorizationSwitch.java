@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage
  * @generated
  */
@@ -43,7 +44,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static VCategorizationPackage modelPackage;
@@ -52,7 +53,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public CategorizationSwitch() {
@@ -65,7 +66,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -80,7 +81,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
@@ -88,67 +89,96 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION: {
-			VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
+			final VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
 			T result = caseAbstractCategorization(abstractCategorization);
-			if (result == null)
+			if (result == null) {
 				result = caseCategorizableElement(abstractCategorization);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(abstractCategorization);
-			if (result == null)
+			}
+			if (result == null) {
+				result = caseHasTooltip(abstractCategorization);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VCategorizationPackage.CATEGORIZATION: {
-			VCategorization categorization = (VCategorization) theEObject;
+			final VCategorization categorization = (VCategorization) theEObject;
 			T result = caseCategorization(categorization);
-			if (result == null)
+			if (result == null) {
 				result = caseAbstractCategorization(categorization);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseCategorizableElement(categorization);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(categorization);
-			if (result == null)
+			}
+			if (result == null) {
+				result = caseHasTooltip(categorization);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VCategorizationPackage.CATEGORY: {
-			VCategory category = (VCategory) theEObject;
+			final VCategory category = (VCategory) theEObject;
 			T result = caseCategory(category);
-			if (result == null)
+			if (result == null) {
 				result = caseAbstractCategorization(category);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseCategorizableElement(category);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(category);
-			if (result == null)
+			}
+			if (result == null) {
+				result = caseHasTooltip(category);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VCategorizationPackage.ACTION: {
-			VAction action = (VAction) theEObject;
+			final VAction action = (VAction) theEObject;
 			T result = caseAction(action);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT: {
-			VCategorizationElement categorizationElement = (VCategorizationElement) theEObject;
+			final VCategorizationElement categorizationElement = (VCategorizationElement) theEObject;
 			T result = caseCategorizationElement(categorizationElement);
-			if (result == null)
+			if (result == null) {
 				result = caseContainedElement(categorizationElement);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(categorizationElement);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VCategorizationPackage.CATEGORIZABLE_ELEMENT: {
-			VCategorizableElement categorizableElement = (VCategorizableElement) theEObject;
+			final VCategorizableElement categorizableElement = (VCategorizableElement) theEObject;
 			T result = caseCategorizableElement(categorizableElement);
-			if (result == null)
+			if (result == null) {
 				result = caseElement(categorizableElement);
-			if (result == null)
+			}
+			if (result == null) {
+				result = caseHasTooltip(categorizableElement);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -162,7 +192,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Abstract Categorization</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -178,7 +208,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Categorization</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -194,7 +224,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Category</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -210,7 +240,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Action</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -226,7 +256,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -242,7 +272,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Categorizable Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -258,7 +288,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -269,12 +299,29 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 * @since 1.13
+	 */
+	public T caseHasTooltip(VHasTooltip object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -290,7 +337,7 @@ public class CategorizationSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

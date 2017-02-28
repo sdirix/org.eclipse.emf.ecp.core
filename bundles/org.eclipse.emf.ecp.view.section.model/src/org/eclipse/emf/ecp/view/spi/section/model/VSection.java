@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.section.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
  * @model
  * @generated
  */
-public interface VSection extends VContainer {
+public interface VSection extends VContainer, VHasTooltip {
 	/**
 	 * Returns the value of the '<em><b>Child Items</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.section.model.VSection}.

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage
  * @generated
  */
@@ -40,7 +41,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static VSectionPackage modelPackage;
@@ -49,7 +50,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public SectionSwitch() {
@@ -62,7 +63,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -77,7 +78,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
@@ -85,25 +86,34 @@ public class SectionSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case VSectionPackage.SECTIONED_AREA: {
-			VSectionedArea sectionedArea = (VSectionedArea) theEObject;
+			final VSectionedArea sectionedArea = (VSectionedArea) theEObject;
 			T result = caseSectionedArea(sectionedArea);
-			if (result == null)
+			if (result == null) {
 				result = caseContainedElement(sectionedArea);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(sectionedArea);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VSectionPackage.SECTION: {
-			VSection section = (VSection) theEObject;
+			final VSection section = (VSection) theEObject;
 			T result = caseSection(section);
-			if (result == null)
+			if (result == null) {
 				result = caseContainer(section);
-			if (result == null)
+			}
+			if (result == null) {
+				result = caseHasTooltip(section);
+			}
+			if (result == null) {
 				result = caseElement(section);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -117,7 +127,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Sectioned Area</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -133,7 +143,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Section</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -149,7 +159,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -165,7 +175,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -181,7 +191,7 @@ public class SectionSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -192,12 +202,29 @@ public class SectionSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 * @since 1.13
+	 */
+	public T caseHasTooltip(VHasTooltip object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

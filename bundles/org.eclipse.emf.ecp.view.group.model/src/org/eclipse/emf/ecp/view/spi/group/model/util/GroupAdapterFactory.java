@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -106,6 +107,11 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseContainedContainer(VContainedContainer object) {
 			return createContainedContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseHasTooltip(VHasTooltip object) {
+			return createHasTooltipAdapter();
 		}
 
 		@Override
@@ -206,6 +212,22 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createContainedContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
+	 * Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 */
+	public Adapter createHasTooltipAdapter() {
 		return null;
 	}
 

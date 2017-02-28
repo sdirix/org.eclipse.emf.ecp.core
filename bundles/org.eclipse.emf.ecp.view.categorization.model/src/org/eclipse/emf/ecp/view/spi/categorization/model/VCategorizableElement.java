@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @model abstract="true"
  * @generated
  */
-public interface VCategorizableElement extends VElement {
+public interface VCategorizableElement extends VElement, VHasTooltip {
 
 	/**
 	 * Returns the value of the '<em><b>Label Object</b></em>' reference.

@@ -20,9 +20,11 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -30,7 +32,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class CategorizableElementItemProvider
@@ -39,7 +41,7 @@ public class CategorizableElementItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public CategorizableElementItemProvider(AdapterFactory adapterFactory) {
@@ -50,7 +52,7 @@ public class CategorizableElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -58,16 +60,41 @@ public class CategorizableElementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addTooltipPropertyDescriptor(object);
 			addLabelObjectPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
+	 * This adds a property descriptor for the Tooltip feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	protected void addTooltipPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_HasTooltip_tooltip_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_HasTooltip_tooltip_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_HasTooltip_type"), //$NON-NLS-1$
+				VViewPackage.Literals.HAS_TOOLTIP__TOOLTIP,
+				true,
+				true,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This adds a property descriptor for the Label Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addLabelObjectPropertyDescriptor(Object object) {
@@ -108,7 +135,7 @@ public class CategorizableElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,6 +143,7 @@ public class CategorizableElementItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VCategorizableElement.class)) {
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__TOOLTIP:
 		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL_OBJECT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -128,7 +156,7 @@ public class CategorizableElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

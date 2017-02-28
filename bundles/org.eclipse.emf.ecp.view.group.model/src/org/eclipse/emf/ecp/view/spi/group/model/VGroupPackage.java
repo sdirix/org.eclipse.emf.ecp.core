@@ -174,6 +174,16 @@ public interface VGroupPackage extends EPackage {
 	int GROUP__CHILDREN = VViewPackage.CONTAINED_CONTAINER__CHILDREN;
 
 	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__TOOLTIP = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Group Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 *
@@ -182,7 +192,7 @@ public interface VGroupPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__GROUP_TYPE = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 0;
+	int GROUP__GROUP_TYPE = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -193,7 +203,7 @@ public interface VGroupPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__LABEL_ALIGNMENT = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 1;
+	int GROUP__LABEL_ALIGNMENT = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Collapsed</b></em>' attribute.
@@ -204,7 +214,7 @@ public interface VGroupPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__COLLAPSED = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 2;
+	int GROUP__COLLAPSED = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Group</em>' class.
@@ -214,7 +224,7 @@ public interface VGroupPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP_FEATURE_COUNT = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 3;
+	int GROUP_FEATURE_COUNT = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupType <em>Type</em>}' enum.

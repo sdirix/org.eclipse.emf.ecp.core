@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -119,6 +120,11 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseElement(VElement object) {
 			return createElementAdapter();
+		}
+
+		@Override
+		public Adapter caseHasTooltip(VHasTooltip object) {
+			return createHasTooltipAdapter();
 		}
 
 		@Override
@@ -256,6 +262,22 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
+	 * Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 */
+	public Adapter createHasTooltipAdapter() {
 		return null;
 	}
 

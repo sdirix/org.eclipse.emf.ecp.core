@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.group.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
  * @model
  * @generated
  */
-public interface VGroup extends VContainedContainer {
+public interface VGroup extends VContainedContainer, VHasTooltip {
 
 	/**
 	 * Returns the value of the '<em><b>Group Type</b></em>' attribute.

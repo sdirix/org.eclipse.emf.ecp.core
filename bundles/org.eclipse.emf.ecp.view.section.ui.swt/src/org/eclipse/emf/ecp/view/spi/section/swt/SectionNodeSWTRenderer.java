@@ -19,15 +19,20 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -240,7 +245,13 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		getExpandableComposite().setText(text);
 		initExpandableComposite(getExpandableComposite());
 
-		StaticTooltipHelper.addToolStaticTipFromAnnotation(getVElement(), getExpandableComposite());
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
+		final IObservableValue targetTooltipValue = new ExpandableCompositeTooltipProperty().observe(getExpandableComposite());
+		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
 	}
@@ -342,6 +353,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	/**
 	 * @return the expandableComposite
+	 * @since 1.12
 	 */
 	protected ExpandableComposite getExpandableComposite() {
 		return expandableComposite;
@@ -349,6 +361,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	/**
 	 * @param expandableComposite the expandableComposite to set
+	 * @since 1.12
 	 */
 	protected void setExpandableComposite(ExpandableComposite expandableComposite) {
 		this.expandableComposite = expandableComposite;

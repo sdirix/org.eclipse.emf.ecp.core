@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.group.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
 /**
@@ -51,7 +50,6 @@ public final class GroupEditPlugin extends EMFPlugin {
 	 */
 	public GroupEditPlugin() {
 		super(new ResourceLocator[] {
-			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});
 	}

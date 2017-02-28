@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -45,7 +46,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static VViewPackage modelPackage;
@@ -54,7 +55,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewAdapterFactory() {
@@ -68,7 +69,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc --> This implementation returns <code>true</code> if
 	 * the object is either the model's package or is an instance object of the
 	 * model. <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -161,6 +162,11 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseHasTooltip(VHasTooltip object) {
+			return createHasTooltipAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -170,7 +176,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
@@ -187,7 +193,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
@@ -203,7 +209,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic
 	 * @generated
@@ -234,7 +240,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
@@ -299,7 +305,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
 	 * @return the new adapter.
@@ -307,6 +313,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDateTimeDisplayAttachmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
+	 * Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 * @since 1.13
+	 */
+	public Adapter createHasTooltipAdapter() {
 		return null;
 	}
 
@@ -333,7 +356,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
@@ -366,7 +389,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @generated
@@ -383,7 +406,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
 	 * @generated
@@ -399,7 +422,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VAttachment
 	 * @generated
@@ -413,7 +436,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @generated
 	 */

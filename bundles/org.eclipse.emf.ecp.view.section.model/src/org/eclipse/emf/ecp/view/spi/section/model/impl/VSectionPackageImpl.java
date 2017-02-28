@@ -246,6 +246,7 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 		// Add supertypes to classes
 		sectionedAreaEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 		sectionEClass.getESuperTypes().add(theViewPackage.getContainer());
+		sectionEClass.getESuperTypes().add(theViewPackage.getHasTooltip());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(sectionedAreaEClass, VSectionedArea.class, "SectionedArea", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$

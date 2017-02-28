@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.section.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
 /**
@@ -47,7 +46,6 @@ public final class SectionEditPlugin extends EMFPlugin {
 	 */
 	public SectionEditPlugin() {
 		super(new ResourceLocator[] {
-			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});
 	}

@@ -285,6 +285,16 @@ public interface VSectionPackage extends EPackage {
 	int SECTION__CHILDREN = VViewPackage.CONTAINER__CHILDREN;
 
 	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int SECTION__TOOLTIP = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Child Items</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -292,7 +302,7 @@ public interface VSectionPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__CHILD_ITEMS = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+	int SECTION__CHILD_ITEMS = VViewPackage.CONTAINER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Collapsed</b></em>' attribute.
@@ -302,7 +312,7 @@ public interface VSectionPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__COLLAPSED = VViewPackage.CONTAINER_FEATURE_COUNT + 1;
+	int SECTION__COLLAPSED = VViewPackage.CONTAINER_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Section</em>' class.
@@ -312,7 +322,7 @@ public interface VSectionPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 2;
+	int SECTION_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 3;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea <em>Sectioned

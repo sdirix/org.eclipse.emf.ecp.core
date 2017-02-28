@@ -408,6 +408,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categorizationElementEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 		categorizableElementEClass.getESuperTypes().add(theViewPackage.getElement());
+		categorizableElementEClass.getESuperTypes().add(theViewPackage.getHasTooltip());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(abstractCategorizationEClass, VAbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT, //$NON-NLS-1$

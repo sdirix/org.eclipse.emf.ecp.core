@@ -227,6 +227,16 @@ public interface VCategorizationPackage extends EPackage {
 	int CATEGORIZABLE_ELEMENT__UUID = VViewPackage.ELEMENT__UUID;
 
 	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__TOOLTIP = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -234,7 +244,7 @@ public interface VCategorizationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
+	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Categorizable Element</em>' class.
@@ -244,7 +254,7 @@ public interface VCategorizationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
+	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -325,6 +335,16 @@ public interface VCategorizationPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_CATEGORIZATION__UUID = CATEGORIZABLE_ELEMENT__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__TOOLTIP = CATEGORIZABLE_ELEMENT__TOOLTIP;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
@@ -435,6 +455,16 @@ public interface VCategorizationPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORIZATION__UUID = ABSTRACT_CATEGORIZATION__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__TOOLTIP = ABSTRACT_CATEGORIZATION__TOOLTIP;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
@@ -555,6 +585,16 @@ public interface VCategorizationPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORY__UUID = ABSTRACT_CATEGORIZATION__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__TOOLTIP = ABSTRACT_CATEGORIZATION__TOOLTIP;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
