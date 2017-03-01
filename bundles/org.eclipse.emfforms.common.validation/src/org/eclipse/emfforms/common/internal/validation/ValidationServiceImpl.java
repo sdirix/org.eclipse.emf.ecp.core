@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
@@ -58,10 +59,29 @@ public class ValidationServiceImpl implements ValidationService {
 	private boolean validationRunning;
 	private boolean cancelationRequested;
 
+	private Diagnostician diagnostician;
+
 	/**
 	 * Default constructor.
 	 */
 	public ValidationServiceImpl() {
+		diagnostician = new Diagnostician(EValidator.Registry.INSTANCE) {
+			@Override
+			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
+				Map<Object, Object> context) {
+				Object eValidator;
+				EClass eType = eClass;
+				while ((eValidator = eValidatorRegistry.get(eType.eContainer())) == null) {
+					final List<EClass> eSuperTypes = eType.getESuperTypes();
+					if (eSuperTypes.isEmpty()) {
+						eValidator = eValidatorRegistry.get(null);
+						break;
+					}
+					eType = eSuperTypes.get(0);
+				}
+				return doValidate((EValidator) eValidator, eClass, eObject, diagnostics, context);
+			}
+		};
 	}
 
 	private boolean isFiltered(EObject object) {
@@ -192,12 +212,10 @@ public class ValidationServiceImpl implements ValidationService {
 	 * @return the {@link EValidator}
 	 */
 	protected EValidator getEValidatorForEObject(EObject eObject) {
-		final EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(eObject.eClass().getEPackage());
-
-		if (eValidator == null) {
+		if (EValidator.Registry.INSTANCE.getEValidator(eObject.eClass().getEPackage()) == null) {
 			return new EObjectValidator();
 		}
-		return eValidator;
+		return diagnostician;
 	}
 
 	/**
