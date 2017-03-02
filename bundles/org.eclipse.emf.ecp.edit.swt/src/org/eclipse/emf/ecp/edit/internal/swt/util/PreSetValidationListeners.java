@@ -11,10 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import java.text.MessageFormat;
+
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -108,11 +112,26 @@ public final class PreSetValidationListeners {
 	private VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
 		final Diagnostic strictDiag = preSetValidationService.validate(feature, value);
 		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
-		vDiagnostic.getDiagnostics().add(strictDiag);
 		if (strictDiag.getSeverity() != Diagnostic.OK) {
+			vDiagnostic.getDiagnostics().add(strictDiag);
 			return vDiagnostic;
 		}
+		if (feature.isRequired()) {
+			/* value must not be empty, which is not an EDataType-Constraint */
+			if (value == null || isString(feature.getEType()) && "".equals(value)) { //$NON-NLS-1$
+				final BasicDiagnostic multiplicityDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "", //$NON-NLS-1$
+					EObjectValidator.EOBJECT__EVERY_MULTIPCITY_CONFORMS,
+					MessageFormat.format("The required feature ''{0}'' must be set", feature.getName()), //$NON-NLS-1$
+					new Object[0]);
+				vDiagnostic.getDiagnostics().add(multiplicityDiagnostic);
+				return vDiagnostic;
+			}
+		}
 		return null;
+	}
+
+	private boolean isString(EClassifier classifier) {
+		return classifier.getInstanceTypeName().equals(String.class.getCanonicalName());
 	}
 
 	/**
@@ -186,9 +205,6 @@ public final class PreSetValidationListeners {
 			return classifier.getInstanceTypeName().equals(Integer.class.getCanonicalName());
 		}
 
-		private boolean isString(EClassifier classifier) {
-			return classifier.getInstanceTypeName().equals(String.class.getCanonicalName());
-		}
 	}
 
 	/**
