@@ -199,7 +199,13 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				} catch (final IOException ex) {
 				}
 			}
-			rootView.getSelectionProvider().refresh();
+			getSite().getShell().getDisplay().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					rootView.getSelectionProvider().refresh();
+				}
+			});
 			reloading = false;
 			getCommandStack().flush();
 			initMarkers();
