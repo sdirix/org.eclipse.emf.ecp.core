@@ -303,7 +303,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(unsetLabel);
-		unsetLabel.setText(LocalizationServiceHelper.getString(getClass(), "LinkControl_NotSet")); //$NON-NLS-1$
+		unsetLabel.setText(
+			LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class, "LinkControl_NotSet")); //$NON-NLS-1$
 		unsetLabel.setBackground(mainComposite.getBackground());
 		unsetLabel.setForeground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);

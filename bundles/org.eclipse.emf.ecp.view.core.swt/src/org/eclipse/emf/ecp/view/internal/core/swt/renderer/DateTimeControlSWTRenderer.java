@@ -223,7 +223,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		bUnset = new Button(dateTimeComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
 		bUnset
-			.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/unset_feature.png")); //$NON-NLS-1$
+			.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(DateTimeControlSWTRenderer.class),
+				"icons/unset_feature.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
 		final String tooltip = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
 			? MessageKeys.DateTimeControlSWTRenderer_CleanTime : MessageKeys.DateTimeControlSWTRenderer_CleanDate;
@@ -254,7 +255,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			: "icons/date.png"; //$NON-NLS-1$
 		setBtn = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(setBtn);
-		setBtn.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), imagePath));
+		setBtn.setImage(
+			imageRegistryService.getImage(FrameworkUtil.getBundle(DateTimeControlSWTRenderer.class), imagePath));
 		setBtn.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonSet"); //$NON-NLS-1$
 		final String tooltip = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
 			? MessageKeys.DateTimeControlSWTRenderer_SelectTime : MessageKeys.DateTimeControlSWTRenderer_SelectData;

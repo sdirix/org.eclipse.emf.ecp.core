@@ -197,7 +197,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @return the image
 	 */
 	protected Image getImage(String path) {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(MultiAttributeSWTRenderer.class), path);
 	}
 
 	private Button createRemoveRowButton(final Composite buttonComposite, IObservableList list, EAttribute attribute) {

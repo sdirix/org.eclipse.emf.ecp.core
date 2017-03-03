@@ -294,8 +294,10 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			}
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-				LocalizationServiceHelper.getString(getClass(), MessageKeys.XmlDateControlText_InvalidNumber), null,
-				LocalizationServiceHelper.getString(getClass(),
+				LocalizationServiceHelper.getString(XMLDateControlSWTRenderer.class,
+					MessageKeys.XmlDateControlText_InvalidNumber),
+				null,
+				LocalizationServiceHelper.getString(XMLDateControlSWTRenderer.class,
 					MessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset),
 				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
@@ -330,7 +332,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(control);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
-		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
+		bDate.setImage(
+			imageRegistryService.getImage(FrameworkUtil.getBundle(XMLDateControlSWTRenderer.class), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		text = (Text) Composite.class.cast(control).getChildren()[0];
 		bDate.addSelectionListener(new SelectionAdapterExtension(text, bDate));

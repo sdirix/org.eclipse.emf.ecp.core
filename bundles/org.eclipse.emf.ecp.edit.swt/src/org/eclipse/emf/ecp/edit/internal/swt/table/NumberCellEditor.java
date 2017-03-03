@@ -223,7 +223,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
-			setErrorMessage(LocalizationServiceHelper.getString(getClass(),
+			setErrorMessage(LocalizationServiceHelper.getString(NumberCellEditor.class,
 				TableMessageKeys.NumberCellEditor_ValueIsNull));
 			return ""; //$NON-NLS-1$
 		}

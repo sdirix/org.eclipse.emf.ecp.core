@@ -122,7 +122,8 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		final IObservableValue targetValue = WidgetProperties.text().observe(headingLbl);
 		dataBindingContext.bindValue(targetValue, modelValue);
 
-		whatToDoLbl.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.Categorization_Selection));
+		whatToDoLbl.setText(
+			LocalizationServiceHelper.getString(SWTCategorizationRenderer.class, MessageKeys.Categorization_Selection));
 		SWTDataElementIdHelper.setElementIdDataWithSubId(categoryComposite, getVElement(), "category", //$NON-NLS-1$
 			getViewModelContext());
 		return categoryComposite;
