@@ -96,9 +96,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 	 * @param element The element which changed
 	 */
 	protected void refreshViewer(EObject element) {
-		if (!viewer.isBusy()) {
-			viewer.refresh(element, true);
-		}
+		viewer.refresh(element, true);
 	}
 
 	/**
