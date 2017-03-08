@@ -26,6 +26,7 @@ import java.util.Set;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
@@ -49,6 +51,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.common.internal.validation.DiagnosticHelper;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
 import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
@@ -59,6 +63,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -322,6 +329,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private final Set<EObject> validated = new LinkedHashSet<EObject>();
 	private boolean validationRunning;
 	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new LinkedHashMap<UniqueSetting, VDiagnostic>();
+	private ComposedAdapterFactory adapterFactory;
 
 	/**
 	 * {@inheritDoc}
@@ -368,6 +376,22 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				// nothing to do here
 			}
 		});
+
+		adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+
+		final ViewSubstitutionLabelProviderFactory substitutionLabelProviderFactory = getSubstitutionLabelProviderFactory();
+
+		SubstitutionLabelProvider substitutionLabelProvider;
+		if (substitutionLabelProviderFactory != null) {
+			substitutionLabelProvider = substitutionLabelProviderFactory
+				.createSubstitutionLabelProvider(adapterFactory);
+		} else {
+			substitutionLabelProvider = new ECPSubstitutionLabelProvider(adapterFactory);
+		}
+
+		validationService.setSubstitutionLabelProvider(substitutionLabelProvider);
 
 		registerValidationProviders();
 
@@ -421,6 +445,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		context.unregisterEMFFormsContextListener(this);
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
+		adapterFactory.dispose();
 	}
 
 	/**
@@ -797,4 +822,24 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		// do nothing
 	}
 
+	/**
+	 * Returns a {@link ViewSubstitutionLabelProviderFactory}, if any is registered.
+	 *
+	 * @return an instance of a {@link ViewSubstitutionLabelProviderFactory}, if any is available,
+	 *         {@code null} otherwise
+	 */
+	protected ViewSubstitutionLabelProviderFactory getSubstitutionLabelProviderFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ViewSubstitutionLabelProviderFactory> serviceReference = bundleContext
+			.getServiceReference(ViewSubstitutionLabelProviderFactory.class);
+
+		if (serviceReference == null) {
+			return null;
+		}
+
+		final ViewSubstitutionLabelProviderFactory labelProviderFactory = bundleContext
+			.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return labelProviderFactory;
+	}
 }
