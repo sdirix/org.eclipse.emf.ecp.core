@@ -502,6 +502,7 @@ public class ViewValidator extends EObjectValidator {
 		}
 		return validateDomainModelReference(domainModelReference, diagnostics, context);
 	}
+	// end of custom code
 
 	/**
 	 * <!-- begin-user-doc -->
