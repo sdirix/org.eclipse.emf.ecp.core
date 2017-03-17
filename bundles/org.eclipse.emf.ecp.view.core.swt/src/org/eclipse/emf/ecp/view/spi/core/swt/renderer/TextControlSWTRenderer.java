@@ -21,9 +21,13 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -41,6 +45,8 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleP
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationServiceRunnable;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -54,8 +60,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -96,8 +100,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
-		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
-			structuralFeature.isUnsettable());
+		final UpdateValueStrategy targetToModelUpdateStrategy = withPreSetValidation(
+			new TargetToModelUpdateStrategy(structuralFeature.isUnsettable()));
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
@@ -115,16 +119,50 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		final Text text = new Text(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setMessage(getTextMessage());
-		text.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-			}
 
-			@Override
-			public void focusGained(FocusEvent e) {
-				text.selectAll();
-			}
-		});
+		try {
+			PreSetValidationListeners.create().verify(text, getFeature(), getVElement());
+			PreSetValidationListeners.create().focus(text, getFeature(),
+				new PreSetValidationServiceRunnable() {
+					@Override
+					public void run(PreSetValidationService service) {
+
+						try {
+							final Object changedValue = EcoreUtil.createFromString(
+								((EAttribute) getFeature()).getEAttributeType(),
+								text.getText());
+
+							final Diagnostic textDiag = service.validate(getFeature(), changedValue);
+							final Diagnostic boundDiag = service.validate(getFeature(), getModelValue().getValue());
+							final boolean isEnteredValueValid = textDiag.getSeverity() == Diagnostic.OK;
+							final boolean isBoundValueValid = boundDiag.getSeverity() == Diagnostic.OK;
+
+							if (getModelValue().getValue() != null && !isEnteredValueValid && isBoundValueValid) {
+								// revert
+								getVElement().setDiagnostic(null);
+								getDataBindingContext().updateTargets();
+							}
+						} catch (final DatabindingFailedException e) {
+							// can we can do something reasonable here?
+						} catch (final IllegalArgumentException ex) {
+							// TODO: can the previously stored value be invalid?
+							// restore previous value and clear diagnostics
+							getVElement().setDiagnostic(null);
+							getDataBindingContext().updateTargets();
+							return;
+						}
+					}
+				},
+				new Runnable() {
+					@Override
+					public void run() {
+						text.selectAll();
+					}
+				});
+		} catch (final DatabindingFailedException ex) {
+			// ignore
+		}
+
 		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(1, 1);
 		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();

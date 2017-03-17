@@ -114,7 +114,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue value = WidgetProperties.text().observe(hyperlink);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -125,7 +125,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(hyperlink);
 		final Binding tooltipBinding = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -135,7 +135,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageHyperlink);
 		final Binding imageBinding = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -145,7 +145,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue deleteButtonEnablement = WidgetProperties.enabled().observe(deleteReferenceButton);
 		final Binding deleteBinding = getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {

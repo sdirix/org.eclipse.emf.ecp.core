@@ -50,8 +50,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener
- * <em>Change Listener</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener <em>Change
+ * Listener</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEFeature
  * <em>Domain Model EFeature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEReferencePath
@@ -77,7 +77,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * The cached value of the '{@link #getDomainModelEFeature() <em>Domain Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDomainModelEFeature()
 	 * @generated
 	 * @ordered
@@ -88,7 +88,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDomainModelEReferencePath()
 	 * @generated
 	 * @ordered
@@ -98,7 +98,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VFeaturePathDomainModelReferenceImpl() {
@@ -108,7 +108,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -137,20 +137,19 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EStructuralFeature getDomainModelEFeature() {
 		if (domainModelEFeature != null && domainModelEFeature.eIsProxy()) {
-			final InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
+			InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
 			domainModelEFeature = (EStructuralFeature) eResolveProxy(oldDomainModelEFeature);
 			if (domainModelEFeature != oldDomainModelEFeature) {
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
 						domainModelEFeature));
-				}
 			}
 		}
 		return domainModelEFeature;
@@ -159,7 +158,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public EStructuralFeature basicGetDomainModelEFeature() {
@@ -169,18 +168,17 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setDomainModelEFeature(EStructuralFeature newDomainModelEFeature) {
-		final EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
+		EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
 		domainModelEFeature = newDomainModelEFeature;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
 				domainModelEFeature));
-		}
 	}
 
 	/**
@@ -211,7 +209,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * <!-- begin-user-doc -->
 	 * .
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -220,9 +218,8 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
 			return getChangeListener();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
-			if (resolve) {
+			if (resolve)
 				return getDomainModelEFeature();
-			}
 			return basicGetDomainModelEFeature();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return getDomainModelEReferencePath();
@@ -233,7 +230,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -258,7 +255,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -280,7 +277,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -299,16 +296,15 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (changeListener: "); //$NON-NLS-1$
 		result.append(changeListener);
 		result.append(')');

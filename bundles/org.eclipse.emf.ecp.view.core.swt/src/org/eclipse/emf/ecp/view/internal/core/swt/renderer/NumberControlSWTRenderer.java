@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.IStatus;
@@ -131,9 +132,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	protected Binding[] createBindings(final Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 
-		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy(
+		final UpdateValueStrategy targetToModelStrategy = withPreSetValidation(new NumericalTargetToModelUpdateStrategy(
 			structuralFeature, getModelValue(), getDataBindingContext(),
-			(Text) Composite.class.cast(control).getChildren()[0]);
+			(Text) Composite.class.cast(control).getChildren()[0]));
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
 			getInstanceClass(structuralFeature), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
@@ -172,11 +173,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 		private final Class<?> instanceClass;
 
-		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass,
-			boolean tooltip) {
+		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, boolean tooltip) {
 			super(tooltip);
 			this.instanceClass = instanceClass;
-
 		}
 
 		@Override
@@ -203,9 +202,8 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		private final EStructuralFeature eStructuralFeature;
 		private final DataBindingContext dataBindingContext;
 
-		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, IObservableValue modelValue,
-			DataBindingContext dataBindingContext,
-			Text text) {
+		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
+			IObservableValue modelValue, DataBindingContext dataBindingContext, Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
 			this.modelValue = modelValue;
@@ -214,8 +212,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 
 		private DecimalFormat getFormat() {
-			return NumericalHelper.setupFormat(localeProvider.getLocale(),
-				getInstanceClass(eStructuralFeature));
+			return NumericalHelper.setupFormat(localeProvider.getLocale(), getInstanceClass(eStructuralFeature));
 		}
 
 		@Override

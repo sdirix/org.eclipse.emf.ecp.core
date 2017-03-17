@@ -151,7 +151,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		final ISWTObservableValue dateObserver = WidgetProperties.selection().observe(dateWidget);
 		final ISWTObservableValue timeObserver = WidgetProperties.selection().observe(timeWidget);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(), null,
+		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy()),
 			new DateModelToTargetUpdateStrategy());
 
 		domainModelChangeListener = new ModelChangeListener() {

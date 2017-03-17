@@ -229,6 +229,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 					}
 				}
 			}
+			sizeComputedByBar.x = sizeComputedByBar.x + 2 * MARGIN;
 			return sizeComputedByBar;
 		}
 	}

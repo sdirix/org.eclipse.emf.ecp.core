@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -357,8 +358,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 
-		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			structuralFeature, text);
+		final UpdateValueStrategy targetToModelUpdateStrategy = withPreSetValidation(
+			new DateTargetToModelUpdateStrategy(structuralFeature, text));
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 
