@@ -264,6 +264,7 @@
 		<!-- Core Services -->
 		<module>../../bundles/org.eclipse.emfforms.common</module>
         <module>../../bundles/org.eclipse.emfforms.common.validation</module>
+        <module>../../bundles/org.eclipse.emfforms.common.prevalidation</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.keyattribute</module>

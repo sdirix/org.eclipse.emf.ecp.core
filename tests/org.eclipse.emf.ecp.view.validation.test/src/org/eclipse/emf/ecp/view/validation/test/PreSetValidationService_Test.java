@@ -22,10 +22,10 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.validation.PreSetValidationServiceImpl;
 import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Gender;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
+import org.eclipse.emfforms.internal.common.prevalidation.PreSetValidationServiceImpl;
 import org.eclipse.emfforms.spi.common.validation.IFeatureConstraint;
 import org.junit.Test;
 

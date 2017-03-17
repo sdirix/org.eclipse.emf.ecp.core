@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.validation;
+package org.eclipse.emfforms.internal.common.prevalidation;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EDataType;
  * Common interface for
  * {@link org.eclipse.emf.ecp.view.internal.validation.PreSetValidationServiceImpl.LooseEValidatorLooseEValidator}
  * and
- * {@link org.eclipse.emf.ecp.view.internal.validation.PreSetValidationServiceImpl.DynamicLoosePatternEValidator
+ * {@link org.eclipse.emfforms.spi.common.prevalidation.PreSetValidationServiceImpl.DynamicLoosePatternEValidator
  * DynamicLoosePatternEValidator}.
  *
  */
@@ -28,7 +28,7 @@ interface PreSetValidator {
 	/**
 	 * Validates the object in the given context, optionally producing diagnostics.
 	 *
-	 * @param eDataType the {@link EDataType} to validate the value against
+	 * @param eDataType the {@link org.eclipse.emf.ecore.EDataType EDataType} to validate the value against
 	 * @param value the value to be validated
 	 * @param diagnostics a place to accumulate diagnostics; if it's <code>null</code>, no diagnostics should be
 	 *            produced.

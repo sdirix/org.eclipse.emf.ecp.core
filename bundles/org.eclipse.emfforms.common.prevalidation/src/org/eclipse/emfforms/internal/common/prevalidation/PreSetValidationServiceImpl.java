@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.validation;
+package org.eclipse.emfforms.internal.common.prevalidation;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
