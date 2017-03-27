@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -126,11 +127,10 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				new PreSetValidationServiceRunnable() {
 					@Override
 					public void run(PreSetValidationService service) {
-
 						try {
+							final EDataType attributeType = ((EAttribute) getFeature()).getEAttributeType();
 							final Object changedValue = EcoreUtil.createFromString(
-								((EAttribute) getFeature()).getEAttributeType(),
-								text.getText());
+								attributeType, getTextFromTextField(text, attributeType));
 
 							final Diagnostic textDiag = service.validate(getFeature(), changedValue);
 							final Diagnostic boundDiag = service.validate(getFeature(), getModelValue().getValue());
@@ -364,6 +364,18 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Gets the text displayed in the textfield.
+	 *
+	 * @param text the {@link Text}
+	 * @param attributeType the {@link EDataType}
+	 * @return the string displayed in the {@link Text}
+	 * @since 1.13
+	 */
+	protected String getTextFromTextField(final Text text, EDataType attributeType) {
+		return text.getText();
 	}
 
 	/**

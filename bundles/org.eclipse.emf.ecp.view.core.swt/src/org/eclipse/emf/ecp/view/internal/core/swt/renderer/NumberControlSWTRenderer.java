@@ -23,6 +23,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -163,6 +164,19 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 	private Class<?> getInstanceClass(EStructuralFeature feature) {
 		return feature.getEType().getInstanceClass();
+	}
+
+	@Override
+	protected String getTextFromTextField(Text text, EDataType attributeType) {
+		if (!Object.class.isAssignableFrom(attributeType.getInstanceClass())) {
+			/* primitive types */
+			return super.getTextFromTextField(text, attributeType);
+		}
+		if (text.getText() != null && text.getText().isEmpty()) {
+			/* string is empty, but since we are a non primitive type, return null instead */
+			return null;
+		}
+		return super.getTextFromTextField(text, attributeType);
 	}
 
 	/**
