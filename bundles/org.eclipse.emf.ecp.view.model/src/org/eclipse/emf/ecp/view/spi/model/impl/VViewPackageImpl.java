@@ -56,7 +56,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass elementEClass = null;
@@ -64,14 +64,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass diagnosticEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass viewEClass = null;
@@ -79,14 +79,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass containedElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass controlEClass = null;
@@ -94,7 +94,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass viewModelLoadingPropertiesEClass = null;
@@ -102,7 +102,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass viewModelPropertiesEClass = null;
@@ -110,7 +110,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass dateTimeDisplayAttachmentEClass = null;
@@ -118,7 +118,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass hasTooltipEClass = null;
@@ -126,7 +126,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass stringToObjectMapEntryEClass = null;
@@ -134,7 +134,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass containerEClass = null;
@@ -142,7 +142,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass containedContainerEClass = null;
@@ -150,7 +150,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EEnum labelAlignmentEEnum = null;
@@ -158,7 +158,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EEnum dateTimeDisplayTypeEEnum = null;
@@ -166,7 +166,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EDataType domainModelReferenceChangeListenerEDataType = null;
@@ -174,7 +174,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass domainModelReferenceEClass = null;
@@ -182,7 +182,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass featurePathDomainModelReferenceEClass = null;
@@ -190,7 +190,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass attachmentEClass = null;
@@ -215,31 +215,32 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>
 	 * This method is used to initialize {@link VViewPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static VViewPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE
+		final VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
 				: new VViewPackageImpl());
 
@@ -254,6 +255,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		// Register package validator
 		EValidator.Registry.INSTANCE.put(theViewPackage,
 			new EValidator.Descriptor() {
+				@Override
 				public EValidator getEValidator() {
 					return ViewValidator.INSTANCE;
 				}
@@ -270,7 +272,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -281,7 +283,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -304,7 +306,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -315,7 +317,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -326,7 +328,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -337,7 +339,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -348,7 +350,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -371,7 +373,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -382,7 +384,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -392,7 +394,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -402,7 +404,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -413,7 +415,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -448,7 +450,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -458,7 +460,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -469,7 +471,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -551,20 +553,26 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getHasTooltip() {
 		return hasTooltipEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getHasTooltip_Tooltip() {
 		return (EAttribute) hasTooltipEClass.getEStructuralFeatures().get(0);
 	}
@@ -608,7 +616,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -619,7 +627,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -642,7 +650,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -689,7 +697,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -712,7 +720,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -723,7 +731,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -734,7 +742,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -745,7 +753,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -756,7 +764,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -766,7 +774,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -776,12 +784,13 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -852,7 +861,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -865,8 +874,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -879,15 +889,15 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		featurePathDomainModelReferenceEClass.getESuperTypes().add(this.getDomainModelReference());
-		viewEClass.getESuperTypes().add(this.getElement());
-		containedElementEClass.getESuperTypes().add(this.getElement());
-		containerEClass.getESuperTypes().add(this.getElement());
-		containedContainerEClass.getESuperTypes().add(this.getContainedElement());
-		containedContainerEClass.getESuperTypes().add(this.getContainer());
-		controlEClass.getESuperTypes().add(this.getContainedElement());
-		viewModelLoadingPropertiesEClass.getESuperTypes().add(this.getViewModelProperties());
-		dateTimeDisplayAttachmentEClass.getESuperTypes().add(this.getAttachment());
+		featurePathDomainModelReferenceEClass.getESuperTypes().add(getDomainModelReference());
+		viewEClass.getESuperTypes().add(getElement());
+		containedElementEClass.getESuperTypes().add(getElement());
+		containerEClass.getESuperTypes().add(getElement());
+		containedContainerEClass.getESuperTypes().add(getContainedElement());
+		containedContainerEClass.getESuperTypes().add(getContainer());
+		controlEClass.getESuperTypes().add(getContainedElement());
+		viewModelLoadingPropertiesEClass.getESuperTypes().add(getViewModelProperties());
+		dateTimeDisplayAttachmentEClass.getESuperTypes().add(getAttachment());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(diagnosticEClass, VDiagnostic.class, "Diagnostic", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
@@ -901,7 +911,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(domainModelReferenceEClass, VDomainModelReference.class, "DomainModelReference", IS_ABSTRACT, //$NON-NLS-1$
 			IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDomainModelReference_ChangeListener(), this.getDomainModelReferenceChangeListener(),
+		initEAttribute(getDomainModelReference_ChangeListener(), getDomainModelReferenceChangeListener(),
 			"changeListener", null, 0, -1, VDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
 			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -927,10 +937,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getElement_Readonly(), ecorePackage.getEBoolean(), "readonly", "false", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getElement_Diagnostic(), this.getDiagnostic(), null, "diagnostic", null, 0, 1, VElement.class, //$NON-NLS-1$
+		initEReference(getElement_Diagnostic(), getDiagnostic(), null, "diagnostic", null, 0, 1, VElement.class, //$NON-NLS-1$
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getElement_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1, VElement.class, //$NON-NLS-1$
+		initEReference(getElement_Attachments(), getAttachment(), null, "attachments", null, 0, -1, VElement.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getElement_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, VElement.class, IS_TRANSIENT, //$NON-NLS-1$
@@ -940,12 +950,12 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEReference(getView_RootEClass(), ecorePackage.getEClass(), null, "rootEClass", null, 1, 1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getView_Children(), this.getContainedElement(), null, "children", null, 0, -1, VView.class, //$NON-NLS-1$
+		initEReference(getView_Children(), getContainedElement(), null, "children", null, 0, -1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getView_EcorePath(), ecorePackage.getEString(), "ecorePath", null, 1, 1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getView_LoadingProperties(), this.getViewModelProperties(), null, "loadingProperties", null, 1, //$NON-NLS-1$
+		initEReference(getView_LoadingProperties(), getViewModelProperties(), null, "loadingProperties", null, 1, //$NON-NLS-1$
 			1, VView.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -954,7 +964,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(containerEClass, VContainer.class, "Container", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getContainer_Children(), this.getContainedElement(), null, "children", null, 0, -1, //$NON-NLS-1$
+		initEReference(getContainer_Children(), getContainedElement(), null, "children", null, 0, -1, //$NON-NLS-1$
 			VContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -962,19 +972,19 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getControl_LabelAlignment(), this.getLabelAlignment(), "labelAlignment", "Default", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getControl_LabelAlignment(), getLabelAlignment(), "labelAlignment", "Default", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
 			VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEReference(getControl_DomainModelReference(), this.getDomainModelReference(), null, "domainModelReference", //$NON-NLS-1$
+		initEReference(getControl_DomainModelReference(), getDomainModelReference(), null, "domainModelReference", //$NON-NLS-1$
 			null, 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(viewModelLoadingPropertiesEClass, VViewModelLoadingProperties.class, "ViewModelLoadingProperties", //$NON-NLS-1$
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getViewModelLoadingProperties_InheritableProperties(), this.getStringToObjectMapEntry(), null,
+		initEReference(getViewModelLoadingProperties_InheritableProperties(), getStringToObjectMapEntry(), null,
 			"inheritableProperties", null, 0, -1, VViewModelLoadingProperties.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
 			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getViewModelLoadingProperties_NonInheritableProperties(), this.getStringToObjectMapEntry(), null,
+		initEReference(getViewModelLoadingProperties_NonInheritableProperties(), getStringToObjectMapEntry(), null,
 			"nonInheritableProperties", null, 0, -1, VViewModelLoadingProperties.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
 			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -991,7 +1001,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(dateTimeDisplayAttachmentEClass, VDateTimeDisplayAttachment.class, "DateTimeDisplayAttachment", //$NON-NLS-1$
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDateTimeDisplayAttachment_DisplayType(), this.getDateTimeDisplayType(), "displayType", null, //$NON-NLS-1$
+		initEAttribute(getDateTimeDisplayAttachment_DisplayType(), getDateTimeDisplayType(), "displayType", null, //$NON-NLS-1$
 			0, 1, VDateTimeDisplayAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1033,7 +1043,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(featurePathDomainModelReferenceEClass,
 			source,
 			new String[] {

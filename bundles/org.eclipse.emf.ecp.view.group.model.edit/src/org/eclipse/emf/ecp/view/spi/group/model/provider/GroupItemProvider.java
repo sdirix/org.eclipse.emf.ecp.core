@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class GroupItemProvider
@@ -41,7 +41,7 @@ public class GroupItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public GroupItemProvider(AdapterFactory adapterFactory) {
@@ -52,7 +52,7 @@ public class GroupItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -71,8 +71,10 @@ public class GroupItemProvider
 	/**
 	 * This adds a property descriptor for the Tooltip feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected void addTooltipPropertyDescriptor(Object object) {
@@ -164,7 +166,7 @@ public class GroupItemProvider
 	 * This returns Group.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -194,7 +196,7 @@ public class GroupItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -217,7 +219,7 @@ public class GroupItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

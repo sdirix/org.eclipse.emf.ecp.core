@@ -32,7 +32,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * A common {@link EMFUpdateValueStrategy} that implements {@link #validateBeforeSet(Object)}.
  *
- * @since 1.12
+ * @since 1.13
  */
 public class PreSetValidationStrategy extends UpdateValueStrategy {
 

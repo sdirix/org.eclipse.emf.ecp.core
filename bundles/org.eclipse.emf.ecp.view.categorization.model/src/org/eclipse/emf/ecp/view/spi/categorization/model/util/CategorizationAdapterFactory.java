@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage
  * @generated
  */
@@ -40,7 +40,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static VCategorizationPackage modelPackage;
@@ -49,7 +49,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public CategorizationAdapterFactory() {
@@ -64,7 +64,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -83,7 +83,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CategorizationSwitch<Adapter> modelSwitch = new CategorizationSwitch<Adapter>() {
@@ -142,7 +142,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
@@ -160,7 +160,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
 	 * @generated
@@ -176,7 +176,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization
 	 * @generated
@@ -192,7 +192,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
 	 * @generated
@@ -208,7 +208,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAction
 	 * @generated
@@ -224,7 +224,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement
 	 * @generated
@@ -240,7 +240,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement
 	 * @generated
@@ -256,7 +256,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
@@ -271,8 +271,10 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
 	 * @generated
@@ -288,7 +290,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
@@ -302,7 +304,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @generated
 	 */

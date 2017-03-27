@@ -115,7 +115,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @return a {@link PreSetValidationStrategy}
 	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
 	 *
-	 * @since 1.12
+	 * @since 1.13
 	 */
 	protected UpdateValueStrategy withPreSetValidation(UpdateValueStrategy delegate)
 		throws DatabindingFailedException {
@@ -128,7 +128,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @return the feature
 	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
 	 *
-	 * @since 1.12
+	 * @since 1.13
 	 */
 	protected EStructuralFeature getFeature() throws DatabindingFailedException {
 		final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();

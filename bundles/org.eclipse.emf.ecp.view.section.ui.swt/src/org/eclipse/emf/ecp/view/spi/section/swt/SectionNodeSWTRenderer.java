@@ -250,7 +250,8 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
-		final IObservableValue targetTooltipValue = new ExpandableCompositeTooltipProperty().observe(getExpandableComposite());
+		final IObservableValue targetTooltipValue = new ExpandableCompositeTooltipProperty()
+			.observe(getExpandableComposite());
 		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
@@ -353,7 +354,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	/**
 	 * @return the expandableComposite
-	 * @since 1.12
+	 * @since 1.13
 	 */
 	protected ExpandableComposite getExpandableComposite() {
 		return expandableComposite;
@@ -361,7 +362,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	/**
 	 * @param expandableComposite the expandableComposite to set
-	 * @since 1.12
+	 * @since 1.13
 	 */
 	protected void setExpandableComposite(ExpandableComposite expandableComposite) {
 		this.expandableComposite = expandableComposite;

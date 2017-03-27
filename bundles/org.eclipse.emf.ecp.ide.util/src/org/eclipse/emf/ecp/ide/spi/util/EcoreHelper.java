@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.ide.internal.Activator;
  * Helper methods for dealing with ecores.
  *
  * @author Alexandra Buzila
+ * @since 1.13
  *
  */
 public final class EcoreHelper {

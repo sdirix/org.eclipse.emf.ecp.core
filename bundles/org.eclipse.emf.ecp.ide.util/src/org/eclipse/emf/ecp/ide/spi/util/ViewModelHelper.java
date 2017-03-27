@@ -31,10 +31,12 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
+ * Helper class for view model objects.
+ * 
  * @author Alexandra Buzila
  *
+ * @since 1.13
  */
-/** Helper class for view model objects. */
 public final class ViewModelHelper {
 
 	private ViewModelHelper() {
@@ -91,8 +93,7 @@ public final class ViewModelHelper {
 		} else {
 			ep = null;
 		}
-		if (ep == null && selectedEcore != null)
-		{
+		if (ep == null && selectedEcore != null) {
 			EcoreHelper.registerEcore(selectedEcore.getFullPath().toString());
 			ep = (EPackage) instance.get(ePackage.getNsURI());
 		}

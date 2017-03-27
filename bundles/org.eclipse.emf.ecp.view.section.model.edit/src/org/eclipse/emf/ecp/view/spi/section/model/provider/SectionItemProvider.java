@@ -66,8 +66,10 @@ public class SectionItemProvider extends ContainerItemProvider {
 	/**
 	 * This adds a property descriptor for the Tooltip feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected void addTooltipPropertyDescriptor(Object object) {
@@ -90,7 +92,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * This adds a property descriptor for the Collapsed feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addCollapsedPropertyDescriptor(Object object) {
@@ -113,7 +115,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -128,7 +130,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -142,7 +144,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 	/**
 	 * This returns Section.gif.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -172,7 +174,7 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

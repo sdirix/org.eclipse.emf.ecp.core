@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionFactory
  * @model kind="package"
  * @generated
@@ -38,7 +38,7 @@ public interface VSectionPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "section"; //$NON-NLS-1$
@@ -47,7 +47,7 @@ public interface VSectionPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/section/model"; //$NON-NLS-1$
@@ -56,7 +56,7 @@ public interface VSectionPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.section.model"; //$NON-NLS-1$
@@ -65,7 +65,7 @@ public interface VSectionPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VSectionPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionPackageImpl.init();
@@ -75,7 +75,7 @@ public interface VSectionPackage extends EPackage {
 	 * <em>Sectioned Area</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionedAreaImpl
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionPackageImpl#getSectionedArea()
 	 * @generated
@@ -86,7 +86,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -95,8 +95,10 @@ public interface VSectionPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -106,7 +108,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -116,7 +118,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -126,7 +128,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -136,7 +138,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -146,7 +148,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -155,8 +157,10 @@ public interface VSectionPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -166,7 +170,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Root</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -176,7 +180,7 @@ public interface VSectionPackage extends EPackage {
 	 * The number of structural features of the '<em>Sectioned Area</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -187,7 +191,7 @@ public interface VSectionPackage extends EPackage {
 	 * <em>Section</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionPackageImpl#getSection()
 	 * @generated
@@ -198,7 +202,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -207,8 +211,10 @@ public interface VSectionPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -218,7 +224,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -228,7 +234,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -238,7 +244,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -248,7 +254,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -258,7 +264,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -267,8 +273,10 @@ public interface VSectionPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -278,7 +286,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -287,8 +295,10 @@ public interface VSectionPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -298,7 +308,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Child Items</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -308,7 +318,7 @@ public interface VSectionPackage extends EPackage {
 	 * The feature id for the '<em><b>Collapsed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -318,7 +328,7 @@ public interface VSectionPackage extends EPackage {
 	 * The number of structural features of the '<em>Section</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -329,7 +339,7 @@ public interface VSectionPackage extends EPackage {
 	 * Area</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Sectioned Area</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea
 	 * @generated
@@ -341,7 +351,7 @@ public interface VSectionPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea#getRoot <em>Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Root</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea#getRoot()
 	 * @see #getSectionedArea()
@@ -353,7 +363,7 @@ public interface VSectionPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.section.model.VSection <em>Section</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Section</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSection
 	 * @generated
@@ -365,7 +375,7 @@ public interface VSectionPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.section.model.VSection#getChildItems <em>Child Items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Child Items</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSection#getChildItems()
 	 * @see #getSection()
@@ -378,7 +388,7 @@ public interface VSectionPackage extends EPackage {
 	 * <em>Collapsed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Collapsed</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSection#isCollapsed()
 	 * @see #getSection()
@@ -390,7 +400,7 @@ public interface VSectionPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -406,7 +416,7 @@ public interface VSectionPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -415,7 +425,7 @@ public interface VSectionPackage extends EPackage {
 		 * <em>Sectioned Area</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionedAreaImpl
 		 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionPackageImpl#getSectionedArea()
 		 * @generated
@@ -426,7 +436,7 @@ public interface VSectionPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Root</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference SECTIONED_AREA__ROOT = eINSTANCE.getSectionedArea_Root();
@@ -436,7 +446,7 @@ public interface VSectionPackage extends EPackage {
 		 * <em>Section</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl
 		 * @see org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionPackageImpl#getSection()
 		 * @generated
@@ -447,7 +457,7 @@ public interface VSectionPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Child Items</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference SECTION__CHILD_ITEMS = eINSTANCE.getSection_ChildItems();
@@ -456,7 +466,7 @@ public interface VSectionPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Collapsed</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute SECTION__COLLAPSED = eINSTANCE.getSection_Collapsed();

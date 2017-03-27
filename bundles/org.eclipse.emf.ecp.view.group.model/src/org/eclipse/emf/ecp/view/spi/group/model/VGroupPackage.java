@@ -39,7 +39,7 @@ public interface VGroupPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "group"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface VGroupPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/group/model"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface VGroupPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.group.model"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface VGroupPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VGroupPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl.init();
@@ -76,7 +76,7 @@ public interface VGroupPackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroup()
 	 * @generated
@@ -87,7 +87,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -96,8 +96,10 @@ public interface VGroupPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -107,7 +109,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -117,7 +119,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -127,7 +129,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -137,7 +139,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -147,7 +149,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -156,8 +158,10 @@ public interface VGroupPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -167,7 +171,7 @@ public interface VGroupPackage extends EPackage {
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -176,8 +180,10 @@ public interface VGroupPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -220,7 +226,7 @@ public interface VGroupPackage extends EPackage {
 	 * The number of structural features of the '<em>Group</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -255,7 +261,7 @@ public interface VGroupPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Group</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup
 	 * @generated
@@ -333,7 +339,7 @@ public interface VGroupPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -360,7 +366,7 @@ public interface VGroupPackage extends EPackage {
 		 * <em>Group</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroup()
 		 * @generated
