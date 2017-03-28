@@ -17,6 +17,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -31,6 +33,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -75,10 +78,24 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 	 */
 	@Override
 	protected Viewer createJFaceViewer(final Composite parent) throws DatabindingFailedException {
+		final IValueProperty valueProperty = getEMFFormsDatabinding()
+			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+		final EList<EEnumLiteral> eLiterals = EEnum.class.cast(structuralFeature.getEType()).getELiterals();
+
 		final CCombo combo = new CCombo(parent, SWT.BORDER);
 		final MatchItemComboViewer viewer = new MatchItemComboViewer(combo) {
 			@Override
 			public void onEnter(int selectedIndex) {
+				if (!isEmptyBuffer() && selectedIndex > -1) {
+					final String closestMatch = getCCombo().getItems()[selectedIndex];
+					final Optional<EEnumLiteral> findLiteral = findLiteral(eLiterals, closestMatch);
+					if (findLiteral.isPresent()) {
+						setSelection(new StructuredSelection(findLiteral.get().getInstance()));
+					}
+				} else {
+					setClosestMatch(getCCombo().getText());
+				}
 				combo.clearSelection();
 			}
 		};
@@ -95,9 +112,6 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 			}
 		});
 		viewer.getCCombo().setEditable(true);
-		final IValueProperty valueProperty = getEMFFormsDatabinding()
-			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		viewer.setContentProvider(new ArrayContentProvider());
 		viewer.setLabelProvider(new LabelProvider() {
 
@@ -112,11 +126,30 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 
 		});
 		final List<Object> inputValues = new ArrayList<Object>();
-		for (final EEnumLiteral literal : EEnum.class.cast(structuralFeature.getEType()).getELiterals()) {
+		for (final EEnumLiteral literal : eLiterals) {
 			inputValues.add(literal.getInstance());
 		}
 		viewer.setInput(inputValues);
 		viewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
 		return viewer;
+	}
+
+	/**
+	 * Search the given collection of {@link org.eclipse.emf.common.util.Enumerator Enumerator}s for the given literal.
+	 *
+	 * @param enumerators a collection of {@link org.eclipse.emf.common.util.Enumerator Enumerator}s to be searched
+	 * @param literal the literal to be searched for as a string
+	 * @return an {@link Optional} containing the matched literal
+	 */
+	private static Optional<EEnumLiteral> findLiteral(List<EEnumLiteral> enumerators,
+		String literal) {
+
+		for (final EEnumLiteral e : enumerators) {
+			if (e.getLiteral().equals(literal)) {
+				return Optional.of(e);
+			}
+		}
+
+		return Optional.empty();
 	}
 }
