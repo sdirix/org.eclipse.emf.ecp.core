@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emf.ecp.view.core.swt.enum">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emf.ecp.view.core.swt.enumLiteralFiltered">
    <implementation class="org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumLiteralFilteredComboViewerSWTRendererService"/>
    <service>
       <provide interface="org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService"/>
