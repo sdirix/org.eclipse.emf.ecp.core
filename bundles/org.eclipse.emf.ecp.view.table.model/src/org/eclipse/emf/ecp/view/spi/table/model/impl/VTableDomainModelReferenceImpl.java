@@ -68,7 +68,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getColumnDomainModelReferences()
 	 * @generated
 	 * @ordered
@@ -93,7 +93,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VTableDomainModelReferenceImpl() {
@@ -103,7 +103,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -114,7 +114,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -148,17 +148,16 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs) {
-		final VDomainModelReference oldDomainModelReference = domainModelReference;
+		VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, oldDomainModelReference,
 				newDomainModelReference);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -174,31 +173,27 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
 		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
-			if (domainModelReference != null) {
+			if (domainModelReference != null)
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, null,
 					msgs);
-			}
-			if (newDomainModelReference != null) {
+			if (newDomainModelReference != null)
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, null,
 					msgs);
-			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		} else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, newDomainModelReference,
 				newDomainModelReference));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -215,7 +210,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -232,7 +227,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -253,7 +248,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -272,7 +267,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

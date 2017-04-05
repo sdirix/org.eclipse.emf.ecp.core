@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
@@ -138,6 +139,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		isInited = true;
 
 		// Initialize simple dependencies
+		EcorePackage.eINSTANCE.eClass();
 		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
@@ -334,9 +336,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-         * @since 1.9
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
