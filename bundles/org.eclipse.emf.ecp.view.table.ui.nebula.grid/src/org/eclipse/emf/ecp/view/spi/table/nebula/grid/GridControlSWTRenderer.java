@@ -34,6 +34,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
@@ -229,6 +230,32 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	@Override
 	protected ScrollBar getVerticalBar() {
 		return ((GridTableViewer) getTableViewer()).getGrid().getVerticalBar();
+	}
+
+	@Override
+	protected int computeRequiredHeight(Integer visibleLines) {
+		if (getTableViewer() == null || getTableViewerComposite() == null) {
+			return SWT.DEFAULT;
+		}
+		final TableControl table = getTableViewerComposite().getTableControl();
+		if (table == null) {
+			return SWT.DEFAULT;
+		}
+		if (table.isDisposed()) {
+			return SWT.DEFAULT;
+		}
+		final int itemHeight = table.getItemHeight() + 1;
+		// show one empty row if table does not contain any items or visibleLines < 1
+		int itemCount;
+		if (visibleLines != null) {
+			itemCount = Math.max(visibleLines, 1);
+		} else {
+			itemCount = Math.max(table.getItemCount(), 1);
+		}
+		final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
+
+		final int tableHeight = itemHeight * itemCount + headerHeight;
+		return tableHeight;
 	}
 
 	/**

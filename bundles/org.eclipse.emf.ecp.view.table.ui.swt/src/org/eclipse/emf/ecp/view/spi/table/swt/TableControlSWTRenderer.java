@@ -209,6 +209,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private Optional<Integer> minimumHeight;
 	private Optional<Integer> maximumHeight;
+	private Optional<Integer> visibleLines;
 	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
 	private AbstractTableViewerComposite tableViewerComposite;
 	private int regularColumnsStartIndex;
@@ -472,6 +473,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			: Optional.<Integer> empty();
 		maximumHeight = styleProperty.isSetMaximumHeight() ? Optional.of(styleProperty.getMaximumHeight())
 			: Optional.<Integer> empty();
+		visibleLines = styleProperty.isSetVisibleLines() ? Optional.of(styleProperty.getVisibleLines())
+			: Optional.<Integer> empty();
 	}
 
 	private void addRelayoutListenerIfNeeded(IObservableList list, final Composite composite) {
@@ -691,17 +694,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 * @return the height in px
 	 */
+	// BEGIN COMPLEX CODE
 	protected int getTableHeightHint() {
 		/* if neither min nor max is set we use a fixed height */
-		if (!minimumHeight.isPresent() && !maximumHeight.isPresent()) {
+		if (!minimumHeight.isPresent() && !maximumHeight.isPresent() && !visibleLines.isPresent()) {
 			return 200;
 		}
-
+		// if the visible lines attribute is present, it takes precedence over the minimum & maximum height hints
+		if (visibleLines.isPresent()) {
+			return computeRequiredHeight(visibleLines.get());
+		}
 		if (minimumHeight.isPresent() && maximumHeight.isPresent() && minimumHeight.get() == maximumHeight.get()) {
 			return minimumHeight.get();
 		}
 
-		final int requiredHeight = computeRequiredHeight();
+		final int requiredHeight = computeRequiredHeight(null);
 
 		if (minimumHeight.isPresent() && !maximumHeight.isPresent()) {
 			return requiredHeight < minimumHeight.get() ? minimumHeight.get() : requiredHeight;
@@ -721,8 +728,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		return requiredHeight;
 	}
+	// END COMPLEX CODE
 
-	private int computeRequiredHeight() {
+	/**
+	 * Returns the height in pixels required to display the given number of table items. If the visible items are not
+	 * specified, the height required to display all the table items is returned.
+	 *
+	 * @param visibleLines the number of visible table items
+	 * @return the required height
+	 * @since 1.13
+	 */
+	protected int computeRequiredHeight(Integer visibleLines) {
 		if (tableViewer == null) {
 			return SWT.DEFAULT;
 		}
@@ -734,8 +750,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return SWT.DEFAULT;
 		}
 		final int itemHeight = table.getItemHeight();
-		// show one empty row if table does not contain any items
-		final int itemCount = Math.max(table.getItemCount(), 1);
+		// show one empty row if table does not contain any items or visibleLines < 1
+		int itemCount;
+		if (visibleLines != null) {
+			itemCount = Math.max(visibleLines, 1);
+		} else {
+			itemCount = Math.max(table.getItemCount(), 1);
+		}
 		final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
 		// 4px needed as a buffer to avoid scrollbars
 		final int tableHeight = itemHeight * itemCount + headerHeight + 4;
@@ -750,6 +771,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected AbstractTableViewer getTableViewer() {
 		return tableViewer;
+	}
+
+	/**
+	 * Returns the {@link AbstractTableViewerComposite}.
+	 *
+	 * @return the table viewer composite
+	 * @since 1.13
+	 */
+	protected AbstractTableViewerComposite getTableViewerComposite() {
+		return tableViewerComposite;
 	}
 
 	/**
