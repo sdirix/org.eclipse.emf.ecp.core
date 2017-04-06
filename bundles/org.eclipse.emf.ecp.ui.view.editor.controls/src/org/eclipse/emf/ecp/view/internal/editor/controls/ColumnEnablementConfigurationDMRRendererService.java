@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Johannes Faltermeier - initial API and implementation
+ * Edgar Mueller - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
@@ -28,13 +28,13 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
- * {@link EMFFormsDIRendererService} for {@link ColumnConfigurationDMRRenderer}.
+ * {@link EMFFormsDIRendererService} for configuring the enabled state of column.
  *
- * @author Johannes Faltermeier
+ * @author Edgar Mueller
  *
  */
-@Component(name = "TableWidthConfigurationDMRRendererService", service = EMFFormsDIRendererService.class)
-public class TableWidthConfigurationDMRRendererService implements EMFFormsDIRendererService<VControl> {
+@Component(name = "ColumnEnablementConfigurationDMRRendererService", service = EMFFormsDIRendererService.class)
+public class ColumnEnablementConfigurationDMRRendererService implements EMFFormsDIRendererService<VControl> {
 
 	private EMFFormsDatabindingEMF databinding;
 	private ReportService reportService;
@@ -69,7 +69,7 @@ public class TableWidthConfigurationDMRRendererService implements EMFFormsDIRend
 				domainModelReference,
 				viewModelContext.getDomainModel());
 			if (valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
-				.getWidthConfiguration_ColumnDomainReference()) {
+				.getEnablementConfiguration_ColumnDomainModelReference()) {
 				return 3d;
 			}
 		} catch (final DatabindingFailedException ex) {
