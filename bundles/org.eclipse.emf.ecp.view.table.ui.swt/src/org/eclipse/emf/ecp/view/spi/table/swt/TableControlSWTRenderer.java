@@ -67,6 +67,7 @@ import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -1360,6 +1361,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return editable;
 	}
 
+	private boolean isDisabled(EObject eObject, VDomainModelReference columnDmr) {
+
+		final Optional<VEnablementConfiguration> enablmentConf = TableConfigurationHelper
+			.findEnablementConfiguration(getVElement(), columnDmr);
+
+		if (enablmentConf.isPresent()) {
+			return !enablmentConf.get().isEnabled();
+		}
+
+		return false;
+	}
+
 	/**
 	 * Called by the {@link TableControlEditingSupportAndLabelProvider}.
 	 *
@@ -2088,6 +2101,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
+
+			if (isDisabled(eObject, domainModelReference)) {
+				return false;
+			}
 
 			boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
 			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
