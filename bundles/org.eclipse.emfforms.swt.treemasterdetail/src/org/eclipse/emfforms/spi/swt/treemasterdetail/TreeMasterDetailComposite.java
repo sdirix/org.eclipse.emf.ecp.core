@@ -12,6 +12,9 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.core.databinding.observable.ChangeEvent;
 import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.internal.databinding.observable.DelayedObservableValue;
@@ -31,6 +34,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.DetailPanelRenderingFinishedCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
@@ -127,6 +131,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	private final int renderDelay;
 
 	private ViewModelPropertiesUpdateCallback viewModelPropertiesUpdateCallback;
+	private final Set<DetailPanelRenderingFinishedCallback> detailPanelRenderingFinishedCallbacks = new LinkedHashSet<DetailPanelRenderingFinishedCallback>();
 
 	/** The CreateElementCallback to allow modifications to the newly created element. */
 
@@ -296,6 +301,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		final Object selectedObject = treeViewer.getSelection() != null ? ((StructuredSelection) treeViewer
 			.getSelection()).getFirstElement() : null;
 
+		boolean asyncRendering = false;
 		if (selectedObject instanceof EObject) {
 			lastRenderedObject = selectedObject;
 			final EObject eObject = EObject.class.cast(selectedObject);
@@ -336,6 +342,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 					label.setText("loading...");
 					GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(true, true).applyTo(label);
 					detailPanel.layout(true, true);
+					asyncRendering = true;
 					Display.getDefault().asyncExec(new UpdateDetailRunnable(setFocusToDetail, eObject, label));
 				}
 				// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
@@ -346,6 +353,16 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			}
 		} else {
 			renderEmptyDetailPanel();
+		}
+
+		/*
+		 * Notify the callbacks that the rendering has been finished.
+		 * In case of async rendering, the async process needs to notify the callbacks.
+		 */
+		if (!asyncRendering) {
+			for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
+				callback.renderingFinished(selectedObject);
+			}
 		}
 	}
 
@@ -524,6 +541,10 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				if (setFocusToDetail) {
 					setFocusToDetail();
 				}
+				// notify callbacks that the rendering was finished
+				for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
+					callback.renderingFinished(eObject);
+				}
 			} catch (final ECPRendererException e) {
 			}
 		}
@@ -538,5 +559,29 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	public void addViewModelPropertiesUpdateCallback(
 		ViewModelPropertiesUpdateCallback viewModelPropertiesUpdateCallback) {
 		this.viewModelPropertiesUpdateCallback = viewModelPropertiesUpdateCallback;
+	}
+
+	/**
+	 * Register a callback that is notified whenever the rendering of a detail panel is finished.
+	 *
+	 * @param detailPanelRenderingFinishedCallback the callback
+	 * @return <code>true</code> if the callback has been added, <code>false</code> if it was already registered
+	 * @since 1.13
+	 */
+	public boolean registerDetailPanelRenderingFinishedCallback(
+		DetailPanelRenderingFinishedCallback detailPanelRenderingFinishedCallback) {
+		return detailPanelRenderingFinishedCallbacks.add(detailPanelRenderingFinishedCallback);
+	}
+
+	/**
+	 * Register a callback that is notified whenever the rendering of a detail panel is finished.
+	 *
+	 * @param detailPanelRenderingFinishedCallback the callback
+	 * @return <code>true</code> if the callback has been removed, <code>false</code> if it was not registered
+	 * @since 1.13
+	 */
+	public boolean unregisterDetailPanelRenderingFinishedCallback(
+		DetailPanelRenderingFinishedCallback detailPanelRenderingFinishedCallback) {
+		return detailPanelRenderingFinishedCallbacks.remove(detailPanelRenderingFinishedCallback);
 	}
 }
