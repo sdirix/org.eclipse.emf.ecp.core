@@ -332,6 +332,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private boolean validationRunning;
 	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new LinkedHashMap<UniqueSetting, VDiagnostic>();
 	private ComposedAdapterFactory adapterFactory;
+	private final Timer timer = new Timer();
 
 	/**
 	 * {@inheritDoc}
@@ -521,7 +522,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 		validationRunning = true;
 		EObject toValidate;
-		final Timer timer = new Timer();
 		while ((toValidate = validationQueue.poll()) != null) {
 			final ValidationTimerTask timerTask = new ValidationTimerTask(toValidate);
 			timer.schedule(timerTask, 1000);
@@ -854,10 +854,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 * the validation is done.
 	 */
 	class ValidationTimerTask extends TimerTask {
-	
+
 		private boolean cancelled;
 		private final EObject validatedEObject;
-	
+
 		/**
 		 * Constructor.
 		 *
@@ -867,7 +867,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			super();
 			this.validatedEObject = validatedEObject;
 		}
-	
+
 		@Override
 		public void run() {
 			if (!cancelled) {
@@ -877,7 +877,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 						IStatus.INFO)));
 			}
 		}
-	
+
 		@Override
 		public boolean cancel() {
 			cancelled = true;
