@@ -9,16 +9,16 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.swt.table;
+package org.eclipse.emfforms.spi.swt.table;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -51,20 +51,47 @@ public class DefaultTableViewerCompositeBuilder implements TableViewerCompositeB
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(topComposite);
 
 		/* Title label */
-		titleLabel = new Label(topComposite, SWT.NONE);
-		titleLabel.setBackground(parent.getBackground());
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(titleLabel);
+		titleLabel = createTitleLabel(topComposite, parent.getBackground());
 
 		/* Validation icon label */
 		validationLabel = createValidationLabel(topComposite);
 
 		/* Button composite */
-		buttonComposite = new Composite(topComposite, SWT.NONE);
-		buttonComposite.setBackground(topComposite.getBackground());
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+		buttonComposite = createButtonComposite(topComposite);
 
 		/* Bottom composite */
 		viewerComposite = createViewerComposite(composite);
+	}
+
+	/**
+	 * Returns the {@link Label} displaying the table viewer's label. Can be overwritten to customize the label's
+	 * appearance.
+	 *
+	 * @param parentComposite The parent composite of the created label
+	 * @param background The background color of the label
+	 *
+	 * @return The title label
+	 */
+	protected Label createTitleLabel(final Composite parentComposite, Color background) {
+		final Label titleLabel = new Label(parentComposite, SWT.NONE);
+		titleLabel.setBackground(background);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(titleLabel);
+		return titleLabel;
+	}
+
+	/**
+	 * Creates and returns the button composite used by this table viewer. Can be overwritten to customize the
+	 * composite's appearance and placement.
+	 *
+	 * @param parentComposite The composite that will contain the button composite
+	 * @return The button composite
+	 */
+	protected Composite createButtonComposite(final Composite parentComposite) {
+		final Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
+		buttonComposite.setBackground(parentComposite.getBackground());
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false)
+			.applyTo(buttonComposite);
+		return buttonComposite;
 	}
 
 	/**

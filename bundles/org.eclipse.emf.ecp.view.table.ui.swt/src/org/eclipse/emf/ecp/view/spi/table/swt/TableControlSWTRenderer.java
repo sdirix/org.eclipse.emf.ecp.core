@@ -280,7 +280,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 
 			/* render */
-			final TableViewerCompositeBuilder compositeBuilder = new TableControlSWTRendererCompositeBuilder();
+			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
 			tableControlSWTRendererButtonBarBuilder = new TableControlSWTRendererButtonBarBuilder();
 
 			final TableViewerSWTBuilder tableViewerSWTBuilder = getTableViewerSWTBuilder(parent, list, labelText,
@@ -334,6 +334,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Creates the {@link TableViewerCompositeBuilder} used to get Composite hierarchy for this table renderer. This
+	 * method can be overwritten by sub classes to customize the layout.
+	 *
+	 * @return The {@link TableViewerCompositeBuilder}
+	 */
+	protected TableViewerCompositeBuilder createTableViewerCompositeBuilder() {
+		return new TableControlSWTRendererCompositeBuilder();
 	}
 
 	/**
@@ -1811,9 +1821,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * the existing template method to create the validation label.
 	 *
 	 */
-	@SuppressWarnings("restriction")
-	private final class TableControlSWTRendererCompositeBuilder
-		extends org.eclipse.emfforms.internal.swt.table.DefaultTableViewerCompositeBuilder {
+	protected class TableControlSWTRendererCompositeBuilder
+		extends org.eclipse.emfforms.spi.swt.table.DefaultTableViewerCompositeBuilder {
 		@Override
 		protected Label createValidationLabel(Composite topComposite) {
 			final Label validationLabel = createValidationIcon(topComposite);
