@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -111,6 +112,11 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseWidthConfiguration(VWidthConfiguration object) {
 			return createWidthConfigurationAdapter();
+		}
+
+		@Override
+		public Adapter caseEnablementConfiguration(VEnablementConfiguration object) {
+			return createEnablementConfigurationAdapter();
 		}
 
 		@Override
@@ -237,6 +243,23 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWidthConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration <em>Enablement Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration
+	 * @generated
+	 * @since 1.13
+	 */
+	public Adapter createEnablementConfigurationAdapter() {
 		return null;
 	}
 

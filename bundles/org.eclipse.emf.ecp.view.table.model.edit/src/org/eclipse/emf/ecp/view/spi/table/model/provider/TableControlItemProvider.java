@@ -271,6 +271,9 @@ public class TableControlItemProvider
 		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
 			VTableFactory.eINSTANCE.createWidthConfiguration()));
 
+		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
+			VTableFactory.eINSTANCE.createEnablementConfiguration()));
+
 		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__DETAIL_VIEW,
 			VViewFactory.eINSTANCE.createView()));
 	}

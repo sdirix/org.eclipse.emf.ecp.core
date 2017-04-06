@@ -17,10 +17,10 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -84,6 +84,14 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 *
 	 * @generated
 	 */
+	private EClass enablementConfigurationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	private EEnum detailEditingEEnum = null;
 
 	/**
@@ -139,7 +147,6 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		EcorePackage.eINSTANCE.eClass();
 		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
@@ -351,6 +358,30 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
+	 * @since 1.13
+	 */
+	@Override
+	public EClass getEnablementConfiguration() {
+		return enablementConfigurationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	@Override
+	public EReference getEnablementConfiguration_ColumnDomainModelReference() {
+		return (EReference) enablementConfigurationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
 	 */
 	@Override
 	public EEnum getDetailEditing() {
@@ -412,6 +443,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__WEIGHT);
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__MIN_WIDTH);
 
+		enablementConfigurationEClass = createEClass(ENABLEMENT_CONFIGURATION);
+		createEReference(enablementConfigurationEClass, ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE);
+
 		// Create enums
 		detailEditingEEnum = createEEnum(DETAIL_EDITING);
 	}
@@ -455,6 +489,8 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 		readOnlyColumnConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
 		widthConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
+		enablementConfigurationEClass.getESuperTypes().add(theViewPackage.getElement());
+		enablementConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tableControlEClass, VTableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
@@ -506,6 +542,13 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		initEAttribute(getWidthConfiguration_MinWidth(), ecorePackage.getEInt(), "minWidth", null, 1, 1, //$NON-NLS-1$
 			VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+
+		initEClass(enablementConfigurationEClass, VEnablementConfiguration.class, "EnablementConfiguration", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getEnablementConfiguration_ColumnDomainModelReference(),
+			theViewPackage.getDomainModelReference(), null, "columnDomainModelReference", null, 1, 1, //$NON-NLS-1$
+			VEnablementConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(detailEditingEEnum, DetailEditing.class, "DetailEditing"); //$NON-NLS-1$
