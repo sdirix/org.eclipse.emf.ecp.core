@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -179,6 +180,8 @@ public class TableValidator extends EObjectValidator {
 			return validateWidthConfiguration((VWidthConfiguration) value, diagnostics, context);
 		case VTablePackage.ENABLEMENT_CONFIGURATION:
 			return validateEnablementConfiguration((VEnablementConfiguration) value, diagnostics, context);
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION:
+			return validateSingleColumnConfiguration((VSingleColumnConfiguration) value, diagnostics, context);
 		case VTablePackage.DETAIL_EDITING:
 			return validateDetailEditing((DetailEditing) value, diagnostics, context);
 		default:
@@ -259,7 +262,6 @@ public class TableValidator extends EObjectValidator {
 
 	/**
 	 * @generated
-	 *
 	 * 			<!-- begin-user-doc -->
 	 *            <!-- end-user-doc -->
 	 *
@@ -509,6 +511,18 @@ public class TableValidator extends EObjectValidator {
 	public boolean validateEnablementConfiguration(VEnablementConfiguration enablementConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(enablementConfiguration, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	public boolean validateSingleColumnConfiguration(VSingleColumnConfiguration singleColumnConfiguration,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(singleColumnConfiguration, diagnostics, context);
 	}
 
 	/**

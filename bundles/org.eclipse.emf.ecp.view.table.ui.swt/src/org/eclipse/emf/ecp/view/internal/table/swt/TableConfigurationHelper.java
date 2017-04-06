@@ -96,7 +96,7 @@ public final class TableConfigurationHelper {
 				continue;
 			}
 			final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
-			if (widthConfiguration.getColumnDomainReference() != domainModelReference) {
+			if (widthConfiguration.getColumnDomainModelReference() != domainModelReference) {
 				continue;
 			}
 			return Optional.ofNullable(widthConfiguration.getMinWidth());
@@ -118,7 +118,7 @@ public final class TableConfigurationHelper {
 				continue;
 			}
 			final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
-			if (widthConfiguration.getColumnDomainReference() != domainModelReference) {
+			if (widthConfiguration.getColumnDomainModelReference() != domainModelReference) {
 				continue;
 			}
 			return Optional.ofNullable(widthConfiguration.getWeight());
@@ -146,14 +146,14 @@ public final class TableConfigurationHelper {
 				continue;
 			}
 			final VWidthConfiguration candidate = VWidthConfiguration.class.cast(configuration);
-			if (candidate.getColumnDomainReference() == domainModelReference) {
+			if (candidate.getColumnDomainModelReference() == domainModelReference) {
 				widthConfiguration = candidate;
 				break;
 			}
 		}
 		if (widthConfiguration == null) {
 			widthConfiguration = VTableFactory.eINSTANCE.createWidthConfiguration();
-			widthConfiguration.setColumnDomainReference(domainModelReference);
+			widthConfiguration.setColumnDomainModelReference(domainModelReference);
 			tableControl.getColumnConfigurations().add(widthConfiguration);
 		}
 

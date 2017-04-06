@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.LinkControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -32,7 +33,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author Edgar Mueller
  *
  */
-public class ColumnConfigurationDMRRenderer extends LinkControlSWTRenderer {
+public class WidthConfigurationDMRRenderer extends LinkControlSWTRenderer {
 
 	private ColumnConfigurationDMRRendererReferenceService referenceService;
 
@@ -49,7 +50,7 @@ public class ColumnConfigurationDMRRenderer extends LinkControlSWTRenderer {
 	 */
 	@Inject
 	// CHECKSTYLE.OFF: ParameterNumber
-	public ColumnConfigurationDMRRenderer(
+	public WidthConfigurationDMRRenderer(
 		VControl vElement,
 		ViewModelContext viewContext,
 		ReportService reportService,
@@ -80,7 +81,7 @@ public class ColumnConfigurationDMRRenderer extends LinkControlSWTRenderer {
 	@Override
 	protected ReferenceService getReferenceService() {
 		if (referenceService == null) {
-			referenceService = new ColumnConfigurationDMRRendererReferenceService();
+			referenceService = new ColumnConfigurationDMRRendererReferenceService(VWidthConfiguration.class);
 		}
 		return referenceService;
 	}

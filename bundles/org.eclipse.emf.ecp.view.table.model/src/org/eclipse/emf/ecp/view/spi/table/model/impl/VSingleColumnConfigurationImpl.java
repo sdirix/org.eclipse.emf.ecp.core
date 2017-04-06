@@ -15,29 +15,27 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl;
-import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Enablement Configuration</b></em>'.
+ * An implementation of the model object '<em><b>Single Column Configuration</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VEnablementConfigurationImpl#getColumnDomainModelReference
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VSingleColumnConfigurationImpl#getColumnDomainModelReference
  * <em>Column Domain Model Reference</em>}</li>
  * </ul>
  *
  * @generated
  * @since 1.13
  */
-public class VEnablementConfigurationImpl extends VElementImpl implements VEnablementConfiguration {
+public class VSingleColumnConfigurationImpl extends EObjectImpl implements VSingleColumnConfiguration {
 	/**
 	 * The cached value of the '{@link #getColumnDomainModelReference() <em>Column Domain Model Reference</em>}'
 	 * reference.
@@ -56,7 +54,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	 *
 	 * @generated
 	 */
-	protected VEnablementConfigurationImpl() {
+	protected VSingleColumnConfigurationImpl() {
 		super();
 	}
 
@@ -68,7 +66,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return VTablePackage.Literals.ENABLEMENT_CONFIGURATION;
+		return VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION;
 	}
 
 	/**
@@ -85,7 +83,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 			if (columnDomainModelReference != oldColumnDomainModelReference) {
 				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
+						VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
 						oldColumnDomainModelReference, columnDomainModelReference));
 				}
 			}
@@ -115,7 +113,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 		columnDomainModelReference = newColumnDomainModelReference;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE, oldColumnDomainModelReference,
+				VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE, oldColumnDomainModelReference,
 				columnDomainModelReference));
 		}
 	}
@@ -129,7 +127,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
 			if (resolve) {
 				return getColumnDomainModelReference();
 			}
@@ -147,7 +145,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
 			setColumnDomainModelReference((VDomainModelReference) newValue);
 			return;
 		}
@@ -163,7 +161,7 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
 			setColumnDomainModelReference((VDomainModelReference) null);
 			return;
 		}
@@ -179,60 +177,10 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
 			return columnDomainModelReference != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == VTableColumnConfiguration.class) {
-			switch (derivedFeatureID) {
-			default:
-				return -1;
-			}
-		}
-		if (baseClass == VSingleColumnConfiguration.class) {
-			switch (derivedFeatureID) {
-			case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-				return VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE;
-			default:
-				return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == VTableColumnConfiguration.class) {
-			switch (baseFeatureID) {
-			default:
-				return -1;
-			}
-		}
-		if (baseClass == VSingleColumnConfiguration.class) {
-			switch (baseFeatureID) {
-			case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-				return VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE;
-			default:
-				return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-} // VEnablementConfigurationImpl
+} // VSingleColumnConfigurationImpl

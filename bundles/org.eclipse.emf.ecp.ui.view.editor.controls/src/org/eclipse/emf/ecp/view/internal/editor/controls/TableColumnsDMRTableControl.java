@@ -521,7 +521,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 						continue;
 					}
 					final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
-					if (widthConfiguration.getColumnDomainReference() != object) {
+					if (widthConfiguration.getColumnDomainModelReference() != object) {
 						continue;
 					}
 					return MessageFormat.format(

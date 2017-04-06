@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 
 /**
@@ -32,6 +32,18 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
  *
  */
 public class ColumnConfigurationDMRRendererReferenceService implements ReferenceService {
+
+	private final Class<? extends VSingleColumnConfiguration> columnConfigClass;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param columnConfigClass the {@link VSingleColumnConfiguration} based class to be filtered
+	 */
+	public ColumnConfigurationDMRRendererReferenceService(
+		Class<? extends VSingleColumnConfiguration> columnConfigClass) {
+		this.columnConfigClass = columnConfigClass;
+	}
 
 	@Override
 	public void instantiate(ViewModelContext context) {
@@ -69,11 +81,11 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 		final Set<EObject> unconfiguredColumns = new LinkedHashSet<EObject>(
 			tableDMR.getColumnDomainModelReferences());
 		for (final VTableColumnConfiguration columnConfiguration : tableControl.getColumnConfigurations()) {
-			if (!VWidthConfiguration.class.isInstance(columnConfiguration)) {
+			if (!columnConfigClass.isInstance(columnConfiguration)) {
 				continue;
 			}
 			unconfiguredColumns
-				.remove(VWidthConfiguration.class.cast(columnConfiguration).getColumnDomainReference());
+				.remove(columnConfigClass.cast(columnConfiguration).getColumnDomainModelReference());
 		}
 
 		final Set<EObject> selectedColumns = SelectModelElementWizardFactory

@@ -65,6 +65,12 @@
                 <message_argument value="createEnablementConfiguration()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableFactory"/>
+                <message_argument value="createSingleColumnConfiguration()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.9.0" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableFactory"/>
@@ -85,6 +91,20 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="DETAIL_EDITING"/>
                 <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="READ_ONLY_COLUMN_CONFIGURATION_FEATURE_COUNT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES"/>
+                <message_argument value="0"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -314,6 +334,30 @@
                 <message_argument value="ENABLEMENT_CONFIGURATION__VISIBLE"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -342,6 +386,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="WIDTH_CONFIGURATION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">
@@ -380,6 +430,18 @@
                 <message_argument value="getEnablementConfiguration_ColumnDomainModelReference()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getSingleColumnConfiguration()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getSingleColumnConfiguration_ColumnDomainModelReference()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change with 1.5.0" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -416,6 +478,18 @@
                 <message_argument value="getWidthConfiguration_Width()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change" id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration_ColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTablePackage.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage$Literals">
         <filter comment="SPI change" id="403767336">
@@ -428,6 +502,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
                 <message_argument value="ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change with 1.5.0" id="403767336">
@@ -464,6 +550,60 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
                 <message_argument value="WIDTH_CONFIGURATION__WIDTH"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VWidthConfiguration.java" type="org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration">
+        <filter comment="SPI change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration"/>
+                <message_argument value="getColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration"/>
+                <message_argument value="setColumnDomainReference(VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/impl/VTablePackageImpl.java" type="org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl">
+        <filter comment="SPI change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl"/>
+                <message_argument value="getWidthConfiguration_ColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/impl/VWidthConfigurationImpl.java" type="org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl">
+        <filter comment="SPI change" id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl"/>
+                <message_argument value="columnDomainReference"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl"/>
+                <message_argument value="basicGetColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl"/>
+                <message_argument value="getColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl"/>
+                <message_argument value="setColumnDomainReference(VDomainModelReference)"/>
             </message_arguments>
         </filter>
     </resource>

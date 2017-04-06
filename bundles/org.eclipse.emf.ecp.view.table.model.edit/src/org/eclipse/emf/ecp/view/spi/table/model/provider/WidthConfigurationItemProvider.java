@@ -42,13 +42,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class WidthConfigurationItemProvider
-	extends ItemProviderAdapter
-	implements
-	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource {
+	extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -72,7 +67,7 @@ public class WidthConfigurationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addColumnDomainReferencePropertyDescriptor(object);
+			addColumnDomainModelReferencePropertyDescriptor(object);
 			addWeightPropertyDescriptor(object);
 			addMinWidthPropertyDescriptor(object);
 		}
@@ -80,20 +75,21 @@ public class WidthConfigurationItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Column Domain Reference feature.
+	 * This adds a property descriptor for the Column Domain Model Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected void addColumnDomainReferencePropertyDescriptor(Object object) {
+	protected void addColumnDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_WidthConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_columnDomainReference_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
+				getString("_UI_SingleColumnConfiguration_columnDomainModelReference_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_columnDomainModelReference_feature", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
 				true,
@@ -168,7 +164,7 @@ public class WidthConfigurationItemProvider
 	@Override
 	public String getText(Object object) {
 		final VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
-		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainReference();
+		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainModelReference();
 		String label;
 		if (columnDomainReference == null) {
 			label = "<none>"; //$NON-NLS-1$

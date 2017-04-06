@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -68,8 +69,10 @@ public class ColumnEnablementConfigurationDMRRendererService implements EMFForms
 			final IEMFValueProperty valueProperty = databinding.getValueProperty(
 				domainModelReference,
 				viewModelContext.getDomainModel());
-			if (valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
-				.getEnablementConfiguration_ColumnDomainModelReference()) {
+
+			if (viewModelContext.getDomainModel() instanceof VEnablementConfiguration
+				&& valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
+					.getSingleColumnConfiguration_ColumnDomainModelReference()) {
 				return 3d;
 			}
 		} catch (final DatabindingFailedException ex) {
@@ -81,7 +84,7 @@ public class ColumnEnablementConfigurationDMRRendererService implements EMFForms
 
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return ColumnConfigurationDMRRenderer.class;
+		return ColumnEnablementConfigurationDMRRenderer.class;
 	}
 
 }

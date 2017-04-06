@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -117,6 +118,11 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseEnablementConfiguration(VEnablementConfiguration object) {
 			return createEnablementConfigurationAdapter();
+		}
+
+		@Override
+		public Adapter caseSingleColumnConfiguration(VSingleColumnConfiguration object) {
+			return createSingleColumnConfigurationAdapter();
 		}
 
 		@Override
@@ -260,6 +266,24 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @since 1.13
 	 */
 	public Adapter createEnablementConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration <em>Single Column
+	 * Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration
+	 * @generated
+	 * @since 1.13
+	 */
+	public Adapter createSingleColumnConfigurationAdapter() {
 		return null;
 	}
 

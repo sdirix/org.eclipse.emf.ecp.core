@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -28,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
- * {@link EMFFormsDIRendererService} for {@link ColumnConfigurationDMRRenderer}.
+ * {@link EMFFormsDIRendererService} for {@link ColumnEnablementConfigurationDMRRenderer}.
  *
  * @author Johannes Faltermeier
  *
@@ -68,8 +69,9 @@ public class TableWidthConfigurationDMRRendererService implements EMFFormsDIRend
 			final IEMFValueProperty valueProperty = databinding.getValueProperty(
 				domainModelReference,
 				viewModelContext.getDomainModel());
-			if (valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
-				.getWidthConfiguration_ColumnDomainReference()) {
+			if (viewModelContext.getDomainModel() instanceof VWidthConfiguration
+				&& valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
+					.getSingleColumnConfiguration_ColumnDomainModelReference()) {
 				return 3d;
 			}
 		} catch (final DatabindingFailedException ex) {
@@ -81,7 +83,7 @@ public class TableWidthConfigurationDMRRendererService implements EMFFormsDIRend
 
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return ColumnConfigurationDMRRenderer.class;
+		return WidthConfigurationDMRRenderer.class;
 	}
 
 }

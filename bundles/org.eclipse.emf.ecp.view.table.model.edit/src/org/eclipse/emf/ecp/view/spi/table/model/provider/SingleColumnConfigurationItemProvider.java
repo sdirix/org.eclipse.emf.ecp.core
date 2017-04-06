@@ -29,24 +29,30 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration}
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration}
  * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
+ * @since 1.13
  */
-public class ReadOnlyColumnConfigurationItemProvider
-	extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+public class SingleColumnConfigurationItemProvider
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
-	public ReadOnlyColumnConfigurationItemProvider(AdapterFactory adapterFactory) {
+	public SingleColumnConfigurationItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -54,7 +60,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -62,27 +68,27 @@ public class ReadOnlyColumnConfigurationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addColumnDomainReferencesPropertyDescriptor(object);
+			addColumnDomainModelReferencePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Column Domain References feature.
+	 * This adds a property descriptor for the Column Domain Model Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
-	protected void addColumnDomainReferencesPropertyDescriptor(Object object) {
+	protected void addColumnDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature"), //$NON-NLS-1$
+				getString("_UI_SingleColumnConfiguration_columnDomainModelReference_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-					"_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature", //$NON-NLS-1$
-					"_UI_ReadOnlyColumnConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES,
+					"_UI_SingleColumnConfiguration_columnDomainModelReference_feature", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
 				true,
@@ -92,27 +98,27 @@ public class ReadOnlyColumnConfigurationItemProvider
 	}
 
 	/**
-	 * This returns ReadOnlyColumnConfiguration.gif.
+	 * This returns SingleColumnConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ReadOnlyColumnConfiguration")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SingleColumnConfiguration")); //$NON-NLS-1$
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ReadOnlyColumnConfiguration_type"); //$NON-NLS-1$
+		return getString("_UI_SingleColumnConfiguration_type"); //$NON-NLS-1$
 	}
 
 	/**
@@ -120,7 +126,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -134,7 +140,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -146,7 +152,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

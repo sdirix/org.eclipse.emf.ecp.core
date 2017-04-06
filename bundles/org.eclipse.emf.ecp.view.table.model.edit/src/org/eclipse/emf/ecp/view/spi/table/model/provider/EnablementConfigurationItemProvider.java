@@ -27,16 +27,15 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
- * @since 1.13
  */
 public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public EnablementConfigurationItemProvider(AdapterFactory adapterFactory) {
@@ -47,7 +46,7 @@ public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -64,18 +63,18 @@ public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	 * This adds a property descriptor for the Column Domain Model Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addColumnDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_EnablementConfiguration_columnDomainModelReference_feature"), //$NON-NLS-1$
+				getString("_UI_SingleColumnConfiguration_columnDomainModelReference_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-					"_UI_EnablementConfiguration_columnDomainModelReference_feature", //$NON-NLS-1$
-					"_UI_EnablementConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
+					"_UI_SingleColumnConfiguration_columnDomainModelReference_feature", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
 				true,
@@ -88,7 +87,7 @@ public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	 * This returns EnablementConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -100,12 +99,12 @@ public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VEnablementConfiguration) object).getName();
+		String label = ((VEnablementConfiguration) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_EnablementConfiguration_type") : //$NON-NLS-1$
 			getString("_UI_EnablementConfiguration_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
@@ -115,7 +114,7 @@ public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -129,7 +128,7 @@ public class EnablementConfigurationItemProvider extends ElementItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
