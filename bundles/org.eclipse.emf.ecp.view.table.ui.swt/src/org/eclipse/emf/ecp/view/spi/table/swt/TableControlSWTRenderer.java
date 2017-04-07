@@ -343,6 +343,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * method can be overwritten by sub classes to customize the layout.
 	 *
 	 * @return The {@link TableViewerCompositeBuilder}
+	 * @since 1.13
 	 */
 	protected TableViewerCompositeBuilder createTableViewerCompositeBuilder() {
 		return new TableControlSWTRendererCompositeBuilder();
@@ -1863,6 +1864,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@link org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder TableViewerCompositeBuilder} which calls
 	 * the existing template method to create the validation label.
+	 *
+	 * @since 1.13
 	 *
 	 */
 	protected class TableControlSWTRendererCompositeBuilder

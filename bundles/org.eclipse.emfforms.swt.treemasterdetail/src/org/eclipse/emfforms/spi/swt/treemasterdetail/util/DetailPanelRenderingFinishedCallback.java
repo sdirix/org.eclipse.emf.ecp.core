@@ -11,19 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail.util;
 
-import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
-
 /**
- * This interface allows to be notified when the {@link TreeMasterDetailComposite} finished rendering a detail pane.
+ * This interface allows to be notified when the
+ * {@link org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite TreeMasterDetailComposite} finished
+ * rendering a detail pane.
  *
  * @author Lucas Koehler
+ * @since 1.13
  *
  */
 public interface DetailPanelRenderingFinishedCallback {
 
 	/**
 	 * This method is called after the renderedObject has been rendered.
-	 * 
+	 *
 	 * @param renderedObject The rendered Object
 	 */
 	void renderingFinished(Object renderedObject);
