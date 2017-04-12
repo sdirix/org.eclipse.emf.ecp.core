@@ -40,6 +40,8 @@ import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 /**
  * Renderer for enums that makes use of a {@link MatchItemComboViewer}.
@@ -131,6 +133,12 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 		}
 		viewer.setInput(inputValues);
 		viewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
+		combo.addListener(SWT.Resize, new Listener() {
+			@Override
+			public void handleEvent(final Event argEvent) {
+				combo.setText(combo.getText());
+			}
+		});
 		return viewer;
 	}
 
