@@ -215,6 +215,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private AbstractTableViewerComposite tableViewerComposite;
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
+	private IObservableList list;
 
 	/**
 	 * Default constructor.
@@ -269,7 +270,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final VDomainModelReference dmrToCheck = getDMRToMultiReference();
 
 			/* get the observable list */
-			final IObservableList list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
+			list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
 				getViewModelContext().getDomainModel());
 
 			/* get the label text/tooltip */
@@ -1244,6 +1245,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		isDisposing = true;
 		rendererGridDescription = null;
 		viewModelDBC.dispose();
+		if (list != null) {
+			list.dispose();
+		}
 		super.dispose();
 	}
 
