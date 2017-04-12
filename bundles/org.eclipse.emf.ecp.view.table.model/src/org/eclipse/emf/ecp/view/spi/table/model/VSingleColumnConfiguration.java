@@ -16,50 +16,52 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Single Column Configuration</b></em>'.
- * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration#getColumnDomainModelReference
- * <em>Column Domain Model Reference</em>}</li>
- * </ul>
+ * @since 1.13
+ *
+ *        <!-- end-user-doc -->
+ *
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration#getColumnDomainReference
+ *        <em>Column Domain Reference</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getSingleColumnConfiguration()
  * @model interface="true" abstract="true"
  * @generated
- * @since 1.13
  */
 public interface VSingleColumnConfiguration extends VTableColumnConfiguration {
 	/**
-	 * Returns the value of the '<em><b>Column Domain Model Reference</b></em>' reference.
+	 * Returns the value of the '<em><b>Column Domain Reference</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Column Domain Model Reference</em>' reference isn't clear,
+	 * If the meaning of the '<em>Column Domain Reference</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 *
-	 * @return the value of the '<em>Column Domain Model Reference</em>' reference.
-	 * @see #setColumnDomainModelReference(VDomainModelReference)
-	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getSingleColumnConfiguration_ColumnDomainModelReference()
+	 * @return the value of the '<em>Column Domain Reference</em>' reference.
+	 * @see #setColumnDomainReference(VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getSingleColumnConfiguration_ColumnDomainReference()
 	 * @model required="true"
 	 * @generated
 	 */
-	VDomainModelReference getColumnDomainModelReference();
+	VDomainModelReference getColumnDomainReference();
 
 	/**
 	 * Sets the value of the
-	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration#getColumnDomainModelReference
-	 * <em>Column Domain Model Reference</em>}' reference.
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration#getColumnDomainReference <em>Column
+	 * Domain Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @param value the new value of the '<em>Column Domain Model Reference</em>' reference.
-	 * @see #getColumnDomainModelReference()
+	 * @param value the new value of the '<em>Column Domain Reference</em>' reference.
+	 * @see #getColumnDomainReference()
 	 * @generated
 	 */
-	void setColumnDomainModelReference(VDomainModelReference value);
+	void setColumnDomainReference(VDomainModelReference value);
 
 } // VSingleColumnConfiguration

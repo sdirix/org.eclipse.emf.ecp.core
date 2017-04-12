@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.table.model" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change 1.13.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.13.0"/>
+                <message_argument value="1.12.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change with 1.5.0" id="923795461">
             <message_arguments>
                 <message_argument value="1.5.0"/>
@@ -292,6 +298,12 @@
                 <message_argument value="ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.13.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -356,6 +368,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.13.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">
@@ -442,6 +460,12 @@
                 <message_argument value="getSingleColumnConfiguration_ColumnDomainModelReference()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.13.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getSingleColumnConfiguration_ColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change with 1.5.0" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -514,6 +538,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
                 <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.13.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change with 1.5.0" id="403767336">

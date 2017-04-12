@@ -72,7 +72,7 @@ public class ColumnEnablementConfigurationDMRRendererService implements EMFForms
 
 			if (viewModelContext.getDomainModel() instanceof VEnablementConfiguration
 				&& valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
-					.getSingleColumnConfiguration_ColumnDomainModelReference()) {
+					.getSingleColumnConfiguration_ColumnDomainReference()) {
 				return 3d;
 			}
 		} catch (final DatabindingFailedException ex) {

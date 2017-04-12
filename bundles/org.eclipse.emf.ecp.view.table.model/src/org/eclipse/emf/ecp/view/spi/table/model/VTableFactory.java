@@ -76,11 +76,11 @@ public interface VTableFactory extends EFactory {
 	/**
 	 * Returns a new object of class '<em>Enablement Configuration</em>'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
 	 * @return a new object of class '<em>Enablement Configuration</em>'.
 	 * @generated
-	 * @since 1.13
 	 */
 	VEnablementConfiguration createEnablementConfiguration();
 

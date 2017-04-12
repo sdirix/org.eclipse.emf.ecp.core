@@ -30,8 +30,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
  *        The following features are implemented:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getColumnDomainModelReference
- *        <em>Column Domain Model Reference</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getColumnDomainReference
+ *        <em>Column Domain Reference</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getWeight
  *        <em>Weight</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getMinWidth <em>Min
@@ -42,17 +42,15 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
  */
 public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfiguration {
 	/**
-	 * The cached value of the '{@link #getColumnDomainModelReference() <em>Column Domain Model Reference</em>}'
-	 * reference.
+	 * The cached value of the '{@link #getColumnDomainReference() <em>Column Domain Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #getColumnDomainModelReference()
+	 * @see #getColumnDomainReference()
 	 * @generated
 	 * @ordered
-	 * @since 1.13
 	 */
-	protected VDomainModelReference columnDomainModelReference;
+	protected VDomainModelReference columnDomainReference;
 
 	/**
 	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
@@ -124,22 +122,21 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.13
 	 */
 	@Override
-	public VDomainModelReference getColumnDomainModelReference() {
-		if (columnDomainModelReference != null && columnDomainModelReference.eIsProxy()) {
-			final InternalEObject oldColumnDomainModelReference = (InternalEObject) columnDomainModelReference;
-			columnDomainModelReference = (VDomainModelReference) eResolveProxy(oldColumnDomainModelReference);
-			if (columnDomainModelReference != oldColumnDomainModelReference) {
+	public VDomainModelReference getColumnDomainReference() {
+		if (columnDomainReference != null && columnDomainReference.eIsProxy()) {
+			final InternalEObject oldColumnDomainReference = (InternalEObject) columnDomainReference;
+			columnDomainReference = (VDomainModelReference) eResolveProxy(oldColumnDomainReference);
+			if (columnDomainReference != oldColumnDomainReference) {
 				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE, oldColumnDomainModelReference,
-						columnDomainModelReference));
+						VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE, oldColumnDomainReference,
+						columnDomainReference));
 				}
 			}
 		}
-		return columnDomainModelReference;
+		return columnDomainReference;
 	}
 
 	/**
@@ -147,10 +144,9 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.13
 	 */
-	public VDomainModelReference basicGetColumnDomainModelReference() {
-		return columnDomainModelReference;
+	public VDomainModelReference basicGetColumnDomainReference() {
+		return columnDomainReference;
 	}
 
 	/**
@@ -158,16 +154,15 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.13
 	 */
 	@Override
-	public void setColumnDomainModelReference(VDomainModelReference newColumnDomainModelReference) {
-		final VDomainModelReference oldColumnDomainModelReference = columnDomainModelReference;
-		columnDomainModelReference = newColumnDomainModelReference;
+	public void setColumnDomainReference(VDomainModelReference newColumnDomainReference) {
+		final VDomainModelReference oldColumnDomainReference = columnDomainReference;
+		columnDomainReference = newColumnDomainReference;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE, oldColumnDomainModelReference,
-				columnDomainModelReference));
+				VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE, oldColumnDomainReference,
+				columnDomainReference));
 		}
 	}
 
@@ -234,11 +229,11 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
+		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
 			if (resolve) {
-				return getColumnDomainModelReference();
+				return getColumnDomainReference();
 			}
-			return basicGetColumnDomainModelReference();
+			return basicGetColumnDomainReference();
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			return getWeight();
 		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:
@@ -256,8 +251,8 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-			setColumnDomainModelReference((VDomainModelReference) newValue);
+		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+			setColumnDomainReference((VDomainModelReference) newValue);
 			return;
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			setWeight((Integer) newValue);
@@ -278,8 +273,8 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-			setColumnDomainModelReference((VDomainModelReference) null);
+		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+			setColumnDomainReference((VDomainModelReference) null);
 			return;
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			setWeight(WEIGHT_EDEFAULT);
@@ -300,8 +295,8 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-			return columnDomainModelReference != null;
+		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+			return columnDomainReference != null;
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			return weight != WEIGHT_EDEFAULT;
 		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:

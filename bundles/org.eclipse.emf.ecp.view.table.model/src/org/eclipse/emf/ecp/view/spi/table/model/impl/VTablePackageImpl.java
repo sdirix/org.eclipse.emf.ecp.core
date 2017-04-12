@@ -352,10 +352,10 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
 	public EClass getEnablementConfiguration() {
@@ -364,10 +364,10 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
 	public EClass getSingleColumnConfiguration() {
@@ -376,13 +376,13 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
-	public EReference getSingleColumnConfiguration_ColumnDomainModelReference() {
+	public EReference getSingleColumnConfiguration_ColumnDomainReference() {
 		return (EReference) singleColumnConfigurationEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -454,7 +454,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		enablementConfigurationEClass = createEClass(ENABLEMENT_CONFIGURATION);
 
 		singleColumnConfigurationEClass = createEClass(SINGLE_COLUMN_CONFIGURATION);
-		createEReference(singleColumnConfigurationEClass, SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE);
+		createEReference(singleColumnConfigurationEClass, SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE);
 
 		// Create enums
 		detailEditingEEnum = createEEnum(DETAIL_EDITING);
@@ -556,10 +556,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 		initEClass(singleColumnConfigurationEClass, VSingleColumnConfiguration.class, "SingleColumnConfiguration", //$NON-NLS-1$
 			IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSingleColumnConfiguration_ColumnDomainModelReference(),
-			theViewPackage.getDomainModelReference(), null, "columnDomainModelReference", null, 1, 1, //$NON-NLS-1$
-			VSingleColumnConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSingleColumnConfiguration_ColumnDomainReference(), theViewPackage.getDomainModelReference(),
+			null, "columnDomainReference", null, 1, 1, VSingleColumnConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(detailEditingEEnum, DetailEditing.class, "DetailEditing"); //$NON-NLS-1$

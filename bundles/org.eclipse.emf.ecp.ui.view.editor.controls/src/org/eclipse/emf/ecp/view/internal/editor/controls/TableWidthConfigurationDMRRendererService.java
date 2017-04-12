@@ -71,7 +71,7 @@ public class TableWidthConfigurationDMRRendererService implements EMFFormsDIRend
 				viewModelContext.getDomainModel());
 			if (viewModelContext.getDomainModel() instanceof VWidthConfiguration
 				&& valueProperty.getStructuralFeature() == VTablePackage.eINSTANCE
-					.getSingleColumnConfiguration_ColumnDomainModelReference()) {
+					.getSingleColumnConfiguration_ColumnDomainReference()) {
 				return 3d;
 			}
 		} catch (final DatabindingFailedException ex) {

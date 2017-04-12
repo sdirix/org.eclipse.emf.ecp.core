@@ -47,7 +47,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="EnablementConfiguration" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element #//SingleColumnConfiguration"/>
   <eClassifiers xsi:type="ecore:EClass" name="SingleColumnConfiguration" abstract="true"
       interface="true" eSuperTypes="#//TableColumnConfiguration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="columnDomainModelReference"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnDomainReference"
         lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
   </eClassifiers>
 </ecore:EPackage>

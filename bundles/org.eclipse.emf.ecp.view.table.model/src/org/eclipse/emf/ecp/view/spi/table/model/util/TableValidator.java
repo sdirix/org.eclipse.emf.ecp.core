@@ -259,12 +259,13 @@ public class TableValidator extends EObjectValidator {
 		}
 		return viewValidator.validateDomainModelReference(domainModelReference, diagnostics, context);
 	}
+	// end of custom code
 
 	/**
-	 * @generated
-	 * 			<!-- begin-user-doc -->
-	 *            <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
+	 * @generated
 	 */
 	public boolean validateTableColumnConfiguration(VTableColumnConfiguration tableColumnConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -503,10 +504,10 @@ public class TableValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	public boolean validateEnablementConfiguration(VEnablementConfiguration enablementConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -515,10 +516,10 @@ public class TableValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	public boolean validateSingleColumnConfiguration(VSingleColumnConfiguration singleColumnConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {

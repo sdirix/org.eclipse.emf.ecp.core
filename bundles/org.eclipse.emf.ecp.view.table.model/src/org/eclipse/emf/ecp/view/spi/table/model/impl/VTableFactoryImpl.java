@@ -172,10 +172,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
 	public VEnablementConfiguration createEnablementConfiguration() {

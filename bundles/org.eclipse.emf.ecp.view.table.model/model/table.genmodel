@@ -40,7 +40,7 @@
     </genClasses>
     <genClasses ecoreClass="table.ecore#//EnablementConfiguration"/>
     <genClasses ecoreClass="table.ecore#//SingleColumnConfiguration">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//SingleColumnConfiguration/columnDomainModelReference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

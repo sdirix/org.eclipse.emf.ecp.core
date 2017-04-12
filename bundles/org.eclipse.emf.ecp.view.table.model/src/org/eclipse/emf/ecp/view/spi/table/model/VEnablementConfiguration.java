@@ -16,13 +16,14 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Enablement Configuration</b></em>'.
- * <!-- end-user-doc -->
+ *
+ * @since 1.13
+ *        <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getEnablementConfiguration()
  * @model
  * @generated
- * @since 1.13
  */
 public interface VEnablementConfiguration extends VElement, VSingleColumnConfiguration {
 

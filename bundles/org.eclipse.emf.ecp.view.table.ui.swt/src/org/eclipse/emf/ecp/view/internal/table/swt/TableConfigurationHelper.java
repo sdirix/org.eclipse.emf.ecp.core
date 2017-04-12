@@ -72,7 +72,7 @@ public final class TableConfigurationHelper {
 			if (VEnablementConfiguration.class.isInstance(columnConfiguration)) {
 				final VEnablementConfiguration configuration = VEnablementConfiguration.class
 					.cast(columnConfiguration);
-				if (configuration.getColumnDomainModelReference() == columnDmr) {
+				if (configuration.getColumnDomainReference() == columnDmr) {
 					return Optional.of(configuration);
 				}
 			}
@@ -96,7 +96,7 @@ public final class TableConfigurationHelper {
 				continue;
 			}
 			final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
-			if (widthConfiguration.getColumnDomainModelReference() != domainModelReference) {
+			if (widthConfiguration.getColumnDomainReference() != domainModelReference) {
 				continue;
 			}
 			return Optional.ofNullable(widthConfiguration.getMinWidth());
@@ -118,7 +118,7 @@ public final class TableConfigurationHelper {
 				continue;
 			}
 			final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
-			if (widthConfiguration.getColumnDomainModelReference() != domainModelReference) {
+			if (widthConfiguration.getColumnDomainReference() != domainModelReference) {
 				continue;
 			}
 			return Optional.ofNullable(widthConfiguration.getWeight());
@@ -146,14 +146,14 @@ public final class TableConfigurationHelper {
 				continue;
 			}
 			final VWidthConfiguration candidate = VWidthConfiguration.class.cast(configuration);
-			if (candidate.getColumnDomainModelReference() == domainModelReference) {
+			if (candidate.getColumnDomainReference() == domainModelReference) {
 				widthConfiguration = candidate;
 				break;
 			}
 		}
 		if (widthConfiguration == null) {
 			widthConfiguration = VTableFactory.eINSTANCE.createWidthConfiguration();
-			widthConfiguration.setColumnDomainModelReference(domainModelReference);
+			widthConfiguration.setColumnDomainReference(domainModelReference);
 			tableControl.getColumnConfigurations().add(widthConfiguration);
 		}
 

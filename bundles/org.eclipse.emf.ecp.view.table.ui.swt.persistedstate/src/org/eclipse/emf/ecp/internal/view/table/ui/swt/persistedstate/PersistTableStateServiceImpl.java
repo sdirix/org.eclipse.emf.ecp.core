@@ -121,7 +121,7 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 				} else {
 					final VWidthConfiguration widthConfiguration = VTableFactory.eINSTANCE.createWidthConfiguration();
 					fillWidthConfig(widthConfiguration, entry.getValue());
-					widthConfiguration.setColumnDomainModelReference(realMatchingDMR);
+					widthConfiguration.setColumnDomainReference(realMatchingDMR);
 					realTable.getColumnConfigurations().add(widthConfiguration);
 				}
 			}
@@ -141,7 +141,7 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 				continue;
 			}
 			final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
-			result.put(widthConfiguration.getColumnDomainModelReference(), widthConfiguration);
+			result.put(widthConfiguration.getColumnDomainReference(), widthConfiguration);
 		}
 		return result;
 	}

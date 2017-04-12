@@ -48,7 +48,7 @@ public class WidthConfigurationItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public WidthConfigurationItemProvider(AdapterFactory adapterFactory) {
@@ -59,7 +59,7 @@ public class WidthConfigurationItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -67,7 +67,7 @@ public class WidthConfigurationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addColumnDomainModelReferencePropertyDescriptor(object);
+			addColumnDomainReferencePropertyDescriptor(object);
 			addWeightPropertyDescriptor(object);
 			addMinWidthPropertyDescriptor(object);
 		}
@@ -75,21 +75,21 @@ public class WidthConfigurationItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Column Domain Model Reference feature.
+	 * This adds a property descriptor for the Column Domain Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
-	protected void addColumnDomainModelReferencePropertyDescriptor(Object object) {
+	protected void addColumnDomainReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_SingleColumnConfiguration_columnDomainModelReference_feature"), //$NON-NLS-1$
+				getString("_UI_SingleColumnConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-					"_UI_SingleColumnConfiguration_columnDomainModelReference_feature", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_columnDomainReference_feature", //$NON-NLS-1$
 					"_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
+				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
 				true,
 				false,
 				true,
@@ -102,7 +102,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Weight feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addWeightPropertyDescriptor(Object object) {
@@ -124,7 +124,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Min Width feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addMinWidthPropertyDescriptor(Object object) {
@@ -146,7 +146,7 @@ public class WidthConfigurationItemProvider
 	 * This returns WidthConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -164,7 +164,7 @@ public class WidthConfigurationItemProvider
 	@Override
 	public String getText(Object object) {
 		final VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
-		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainModelReference();
+		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainReference();
 		String label;
 		if (columnDomainReference == null) {
 			label = "<none>"; //$NON-NLS-1$
@@ -185,7 +185,7 @@ public class WidthConfigurationItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -206,7 +206,7 @@ public class WidthConfigurationItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -218,7 +218,7 @@ public class WidthConfigurationItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

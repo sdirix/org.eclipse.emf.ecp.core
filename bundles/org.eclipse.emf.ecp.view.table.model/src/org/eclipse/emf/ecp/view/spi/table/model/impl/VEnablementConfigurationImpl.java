@@ -25,30 +25,30 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Enablement Configuration</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VEnablementConfigurationImpl#getColumnDomainModelReference
- * <em>Column Domain Model Reference</em>}</li>
- * </ul>
+ *
+ * @since 1.13
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VEnablementConfigurationImpl#getColumnDomainReference
+ *        <em>Column Domain Reference</em>}</li>
+ *        </ul>
  *
  * @generated
- * @since 1.13
  */
 public class VEnablementConfigurationImpl extends VElementImpl implements VEnablementConfiguration {
 	/**
-	 * The cached value of the '{@link #getColumnDomainModelReference() <em>Column Domain Model Reference</em>}'
-	 * reference.
+	 * The cached value of the '{@link #getColumnDomainReference() <em>Column Domain Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #getColumnDomainModelReference()
+	 * @see #getColumnDomainReference()
 	 * @generated
 	 * @ordered
 	 */
-	protected VDomainModelReference columnDomainModelReference;
+	protected VDomainModelReference columnDomainReference;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -78,19 +78,19 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getColumnDomainModelReference() {
-		if (columnDomainModelReference != null && columnDomainModelReference.eIsProxy()) {
-			final InternalEObject oldColumnDomainModelReference = (InternalEObject) columnDomainModelReference;
-			columnDomainModelReference = (VDomainModelReference) eResolveProxy(oldColumnDomainModelReference);
-			if (columnDomainModelReference != oldColumnDomainModelReference) {
+	public VDomainModelReference getColumnDomainReference() {
+		if (columnDomainReference != null && columnDomainReference.eIsProxy()) {
+			final InternalEObject oldColumnDomainReference = (InternalEObject) columnDomainReference;
+			columnDomainReference = (VDomainModelReference) eResolveProxy(oldColumnDomainReference);
+			if (columnDomainReference != oldColumnDomainReference) {
 				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE,
-						oldColumnDomainModelReference, columnDomainModelReference));
+						VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE, oldColumnDomainReference,
+						columnDomainReference));
 				}
 			}
 		}
-		return columnDomainModelReference;
+		return columnDomainReference;
 	}
 
 	/**
@@ -99,8 +99,8 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	 *
 	 * @generated
 	 */
-	public VDomainModelReference basicGetColumnDomainModelReference() {
-		return columnDomainModelReference;
+	public VDomainModelReference basicGetColumnDomainReference() {
+		return columnDomainReference;
 	}
 
 	/**
@@ -110,13 +110,13 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	 * @generated
 	 */
 	@Override
-	public void setColumnDomainModelReference(VDomainModelReference newColumnDomainModelReference) {
-		final VDomainModelReference oldColumnDomainModelReference = columnDomainModelReference;
-		columnDomainModelReference = newColumnDomainModelReference;
+	public void setColumnDomainReference(VDomainModelReference newColumnDomainReference) {
+		final VDomainModelReference oldColumnDomainReference = columnDomainReference;
+		columnDomainReference = newColumnDomainReference;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE, oldColumnDomainModelReference,
-				columnDomainModelReference));
+				VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE, oldColumnDomainReference,
+				columnDomainReference));
 		}
 	}
 
@@ -129,11 +129,11 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
+		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
 			if (resolve) {
-				return getColumnDomainModelReference();
+				return getColumnDomainReference();
 			}
-			return basicGetColumnDomainModelReference();
+			return basicGetColumnDomainReference();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -147,8 +147,8 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-			setColumnDomainModelReference((VDomainModelReference) newValue);
+		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+			setColumnDomainReference((VDomainModelReference) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -163,8 +163,8 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-			setColumnDomainModelReference((VDomainModelReference) null);
+		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+			setColumnDomainReference((VDomainModelReference) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -179,8 +179,8 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-			return columnDomainModelReference != null;
+		case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+			return columnDomainReference != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -201,8 +201,8 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 		}
 		if (baseClass == VSingleColumnConfiguration.class) {
 			switch (derivedFeatureID) {
-			case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-				return VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE;
+			case VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+				return VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE;
 			default:
 				return -1;
 			}
@@ -226,8 +226,8 @@ public class VEnablementConfigurationImpl extends VElementImpl implements VEnabl
 		}
 		if (baseClass == VSingleColumnConfiguration.class) {
 			switch (baseFeatureID) {
-			case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE:
-				return VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_MODEL_REFERENCE;
+			case VTablePackage.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
+				return VTablePackage.ENABLEMENT_CONFIGURATION__COLUMN_DOMAIN_REFERENCE;
 			default:
 				return -1;
 			}

@@ -258,12 +258,12 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration
 	 * @generated
-	 * @since 1.13
 	 */
 	public Adapter createEnablementConfigurationAdapter() {
 		return null;
@@ -276,12 +276,12 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration
 	 * @generated
-	 * @since 1.13
 	 */
 	public Adapter createSingleColumnConfigurationAdapter() {
 		return null;

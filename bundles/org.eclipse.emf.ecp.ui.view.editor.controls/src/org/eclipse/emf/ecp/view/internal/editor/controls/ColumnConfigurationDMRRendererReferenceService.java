@@ -85,7 +85,7 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 				continue;
 			}
 			unconfiguredColumns
-				.remove(columnConfigClass.cast(columnConfiguration).getColumnDomainModelReference());
+				.remove(columnConfigClass.cast(columnConfiguration).getColumnDomainReference());
 		}
 
 		final Set<EObject> selectedColumns = SelectModelElementWizardFactory
