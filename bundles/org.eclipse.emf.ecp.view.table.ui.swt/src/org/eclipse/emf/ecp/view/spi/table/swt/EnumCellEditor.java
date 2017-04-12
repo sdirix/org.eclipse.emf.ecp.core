@@ -291,13 +291,16 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 				if (viewer.getClosestMatchIndex(characterAsString) != -1) {
 					control.setText(characterAsString);
 					viewer.addToBuffer(actEvent.character);
-				} else {
-					// if invalid character, use first item as closest match and add
-					// first character to buffer
-					final String item = viewer.getCCombo().getItems()[0];
-					control.setText(item);
+					return;
+				}
+				// if invalid character, use first item as closest match and add
+				// first character to buffer
+				final String item = viewer.getCCombo().getItems()[0];
+				control.setText(item);
+				if (item != null && item.length() > 0) {
 					viewer.addToBuffer(item.charAt(0));
 				}
+
 			}
 		}
 	}
@@ -309,6 +312,13 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 	 */
 	@Override
 	public void deactivate() {
+		final CCombo control = (CCombo) getControl();
+
+		if (control != null && !control.isDisposed()) {
+			text = control.getText();
+			text = text == null ? EMPTY : text;
+		}
+
 		final SelectedEnumeratorMapping[] selectedMapping = (SelectedEnumeratorMapping[]) viewer.getInput();
 		if (selectedMapping != null) {
 			final Optional<SelectedEnumeratorMapping> sel = SelectedEnumeratorMapping.findLiteral(selectedMapping,
@@ -319,7 +329,6 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 			}
 		}
 
-		final CCombo control = (CCombo) getControl();
 		text = EMPTY;
 		viewer.resetBuffer();
 		viewer.resetKeyPressedTimer();
