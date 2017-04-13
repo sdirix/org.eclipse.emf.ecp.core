@@ -319,6 +319,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				 */
 				detailPanel.layout();
 				renderedView.getViewModelContext().changeDomainModel(eObject);
+				updateScrolledComposite();
 			} else {
 				if (viewModelPropertiesUpdateCallback != null) {
 					viewModelPropertiesUpdateCallback.updateViewModelProperties(context);
@@ -346,10 +347,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 					Display.getDefault().asyncExec(new UpdateDetailRunnable(setFocusToDetail, eObject, label));
 				}
 				// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
-				if (ScrolledComposite.class.isInstance(detailComposite)) {
-					ScrolledComposite.class.cast(detailComposite)
-						.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				}
+				updateScrolledComposite();
 			}
 		} else {
 			renderEmptyDetailPanel();
@@ -363,6 +361,13 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
 				callback.renderingFinished(selectedObject);
 			}
+		}
+	}
+
+	private void updateScrolledComposite() {
+		if (ScrolledComposite.class.isInstance(detailComposite)) {
+			ScrolledComposite.class.cast(detailComposite)
+				.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		}
 	}
 
@@ -392,10 +397,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		detailPanel.pack();
 		detailPanel.layout(true, true);
 
-		if (ScrolledComposite.class.isInstance(detailComposite)) {
-			ScrolledComposite.class.cast(detailComposite)
-				.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		}
+		updateScrolledComposite();
 	}
 
 	/**
