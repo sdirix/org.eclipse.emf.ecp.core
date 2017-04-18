@@ -27,6 +27,9 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -246,11 +249,30 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		private final EStructuralFeature eStructuralFeature;
 		private final Text text;
+		private final boolean isDate;
 
 		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
 			this.text = text;
+			final EClassifier eType = eStructuralFeature.getEType();
+			if (eType == null) {
+				isDate = true;
+				return;
+			}
+			final EAnnotation eAnnotation = eType.getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");//$NON-NLS-1$
+			if (eAnnotation == null) {
+				isDate = true;
+				return;
+			}
+			final EMap<String, String> typeDetails = eAnnotation.getDetails();
+			if (typeDetails.containsKey("name")) {//$NON-NLS-1$
+				isDate = "date".equals(typeDetails.get("name"));//$NON-NLS-1$//$NON-NLS-2$
+			} else if (typeDetails.containsKey("baseType")) {//$NON-NLS-1$
+				isDate = typeDetails.get("baseType").endsWith("date");//$NON-NLS-1$//$NON-NLS-2$
+			} else {
+				isDate = true;
+			}
 
 		}
 
@@ -274,7 +296,10 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 				final Calendar targetCal = Calendar.getInstance();
 				targetCal.setTime(date);
-				return DateUtil.convertOnlyDateToXMLGregorianCalendar(targetCal);
+				if (isDate) {
+					return DateUtil.convertOnlyDateToXMLGregorianCalendar(targetCal);
+				}
+				return DateUtil.convertCalendarToXMLGregorianCalendar(targetCal);
 			} catch (final ParseException ex) {
 				return revertToOldValue(value);
 			}
