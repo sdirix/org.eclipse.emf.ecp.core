@@ -255,7 +255,10 @@ public class ValidationServiceImpl implements ValidationService {
 					diagnosticMap.get(DiagnosticHelper.getEStructuralFeature(additionDiagnostic.getData()))
 						.add(additionDiagnostic);
 				} else {
-					diagnostic.add(additionDiagnostic);
+					// only add non-OK diagnostics
+					if (additionDiagnostic.getSeverity() != Diagnostic.OK) {
+						diagnostic.add(additionDiagnostic);
+					}
 				}
 
 			}
