@@ -145,7 +145,14 @@ public final class PreSetValidationListeners {
 		}
 	}
 
-	VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
+	/**
+	 * Validate a given feature value strictly based on the defined constraints.
+	 *
+	 * @param feature the feature to validate
+	 * @param value the value to validate
+	 * @return
+	 */
+	protected VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
 		final Diagnostic strictDiag = preSetValidationService.validate(feature, value);
 		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 		if (strictDiag.getSeverity() != Diagnostic.OK) {
@@ -166,7 +173,7 @@ public final class PreSetValidationListeners {
 		return null;
 	}
 
-	boolean isString(EClassifier classifier) {
+	private boolean isString(EClassifier classifier) {
 		return classifier.getInstanceTypeName().equals(String.class.getCanonicalName());
 	}
 
@@ -199,6 +206,10 @@ public final class PreSetValidationListeners {
 		}
 	}
 
+	/**
+	 * Default VerifyListener implementation.
+	 *
+	 */
 	public static class PreSetVerifyListener implements VerifyListener {
 
 		private final EAttribute attribute;
@@ -209,7 +220,6 @@ public final class PreSetValidationListeners {
 		 *
 		 * @param vElement the {@link VElement} any {@link VDiagnostic} will be attached to
 		 * @param attribute the {@link EAttribute} to be validated
-		 * @param preSetValidationListeners TODO
 		 */
 		public PreSetVerifyListener(VElement vElement, EAttribute attribute) {
 			this.vElement = vElement;
@@ -217,6 +227,12 @@ public final class PreSetValidationListeners {
 		}
 
 		@Override
+		/**
+		 *
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.swt.events.VerifyListener#verifyText(org.eclipse.swt.events.VerifyEvent)
+		 */
 		public void verifyText(VerifyEvent e) {
 			final String changedText = obtainText(e);
 
