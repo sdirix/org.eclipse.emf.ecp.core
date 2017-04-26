@@ -29,6 +29,7 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -44,8 +45,8 @@ public final class PreSetValidationListeners {
 	/**
 	 * Singleton instance.
 	 */
-	private static PreSetValidationListeners instance = new PreSetValidationListeners();
-	private PreSetValidationService preSetValidationService;
+	private static PreSetValidationListeners validationListeners = new PreSetValidationListeners();
+	private static PreSetValidationService preSetValidationService;
 
 	private PreSetValidationListeners() {
 		init();
@@ -57,7 +58,7 @@ public final class PreSetValidationListeners {
 	 * @return the factory that can be used to create and attach listeners
 	 */
 	public static PreSetValidationListeners create() {
-		return instance;
+		return validationListeners;
 	}
 
 	private void init() {
@@ -86,6 +87,17 @@ public final class PreSetValidationListeners {
 	}
 
 	/**
+	 * Attach a {@link VerifyListener} to the given {@link Combo} widget.
+	 * Performs pre-set validation for the given {@link EStructuralFeature}
+	 *
+	 * @param combo the combo widget the created verify listener should be attached to
+	 * @param feature the feature to be validated
+	 */
+	public void verify(Combo combo, final EStructuralFeature feature) {
+		verify(combo, feature, null);
+	}
+
+	/**
 	 * Attach a {@link VerifyListener} to the given {@link Text} widget.
 	 * Performs pre-set validation for the given {@link EStructuralFeature} and reports any
 	 * errors to the given {@link VElement}.
@@ -109,7 +121,31 @@ public final class PreSetValidationListeners {
 		}
 	}
 
-	private VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
+	/**
+	 * Attach a {@link VerifyListener} to the given {@link Combo} widget.
+	 * Performs pre-set validation for the given {@link EStructuralFeature} and reports any
+	 * errors to the given {@link VElement}.
+	 *
+	 * @param combo the combo widget the created verify listener should be attached to
+	 * @param feature the feature to be validated
+	 * @param vElement the {@link VElement} an {@link Diagnostic} may be attached to
+	 */
+	public void verify(Combo combo, final EStructuralFeature feature, final VElement vElement) {
+
+		if (!EAttribute.class.isInstance(feature)) {
+			// this shouldn't happen as we expect only EDataTypes
+			return;
+		}
+
+		final EAttribute attribute = (EAttribute) feature;
+
+		if (preSetValidationService != null) {
+			final VerifyListener verifyListener = new PreSetVerifyListener(vElement, attribute);
+			combo.addVerifyListener(verifyListener);
+		}
+	}
+
+	VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
 		final Diagnostic strictDiag = preSetValidationService.validate(feature, value);
 		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 		if (strictDiag.getSeverity() != Diagnostic.OK) {
@@ -130,81 +166,8 @@ public final class PreSetValidationListeners {
 		return null;
 	}
 
-	private boolean isString(EClassifier classifier) {
+	boolean isString(EClassifier classifier) {
 		return classifier.getInstanceTypeName().equals(String.class.getCanonicalName());
-	}
-
-	/**
-	 * Pre-set verify listener.
-	 *
-	 */
-	class PreSetVerifyListener implements VerifyListener {
-
-		private final EAttribute attribute;
-		private final VElement vElement;
-
-		/**
-		 * Constructor.
-		 *
-		 * @param vElement the {@link VElement} any {@link VDiagnostic} will be attached to
-		 * @param attribute the {@link EAttribute} to be validated
-		 */
-		PreSetVerifyListener(VElement vElement, EAttribute attribute) {
-			this.vElement = vElement;
-			this.attribute = attribute;
-		}
-
-		@Override
-		public void verifyText(VerifyEvent e) {
-			final String changedText = obtainText(e);
-
-			Object changedValue;
-			try {
-				changedValue = EcoreUtil.createFromString(attribute.getEAttributeType(), changedText);
-			} catch (final IllegalArgumentException formatException) {
-				if (isInteger(attribute.getEType()) && changedText.isEmpty()) {
-					// TODO: corner case, let change propagate in case of integer
-					return;
-				}
-
-				e.doit = false;
-				return;
-			}
-
-			final VDiagnostic prevDiagnostic = vElement == null ? null : vElement.getDiagnostic();
-			if (vElement != null) {
-				vElement.setDiagnostic(validateStrict(attribute, changedValue));
-			}
-
-			final Diagnostic looseDiag = preSetValidationService.validateLoose(attribute, changedValue);
-			if (looseDiag.getSeverity() == Diagnostic.OK) {
-				// loose validation successfully, but keep nevertheless keep validation diagnostic
-				return;
-			}
-
-			// loose validation not successfully, revert and restore previous diagnostic, if any
-			// TODO: revert only for strings because of un-intuitive behavior for integers
-			if (isString(attribute.getEType())) {
-				// remove diagnostic once again, since we revert the change
-				e.doit = false;
-				if (vElement != null) {
-					vElement.setDiagnostic(prevDiagnostic);
-				}
-
-			}
-		}
-
-		private String obtainText(VerifyEvent event) {
-			final String currentText = Text.class.cast(event.widget).getText();
-			final String changedText = currentText.substring(0, event.start) + event.text
-				+ currentText.substring(event.end);
-			return changedText;
-		}
-
-		private boolean isInteger(EClassifier classifier) {
-			return classifier.getInstanceTypeName().equals(Integer.class.getCanonicalName());
-		}
-
 	}
 
 	/**
@@ -234,5 +197,81 @@ public final class PreSetValidationListeners {
 				}
 			});
 		}
+	}
+
+	public static class PreSetVerifyListener implements VerifyListener {
+
+		private final EAttribute attribute;
+		private final VElement vElement;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param vElement the {@link VElement} any {@link VDiagnostic} will be attached to
+		 * @param attribute the {@link EAttribute} to be validated
+		 * @param preSetValidationListeners TODO
+		 */
+		public PreSetVerifyListener(VElement vElement, EAttribute attribute) {
+			this.vElement = vElement;
+			this.attribute = attribute;
+		}
+
+		@Override
+		public void verifyText(VerifyEvent e) {
+			final String changedText = obtainText(e);
+
+			Object changedValue;
+			try {
+				changedValue = EcoreUtil.createFromString(attribute.getEAttributeType(), changedText);
+			} catch (final IllegalArgumentException formatException) {
+				if (isInteger(attribute.getEType()) && changedText.isEmpty()) {
+					// TODO: corner case, let change propagate in case of integer
+					return;
+				}
+
+				e.doit = false;
+				return;
+			}
+
+			final VDiagnostic prevDiagnostic = vElement == null ? null : vElement.getDiagnostic();
+			if (vElement != null) {
+				vElement.setDiagnostic(validationListeners.validateStrict(attribute, changedValue));
+			}
+
+			final Diagnostic looseDiag = preSetValidationService.validateLoose(attribute,
+				changedValue);
+			if (looseDiag.getSeverity() == Diagnostic.OK) {
+				// loose validation successfully, but keep nevertheless keep validation diagnostic
+				return;
+			}
+
+			// loose validation not successfully, revert and restore previous diagnostic, if any
+			// TODO: revert only for strings because of un-intuitive behavior for integers
+			if (validationListeners.isString(attribute.getEType())) {
+				// remove diagnostic once again, since we revert the change
+				e.doit = false;
+				if (vElement != null) {
+					vElement.setDiagnostic(prevDiagnostic);
+				}
+
+			}
+		}
+
+		protected String obtainText(VerifyEvent event) {
+			String currentText = ""; //$NON-NLS-1$
+			if (event.widget instanceof Text) {
+				currentText = Text.class.cast(event.widget).getText();
+			} else if (event.widget instanceof Combo) {
+				currentText = Combo.class.cast(event.widget).getText();
+			}
+			final String changedText = currentText.substring(0, event.start) + event.text
+				+ currentText.substring(event.end);
+			return changedText;
+		}
+
+		private boolean isInteger(EClassifier classifier) {
+			return classifier.getInstanceTypeName().equals(Integer.class.getCanonicalName());
+		}
+
 	}
 }

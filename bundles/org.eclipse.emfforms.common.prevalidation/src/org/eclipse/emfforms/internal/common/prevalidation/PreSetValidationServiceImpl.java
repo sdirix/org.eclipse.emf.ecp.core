@@ -70,8 +70,11 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 				@Override
 				public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics,
 					Map<Object, Object> context) {
-					final EValidator validator = EValidator.Registry.INSTANCE
+					EValidator validator = EValidator.Registry.INSTANCE
 						.getEValidator(eStructuralFeature.getEType().getEPackage());
+					if (validator == null) {
+						validator = new EObjectValidator();
+					}
 					return validator.validate(eDataType, value, diagnostics, context);
 				}
 			},
