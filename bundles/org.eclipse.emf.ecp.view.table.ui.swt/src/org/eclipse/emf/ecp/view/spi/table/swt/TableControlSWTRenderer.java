@@ -2109,12 +2109,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
 
-			if (isDisabled(eObject, domainModelReference)) {
+			if (isDisabled(eObject, domainModelReference)
+				|| CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting)) {
 				return false;
 			}
 
-			boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
-			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
+			final boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
