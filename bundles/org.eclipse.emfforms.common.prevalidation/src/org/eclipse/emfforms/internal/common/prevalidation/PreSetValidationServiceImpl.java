@@ -58,10 +58,8 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	private static final String MULTI_LITERAL_SEP = "|"; //$NON-NLS-1$
 	private static final String ESCAPED_MULTI_LITERAL_SEP = "\\|"; //$NON-NLS-1$
 
-	private Map<EDataType, Set<IFeatureConstraint>> eDataTypeConstraints = //
-		new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
-	private final Map<EStructuralFeature, Set<IFeatureConstraint>> eStructuralFeatureConstraints = //
-		new LinkedHashMap<EStructuralFeature, Set<IFeatureConstraint>>();
+	private Map<ENamedElement, Set<IFeatureConstraint>> constraints = //
+		new LinkedHashMap<ENamedElement, Set<IFeatureConstraint>>();
 
 	@Override
 	public Diagnostic validate(final EStructuralFeature eStructuralFeature, Object value) {
@@ -141,29 +139,13 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 				validator.validate(eDataType, value, diagnostics, context);
 			}
 
-			final Set<IFeatureConstraint> dataTypeConstraints = eDataTypeConstraints.get(eType);
-			if (dataTypeConstraints != null) {
-				for (final IFeatureConstraint constraint : dataTypeConstraints) {
-					final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
-					if (result.getSeverity() == Diagnostic.OK) {
-						continue;
-					}
-					diagnostics.add(result);
-				}
-			}
+			executeValidators(diagnostics, constraints.get(eType),
+				eStructuralFeature, value, context);
 
 		}
 
-		final Set<IFeatureConstraint> featureConstraints = eStructuralFeatureConstraints.get(eStructuralFeature);
-		if (featureConstraints != null) {
-			for (final IFeatureConstraint constraint : featureConstraints) {
-				final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
-				if (result.getSeverity() == Diagnostic.OK) {
-					continue;
-				}
-				diagnostics.add(result);
-			}
-		}
+		executeValidators(diagnostics, constraints.get(eStructuralFeature),
+			eStructuralFeature, value, context);
 
 		return diagnostics;
 	}
@@ -203,24 +185,30 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 		return false;
 	}
 
+	private static void executeValidators(BasicDiagnostic diagnostics, Set<IFeatureConstraint> constraints,
+		EStructuralFeature eStructuralFeature, Object value, Map<Object, Object> context) {
+
+		if (constraints == null) {
+			return;
+		}
+
+		for (final IFeatureConstraint constraint : constraints) {
+			final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
+			if (result.getSeverity() == Diagnostic.OK) {
+				continue;
+			}
+			diagnostics.add(result);
+		}
+
+	}
+
 	@Override
 	public void addConstraintValidator(ENamedElement element, IFeatureConstraint constraint) {
 
-		if (element instanceof EDataType) {
-			if (!eDataTypeConstraints.containsKey(element)) {
-				eDataTypeConstraints.put((EDataType) element, new LinkedHashSet<IFeatureConstraint>());
-			}
-			eDataTypeConstraints.get(element).add(constraint);
-
-		} else if (element instanceof EStructuralFeature && !eStructuralFeatureConstraints.containsKey(element)) {
-			if (!eStructuralFeatureConstraints.containsKey(element)) {
-				eStructuralFeatureConstraints.put((EStructuralFeature) element,
-					new LinkedHashSet<IFeatureConstraint>());
-			}
-			eStructuralFeatureConstraints.get(element).add(constraint);
-		} else {
-			throw new UnsupportedOperationException("Unsupported element type"); //$NON-NLS-1$
+		if (!constraints.containsKey(constraint)) {
+			constraints.put(element, new LinkedHashSet<IFeatureConstraint>());
 		}
+		constraints.get(element).add(constraint);
 
 	}
 
@@ -231,7 +219,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	 */
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		eDataTypeConstraints = new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
+		constraints = new LinkedHashMap<ENamedElement, Set<IFeatureConstraint>>();
 	}
 
 	/**
@@ -241,7 +229,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	 */
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) {
-		eDataTypeConstraints = null;
+		constraints = null;
 	}
 
 	/**

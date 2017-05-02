@@ -150,7 +150,7 @@ public final class PreSetValidationListeners {
 	 *
 	 * @param feature the feature to validate
 	 * @param value the value to validate
-	 * @return
+	 * @return the resulting {@link VDiagnostic}
 	 */
 	protected VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
 		final Diagnostic strictDiag = preSetValidationService.validate(feature, value);
@@ -230,7 +230,7 @@ public final class PreSetValidationListeners {
 		/**
 		 *
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.swt.events.VerifyListener#verifyText(org.eclipse.swt.events.VerifyEvent)
 		 */
 		public void verifyText(VerifyEvent e) {
@@ -273,6 +273,12 @@ public final class PreSetValidationListeners {
 			}
 		}
 
+		/**
+		 * Obtain the text value of the widget.
+		 *
+		 * @param event the event
+		 * @return the current text value
+		 */
 		protected String obtainText(VerifyEvent event) {
 			String currentText = ""; //$NON-NLS-1$
 			if (event.widget instanceof Text) {

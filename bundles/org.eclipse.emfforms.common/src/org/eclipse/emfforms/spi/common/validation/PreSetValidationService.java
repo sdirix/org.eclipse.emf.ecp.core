@@ -12,7 +12,6 @@
 package org.eclipse.emfforms.spi.common.validation;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -25,7 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public interface PreSetValidationService extends IFeatureConstraint {
 
 	/**
-	 * Validate a given value against constraints defined by the {@link org.eclipse.emf.ecore.EDataType EDataType}
+	 * Validate a given value against constraints defined by the EDataType
 	 * of the {@link EStructuralFeature}.
 	 *
 	 * @param eStructuralFeature the feature that defines any constraints
@@ -43,7 +42,7 @@ public interface PreSetValidationService extends IFeatureConstraint {
 	void addConstraintValidator(ENamedElement element, IFeatureConstraint constraint);
 
 	/**
-	 * Validate a given value against loose constraints defined by the {@link EDataType} of the
+	 * Validate a given value against loose constraints defined by the EDataType of the
 	 * {@link EStructuralFeature}.
 	 *
 	 * @param eStructuralFeature the feature that defines any constraints
