@@ -114,10 +114,9 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 
 		BasicDiagnostic diagnostics = new BasicDiagnostic();
 
-		if (eType instanceof EDataType && EDataType.class.cast(eType).getEPackage() == EcorePackage.eINSTANCE) {
+		if (eType instanceof EDataType && EDataType.class.cast(eType).getEPackage() != EcorePackage.eINSTANCE) {
 
 			final EDataType eDataType = EDataType.class.cast(eType);
-
 			diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
 
 			// try to validate given value as enum literal
@@ -139,10 +138,10 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 				validator.validate(eDataType, value, diagnostics, context);
 			}
 
-			executeValidators(diagnostics, constraints.get(eType),
-				eStructuralFeature, value, context);
-
 		}
+
+		executeValidators(diagnostics, constraints.get(eType),
+			eStructuralFeature, value, context);
 
 		executeValidators(diagnostics, constraints.get(eStructuralFeature),
 			eStructuralFeature, value, context);
