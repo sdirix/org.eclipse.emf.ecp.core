@@ -596,7 +596,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			}
 		}
 
-		updateAndPropagate(controlDiagnosticMap);
+		 updateAndPropagate(controlDiagnosticMap);
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
@@ -794,6 +794,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
 		validate(getAllEObjectsToValidate());
+		childContext.registerViewChangeListener(viewChangeListener);
 	}
 
 	/**
