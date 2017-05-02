@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -56,7 +57,11 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	private static final String LOOSE_MIN_LENGTH = "looseMinLength"; //$NON-NLS-1$
 	private static final String MULTI_LITERAL_SEP = "|"; //$NON-NLS-1$
 	private static final String ESCAPED_MULTI_LITERAL_SEP = "\\|"; //$NON-NLS-1$
-	private Map<EDataType, Set<IFeatureConstraint>> extensions = new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
+
+	private Map<EDataType, Set<IFeatureConstraint>> eDataTypeConstraints = //
+		new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
+	private final Map<EStructuralFeature, Set<IFeatureConstraint>> eStructuralFeatureConstraints = //
+		new LinkedHashMap<EStructuralFeature, Set<IFeatureConstraint>>();
 
 	@Override
 	public Diagnostic validate(final EStructuralFeature eStructuralFeature, Object value) {
@@ -109,34 +114,47 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 		Map<Object, Object> context) {
 		final EClassifier eType = eStructuralFeature.getEType();
 
-		if (!EDataType.class.isInstance(eType) || EDataType.class.cast(eType).getEPackage() == EcorePackage.eINSTANCE) {
-			return new BasicDiagnostic();
-		}
+		BasicDiagnostic diagnostics = new BasicDiagnostic();
 
-		final EDataType eDataType = EDataType.class.cast(eType);
+		if (eType instanceof EDataType && EDataType.class.cast(eType).getEPackage() == EcorePackage.eINSTANCE) {
 
-		final BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
+			final EDataType eDataType = EDataType.class.cast(eType);
 
-		// try to validate given value as enum literal
-		if (eDataType instanceof EEnum && value instanceof String) {
-			if (validateEEnum((EEnum) eDataType, (String) value)) {
-				return new BasicDiagnostic();
-			}
-		} else if (eDataType instanceof EEnum && value instanceof List<?>) {
-			try {
-				if (validateEEnum((EEnum) eDataType, (List<Enumerator>) value)) {
+			diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
+
+			// try to validate given value as enum literal
+			if (eDataType instanceof EEnum && value instanceof String) {
+				if (validateEEnum((EEnum) eDataType, (String) value)) {
 					return new BasicDiagnostic();
 				}
-			} catch (final ClassCastException ex) {
-				// ignore and continue with regular validation
+			} else if (eDataType instanceof EEnum && value instanceof List<?>) {
+				try {
+					if (validateEEnum((EEnum) eDataType, (List<Enumerator>) value)) {
+						return new BasicDiagnostic();
+					}
+				} catch (final ClassCastException ex) {
+					// ignore and continue with regular validation
+				}
 			}
+
+			if (validator != null) {
+				validator.validate(eDataType, value, diagnostics, context);
+			}
+
+			final Set<IFeatureConstraint> dataTypeConstraints = eDataTypeConstraints.get(eType);
+			if (dataTypeConstraints != null) {
+				for (final IFeatureConstraint constraint : dataTypeConstraints) {
+					final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
+					if (result.getSeverity() == Diagnostic.OK) {
+						continue;
+					}
+					diagnostics.add(result);
+				}
+			}
+
 		}
 
-		if (validator != null) {
-			validator.validate(eDataType, value, diagnostics, context);
-		}
-
-		final Set<IFeatureConstraint> featureConstraints = extensions.get(eType);
+		final Set<IFeatureConstraint> featureConstraints = eStructuralFeatureConstraints.get(eStructuralFeature);
 		if (featureConstraints != null) {
 			for (final IFeatureConstraint constraint : featureConstraints) {
 				final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
@@ -186,11 +204,24 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	}
 
 	@Override
-	public void addConstraintValidator(EDataType eDataType, IFeatureConstraint extension) {
-		if (!extensions.containsKey(eDataType)) {
-			extensions.put(eDataType, new LinkedHashSet<IFeatureConstraint>());
+	public void addConstraintValidator(ENamedElement element, IFeatureConstraint constraint) {
+
+		if (element instanceof EDataType) {
+			if (!eDataTypeConstraints.containsKey(element)) {
+				eDataTypeConstraints.put((EDataType) element, new LinkedHashSet<IFeatureConstraint>());
+			}
+			eDataTypeConstraints.get(element).add(constraint);
+
+		} else if (element instanceof EStructuralFeature && !eStructuralFeatureConstraints.containsKey(element)) {
+			if (!eStructuralFeatureConstraints.containsKey(element)) {
+				eStructuralFeatureConstraints.put((EStructuralFeature) element,
+					new LinkedHashSet<IFeatureConstraint>());
+			}
+			eStructuralFeatureConstraints.get(element).add(constraint);
+		} else {
+			throw new UnsupportedOperationException("Unsupported element type"); //$NON-NLS-1$
 		}
-		extensions.get(eDataType).add(extension);
+
 	}
 
 	/**
@@ -200,7 +231,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	 */
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		extensions = new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
+		eDataTypeConstraints = new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
 	}
 
 	/**
@@ -210,7 +241,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	 */
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) {
-		extensions = null;
+		eDataTypeConstraints = null;
 	}
 
 	/**

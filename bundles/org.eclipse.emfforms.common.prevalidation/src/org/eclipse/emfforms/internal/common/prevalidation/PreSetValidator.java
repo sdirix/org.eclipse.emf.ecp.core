@@ -24,7 +24,8 @@ import org.eclipse.emf.ecore.EDataType;
  * DynamicLoosePatternEValidator}.
  *
  */
-interface PreSetValidator {
+public interface PreSetValidator {
+
 	/**
 	 * Validates the object in the given context, optionally producing diagnostics.
 	 *

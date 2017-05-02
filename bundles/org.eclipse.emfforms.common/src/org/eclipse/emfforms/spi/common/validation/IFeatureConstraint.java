@@ -25,6 +25,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public interface IFeatureConstraint {
 
 	/**
+	 * Context map key to retrieve the the root EObject (may be null).
+	 */
+	String E_ROOT_OBJECT = "rootEObject"; //$NON-NLS-1$
+
+	/**
 	 * Validate a given value against constraints defined by the {@link org.eclipse.emf.ecore.EDataType EDataType}
 	 * of the {@link EStructuralFeature}.
 	 *

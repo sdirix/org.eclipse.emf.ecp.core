@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.common.validation;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -36,10 +37,10 @@ public interface PreSetValidationService extends IFeatureConstraint {
 	/**
 	 * Add a custom {@link IFeatureConstraint}.
 	 *
-	 * @param eDataType a custom {@link EDataType}
+	 * @param element {@link ENamedElement} to add a validation constraint for
 	 * @param constraint the behavioral validation constraint
 	 */
-	void addConstraintValidator(EDataType eDataType, IFeatureConstraint constraint);
+	void addConstraintValidator(ENamedElement element, IFeatureConstraint constraint);
 
 	/**
 	 * Validate a given value against loose constraints defined by the {@link EDataType} of the
