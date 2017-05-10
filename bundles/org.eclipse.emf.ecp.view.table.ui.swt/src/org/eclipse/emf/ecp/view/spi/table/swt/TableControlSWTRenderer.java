@@ -17,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -192,6 +194,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
+	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
+	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
 
 	private final Map<Integer, ECPCellEditorComparator> columnIndexToComparatorMap = new LinkedHashMap<Integer, ECPCellEditorComparator>();
 
@@ -207,6 +211,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private boolean showValidationSummaryTooltip;
 	private Button addButton;
 	private Button removeButton;
+	private Button moveUpButton;
+	private Button moveDownButton;
 
 	private Optional<Integer> minimumHeight;
 	private Optional<Integer> maximumHeight;
@@ -216,6 +222,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
 	private IObservableList list;
+	private boolean isFeatureOrdered;
 
 	/**
 	 * Default constructor.
@@ -822,9 +829,25 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(false);
 			}
+			if (isFeatureOrdered) {
+				if (moveDownButton != null) {
+					moveDownButton.setEnabled(false);
+				}
+				if (moveUpButton != null) {
+					moveUpButton.setEnabled(false);
+				}
+			}
 		} else {
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(true);
+			}
+			if (isFeatureOrdered) {
+				if (moveDownButton != null) {
+					moveDownButton.setEnabled(true);
+				}
+				if (moveUpButton != null) {
+					moveUpButton.setEnabled(true);
+				}
 			}
 		}
 	}
@@ -1046,6 +1069,45 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		SWTDataElementIdHelper.setElementIdDataWithSubId(addButton, getVElement(), "table_add", getViewModelContext()); //$NON-NLS-1$
 		return addButton;
+	}
+
+	private Button createMoveUpButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+		moveUpButton = new Button(buttonComposite, SWT.None);
+		final Image image = getImage(ICON_MOVE_UP);
+		moveUpButton.setImage(image);
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		moveUpButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_MoveUp),
+			instanceName));
+
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (!structuralFeature.isOrdered() || containments.size() <= 1) {
+			moveUpButton.setEnabled(false);
+		}
+		isFeatureOrdered = structuralFeature.isOrdered();
+		SWTDataElementIdHelper.setElementIdDataWithSubId(moveUpButton, getVElement(), "table_moveUp", //$NON-NLS-1$
+			getViewModelContext());
+		return moveUpButton;
+	}
+
+	private Button createMoveDownButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+		moveDownButton = new Button(buttonComposite, SWT.None);
+		final Image image = getImage(ICON_MOVE_DOWN);
+		moveDownButton.setImage(image);
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		moveDownButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_MoveDown),
+			instanceName));
+
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (!structuralFeature.isOrdered() || containments.size() <= 1) {
+			moveDownButton.setEnabled(false);
+		}
+		SWTDataElementIdHelper.setElementIdDataWithSubId(moveDownButton, getVElement(), "table_moveDown", //$NON-NLS-1$
+			getViewModelContext());
+		return moveDownButton;
 	}
 
 	/**
@@ -1806,6 +1868,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public void fillButtonComposite(Composite buttonComposite, AbstractTableViewer viewer) {
 			int numButtons = addButtonsToButtonBar(buttonComposite);
+			if (!getVElement().isMoveUpDownDisabled() && structuralFeature.isOrdered()
+				&& structuralFeature.getUpperBound() != 1) {
+				moveUpButton = createMoveUpButton(
+					clazz, buttonComposite, eObject, structuralFeature);
+				moveDownButton = createMoveDownButton(
+					clazz, buttonComposite, eObject, structuralFeature);
+
+				numButtons = numButtons + 2;
+
+				initMoveUpDownButtons(moveUpButton, moveDownButton, viewer);
+			}
 			if (!getVElement().isAddRemoveDisabled()) {
 				addButton = createAddRowButton(
 					clazz, buttonComposite, eObject, structuralFeature);
@@ -1814,13 +1887,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 				numButtons = numButtons + 2;
 
-				initButtons(addButton, removeButton, viewer);
+				initAddRemoveButtons(addButton, removeButton, viewer);
 			}
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false)
 				.applyTo(buttonComposite);
 		}
 
-		private void initButtons(final Button addButton, final Button removeButton, final AbstractTableViewer viewer) {
+		private void initAddRemoveButtons(final Button addButton, final Button removeButton,
+			final AbstractTableViewer viewer) {
 			addButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -1837,7 +1911,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 			});
 			removeButton.addSelectionListener(new SelectionAdapter() {
-
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
@@ -1857,6 +1930,73 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						structuralFeature, addButton, removeButton);
 				}
 			});
+		}
+
+		private void initMoveUpDownButtons(final Button moveUpButton, final Button moveDownButton,
+			final AbstractTableViewer viewer) {
+			moveUpButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+					final EditingDomain editingDomain = getEditingDomain(eObject);
+
+					@SuppressWarnings({ "rawtypes", "unchecked" })
+					final List<?> moveUpList = new ArrayList(
+						IStructuredSelection.class.cast(tableViewer.getSelection()).toList());
+					sortSelectionBasedOnIndex(moveUpList, containments);
+
+					for (final Object moveUpObject : moveUpList) {
+						final int currentIndex = containments.indexOf(moveUpObject);
+						if (currentIndex <= 0) {
+							return;
+						}
+						editingDomain.getCommandStack()
+							.execute(
+								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
+									currentIndex - 1));
+					}
+				}
+			});
+			moveDownButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+					final EditingDomain editingDomain = getEditingDomain(eObject);
+
+					@SuppressWarnings({ "rawtypes", "unchecked" })
+					final List<?> moveDownList = new ArrayList(
+						IStructuredSelection.class.cast(tableViewer.getSelection()).toList());
+					sortSelectionBasedOnIndex(moveDownList, containments);
+					// need to reverse to avoid the moves interfering each other
+					Collections.reverse(moveDownList);
+
+					final int maxIndex = containments.size() - 1;
+
+					for (final Object moveDownObject : moveDownList) {
+						final int currentIndex = containments.indexOf(moveDownObject);
+						if (currentIndex < 0 || currentIndex == maxIndex) {
+							return;
+						}
+						editingDomain.getCommandStack()
+							.execute(
+								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
+									currentIndex + 1));
+					}
+				}
+			});
+		}
+
+		private void sortSelectionBasedOnIndex(List<?> selection, final List<?> list) {
+			Collections.sort(
+				selection,
+				new Comparator<Object>() {
+					@Override
+					public int compare(Object o1, Object o2) {
+						final int i1 = list.indexOf(o1);
+						final int i2 = list.indexOf(o2);
+						return i1 - i2;
+					}
+				});
 		}
 
 		@Override

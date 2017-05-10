@@ -8,6 +8,8 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addRemoveDisabled" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="moveUpDownDisabled" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnConfigurations" upperBound="-1"
         eType="#//TableColumnConfiguration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="detailEditing" lowerBound="1"

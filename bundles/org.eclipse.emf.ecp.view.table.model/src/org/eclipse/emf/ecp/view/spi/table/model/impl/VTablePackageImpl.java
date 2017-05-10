@@ -210,8 +210,19 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getTableControl_MoveUpDownDisabled() {
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EReference getTableControl_ColumnConfigurations() {
-		return (EReference) tableControlEClass.getEStructuralFeatures().get(1);
+		return (EReference) tableControlEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -222,7 +233,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	@Override
 	public EAttribute getTableControl_DetailEditing() {
-		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(2);
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -233,7 +244,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	@Override
 	public EReference getTableControl_DetailView() {
-		return (EReference) tableControlEClass.getEStructuralFeatures().get(3);
+		return (EReference) tableControlEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -244,7 +255,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	@Override
 	public EAttribute getTableControl_EnableDetailEditingDialog() {
-		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(4);
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -433,6 +444,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		// Create classes and their features
 		tableControlEClass = createEClass(TABLE_CONTROL);
 		createEAttribute(tableControlEClass, TABLE_CONTROL__ADD_REMOVE_DISABLED);
+		createEAttribute(tableControlEClass, TABLE_CONTROL__MOVE_UP_DOWN_DISABLED);
 		createEReference(tableControlEClass, TABLE_CONTROL__COLUMN_CONFIGURATIONS);
 		createEAttribute(tableControlEClass, TABLE_CONTROL__DETAIL_EDITING);
 		createEReference(tableControlEClass, TABLE_CONTROL__DETAIL_VIEW);
@@ -508,6 +520,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTableControl_AddRemoveDisabled(), ecorePackage.getEBoolean(), "addRemoveDisabled", "false", 1, //$NON-NLS-1$ //$NON-NLS-2$
 			1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableControl_MoveUpDownDisabled(), ecorePackage.getEBoolean(), "moveUpDownDisabled", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			1, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEReference(getTableControl_ColumnConfigurations(), getTableColumnConfiguration(), null,
 			"columnConfigurations", null, 0, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$

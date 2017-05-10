@@ -196,6 +196,16 @@ public interface VTablePackage extends EPackage {
 	int TABLE_CONTROL__ADD_REMOVE_DISABLED = VViewPackage.CONTROL_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Move Up Down Disabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__MOVE_UP_DOWN_DISABLED = VViewPackage.CONTROL_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Column Configurations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -203,7 +213,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__COLUMN_CONFIGURATIONS = VViewPackage.CONTROL_FEATURE_COUNT + 1;
+	int TABLE_CONTROL__COLUMN_CONFIGURATIONS = VViewPackage.CONTROL_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Detail Editing</b></em>' attribute.
@@ -213,7 +223,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__DETAIL_EDITING = VViewPackage.CONTROL_FEATURE_COUNT + 2;
+	int TABLE_CONTROL__DETAIL_EDITING = VViewPackage.CONTROL_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Detail View</b></em>' containment reference.
@@ -223,7 +233,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__DETAIL_VIEW = VViewPackage.CONTROL_FEATURE_COUNT + 3;
+	int TABLE_CONTROL__DETAIL_VIEW = VViewPackage.CONTROL_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Enable Detail Editing Dialog</b></em>' attribute.
@@ -233,7 +243,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = VViewPackage.CONTROL_FEATURE_COUNT + 4;
+	int TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = VViewPackage.CONTROL_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -243,7 +253,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 5;
+	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration <em>Column
@@ -628,6 +638,20 @@ public interface VTablePackage extends EPackage {
 	EAttribute getTableControl_AddRemoveDisabled();
 
 	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isMoveUpDownDisabled <em>Move Up Down
+	 * Disabled</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Move Up Down Disabled</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isMoveUpDownDisabled()
+	 * @see #getTableControl()
+	 * @generated
+	 */
+	EAttribute getTableControl_MoveUpDownDisabled();
+
+	/**
 	 * Returns the meta object for the containment reference list
 	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations <em>Column
 	 * Configurations</em>}'.
@@ -898,6 +922,15 @@ public interface VTablePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__ADD_REMOVE_DISABLED = eINSTANCE.getTableControl_AddRemoveDisabled();
+
+		/**
+		 * The meta object literal for the '<em><b>Move Up Down Disabled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TABLE_CONTROL__MOVE_UP_DOWN_DISABLED = eINSTANCE.getTableControl_MoveUpDownDisabled();
 
 		/**
 		 * The meta object literal for the '<em><b>Column Configurations</b></em>' containment reference list feature.
