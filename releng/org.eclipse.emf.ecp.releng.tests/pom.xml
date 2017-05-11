@@ -71,6 +71,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.test.model.edit</module>
 		<module>../../tests/org.eclipse.emf.ecp.test.model.feature</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.rap.sessionprovider.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.rap.sessionprovider.concurrent.test</module>
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test</module>
@@ -118,6 +119,7 @@
 		<module>../../tests/org.eclipse.emfforms.editor.ecore.test</module>
 
 		<module>../../tests/org.eclipse.emf.ecp.core.rap.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.rap.concurrent.test</module>
 		
 		<!-- Key Attribute DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	
