@@ -1235,6 +1235,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final EObject instance = eObjectToAdd.get();
 		final EditingDomain editingDomain = getEditingDomain(eObject);
 		if (editingDomain == null) {
+			return;
 		}
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, eObject, structuralFeature, instance));
