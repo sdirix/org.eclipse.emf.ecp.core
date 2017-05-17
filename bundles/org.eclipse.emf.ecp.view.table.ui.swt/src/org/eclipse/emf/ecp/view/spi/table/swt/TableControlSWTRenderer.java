@@ -2203,6 +2203,27 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
 				.getSeverity());
 		}
+
+		/**
+		 * @return the cellEditor
+		 */
+		protected CellEditor getCellEditor() {
+			return cellEditor;
+		}
+
+		/**
+		 * @return the feature
+		 */
+		protected EStructuralFeature getFeature() {
+			return feature;
+		}
+
+		/**
+		 * @return the dmr
+		 */
+		protected VDomainModelReference getDmr() {
+			return dmr;
+		}
 	}
 
 	/**
