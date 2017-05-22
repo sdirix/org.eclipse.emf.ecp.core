@@ -22,14 +22,13 @@
 <repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.8.0.v20160606-1028"/>
-<repository location="http://download.eclipse.org/emfstore/releases_18"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/emfstore/releases_19"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="3.12.3.v20170301-0400"/>
@@ -408,8 +407,6 @@
 <plugin id="org.eclipse.emf.emfstore.common.model.edit.source"/>
 <plugin id="org.eclipse.emf.emfstore.common.model.source"/>
 <plugin id="org.eclipse.emf.emfstore.common.source"/>
-<plugin id="org.eclipse.emf.emfstore.ecore"/>
-<plugin id="org.eclipse.emf.emfstore.ecore.source"/>
 <plugin id="org.eclipse.emf.emfstore.example.installer"/>
 <plugin id="org.eclipse.emf.emfstore.examplemodel"/>
 <plugin id="org.eclipse.emf.emfstore.examplemodel.edit"/>
