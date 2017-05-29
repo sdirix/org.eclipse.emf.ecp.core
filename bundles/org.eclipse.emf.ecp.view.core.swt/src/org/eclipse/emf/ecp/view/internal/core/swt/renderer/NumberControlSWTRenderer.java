@@ -130,6 +130,14 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
+	protected Object convert(Text text, EDataType attributeType, String value) throws DatabindingFailedException {
+		final EStructuralFeature eStructuralFeature = (EStructuralFeature) getModelValue().getValueType();
+		final NumericalTargetToModelUpdateStrategy converter = new NumericalTargetToModelUpdateStrategy(
+			eStructuralFeature, getModelValue(), getDataBindingContext(), text);
+		return converter.convert(value);
+	}
+
+	@Override
 	protected Binding[] createBindings(final Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 
