@@ -24,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
@@ -59,6 +58,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.internal.table.swt.RunnableManager;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
@@ -224,8 +224,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private boolean isDisposing;
 	private IObservableList list;
 	private boolean isFeatureOrdered;
-	private final AtomicBoolean isValidationRunning = new AtomicBoolean(false);
-	private final AtomicBoolean isValidationPending = new AtomicBoolean(false);
+	private final RunnableManager runnableManager = new RunnableManager(Display.getDefault());
 
 	/**
 	 * Default constructor.
@@ -1247,11 +1246,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyValidation() {
-		if (isValidationRunning.compareAndSet(false, true)) {
-			Display.getDefault().asyncExec(new ApplyValidationRunnable());
-		} else {
-			isValidationPending.compareAndSet(false, true);
-		}
+		runnableManager.executeAsync(new ApplyValidationRunnable());
 	}
 
 	/**
@@ -1661,56 +1656,46 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private final class ApplyValidationRunnable implements Runnable {
 		@Override
 		public void run() {
+			if (isDisposing) {
+				return;
+			}
+			// triggered due to another validation rule before this control is rendered
+			// validation rule triggered after the control was disposed
+			if (validationIcon == null || validationIcon.isDisposed()) {
+				return;
+			}
+
+			// no diagnostic set
+			if (getVElement().getDiagnostic() == null) {
+				return;
+			}
+
+			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
+				.getDomainModelReference();
+			IObservableValue observableValue;
 			try {
-				if (isDisposing) {
-					return;
+				if (tableDMR.getDomainModelReference() != null) {
+					observableValue = getEMFFormsDatabinding().getObservableValue(
+						tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
+				} else {
+					observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
+						getViewModelContext().getDomainModel());
 				}
-				// triggered due to another validation rule before this control is rendered
-				// validation rule triggered after the control was disposed
-				if (validationIcon == null || validationIcon.isDisposed()) {
-					return;
-				}
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
+				return;
+			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+			observableValue.dispose();
 
-				// no diagnostic set
-				if (getVElement().getDiagnostic() == null) {
-					return;
-				}
+			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+			showValidationSummaryTooltip(showValidationSummaryTooltip);
 
-				final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
-					.getDomainModelReference();
-				IObservableValue observableValue;
-				try {
-					if (tableDMR.getDomainModelReference() != null) {
-						observableValue = getEMFFormsDatabinding().getObservableValue(
-							tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
-					} else {
-						observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
-							getViewModelContext().getDomainModel());
-					}
-				} catch (final DatabindingFailedException ex) {
-					getReportService().report(new DatabindingFailedReport(ex));
-					return;
-				}
-				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-				observableValue.dispose();
-
-				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-				showValidationSummaryTooltip(showValidationSummaryTooltip);
-
-				final Collection<?> collection = (Collection<?>) eObject.eGet(structuralFeature, true);
-				if (!collection.isEmpty()) {
-					for (final Object object : collection) {
-						tableViewer.update(object, null);
-					}
-				}
-			} finally {
-				// validation finished
-				isValidationRunning.compareAndSet(true, false);
-
-				// re-trigger validation if we have a pending request
-				if (isValidationPending.compareAndSet(true, false)) {
-					applyValidation();
+			final Collection<?> collection = (Collection<?>) eObject.eGet(structuralFeature, true);
+			if (!collection.isEmpty()) {
+				for (final Object object : collection) {
+					tableViewer.update(object, null);
 				}
 			}
 		}
