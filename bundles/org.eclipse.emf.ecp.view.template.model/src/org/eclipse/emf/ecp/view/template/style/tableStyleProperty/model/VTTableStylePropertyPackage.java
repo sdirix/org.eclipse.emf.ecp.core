@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 
@@ -130,13 +131,23 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Visible Lines</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int TABLE_STYLE_PROPERTY__VISIBLE_LINES = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Render Mode</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_STYLE_PROPERTY__RENDER_MODE = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Table Style Property</em>' class.
@@ -147,7 +158,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 5;
+	int TABLE_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Table Style Property</em>' class.
@@ -158,6 +169,18 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_STYLE_PROPERTY_OPERATION_COUNT = VTTemplatePackage.STYLE_PROPERTY_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
+	 * <em>Render Mode</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl#getRenderMode()
+	 * @generated
+	 */
+	int RENDER_MODE = 1;
 
 	/**
 	 * Returns the meta object for class
@@ -235,7 +258,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
 	 * <em>Visible Lines</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Visible Lines</em>'.
@@ -244,6 +267,32 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTableStyleProperty_VisibleLines();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode
+	 * <em>Render Mode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Render Mode</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode()
+	 * @see #getTableStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTableStyleProperty_RenderMode();
+
+	/**
+	 * Returns the meta object for enum
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode <em>Render Mode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for enum '<em>Render Mode</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
+	 * @generated
+	 */
+	EEnum getRenderMode();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -325,12 +374,34 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Visible Lines</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.13
 		 *        <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute TABLE_STYLE_PROPERTY__VISIBLE_LINES = eINSTANCE.getTableStyleProperty_VisibleLines();
+
+		/**
+		 * The meta object literal for the '<em><b>Render Mode</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute TABLE_STYLE_PROPERTY__RENDER_MODE = eINSTANCE.getTableStyleProperty_RenderMode();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode <em>Render Mode</em>}'
+		 * enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
+		 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl#getRenderMode()
+		 * @generated
+		 */
+		EEnum RENDER_MODE = eINSTANCE.getRenderMode();
 
 	}
 
