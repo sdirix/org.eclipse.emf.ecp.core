@@ -129,10 +129,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 					public void run(PreSetValidationService service) {
 						try {
 							final EDataType attributeType = ((EAttribute) getFeature()).getEAttributeType();
-							final Object changedValue = EcoreUtil.createFromString(
-								attributeType, getTextFromTextField(text, attributeType));
-
-							final Diagnostic textDiag = service.validate(getFeature(), changedValue);
+							final String textFieldText = getTextFromTextField(text, attributeType);
+							final Object convertedValue = convert(text, attributeType, textFieldText);
+							final Diagnostic textDiag = service.validate(getFeature(), convertedValue);
 							final Diagnostic boundDiag = service.validate(getFeature(), getModelValue().getValue());
 							final boolean isEnteredValueValid = textDiag.getSeverity() == Diagnostic.OK;
 							final boolean isBoundValueValid = boundDiag.getSeverity() == Diagnostic.OK;
@@ -171,6 +170,20 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		}
 		gdf.applyTo(text);
 		return composite;
+	}
+
+	/**
+	 * Convert the given value from target to model.
+	 *
+	 * @param text the Text control
+	 * @param attributeType the model data type
+	 * @param value the target value to convert
+	 * @return the converted value
+	 * @throws DatabindingFailedException in case the databinding failed
+	 * @since 1.13
+	 */
+	protected Object convert(Text text, EDataType attributeType, String value) throws DatabindingFailedException {
+		return EcoreUtil.createFromString(attributeType, value);
 	}
 
 	/**

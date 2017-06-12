@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -197,6 +198,13 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			dialog.open();
 		}
+	}
+
+	@Override
+	protected Object convert(Text text, EDataType attributeType, String value) throws DatabindingFailedException {
+		final EStructuralFeature eStructuralFeature = (EStructuralFeature) getModelValue().getValueType();
+		final DateTargetToModelUpdateStrategy converter = new DateTargetToModelUpdateStrategy(eStructuralFeature, text);
+		return converter.convert(value);
 	}
 
 	/**

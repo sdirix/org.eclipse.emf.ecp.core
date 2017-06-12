@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import java.text.MessageFormat;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
@@ -20,6 +22,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xml.type.InvalidDatatypeValueException;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -239,8 +242,12 @@ public final class PreSetValidationListeners {
 			Object changedValue;
 			try {
 				changedValue = EcoreUtil.createFromString(attribute.getEAttributeType(), changedText);
-			} catch (final IllegalArgumentException formatException) {
-				if (isInteger(attribute.getEType()) && changedText.isEmpty()) {
+			} catch (final IllegalArgumentException | InvalidDatatypeValueException formatException) {
+				if (isInteger(attribute.getEType()) && changedText.isEmpty()
+					|| XMLGregorianCalendar.class.isAssignableFrom(attribute.getEType().getInstanceClass())
+					|| double.class.isAssignableFrom(attribute.getEType().getInstanceClass())
+					|| Double.class.isAssignableFrom(attribute.getEType().getInstanceClass())) {
+
 					// TODO: corner case, let change propagate in case of integer
 					return;
 				}

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.view.validation.feature"
-      label="EMF Forms Validation Service"
+      id="org.eclipse.emfforms.common.prevalidation.feature"
+      label="EMFForms PreValidation Feature"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.view.validation"
-      image="eclipse_update_120.jpg"
+      plugin="org.eclipse.emfforms.common.prevalidation"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.13.0.qualifier">
 
@@ -22,14 +21,7 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.validation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emfforms.common.validation"
+         id="org.eclipse.emfforms.common.prevalidation"
          download-size="0"
          install-size="0"
          version="0.0.0"
