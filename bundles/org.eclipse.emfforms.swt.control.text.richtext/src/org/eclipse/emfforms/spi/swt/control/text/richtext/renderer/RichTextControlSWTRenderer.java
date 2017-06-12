@@ -83,7 +83,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 
 		@Override
 		public void mouseUp(MouseEvent e) {
-			openPopUp(text);
+			openPopUp(text, false);
 		}
 
 		@Override
@@ -96,7 +96,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
-	private void openPopUp(final StyledText text) {
+	private void openPopUp(final StyledText text, boolean selectAll) {
 		popupWindow = createPopupWindow();
 
 		innerText = new Text(popupWindow.getContent(),
@@ -111,7 +111,11 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		innerText.setFocus();
 		innerText.setText(text.getText());
 
-		innerText.setSelection(text.getSelectionRange().x, text.getSelectionRange().x + text.getSelectionCount());
+		if (selectAll) {
+			innerText.selectAll();
+		} else {
+			innerText.setSelection(text.getSelectionRange().x, text.getSelectionRange().x + text.getSelectionCount());
+		}
 
 		innerText.addVerifyListener(new VerifyListener() {
 
@@ -288,7 +292,11 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			public void keyPressed(KeyEvent e) {
 
 				if (isOpenKey(e)) {
-					openPopUp(text);
+					boolean selectAll = false;
+					if ((isCommandKeyPressed(e) || isCtrlKeyPressed(e)) && e.keyCode == 'a') {
+						selectAll = true;
+					}
+					openPopUp(text, selectAll);
 				}
 
 			}
@@ -319,6 +327,12 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			return false;
 		}
 		if (e.keyCode == SWT.ALT) {
+			return false;
+		}
+		if (e.keyCode == SWT.CTRL) {
+			return false;
+		}
+		if (e.keyCode == SWT.COMMAND) {
 			return false;
 		}
 
