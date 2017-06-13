@@ -163,7 +163,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		final Object detailPane = getViewModelContext().getContextValue("detailPane"); //$NON-NLS-1$
 		if (detailPane != null && Composite.class.isInstance(detailPane)) {
-			treeViewer = new TreeViewer(parent);
+			treeViewer = createTreeViewer(parent);
 
 			final ScrolledComposite editorComposite = createdEditorPane(Composite.class.cast(detailPane));
 
@@ -179,7 +179,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sashForm);
 
-		treeViewer = new TreeViewer(sashForm);
+		treeViewer = createTreeViewer(sashForm);
 
 		final ScrolledComposite editorComposite = createdEditorPane(sashForm);
 
@@ -191,6 +191,16 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			getViewModelContext());
 		SWTDataElementIdHelper.setElementIdDataWithSubId(sashForm, getVElement(), "sash", getViewModelContext()); //$NON-NLS-1$
 		return sashForm;
+	}
+
+	/**
+	 * Creates a {@link TreeViewer}. Sub classes can override to influence the {@link TreeViewer}.
+	 *
+	 * @param parent the parent {@link Composite}
+	 * @return a {@link TreeViewer}
+	 */
+	protected TreeViewer createTreeViewer(Composite parent) {
+		return new TreeViewer(parent, SWT.SINGLE);
 	}
 
 	/**
