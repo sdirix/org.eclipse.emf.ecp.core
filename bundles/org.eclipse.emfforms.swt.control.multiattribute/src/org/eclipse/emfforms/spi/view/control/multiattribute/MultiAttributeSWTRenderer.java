@@ -341,7 +341,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 
 		if (getTableStyleProperty().getRenderMode() == RenderMode.DEFAULT) {
-			final Composite titleComposite = createTitleComposite(parent);
+			final Composite titleComposite = createTitleComposite(composite);
 			createButtonComposite(titleComposite, list);
 		}
 
