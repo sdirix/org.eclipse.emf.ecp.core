@@ -60,8 +60,6 @@ public class ValidationService_PTest {
 
 	private CrossReferenceContainer otherContainer;
 
-	private ReportService reportService;
-
 	/**
 	 * @throws java.lang.Exception
 	 */

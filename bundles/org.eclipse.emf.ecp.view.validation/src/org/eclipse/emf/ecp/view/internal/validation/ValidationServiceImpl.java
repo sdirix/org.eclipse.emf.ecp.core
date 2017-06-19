@@ -17,13 +17,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -327,10 +329,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private ValidationDomainModelChangeListener domainChangeListener;
 	private ViewModelChangeListener viewChangeListener;
 	private ViewModelContext context;
-	private final Queue<EObject> validationQueue = new LinkedList<EObject>();
-	private final Set<EObject> validated = new LinkedHashSet<EObject>();
-	private boolean validationRunning;
-	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new LinkedHashMap<UniqueSetting, VDiagnostic>();
+	private final Queue<EObject> validationQueue = new ConcurrentLinkedQueue<EObject>();
+	private final Set<EObject> validated = Collections.newSetFromMap(new ConcurrentHashMap<EObject, Boolean>());
+	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
+	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new ConcurrentHashMap<UniqueSetting, VDiagnostic>();
 	private ComposedAdapterFactory adapterFactory;
 	private final Timer timer = new Timer();
 
@@ -517,10 +519,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			return;
 		}
 		// prohibit re-entry in recursion
-		if (validationRunning) {
+		if (!validationRunning.compareAndSet(false, true)) {
 			return;
 		}
-		validationRunning = true;
 		EObject toValidate;
 		while ((toValidate = validationQueue.poll()) != null) {
 			final ValidationTimerTask timerTask = new ValidationTimerTask(toValidate);
@@ -532,7 +533,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		notifyListeners();
 		currentUpdates.clear();
 		validated.clear();
-		validationRunning = false;
+		validationRunning.compareAndSet(true, false);
 	}
 
 	/**
@@ -596,7 +597,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			}
 		}
 
-		 updateAndPropagate(controlDiagnosticMap);
+		updateAndPropagate(controlDiagnosticMap);
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
