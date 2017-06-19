@@ -265,6 +265,11 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	@Override
+	protected void applyReadOnly() {
+		applyEnable();
+	}
+
+	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoPropertyDescriptorFoundExeption, NoRendererFoundException {
 		if (rendererGridDescription.getColumns() == 1) {
@@ -603,6 +608,55 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#applyEnable()
+	 */
+	@Override
+	protected void applyEnable() {
+		if (getAddButton() != null) {
+			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (getRemoveButton() != null) {
+			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (getMoveUpButton() != null) {
+			getMoveUpButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (getMoveDownButton() != null) {
+			getMoveDownButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getMoveDownButton() {
+		return downButton;
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getMoveUpButton() {
+		return upButton;
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getRemoveButton() {
+		return removeButton;
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getAddButton() {
+		return addButton;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void dispose() {
@@ -798,7 +852,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
-				return true;
+				return editable;
 			}
 			return editable;
 		}
