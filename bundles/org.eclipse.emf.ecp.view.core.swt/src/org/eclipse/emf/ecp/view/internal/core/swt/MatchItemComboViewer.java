@@ -24,13 +24,14 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * A {@link ComboViewer} that allows typed text to be matched against
  * the combo viewer's items and also allows setting the selection via arrow keys.
- *
+ * If the escape key pressed, the content of the editor is set back to its initial state.
  */
 public class MatchItemComboViewer extends ComboViewer {
 
 	private static final int TIMEOUT = 1000;
 	private long lastKeyPressMillis = -1;
 	private final StringBuffer searchBuffer;
+	private String initialText;
 
 	/**
 	 * Constructor.
@@ -68,11 +69,21 @@ public class MatchItemComboViewer extends ComboViewer {
 	}
 
 	/**
+	 * Callback that is called when the escape key is released.
+	 * By default, this method does nothing, but note that at this
+	 * point in time the text already has been reset to the initial text.
+	 */
+	protected void onEscape() {
+
+	}
+
+	/**
 	 * Initializes this viewer.
 	 */
 	protected void init() {
 		getCCombo().addKeyListener(new MatchItemKeyAdapter());
 		getCCombo().addFocusListener(new FocusListener() {
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				// reset buffer when focus has been lost
@@ -81,6 +92,7 @@ public class MatchItemComboViewer extends ComboViewer {
 
 			@Override
 			public void focusGained(FocusEvent e) {
+				initialText = getCCombo().getText();
 			}
 		});
 	}
@@ -118,6 +130,10 @@ public class MatchItemComboViewer extends ComboViewer {
 			combo.select(index);
 			combo.setText(item);
 			combo.setSelection(new Point(pt.x, item.length()));
+		} else {
+			// if no literal matches, reset to initial state
+			getCCombo().setText(initialText);
+			resetBuffer();
 		}
 	}
 
@@ -196,7 +212,9 @@ public class MatchItemComboViewer extends ComboViewer {
 	class MatchItemKeyAdapter extends KeyAdapter {
 		@Override
 		public void keyReleased(KeyEvent keyEvent) {
-			if (keyEvent.keyCode == SWT.CR) {
+			if (keyEvent.keyCode == SWT.ESC) {
+				onEscape();
+			} else if (keyEvent.keyCode == SWT.CR) {
 				keyEvent.doit = true;
 				final int selectedIndex = getClosestMatchIndex(bufferAsString());
 				onEnter(selectedIndex);
@@ -224,7 +242,10 @@ public class MatchItemComboViewer extends ComboViewer {
 				resetBuffer();
 			}
 
-			if (!Character.isISOControl(keyEvent.character)) {
+			if (keyEvent.keyCode == SWT.ESC) {
+				// reset to initial text
+				getCCombo().setText(initialText);
+			} else if (!Character.isISOControl(keyEvent.character)) {
 				addToBuffer(keyEvent.character);
 				resetKeyPressedTimeout();
 			} else if (keyEvent.keyCode == SWT.BS && !isEmptyBuffer()) {

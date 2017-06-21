@@ -233,6 +233,15 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 				focusLost();
 			}
 
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer#onEscape()
+			 */
+			@Override
+			protected void onEscape() {
+				EnumCellEditor.this.fireCancelEditor();
+			}
 		};
 
 		final CCombo combo = viewer.getCCombo();
@@ -287,20 +296,7 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 			if (control != null && Character.isLetterOrDigit(actEvent.character)) {
 				viewer.resetBuffer();
 				// key pressed is not fired during activation
-				final String characterAsString = String.valueOf(actEvent.character);
-				if (viewer.getClosestMatchIndex(characterAsString) != -1) {
-					control.setText(characterAsString);
-					viewer.addToBuffer(actEvent.character);
-					return;
-				}
-				// if invalid character, use first item as closest match and add
-				// first character to buffer
-				final String item = viewer.getCCombo().getItems()[0];
-				control.setText(item);
-				if (item != null && item.length() > 0) {
-					viewer.addToBuffer(item.charAt(0));
-				}
-
+				viewer.addToBuffer(actEvent.character);
 			}
 		}
 	}
