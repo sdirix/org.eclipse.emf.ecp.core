@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.swt.controlgrid.feature"
-      label="EMFForms Control Grid SWT Feature (Experimental)"
+      label="EMF Forms Control Grid SWT Feature (Experimental)"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.view.controlgrid.model"

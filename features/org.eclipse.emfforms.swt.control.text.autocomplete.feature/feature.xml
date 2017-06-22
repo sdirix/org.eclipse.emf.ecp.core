@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.swt.control.text.autocomplete.feature"
-      label="EMFForms SWT Text Control with Autocomplete Feature"
+      label="EMF Forms SWT Text Control with Autocomplete Feature"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.swt.control.text.autocomplete"

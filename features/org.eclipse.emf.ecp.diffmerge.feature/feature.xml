@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.diffmerge.feature"
-      label="DiffMerge Feature"
+      label="ECP DiffMerge Feature"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.diffmerge.context"

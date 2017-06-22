@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.editor.genmodel.util.feature"
-      label="EMFForms GenModel Editor Util"
+      label="EMF Forms GenModel Editor Util"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.editor.genmodel.util"

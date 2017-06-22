@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.view.annotation.feature"
-      label="EMFForms Annotation View Model Feature"
+      label="EMF Forms Annotation View Model Feature"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.view.annotation.model"

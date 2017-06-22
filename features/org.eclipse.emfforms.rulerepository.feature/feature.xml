@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.rulerepository.feature"
-      label="EMFForms RuleRepository Feature"
+      label="EMF Forms Rule Repository Feature"
       version="1.13.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.rulerepository.model"

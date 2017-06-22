@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.indexdmr.feature"
-      label="EMFForms Index DMR Feature"
+      label="EMF Forms Index DMR Feature"
       version="1.13.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.view.indexdmr.model"
