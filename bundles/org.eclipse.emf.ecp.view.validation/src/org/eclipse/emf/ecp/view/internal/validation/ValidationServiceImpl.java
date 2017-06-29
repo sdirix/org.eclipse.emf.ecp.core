@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -849,41 +848,5 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 		return labelProviderFactory;
-	}
-
-	/**
-	 * TimerTask that reports that the validation is taking longer than expected. This task should be cancelled when
-	 * the validation is done.
-	 */
-	class ValidationTimerTask extends TimerTask {
-
-		private boolean cancelled;
-		private final EObject validatedEObject;
-
-		/**
-		 * Constructor.
-		 *
-		 * @param validatedEObject the EObject being validated
-		 */
-		ValidationTimerTask(EObject validatedEObject) {
-			super();
-			this.validatedEObject = validatedEObject;
-		}
-
-		@Override
-		public void run() {
-			if (!cancelled) {
-				Activator.getDefault().getReportService()
-					.report(new AbstractReport(MessageFormat.format(
-						"Validation took longer than expected for EObject {0}", validatedEObject, //$NON-NLS-1$
-						IStatus.INFO)));
-			}
-		}
-
-		@Override
-		public boolean cancel() {
-			cancelled = true;
-			return super.cancel();
-		}
 	}
 }
