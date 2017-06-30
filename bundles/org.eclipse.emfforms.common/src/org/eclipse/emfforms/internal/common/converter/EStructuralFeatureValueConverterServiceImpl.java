@@ -36,7 +36,9 @@ public class EStructuralFeatureValueConverterServiceImpl implements EStructuralF
 
 	private static final RankingHelper<EStructuralFeatureValueConverter> RANKING_HELPER = //
 		new RankingHelper<EStructuralFeatureValueConverter>(
-			EStructuralFeatureValueConverter.class, EStructuralFeatureValueConverter.NOT_APPLICABLE);
+			EStructuralFeatureValueConverter.class,
+			EStructuralFeatureValueConverter.NOT_APPLICABLE,
+			EStructuralFeatureValueConverter.NOT_APPLICABLE);
 
 	@Override
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE)
