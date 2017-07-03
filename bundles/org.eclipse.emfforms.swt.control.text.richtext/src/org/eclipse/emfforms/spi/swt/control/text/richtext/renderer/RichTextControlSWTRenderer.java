@@ -321,6 +321,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	 *
 	 * @param e the {@link KeyEvent} on the regular {@link Text}
 	 * @return whether the popup should open
+	 * @since 1.14
 	 */
 	protected boolean isOpenKey(KeyEvent e) {
 		if (e.keyCode == SWT.SHIFT) {

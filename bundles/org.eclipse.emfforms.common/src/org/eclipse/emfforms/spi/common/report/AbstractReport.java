@@ -69,7 +69,7 @@ public class AbstractReport {
 	 * @param message the report message
 	 * @param arguments the arguments for the message
 	 *
-	 * @since 1.13
+	 * @since 1.14
 	 */
 	public AbstractReport(String message, Object... arguments) {
 		this.message = MessageFormat.format(message, arguments);
@@ -96,7 +96,7 @@ public class AbstractReport {
 	 * @param severity the message severity
 	 * @param arguments the arguments for the message
 	 *
-	 * @since 1.13
+	 * @since 1.14
 	 */
 	public AbstractReport(String message, int severity, Object... arguments) {
 		this.message = MessageFormat.format(message, arguments);
@@ -124,7 +124,7 @@ public class AbstractReport {
 	 * @param message the report message
 	 * @param arguments the arguments for the message
 	 *
-	 * @since 1.13
+	 * @since 1.14
 	 */
 	public AbstractReport(Throwable exception, String message, Object... arguments) {
 		this.exception = exception;

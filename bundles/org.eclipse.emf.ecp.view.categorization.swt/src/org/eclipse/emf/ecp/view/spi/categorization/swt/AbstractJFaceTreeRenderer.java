@@ -198,6 +198,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	 *
 	 * @param parent the parent {@link Composite}
 	 * @return a {@link TreeViewer}
+	 * @since 1.14
 	 */
 	protected TreeViewer createTreeViewer(Composite parent) {
 		return new TreeViewer(parent, SWT.SINGLE);

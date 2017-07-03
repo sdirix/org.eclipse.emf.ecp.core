@@ -310,7 +310,7 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * If the meaning of the '<em>Render Mode</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
-	 * 
+	 *
 	 * @since 1.14
 	 *        <!-- end-user-doc -->
 	 *
@@ -328,7 +328,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode
 	 * <em>Render Mode</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
 	 *
 	 * @param value the new value of the '<em>Render Mode</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode

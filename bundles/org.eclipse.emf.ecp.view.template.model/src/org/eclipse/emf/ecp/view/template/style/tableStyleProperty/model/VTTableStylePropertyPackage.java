@@ -40,7 +40,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "tableStyleProperty"; //$NON-NLS-1$
@@ -49,7 +49,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/style/table/model"; //$NON-NLS-1$
@@ -58,7 +58,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.style.table.model"; //$NON-NLS-1$
@@ -67,7 +67,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTTableStylePropertyPackage eINSTANCE = org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl
@@ -79,7 +79,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * Style Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl#getTableStyleProperty()
 	 * @generated
@@ -90,7 +90,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The feature id for the '<em><b>Minimum Height</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -100,7 +100,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The feature id for the '<em><b>Maximum Height</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -142,8 +142,10 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Render Mode</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -164,7 +166,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The number of operations of the '<em>Table Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -174,8 +176,10 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
 	 * <em>Render Mode</em>}' enum.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl#getRenderMode()
 	 * @generated
@@ -188,7 +192,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Table Style Property</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty
 	 * @generated
@@ -201,7 +205,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * <em>Minimum Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Minimum Height</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight()
 	 * @see #getTableStyleProperty()
@@ -215,7 +219,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * <em>Maximum Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Maximum Height</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight()
 	 * @see #getTableStyleProperty()
@@ -273,8 +277,10 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode
 	 * <em>Render Mode</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the attribute '<em>Render Mode</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode()
 	 * @see #getTableStyleProperty()
@@ -286,8 +292,10 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * Returns the meta object for enum
 	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode <em>Render Mode</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for enum '<em>Render Mode</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
 	 * @generated
@@ -298,7 +306,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -315,7 +323,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -325,7 +333,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		 * <em>Table Style Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl
 		 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl#getTableStyleProperty()
 		 * @generated
@@ -336,7 +344,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Minimum Height</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute TABLE_STYLE_PROPERTY__MINIMUM_HEIGHT = eINSTANCE.getTableStyleProperty_MinimumHeight();
@@ -345,7 +353,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Maximum Height</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT = eINSTANCE.getTableStyleProperty_MaximumHeight();
@@ -384,8 +392,10 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Render Mode</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
 		 * 
+		 * @since 1.14
+		 *        <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EAttribute TABLE_STYLE_PROPERTY__RENDER_MODE = eINSTANCE.getTableStyleProperty_RenderMode();
@@ -395,8 +405,10 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode <em>Render Mode</em>}'
 		 * enum.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
+		 *
+		 * @since 1.14
+		 *        <!-- end-user-doc -->
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
 		 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyPackageImpl#getRenderMode()
 		 * @generated
