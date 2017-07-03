@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -315,6 +316,38 @@ public class ValidationService_PTest {
 		assertEquals(content, validatedEObjectField.get(timerTask));
 		timerTask.run();
 		assertEquals(null, validatedEObjectField.get(timerTask));
+	}
+
+	@Test
+	public void testViewModelChangeListenerCutOffDMR() {
+		/* setup domain */
+		final TableContentWithInnerChild parent = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		final TableContentWithInnerChild middle = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		final TableContentWithInnerChild child = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		parent.setInnerChild(middle);
+		middle.setInnerChild(child);
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(vControl);
+		vControl.setDomainModelReference(
+			TestPackage.eINSTANCE.getTableContentWithInnerChild_Stuff(),
+			Arrays.asList(
+				TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild(),
+				TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild()));
+
+		/* setup rendering */
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, parent);
+
+		/* act */
+		parent.setInnerChild(null); /* cut off */
+		vControl.setEnabled(false); /* produce view notifications */
+		vControl.setEnabled(true);/* produce view notifications */
+
+		/* assert */
+		/* cutting of should not produce NPEs as this is legit */
 	}
 
 	private ReportService getReportService() {

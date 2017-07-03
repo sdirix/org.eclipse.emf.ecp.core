@@ -140,7 +140,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			// validate(observed);
 			// TODO: add test case for this
 			final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-			eObjectsToValidate.add(observed);
+			if (observed != null) {
+				/* possible e.g. when feature path dmr gets cut off during runtime */
+				eObjectsToValidate.add(observed);
+			}
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Object value = observableValue.getValue();
 			if (EReference.class.isInstance(structuralFeature) && value != null) {
