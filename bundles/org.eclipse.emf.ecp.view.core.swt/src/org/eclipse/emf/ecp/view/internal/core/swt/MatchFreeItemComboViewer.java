@@ -20,12 +20,15 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 
 /**
- * A {@link ComboViewer} that allows typed text to be matched against
- * the combo viewer's items and also allows setting the selection via arrow keys.
- * If the escape key pressed, the content of the editor is set back to its initial state.
+ * A modified version of {@link MatchItemComboViewer} that allow free text entry.
+ * Entered text is matched against the list of combo items, but this control also
+ * allows for values that do not match any item.
  */
-public class MatchItemComboViewer extends ComboViewer {
+public class MatchFreeItemComboViewer extends ComboViewer {
 
+	/**
+	 * This search buffer is only used when the combo's popup has been opened.
+	 */
 	private final TimeBoundStringBuffer searchBuffer;
 	private String initialText;
 
@@ -34,7 +37,7 @@ public class MatchItemComboViewer extends ComboViewer {
 	 *
 	 * @param combo the {@link CCombo} to be wrapped
 	 */
-	public MatchItemComboViewer(CCombo combo) {
+	public MatchFreeItemComboViewer(CCombo combo) {
 		super(combo);
 		searchBuffer = new TimeBoundStringBuffer();
 		setupListeners();
@@ -48,30 +51,8 @@ public class MatchItemComboViewer extends ComboViewer {
 	 *
 	 */
 	public void onEnter() {
-		setClosestMatch(getCCombo().getText());
-	}
-
-	/**
-	 * Returns the search buffer used during matching.
-	 *
-	 * @return the {@link TimeBoundStringBuffer}
-	 */
-	public TimeBoundStringBuffer getBuffer() {
-		return searchBuffer;
-	}
-
-	/**
-	 * Match given text against items of combo and set selection, if applicable.
-	 * If no match has been found, reset to initial state.
-	 *
-	 * @param text the string to be matched
-	 */
-	public void setClosestMatch(String text) {
-		final boolean matchFound = ComboUtil.setClosestMatch(getCCombo(), text);
-		// if no literal matches, reset to initial state
-		if (!matchFound) {
-			reset();
-		}
+		searchBuffer.reset();
+		ComboUtil.setClosestMatch(getCCombo(), getCCombo().getText());
 	}
 
 	/**
@@ -80,7 +61,7 @@ public class MatchItemComboViewer extends ComboViewer {
 	 * point in time the text already has been reset to the initial text.
 	 */
 	protected void onEscape() {
-
+		searchBuffer.reset();
 	}
 
 	/**
@@ -92,23 +73,24 @@ public class MatchItemComboViewer extends ComboViewer {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// reset buffer when focus has been lost
-				searchBuffer.reset();
+
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
 				initialText = getCCombo().getText();
+				// limit visible items
+				final CCombo control = getCCombo();
+				if (control != null) {
+					final int itemCount = control.getItemCount();
+					if (itemCount == 0) {
+						control.setVisibleItemCount(0);
+					} else {
+						control.setVisibleItemCount(itemCount <= 25 ? itemCount : 25);
+					}
+				}
 			}
 		});
-	}
-
-	/**
-	 * Reset to initial state, i.e. the initial text is restored and the search buffer is emptied.
-	 */
-	protected void reset() {
-		getCCombo().setText(initialText);
-		searchBuffer.reset();
 	}
 
 	/**
@@ -121,41 +103,36 @@ public class MatchItemComboViewer extends ComboViewer {
 			if (keyEvent.keyCode == SWT.ESC) {
 				onEscape();
 			} else if (keyEvent.keyCode == SWT.CR) {
-				keyEvent.doit = true;
 				onEnter();
-				searchBuffer.reset();
-			} else if (keyEvent.keyCode == SWT.ARROW_DOWN || keyEvent.keyCode == SWT.ARROW_UP) {
-				// enable skipping through the list item by item
-				keyEvent.doit = true;
-				searchBuffer.reset();
 			} else {
-				// only update buffer in case it is a visible character
-				keyEvent.doit = false;
-				if (!Character.isISOControl(keyEvent.character) || keyEvent.keyCode == SWT.BS) {
-					setClosestMatch(searchBuffer.asString());
-				} else if (keyEvent.keyCode != SWT.SHIFT) {
-					searchBuffer.reset();
+				if (!Character.isISOControl(keyEvent.character)) {
+					if (getCCombo().getListVisible()) {
+						ComboUtil.setClosestMatch(getCCombo(), searchBuffer.asString());
+					} else {
+						ComboUtil.setClosestMatch(getCCombo(), getCCombo().getText());
+					}
 				}
 			}
 		}
 
 		@Override
 		public void keyPressed(KeyEvent keyEvent) {
-			keyEvent.doit = false;
-			if (searchBuffer.timedOut() && keyEvent.keyCode != SWT.CR) {
+
+			// reset in case the buffer has timed out or the popup is not visible at all
+			if (searchBuffer.timedOut() || !getCCombo().getListVisible()) {
 				searchBuffer.reset();
 			}
 
 			if (keyEvent.keyCode == SWT.ESC) {
 				// reset to initial text
 				getCCombo().setText(initialText);
-			} else if (!Character.isISOControl(keyEvent.character)) {
-				searchBuffer.addLast(keyEvent.character);
-			} else if (keyEvent.keyCode == SWT.BS) {
-				searchBuffer.removeLast();
-			} else if (keyEvent.keyCode == SWT.ARROW_DOWN || keyEvent.keyCode == SWT.ARROW_UP) {
-				// enable skipping through the list item by item
-				keyEvent.doit = true;
+			}
+
+			if (!Character.isISOControl(keyEvent.character)) {
+				if (getCCombo().getListVisible()) {
+					keyEvent.doit = false;
+					searchBuffer.addLast(keyEvent.character);
+				}
 			}
 		}
 	}

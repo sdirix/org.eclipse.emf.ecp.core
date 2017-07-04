@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPEnumCellEditor;
+import org.eclipse.emf.ecp.view.internal.core.swt.ComboUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer;
 import org.eclipse.emf.ecp.view.internal.table.swt.FigureUtilities;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -215,10 +216,11 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 	@Override
 	protected Control createControl(Composite parent) {
 		viewer = new MatchItemComboViewer(new CCombo(parent, SWT.NONE)) {
-
 			@Override
-			public void onEnter(int selectedIndex) {
-				if (!viewer.isEmptyBuffer() && selectedIndex > -1) {
+			public void onEnter() {
+				final int selectedIndex = ComboUtil.getClosestMatchIndex(getCCombo().getItems(),
+					getBuffer().asString());
+				if (!getBuffer().isEmpty() && selectedIndex > -1) {
 					final String closestMatch = getCCombo().getItems()[selectedIndex];
 					final Optional<SelectedEnumeratorMapping> selectedMappping = SelectedEnumeratorMapping
 						.findLiteral((SelectedEnumeratorMapping[]) getInput(), closestMatch);
@@ -294,9 +296,9 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 		if (actEvent.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
 			final CCombo control = (CCombo) getControl();
 			if (control != null && Character.isLetterOrDigit(actEvent.character)) {
-				viewer.resetBuffer();
+				viewer.getBuffer().reset();
 				// key pressed is not fired during activation
-				viewer.addToBuffer(actEvent.character);
+				viewer.getBuffer().addLast(actEvent.character);
 			}
 		}
 	}
@@ -326,8 +328,7 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 		}
 
 		text = EMPTY;
-		viewer.resetBuffer();
-		viewer.resetKeyPressedTimer();
+		viewer.getBuffer().reset();
 
 		// As the same cell editor is used for all the rows.
 		// We need to reset the value to avoid the values are cached.

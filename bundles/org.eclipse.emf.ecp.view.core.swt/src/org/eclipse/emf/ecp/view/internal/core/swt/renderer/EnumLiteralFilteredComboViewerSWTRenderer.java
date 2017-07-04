@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecp.view.internal.core.swt.ComboUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -92,8 +93,10 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 
 		final MatchItemComboViewer viewer = new MatchItemComboViewer(combo) {
 			@Override
-			public void onEnter(int selectedIndex) {
-				if (!isEmptyBuffer() && selectedIndex > -1) {
+			public void onEnter() {
+				final int selectedIndex = ComboUtil.getClosestMatchIndex(getCCombo().getItems(),
+					getBuffer().asString());
+				if (!getBuffer().isEmpty() && selectedIndex > -1) {
 					final String closestMatch = getCCombo().getItems()[selectedIndex];
 					final Optional<EEnumLiteral> findLiteral = findLiteral(eEnum.getELiterals(), closestMatch);
 					if (findLiteral.isPresent()) {
