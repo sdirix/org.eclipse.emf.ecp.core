@@ -21,7 +21,6 @@
    <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
 
    <launcher name="ecp">
-      <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
@@ -63,6 +62,8 @@
       <feature id="org.eclipse.emf.emfstore.common.feature"/>
       <feature id="org.eclipse.emf.emfstore.server.feature"/>
       <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.rcp"/>
    </features>
 
    <configurations>
