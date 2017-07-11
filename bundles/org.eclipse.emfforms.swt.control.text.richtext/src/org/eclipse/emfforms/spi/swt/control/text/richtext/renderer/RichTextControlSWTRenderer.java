@@ -135,21 +135,6 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 				}
 			}
 		});
-		innerText.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (isCtrlKeyPressed(e) || isCommandKeyPressed(e)) {
-					return;
-				}
-
-				if (isEnter(e)) {
-					e.doit = false;
-					storePopUpInOriginalText(text, innerText);
-					popupWindow.close();
-				}
-			}
-
-		});
 
 		innerText.addFocusListener(new FocusListener() {
 			@Override
@@ -164,22 +149,17 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			}
 		});
 
-		// If the window is left via ESC, we reload the latest state from the model. This is necessary, as the first key
-		// stroke was done in the regular text field, before the popup opens
 		innerText.addDisposeListener(new DisposeListener() {
 
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				binding.updateModelToTarget();
+				storePopUpInOriginalText(text, innerText);
 				text.setCaretOffset(innerText.getCaretPosition());
 
 			}
+
 		});
 
-	}
-
-	private boolean isEnter(KeyEvent e) {
-		return e.keyCode == SWT.CR || e.keyCode == SWT.LF || e.keyCode == SWT.KEYPAD_CR;
 	}
 
 	private void storePopUpInOriginalText(final StyledText originalText, Text popUpText) {
