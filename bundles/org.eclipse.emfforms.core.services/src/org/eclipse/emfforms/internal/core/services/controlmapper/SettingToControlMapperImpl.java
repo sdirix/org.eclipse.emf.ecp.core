@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
@@ -94,16 +95,19 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	}
 
 	private final EMFFormsViewContext viewModelContext;
-	private final ViewModelListener viewModelListener;
+	private final ViewModelListener dataModelListener;
 
 	private final Map<EObject, Set<UniqueSetting>> eObjectToMappedSettings = new LinkedHashMap<EObject, Set<UniqueSetting>>();
 
 	/**
 	 * A mapping between settings and controls.
 	 */
-	private final Map<UniqueSetting, Set<VControl>> settingToControlMap = new LinkedHashMap<UniqueSetting, Set<VControl>>();
+	private final Map<UniqueSetting, Set<VElement>> settingToControlMap = new LinkedHashMap<UniqueSetting, Set<VElement>>();
+	private final Map<VElement, Set<UniqueSetting>> controlToSettingMap = new LinkedHashMap<VElement, Set<UniqueSetting>>();
 	private final EMFFormsMappingProviderManager mappingManager;
-	private final Map<VElement, Set<EMFFormsSettingToControlMapper>> childMappers = new LinkedHashMap<VElement, Set<EMFFormsSettingToControlMapper>>();
+	private final Map<VControl, EMFFormsViewContext> controlContextMap = new LinkedHashMap<VControl, EMFFormsViewContext>();
+	private final Map<EMFFormsViewContext, VElement> contextParentMap = new LinkedHashMap<EMFFormsViewContext, VElement>();
+	private final ModelChangeAddRemoveListenerImplementation viewModelChangeListener;
 
 	/**
 	 * Creates a new instance of {@link SettingToControlMapperImpl}.
@@ -116,8 +120,9 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		this.mappingManager = mappingManager;
 		this.viewModelContext = viewModelContext;
 		viewModelContext.registerEMFFormsContextListener(this);
-		viewModelContext.registerViewChangeListener(new ModelChangeAddRemoveListenerImplementation());
-		viewModelListener = new ViewModelListener(viewModelContext, this);
+		viewModelChangeListener = new ModelChangeAddRemoveListenerImplementation();
+		viewModelContext.registerViewChangeListener(viewModelChangeListener);
+		dataModelListener = new ViewModelListener(viewModelContext, this);
 	}
 
 	/**
@@ -125,7 +130,14 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
-		return settingToControlMap.get(UniqueSetting.createSetting(setting));
+		final Set<VControl> result = new LinkedHashSet<VControl>();
+		final Set<VElement> allElements = getControlsFor(UniqueSetting.createSetting(setting));
+		for (final VElement element : allElements) {
+			if (VControl.class.isInstance(element)) {
+				result.add((VControl) element);
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -134,7 +146,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	@Override
 	public Set<VElement> getControlsFor(UniqueSetting setting) {
 		final Set<VElement> elements = new LinkedHashSet<VElement>();
-		final Set<VControl> currentControls = settingToControlMap.get(setting);
+		final Set<VElement> currentControls = settingToControlMap.get(setting);
 		if (currentControls != null) {
 			for (final VElement control : currentControls) {
 				if (!control.isEffectivelyEnabled() || !control.isEffectivelyVisible()
@@ -142,15 +154,6 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 					continue;
 				}
 				elements.add(control);
-			}
-		}
-		for (final VElement parentElement : childMappers.keySet()) {
-			for (final EMFFormsSettingToControlMapper childMapper : childMappers.get(parentElement)) {
-				final Set<VElement> controlsFor = childMapper.getControlsFor(setting);
-				elements.addAll(controlsFor);
-				if (!controlsFor.isEmpty()) {
-					elements.add(parentElement);
-				}
 			}
 		}
 		return elements;
@@ -165,27 +168,50 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return;
 		}
 		// delete old mapping
-		final Set<UniqueSetting> keysWithEmptySets = new LinkedHashSet<UniqueSetting>();
-		for (final UniqueSetting setting : settingToControlMap.keySet()) {
-			final Set<VControl> controlSet = settingToControlMap.get(setting);
-			controlSet.remove(vControl);
-			if (controlSet.isEmpty()) {
-				keysWithEmptySets.add(setting);
-			}
-		}
-		for (final UniqueSetting setting : keysWithEmptySets) {
-			settingToControlMap.remove(setting);
-			handleRemoveForEObjectMapping(setting);
-		}
+		deleteOldMapping(vControl);
 		// update mapping
+		final EMFFormsViewContext controlContext = controlContextMap.get(vControl);
 		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl.getDomainModelReference(),
-			viewModelContext.getDomainModel());
+			controlContext == null ? viewModelContext.getDomainModel() : controlContext.getDomainModel());
+		if (!controlToSettingMap.containsKey(vControl)) {
+			controlToSettingMap.put(vControl, new LinkedHashSet<UniqueSetting>());
+		}
+		controlToSettingMap.get(vControl).addAll(map);
 		for (final UniqueSetting setting : map) {
 			if (!settingToControlMap.containsKey(setting)) {
-				settingToControlMap.put(setting, new LinkedHashSet<VControl>());
+				settingToControlMap.put(setting, new LinkedHashSet<VElement>());
 				handleAddForEObjectMapping(setting);
 			}
 			settingToControlMap.get(setting).add(vControl);
+			if (controlContext != null) {
+				VElement parentElement = contextParentMap.get(controlContext);
+				while (parentElement != null) {
+					settingToControlMap.get(setting).add(parentElement);
+					final EMFFormsViewContext context = controlContextMap.get(parentElement);
+					if (context == null) {
+						break;
+					}
+					parentElement = contextParentMap.get(context);
+				}
+			}
+		}
+	}
+
+	private void deleteOldMapping(VControl vControl) {
+		if (controlToSettingMap.containsKey(vControl)) {
+			final Set<UniqueSetting> keysWithEmptySets = new LinkedHashSet<UniqueSetting>();
+			for (final UniqueSetting setting : controlToSettingMap.get(vControl)) {
+				final Set<VElement> controlSet = settingToControlMap.get(setting);
+				controlSet.remove(vControl);
+				if (controlSet.isEmpty()) {
+					keysWithEmptySets.add(setting);
+				}
+			}
+			for (final UniqueSetting setting : keysWithEmptySets) {
+				settingToControlMap.remove(setting);
+				handleRemoveForEObjectMapping(setting);
+			}
+			controlToSettingMap.remove(vControl);
 		}
 	}
 
@@ -209,23 +235,9 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public void vControlRemoved(VControl vControl) {
-		if (vControl.getDomainModelReference() == null) {
-			return;
-		}
+		deleteOldMapping(vControl);
 
-		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl.getDomainModelReference(),
-			viewModelContext.getDomainModel());
-		for (final UniqueSetting setting : map) {
-			if (settingToControlMap.containsKey(setting)) {
-				settingToControlMap.get(setting).remove(vControl);
-				if (settingToControlMap.get(setting).size() == 0) {
-					settingToControlMap.remove(setting);
-					handleRemoveForEObjectMapping(setting);
-				}
-			}
-		}
-
-		viewModelListener.removeVControl(vControl);
+		dataModelListener.removeVControl(vControl);
 	}
 
 	/**
@@ -239,7 +251,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 
 		checkAndUpdateSettingToControlMapping(vControl);
 
-		viewModelListener.addVControl(vControl);
+		dataModelListener.addVControl(vControl);
 	}
 
 	/**
@@ -265,13 +277,17 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
-		final EMFFormsSettingToControlMapper childSettingToControlMapper = childContext
-			.getService(EMFFormsSettingToControlMapper.class);
-		if (!childMappers.containsKey(parentElement)) {
-			childMappers.put(parentElement, new LinkedHashSet<EMFFormsSettingToControlMapper>());
+		childContext.registerViewChangeListener(viewModelChangeListener);
+		contextParentMap.put(childContext, parentElement);
+		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject next = eAllContents.next();
+			if (VControl.class.isInstance(next)) {
+				controlContextMap.put((VControl) next, childContext);
+				vControlAdded((VControl) next);
+			}
 		}
-		childMappers.get(parentElement).add(childSettingToControlMapper);
-
+		childContext.registerEMFFormsContextListener(this);
 	}
 
 	/**
@@ -281,11 +297,17 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public void childContextDisposed(EMFFormsViewContext childContext) {
-		final EMFFormsSettingToControlMapper childSettingToControlMapper = childContext
-			.getService(EMFFormsSettingToControlMapper.class);
-		for (final VElement vElement : childMappers.keySet()) {
-			childMappers.get(vElement).remove(childSettingToControlMapper);
+		childContext.unregisterViewChangeListener(viewModelChangeListener);
+		contextParentMap.remove(childContext);
+		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject next = eAllContents.next();
+			if (VControl.class.isInstance(next)) {
+				vControlRemoved((VControl) next);
+				controlContextMap.remove(next);
+			}
 		}
+		childContext.unregisterEMFFormsContextListener(this);
 	}
 
 	/**
@@ -306,23 +328,16 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	@Override
 	public void contextDispose() {
 		viewModelContext.unregisterEMFFormsContextListener(this);
-		viewModelListener.dispose();
+		dataModelListener.dispose();
 		settingToControlMap.clear();
-		childMappers.clear();
+		controlContextMap.clear();
+		contextParentMap.clear();
 	}
 
 	@Override
 	public boolean hasControlsFor(EObject eObject) {
 		if (eObjectToMappedSettings.containsKey(eObject)) {
 			return true;
-		}
-
-		for (final VElement parentElement : childMappers.keySet()) {
-			for (final EMFFormsSettingToControlMapper childMapper : childMappers.get(parentElement)) {
-				if (childMapper.hasControlsFor(eObject)) {
-					return true;
-				}
-			}
 		}
 
 		return false;
@@ -332,11 +347,6 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public Collection<EObject> getEObjectsWithSettings() {
 		final Set<EObject> result = new LinkedHashSet<EObject>();
 		result.addAll(eObjectToMappedSettings.keySet());
-		for (final VElement parentElement : childMappers.keySet()) {
-			for (final EMFFormsSettingToControlMapper childMapper : childMappers.get(parentElement)) {
-				result.addAll(childMapper.getEObjectsWithSettings());
-			}
-		}
 		return result;
 	}
 }

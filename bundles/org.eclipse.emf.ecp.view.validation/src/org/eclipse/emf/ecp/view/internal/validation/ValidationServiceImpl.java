@@ -551,55 +551,73 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void update() {
+		// prepare Map
+		final Map<VElement, Set<UniqueSetting>> vElementToSettingMap = prepareVElementToSettingMap();
+
 		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
+
+		for (final VElement control : vElementToSettingMap.keySet()) {
+
+			if (!controlDiagnosticMap.containsKey(control)) {
+				controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
+			}
+			for (final UniqueSetting uniqueSetting : vElementToSettingMap.get(control)) {
+				// TODO Performance
+				// controlDiagnosticMap.get(control).getDiagnostics()
+				// .removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+				controlDiagnosticMap.get(control).getDiagnostics()
+					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+			}
+
+			// add all diagnostics of control which are not in the currentUpdates
+			if (control.getDiagnostic() == null) {
+				continue;
+			}
+
+			for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
+				final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
+				if (diagnostic.getData().size() < 2) {
+					continue;
+				}
+				final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
+				final EStructuralFeature eStructuralFeature = DiagnosticHelper
+					.getEStructuralFeature(diagnostic.getData());
+				if (diagnosticEobject == null || eStructuralFeature == null) {
+					continue;
+				}
+				// TODO performance
+				if (!isObjectStillValid(diagnosticEobject)) {
+					continue;
+				}
+				final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
+					diagnosticEobject, eStructuralFeature);
+				if (!currentUpdates.containsKey(uniqueSetting2)) {
+					controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
+				}
+
+			}
+
+		}
+
+		updateAndPropagate(controlDiagnosticMap);
+
+	}
+
+	private Map<VElement, Set<UniqueSetting>> prepareVElementToSettingMap() {
+		final Map<VElement, Set<UniqueSetting>> result = new LinkedHashMap<VElement, Set<UniqueSetting>>();
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
 			final Set<VElement> controls = controlMapper.getControlsFor(uniqueSetting);
 			if (controls == null) {
 				continue;
 			}
-
 			for (final VElement control : controls) {
-				if (!controlDiagnosticMap.containsKey(control)) {
-					controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
+				if (!result.containsKey(control)) {
+					result.put(control, new LinkedHashSet<UniqueSetting>());
 				}
-				// TODO Performance
-				controlDiagnosticMap.get(control).getDiagnostics()
-					.removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-				controlDiagnosticMap.get(control).getDiagnostics()
-					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-
-				// add all diagnostics of control which are not in the currentUpdates
-				if (control.getDiagnostic() == null) {
-					continue;
-				}
-
-				for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
-					final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
-					if (diagnostic.getData().size() < 2) {
-						continue;
-					}
-					final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
-					final EStructuralFeature eStructuralFeature = DiagnosticHelper
-						.getEStructuralFeature(diagnostic.getData());
-					if (diagnosticEobject == null || eStructuralFeature == null) {
-						continue;
-					}
-					// TODO performance
-					if (!isObjectStillValid(diagnosticEobject)) {
-						continue;
-					}
-					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
-						diagnosticEobject, eStructuralFeature);
-					if (!currentUpdates.containsKey(uniqueSetting2)) {
-						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
-					}
-
-				}
-
+				result.get(control).add(uniqueSetting);
 			}
 		}
-
-		updateAndPropagate(controlDiagnosticMap);
+		return result;
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {

@@ -241,7 +241,8 @@ public class ValidationService_PTest {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
-				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
+				assertTrue("Real Message:" + reportEntity.getMessage(),
+					reportEntity.getMessage().startsWith("Validation took longer than expected for"));
 				called.set(0, true);
 
 			}
@@ -250,7 +251,7 @@ public class ValidationService_PTest {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				} catch (final InterruptedException ex) {
 				}
 				return Collections.emptyList();
