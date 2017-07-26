@@ -1400,6 +1400,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (list != null) {
 			list.dispose();
 		}
+		if (columnIndexToComparatorMap != null) {
+			for (final ECPCellEditorComparator value : columnIndexToComparatorMap.values()) {
+				if (value instanceof CellEditor) {
+					((CellEditor) value).dispose();
+				}
+			}
+			columnIndexToComparatorMap.clear();
+		}
 		super.dispose();
 	}
 
