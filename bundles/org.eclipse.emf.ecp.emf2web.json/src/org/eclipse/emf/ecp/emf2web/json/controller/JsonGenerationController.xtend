@@ -18,10 +18,11 @@ import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo
 import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.generator.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.util.ReferenceHelperImpl
-import org.eclipse.emf.ecp.view.spi.model.VView
 import org.eclipse.emf.ecp.emf2web.json.generator.seed.SeedWrapper
 import org.eclipse.emf.ecp.emf2web.controller.GenerationController
 import org.eclipse.emf.ecp.view.spi.model.VElement
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecp.view.spi.model.VView
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
@@ -29,38 +30,40 @@ import org.eclipse.emf.ecp.view.spi.model.VElement
  */
 class JsonGenerationController implements GenerationController {
 	
-	override List<GenerationInfo> generate(Collection<? extends VView> views) {
+	override List<GenerationInfo> generate(Collection<? extends EObject> objects) {
 		val result = new LinkedList<GenerationInfo>
 
 		val modelGenerator = new EcoreJsonGenerator
 		val helper=new ReferenceHelperImpl
 		val formsGenerator = new FormsJsonGenerator(helper)
 
-		for (view : views) {
-			helper.setEcorePath(view.ecorePath)
-			val eClass = view.rootEClass
-			val schemaIdentifier = eClass.name
-
-			val schemaFile = modelGenerator.generate(eClass)
-			val schemaInfo = new GenerationInfo(GenerationInfo.MODEL_TYPE, eClass, null,
-				schemaIdentifier + "Model.json", new SeedWrapper())
-			schemaInfo.generatedString = schemaFile
-			result.add(schemaInfo)
-
-			//internationalize view
-			val allContents = view.eAllContents
-			while (allContents.hasNext) {
-				val next = allContents.next
-				if (VElement.isInstance(next)) {
-					VElement.cast(next).label = VElement.cast(next).name
+		for (view : objects) {
+			if(view instanceof VView){
+				helper.setEcorePath(view.ecorePath)
+				val eClass = view.rootEClass
+				val schemaIdentifier = eClass.name
+	
+				val schemaFile = modelGenerator.generate(eClass)
+				val schemaInfo = new GenerationInfo(GenerationInfo.MODEL_TYPE, eClass, null,
+					schemaIdentifier + "Model.json", new SeedWrapper())
+				schemaInfo.generatedString = schemaFile
+				result.add(schemaInfo)
+	
+				//internationalize view
+				val allContents = view.eAllContents
+				while (allContents.hasNext) {
+					val next = allContents.next
+					if (VElement.isInstance(next)) {
+						VElement.cast(next).label = VElement.cast(next).name
+					}
 				}
+	
+				val controllerFile = formsGenerator.generate(view)
+				val controllerInfo = new GenerationInfo(GenerationInfo.VIEW_TYPE, null, view,
+					schemaIdentifier + "View.json", new SeedWrapper())
+				controllerInfo.generatedString = controllerFile
+				result.add(controllerInfo)
 			}
-
-			val controllerFile = formsGenerator.generate(view)
-			val controllerInfo = new GenerationInfo(GenerationInfo.VIEW_TYPE, null, view,
-				schemaIdentifier + "View.json", new SeedWrapper())
-			controllerInfo.generatedString = controllerFile
-			result.add(controllerInfo)
 		}
 
 		result

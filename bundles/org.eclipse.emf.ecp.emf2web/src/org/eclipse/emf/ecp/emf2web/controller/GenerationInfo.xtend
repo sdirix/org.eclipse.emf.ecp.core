@@ -29,6 +29,7 @@ class GenerationInfo {
 	val public static final String MODEL_TYPE = "Model"
 	val public static final String VIEW_TYPE = "View";
 	val public static final String MODEL_AND_VIEW_TYPE = "Model and View"
+	val public static final String OTHER_TYPE = "Other"
 	
 	@Accessors(PUBLIC_GETTER)val String type
 	@Accessors(PUBLIC_GETTER)val EClass eClass

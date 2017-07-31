@@ -13,12 +13,12 @@ package org.eclipse.emf.ecp.emf2web.controller
 
 import java.util.List
 import java.util.Collection
-import org.eclipse.emf.ecp.view.spi.model.VView
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author Stefan Dirix
  *
  */
 interface GenerationController {
-	def List<GenerationInfo> generate(Collection<? extends VView> views)
+	def List<GenerationInfo> generate(Collection<? extends EObject> objects)
 }

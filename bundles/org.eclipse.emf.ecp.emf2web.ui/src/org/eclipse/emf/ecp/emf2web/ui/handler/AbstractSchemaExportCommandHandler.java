@@ -26,12 +26,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationController;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.exporter.GenerationExporter;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
 import org.eclipse.emf.ecp.emf2web.ui.wizard.ExportSchemasWizard;
-import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -42,7 +42,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Abstract implementation for an handler responsible for exporting view models.
  */
-public abstract class AbstractSchemaExportCommandHandler extends AbstractHandler {
+public abstract class AbstractSchemaExportCommandHandler<T extends EObject> extends AbstractHandler {
 
 	/**
 	 * This implementation uses the {@link #getViews(ExecutionEvent)}
@@ -55,7 +55,7 @@ public abstract class AbstractSchemaExportCommandHandler extends AbstractHandler
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		try {
-			final Collection<VView> views = getViews(event);
+			final Collection<T> views = getObjects(event);
 			if (views == null || views.isEmpty()) {
 				return null;
 			}
@@ -101,7 +101,7 @@ public abstract class AbstractSchemaExportCommandHandler extends AbstractHandler
 	 * The default implementation opens the {@link ExportSchemaWizard} using the generation handlers returned by
 	 * {@link #getGenerationController()} and {@link #getGenerationExporter()}.
 	 *
-	 * @param views
+	 * @param eObject
 	 *            The views which shall be exported.
 	 * @param event
 	 *            The {@link ExecutionEvent} which is given by the {@link #execute(ExecutionEvent)} method.
@@ -110,7 +110,7 @@ public abstract class AbstractSchemaExportCommandHandler extends AbstractHandler
 	 * @return
 	 * 		The return value of the {@link WizardDialog}.
 	 */
-	protected int openWizard(Collection<VView> views, ExecutionEvent event, Shell shell) {
+	protected int openWizard(Collection<? extends EObject> views, ExecutionEvent event, Shell shell) {
 		final List<GenerationInfo> generationInfos = getGenerationController().generate(views);
 		final URI locationProposal = getLocationProposal(event);
 		final ExportSchemasWizard wizard = new ExportSchemasWizard(generationInfos, getGenerationExporter(),
@@ -149,7 +149,7 @@ public abstract class AbstractSchemaExportCommandHandler extends AbstractHandler
 	 * @return
 	 * 		The collection of views which shall be exported.
 	 */
-	protected abstract Collection<VView> getViews(ExecutionEvent event);
+	protected abstract Collection<T> getObjects(ExecutionEvent event);
 
 	/**
 	 * Returns the {@link GenerationController} which shall be used to generate the files.
