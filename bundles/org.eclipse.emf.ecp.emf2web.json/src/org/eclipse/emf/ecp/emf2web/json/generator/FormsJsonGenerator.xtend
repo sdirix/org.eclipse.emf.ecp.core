@@ -25,6 +25,8 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
+import com.google.gson.JsonArray
 
 /** 
  * The class which handles the conversion from ecore files to qbForm files.
@@ -171,6 +173,19 @@ class FormsJsonGenerator extends JsonGenerator {
 			return sb.toString.trim;
 		}
 		containerLabel
+	}
+	
+	protected override dispatch with(JsonObject jsonObject, String propertyName, Collection<? extends EObject> collection) {
+		val filteredElements=collection.filter[item|!VCustomControl.isInstance(item)]
+		val jsonElements = filteredElements.map [ item |
+			createJsonElement(item)
+		]
+		val jsonArray = new JsonArray()
+		for (jsonElement : jsonElements) {
+			jsonArray.add(jsonElement)
+		}
+		jsonObject.add(propertyName, jsonArray)
+		jsonObject
 	}
 	
 }
