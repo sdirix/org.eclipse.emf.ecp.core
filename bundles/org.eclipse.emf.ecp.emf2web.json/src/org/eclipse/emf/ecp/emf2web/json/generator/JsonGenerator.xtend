@@ -60,8 +60,7 @@ abstract class JsonGenerator implements Generator{
 	}
 	
 	protected def dispatch with(JsonObject jsonObject, String propertyName, Collection<? extends EObject> collection) {
-		val filteredElements=collection.filter[item|!VCustomControl.isInstance(item)]
-		val jsonElements = filteredElements.map [ item |
+		val jsonElements = collection.map [ item |
 			createJsonElement(item)
 		]
 		val jsonArray = new JsonArray()
