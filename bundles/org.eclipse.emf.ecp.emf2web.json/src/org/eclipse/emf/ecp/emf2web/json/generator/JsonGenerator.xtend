@@ -19,6 +19,7 @@ import com.google.gson.JsonArray
 import com.google.gson.GsonBuilder
 import org.eclipse.emf.ecp.emf2web.generator.Generator
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
+import com.google.gson.JsonPrimitive
 
 /**
  * @author Stefan Dirix
@@ -69,5 +70,14 @@ abstract class JsonGenerator implements Generator{
 		}
 		jsonObject.add(propertyName, jsonArray)
 		jsonObject
+	}
+	
+	protected def withArray(JsonObject jsonObject, String propertyName, Collection<String> collection) {
+		val jsonArray = new JsonArray()
+		for (string : collection) {
+			jsonArray.add(new JsonPrimitive(string))
+		}
+		jsonObject.add(propertyName, jsonArray)
+		jsonObject	
 	}
 }
