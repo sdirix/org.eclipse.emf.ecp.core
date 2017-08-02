@@ -393,7 +393,17 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		return false;
 	}
 
-	private TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
+	/**
+	 * Creates the top area of the editor.
+	 *
+	 * @param parent The parent {@link Composite}
+	 * @param editorTitle The title of the editor
+	 * @param editorInput the editor input
+	 * @param toolbarActions The actions shown on the top area
+	 * @param createElementCallback a call back if elements are created
+	 * @return a {@link TreeMasterDetailComposite}
+	 */
+	protected TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
 		List<Action> toolbarActions, CreateElementCallback createElementCallback) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 
