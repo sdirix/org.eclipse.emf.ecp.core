@@ -63,14 +63,21 @@ class SiriusJsonGenerator extends JsonGenerator {
 	}	
 	
 	private def dispatch JsonElement createJsonGraphElement(DiagramDescription description) {
-		createJsonGraphElement(description.defaultLayer)
-	}
-	
-	private def dispatch JsonElement createJsonGraphElement(Layer layer) {
+		val nodes = new LinkedList
+		val edges = new LinkedList
+		val iterator = description.eAllContents
+		while(iterator.hasNext){
+		    val next = iterator.next
+			switch next{
+				ContainerMapping: nodes.add(next)
+				NodeMapping: nodes.add(next)
+				EdgeMapping: edges.add(next)
+			}
+		}
 		val jsonObject = new JsonObject()
 		jsonObject.with("id", "Diagram")
-		jsonObject.with("nodes",layer.containerMappings)
-		jsonObject.with("edges", layer.edgeMappings)
+		jsonObject.with("nodes", nodes)
+		jsonObject.with("edges", edges)		
 	}
 	
 	private def dispatch JsonElement createJsonGraphElement(ContainerMapping containerMapping) {
@@ -80,7 +87,14 @@ class SiriusJsonGenerator extends JsonGenerator {
 		jsonObject.with("domainClass", containerMapping.domainClass)
 		jsonObject.with("shapeStyle", createShapeStyleObject(style))
 		jsonObject.with("nodesStyle", containerMapping.childrenPresentation)
-		jsonObject.with("nodes", containerMapping.subNodeMappings)
+		val nodes = new LinkedList
+		nodes.addAll(containerMapping.allNodeMappings.map[nm|nm.name])
+		nodes.addAll(containerMapping.allContainerMappings.map[cm|cm.name])
+		jsonObject.withArray("nodes", nodes)
+		if(!containerMapping.allBorderedNodeMappings.empty){
+			jsonObject.withArray("borderNodes", containerMapping.allBorderedNodeMappings.map[bnm|bnm.name])
+		}
+		jsonObject
 	}
 	
 	private def dispatch JsonElement createJsonGraphElement(NodeMapping nodeMapping) {
