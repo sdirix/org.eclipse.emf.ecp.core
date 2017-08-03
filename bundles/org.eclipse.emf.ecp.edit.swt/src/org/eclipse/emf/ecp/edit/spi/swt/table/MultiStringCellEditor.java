@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,13 +7,17 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Jonas Helming - initial API and implementation
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi.swt.table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -21,63 +25,101 @@ import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
 /**
- * A String cell editor which displays strings.
+ * A cell Editor to display List of Strings in a cell editor. it allows to enter a list of string using a
+ * separator (by default ";").
  *
- * @author Eugen Neufeld
- * @since 1.5
+ * @author Jonas Helming
  *
  */
-public class StringCellEditor extends StringBasedCellEditor {
+public class MultiStringCellEditor extends StringBasedCellEditor {
+
+	/**
+	 * @author Jonas Helming
+	 *
+	 */
+	protected final class TargetToModelStrategy extends EMFUpdateValueStrategy {
+
+		@Override
+		public Object convert(final Object value) {
+			return convertStringToList((String) value);
+		}
+
+	}
+
+	/**
+	 * Convertes a String into a list of Strings using the separator.
+	 *
+	 * @param value the String to split
+	 * @return the list of sub string
+	 */
+	protected List<String> convertStringToList(final String value) {
+		final boolean emptyStringAtEnd = value.endsWith(getSeparator());
+		final String[] split = value.split(getSeparator());
+		final List<String> list = new ArrayList<String>();
+		for (int i = 0; i < split.length; i++) {
+			list.add(split[i]);
+		}
+		if (emptyStringAtEnd) {
+			list.add(""); //$NON-NLS-1$
+		}
+		return list;
+	}
+
+	/**
+	 * Returns the separator used to split the input string into entries of the String list.
+	 *
+	 * @return the separator as a String
+	 */
+	protected String getSeparator() {
+		return ";"; //$NON-NLS-1$
+	}
 
 	private EStructuralFeature eStructuralFeature;
 
 	/**
-	 * Default constructor.
-	 */
-	public StringCellEditor() {
-		super();
-	}
-
-	/**
-	 * A constructor which takes only a parent.
+	 * The constructor which only takes a parent composite.
 	 *
 	 * @param parent the {@link Composite} to use as a parent.
 	 */
-	public StringCellEditor(Composite parent) {
-		super(parent);
+	public MultiStringCellEditor(Composite parent) {
+		super(parent, SWT.RIGHT);
 	}
 
 	/**
-	 * A constructor which takes the parent and the style.
+	 * A constructor which takes a parent and the style to use, the style is ignored by this cell editor.
 	 *
 	 * @param parent the {@link Composite} to use as a parent
-	 * @param style the Style to set
+	 * @param style the SWT style to set
 	 */
-	public StringCellEditor(Composite parent, int style) {
-		super(parent, style);
+	public MultiStringCellEditor(Composite parent, int style) {
+		super(parent, style | SWT.RIGHT);
 	}
 
 	/**
+	 *
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
 
 	/**
+	 *
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
-		eStructuralFeature = feature;
+	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
+		this.eStructuralFeature = eStructuralFeature;
 	}
 
 	/**
@@ -91,7 +133,22 @@ public class StringCellEditor extends StringBasedCellEditor {
 		if (value == null) {
 			return ""; //$NON-NLS-1$
 		}
-		return String.valueOf(value);
+		if (!(value instanceof List)) {
+			return ""; //$NON-NLS-1$
+		}
+
+		@SuppressWarnings("unchecked")
+		final List<String> list = (List<String>) value;
+		String string = ""; //$NON-NLS-1$
+		int i = 0;
+		for (final String subString : list) {
+			if (i != 0) {
+				string = string + getSeparator();
+			}
+			string = string + subString;
+			i++;
+		}
+		return string;
 	}
 
 	/**
@@ -102,7 +159,7 @@ public class StringCellEditor extends StringBasedCellEditor {
 	 */
 	@Override
 	public int getColumnWidthWeight() {
-		return 100;
+		return 50;
 	}
 
 	/**
@@ -110,11 +167,10 @@ public class StringCellEditor extends StringBasedCellEditor {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 * @since 1.6
 	 */
 	@Override
-	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
-		return withPreSetValidation(eStructuralFeature, new UpdateValueStrategy());
+	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
+		return withPreSetValidation(eStructuralFeature, new TargetToModelStrategy());
 	}
 
 	/**
@@ -122,23 +178,35 @@ public class StringCellEditor extends StringBasedCellEditor {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 * @since 1.6
 	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
-		return null;
+		return new EMFUpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				return getFormatedString(value);
+			}
+		};
 	}
 
 	/**
-	 *
+	 * returns the {@link Text} of the cell editor.
+	 * 
+	 * @return a {@link Text}
+	 */
+	protected Text getText() {
+		return text;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
 	 */
 	@Override
 	public void setEditable(boolean editable) {
-		if (text != null) {
-			text.setEditable(editable);
+		if (getText() != null) {
+			getText().setEditable(editable);
 		}
 	}
 
@@ -156,11 +224,9 @@ public class StringCellEditor extends StringBasedCellEditor {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
-	 * @since 1.6
 	 */
 	@Override
 	public int getMinWidth() {
 		return 0;
 	}
-
 }

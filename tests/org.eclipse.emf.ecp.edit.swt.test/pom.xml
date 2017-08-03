@@ -65,12 +65,13 @@
     <!-- skip tycho surefire which is automatically started by using eclipse-test-plugin packaging type -->
 	<build>
 		<plugins>
-			<plugin>
+				<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<skip>true</skip>
+		          	<useUIHarness>true</useUIHarness>
+		          	<useUIThread>true</useUIThread>
 				</configuration>
 			</plugin>
 		</plugins>

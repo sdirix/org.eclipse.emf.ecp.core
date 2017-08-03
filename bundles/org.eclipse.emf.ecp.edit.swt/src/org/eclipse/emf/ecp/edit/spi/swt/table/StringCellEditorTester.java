@@ -9,11 +9,10 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.table;
+package org.eclipse.emf.ecp.edit.spi.swt.table;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 
 /**

@@ -9,11 +9,10 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.table;
+package org.eclipse.emf.ecp.edit.spi.swt.table;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.PreSetValidationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.TextCellEditor;
