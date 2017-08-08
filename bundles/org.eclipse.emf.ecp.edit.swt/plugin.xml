@@ -165,5 +165,11 @@
             tester="org.eclipse.emf.ecp.edit.spi.swt.table.MultiStringCellEditorTester">
       </cellEditor>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.tooltipModifier">
+      <modifier
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellStringTooltipModifier">
+      </modifier>
+   </extension>
 
 </plugin>
