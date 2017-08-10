@@ -107,6 +107,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	private final EMFFormsMappingProviderManager mappingManager;
 	private final Map<VControl, EMFFormsViewContext> controlContextMap = new LinkedHashMap<VControl, EMFFormsViewContext>();
 	private final Map<EMFFormsViewContext, VElement> contextParentMap = new LinkedHashMap<EMFFormsViewContext, VElement>();
+	private final Map<EMFFormsViewContext, ViewModelListener> contextListenerMap = new LinkedHashMap<EMFFormsViewContext, ViewModelListener>();
 	private final ModelChangeAddRemoveListenerImplementation viewModelChangeListener;
 
 	/**
@@ -237,7 +238,12 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public void vControlRemoved(VControl vControl) {
 		deleteOldMapping(vControl);
 
-		dataModelListener.removeVControl(vControl);
+		final EMFFormsViewContext viewContext = controlContextMap.get(vControl);
+		if (viewContext != null) {
+			contextListenerMap.get(viewContext).removeVControl(vControl);
+		} else {
+			dataModelListener.removeVControl(vControl);
+		}
 	}
 
 	/**
@@ -250,8 +256,12 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		}
 
 		checkAndUpdateSettingToControlMapping(vControl);
-
-		dataModelListener.addVControl(vControl);
+		final EMFFormsViewContext viewContext = controlContextMap.get(vControl);
+		if (viewContext != null) {
+			contextListenerMap.get(viewContext).addVControl(vControl);
+		} else {
+			dataModelListener.addVControl(vControl);
+		}
 	}
 
 	/**
@@ -279,6 +289,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
 		childContext.registerViewChangeListener(viewModelChangeListener);
 		contextParentMap.put(childContext, parentElement);
+		contextListenerMap.put(childContext, new ViewModelListener(childContext, this));
 		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
@@ -299,6 +310,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public void childContextDisposed(EMFFormsViewContext childContext) {
 		childContext.unregisterViewChangeListener(viewModelChangeListener);
 		contextParentMap.remove(childContext);
+		contextListenerMap.remove(childContext);
 		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
@@ -332,6 +344,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		settingToControlMap.clear();
 		controlContextMap.clear();
 		contextParentMap.clear();
+		contextListenerMap.clear();
 	}
 
 	@Override
