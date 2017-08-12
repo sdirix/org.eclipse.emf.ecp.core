@@ -239,7 +239,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		deleteOldMapping(vControl);
 
 		final EMFFormsViewContext viewContext = controlContextMap.get(vControl);
-		if (viewContext != null) {
+		if (viewContext != null && contextListenerMap.containsKey(viewContext)) {
 			contextListenerMap.get(viewContext).removeVControl(vControl);
 		} else {
 			dataModelListener.removeVControl(vControl);
@@ -310,7 +310,8 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public void childContextDisposed(EMFFormsViewContext childContext) {
 		childContext.unregisterViewChangeListener(viewModelChangeListener);
 		contextParentMap.remove(childContext);
-		contextListenerMap.remove(childContext);
+		final ViewModelListener listener = contextListenerMap.remove(childContext);
+		listener.dispose();
 		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();

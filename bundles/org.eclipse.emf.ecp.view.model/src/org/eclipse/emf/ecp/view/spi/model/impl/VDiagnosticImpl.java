@@ -81,6 +81,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 			 * @see
 			 * 		org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
 			 */
+			@SuppressWarnings("unchecked")
 			@Override
 			public void notifyChanged(Notification msg) {
 				super.notifyChanged(msg);
@@ -89,15 +90,9 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 				}
 				switch (msg.getEventType()) {
 				case Notification.ADD:
-					removeOldDiagnostic((Diagnostic) msg.getOldValue());
 					addNewDiagnostic((Diagnostic) msg.getNewValue());
 					break;
 				case Notification.ADD_MANY:
-					if (msg.getOldValue() != null) {
-						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
-							removeOldDiagnostic(diagnostic);
-						}
-					}
 					if (msg.getNewValue() != null) {
 						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
 							addNewDiagnostic(diagnostic);
@@ -106,17 +101,11 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 					break;
 				case Notification.REMOVE:
 					removeOldDiagnostic((Diagnostic) msg.getOldValue());
-					addNewDiagnostic((Diagnostic) msg.getNewValue());
 					break;
 				case Notification.REMOVE_MANY:
 					if (msg.getOldValue() != null) {
 						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
 							removeOldDiagnostic(diagnostic);
-						}
-					}
-					if (msg.getNewValue() != null) {
-						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
-							addNewDiagnostic(diagnostic);
 						}
 					}
 					break;
