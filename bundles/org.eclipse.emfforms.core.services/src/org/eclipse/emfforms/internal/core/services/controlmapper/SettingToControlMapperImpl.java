@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.internal.core.services.controlmapper;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -148,16 +149,32 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public Set<VElement> getControlsFor(UniqueSetting setting) {
 		final Set<VElement> elements = new LinkedHashSet<VElement>();
 		final Set<VElement> currentControls = settingToControlMap.get(setting);
+		final Set<VControl> controls = new LinkedHashSet<VControl>();
+		final Set<VElement> validParents = new LinkedHashSet<VElement>();
 		if (currentControls != null) {
 			for (final VElement control : currentControls) {
 				if (!control.isEffectivelyEnabled() || !control.isEffectivelyVisible()
 					|| control.isEffectivelyReadonly()) {
 					continue;
 				}
-				elements.add(control);
+				if (VControl.class.isInstance(control)) {
+					controls.add((VControl) control);
+					if (controlContextMap.containsKey(control)) {
+						final VElement parent = contextParentMap.get(controlContextMap.get(control));
+						validParents.add(parent);
+					}
+				} else {
+					elements.add(control);
+				}
 			}
 		}
-		return elements;
+		if (controls.isEmpty()) {
+			return Collections.emptySet();
+		}
+		final Set<VElement> result = new LinkedHashSet<VElement>(controls);
+		elements.retainAll(validParents);
+		result.addAll(elements);
+		return result;
 	}
 
 	/**
