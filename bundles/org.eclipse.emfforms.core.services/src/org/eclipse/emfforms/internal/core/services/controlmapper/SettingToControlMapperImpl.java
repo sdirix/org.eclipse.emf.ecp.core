@@ -110,6 +110,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	private final Map<EMFFormsViewContext, VElement> contextParentMap = new LinkedHashMap<EMFFormsViewContext, VElement>();
 	private final Map<EMFFormsViewContext, ViewModelListener> contextListenerMap = new LinkedHashMap<EMFFormsViewContext, ViewModelListener>();
 	private final ModelChangeAddRemoveListenerImplementation viewModelChangeListener;
+	private boolean disposed;
 
 	/**
 	 * Creates a new instance of {@link SettingToControlMapperImpl}.
@@ -325,6 +326,9 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public void childContextDisposed(EMFFormsViewContext childContext) {
+		if (disposed) {
+			return;
+		}
 		childContext.unregisterViewChangeListener(viewModelChangeListener);
 		contextParentMap.remove(childContext);
 		final ViewModelListener listener = contextListenerMap.remove(childContext);
@@ -363,6 +367,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		controlContextMap.clear();
 		contextParentMap.clear();
 		contextListenerMap.clear();
+		disposed = true;
 	}
 
 	@Override
