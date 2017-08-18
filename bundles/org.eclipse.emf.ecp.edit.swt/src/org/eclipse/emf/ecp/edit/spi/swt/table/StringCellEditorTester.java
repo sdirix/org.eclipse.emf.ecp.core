@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
  * An {@link ECPCellEditorTester} testing whether a StringCellEditor is applicable.
  *
  * @author Eugen Neufeld
+ * @since 1.14.0
  *
  */
 public class StringCellEditorTester implements ECPCellEditorTester {

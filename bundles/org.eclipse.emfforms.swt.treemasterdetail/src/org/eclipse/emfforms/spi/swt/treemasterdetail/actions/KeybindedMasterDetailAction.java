@@ -157,6 +157,7 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 
 	/**
 	 * @return the executeOnKeyRelease
+	 * @since 1.14.0
 	 */
 	protected boolean isExecuteOnKeyRelease() {
 		return executeOnKeyRelease;
@@ -164,6 +165,7 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 
 	/**
 	 * @param executeOnKeyRelease the executeOnKeyRelease to set
+	 * @since 1.14.0
 	 */
 	protected void setExecuteOnKeyRelease(boolean executeOnKeyRelease) {
 		this.executeOnKeyRelease = executeOnKeyRelease;
