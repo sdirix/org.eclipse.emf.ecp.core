@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -33,6 +34,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableFactory;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -183,18 +187,30 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 			observableValue.dispose();
 			Object value = null;
+			final ButtonAlignmentType buttonAlignment = getUnsettableStyleProperty().getButtonAlignment();
 			if (!eObject.eIsSet(structuralFeature)) {
 				sl.topControl = baseControl;
 				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 				value = structuralFeature.getDefaultValue();
+				if (buttonAlignment == ButtonAlignmentType.LEFT) {
+					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false)
+						.applyTo(controlComposite);
+				}
 			} else {
 				sl.topControl = createUnsetLabel;
 				unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 				value = SetCommand.UNSET_VALUE;
+				if (buttonAlignment == ButtonAlignmentType.LEFT) {
+					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(false, false)
+						.applyTo(controlComposite);
+				}
 			}
 			final EditingDomain editingDomain = getEditingDomain(eObject);
 			editingDomain.getCommandStack().execute(
 				SetCommand.create(editingDomain, eObject, structuralFeature, value));
+			if (buttonAlignment == ButtonAlignmentType.LEFT) {
+				controlComposite.getParent().layout();
+			}
 			controlComposite.layout();
 		}
 	}
@@ -399,7 +415,25 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		controlComposite.setBackground(parent.getBackground());
+		final ButtonAlignmentType buttonAlignment = getUnsettableStyleProperty().getButtonAlignment();
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(controlComposite);
+		if (buttonAlignment == ButtonAlignmentType.LEFT) {
+			// If the (un)set button is configured to be left aligned and no value is set,
+			// align the button directly next to the unset label.
+			try {
+				IObservableValue observableValue;
+				observableValue = getEMFFormsDatabinding().getObservableValue(getVElement().getDomainModelReference(),
+					getViewModelContext().getDomainModel());
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				if (!eObject.eIsSet(structuralFeature)) {
+					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(false, false)
+						.applyTo(controlComposite);
+				}
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
+			}
+		}
 		final StackLayout sl = new StackLayout();
 		controlComposite.setLayout(sl);
 		final Control baseControl = createControl(controlComposite);
@@ -582,5 +616,30 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			unsetModelChangeListener.getUnsetLabel(),
 			unsetModelChangeListener.getUnsetButton());
 		super.rootDomainModelChanged();
+	}
+
+	/**
+	 * Creates the default {@link VTUnsettableStyleProperty}.
+	 *
+	 * @return the default {@link VTUnsettableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTUnsettableStyleProperty createDefaultUnsettableStyleProperty() {
+		return VTUnsettableFactory.eINSTANCE.createUnsettableStyleProperty();
+	}
+
+	/**
+	 * Returns the {@link VTUnsettableStyleProperty}.
+	 *
+	 * @return the {@link VTUnsettableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTUnsettableStyleProperty getUnsettableStyleProperty() {
+		VTUnsettableStyleProperty styleProperty = RendererUtil.getStyleProperty(getVTViewTemplateProvider(),
+			getVElement(), getViewModelContext(), VTUnsettableStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = createDefaultUnsettableStyleProperty();
+		}
+		return styleProperty;
 	}
 }
