@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableFactory;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty;
@@ -88,6 +89,8 @@ public class VTUnsettableFactoryImpl extends EFactoryImpl implements VTUnsettabl
 		switch (eDataType.getClassifierID()) {
 		case VTUnsettablePackage.BUTTON_ALIGNMENT_TYPE:
 			return createButtonAlignmentTypeFromString(eDataType, initialValue);
+		case VTUnsettablePackage.BUTTON_PLACEMENT_TYPE:
+			return createButtonPlacementTypeFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -104,6 +107,8 @@ public class VTUnsettableFactoryImpl extends EFactoryImpl implements VTUnsettabl
 		switch (eDataType.getClassifierID()) {
 		case VTUnsettablePackage.BUTTON_ALIGNMENT_TYPE:
 			return convertButtonAlignmentTypeToString(eDataType, instanceValue);
+		case VTUnsettablePackage.BUTTON_PLACEMENT_TYPE:
+			return convertButtonPlacementTypeToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -143,6 +148,31 @@ public class VTUnsettableFactoryImpl extends EFactoryImpl implements VTUnsettabl
 	 * @generated
 	 */
 	public String convertButtonAlignmentTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public ButtonPlacementType createButtonPlacementTypeFromString(EDataType eDataType, String initialValue) {
+		final ButtonPlacementType result = ButtonPlacementType.get(initialValue);
+		if (result == null) {
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String convertButtonPlacementTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

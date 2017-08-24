@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableFactory;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty;
@@ -45,6 +46,14 @@ public class VTUnsettablePackageImpl extends EPackageImpl implements VTUnsettabl
 	 * @generated
 	 */
 	private EEnum buttonAlignmentTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EEnum buttonPlacementTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -147,8 +156,30 @@ public class VTUnsettablePackageImpl extends EPackageImpl implements VTUnsettabl
 	 * @generated
 	 */
 	@Override
+	public EAttribute getUnsettableStyleProperty_ButtonPlacement() {
+		return (EAttribute) unsettableStylePropertyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EEnum getButtonAlignmentType() {
 		return buttonAlignmentTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EEnum getButtonPlacementType() {
+		return buttonPlacementTypeEEnum;
 	}
 
 	/**
@@ -187,9 +218,11 @@ public class VTUnsettablePackageImpl extends EPackageImpl implements VTUnsettabl
 		// Create classes and their features
 		unsettableStylePropertyEClass = createEClass(UNSETTABLE_STYLE_PROPERTY);
 		createEAttribute(unsettableStylePropertyEClass, UNSETTABLE_STYLE_PROPERTY__BUTTON_ALIGNMENT);
+		createEAttribute(unsettableStylePropertyEClass, UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT);
 
 		// Create enums
 		buttonAlignmentTypeEEnum = createEEnum(BUTTON_ALIGNMENT_TYPE);
+		buttonPlacementTypeEEnum = createEEnum(BUTTON_PLACEMENT_TYPE);
 	}
 
 	/**
@@ -236,11 +269,18 @@ public class VTUnsettablePackageImpl extends EPackageImpl implements VTUnsettabl
 		initEAttribute(getUnsettableStyleProperty_ButtonAlignment(), getButtonAlignmentType(), "buttonAlignment", //$NON-NLS-1$
 			"RIGHT", 1, 1, VTUnsettableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnsettableStyleProperty_ButtonPlacement(), getButtonPlacementType(), "buttonPlacement", //$NON-NLS-1$
+			"RIGHT_OF_LABEL", 1, 1, VTUnsettableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(buttonAlignmentTypeEEnum, ButtonAlignmentType.class, "ButtonAlignmentType"); //$NON-NLS-1$
 		addEEnumLiteral(buttonAlignmentTypeEEnum, ButtonAlignmentType.RIGHT);
 		addEEnumLiteral(buttonAlignmentTypeEEnum, ButtonAlignmentType.LEFT);
+
+		initEEnum(buttonPlacementTypeEEnum, ButtonPlacementType.class, "ButtonPlacementType"); //$NON-NLS-1$
+		addEEnumLiteral(buttonPlacementTypeEEnum, ButtonPlacementType.RIGHT_OF_LABEL);
+		addEEnumLiteral(buttonPlacementTypeEEnum, ButtonPlacementType.LEFT_OF_LABEL);
 
 		// Create resource
 		createResource(eNS_URI);

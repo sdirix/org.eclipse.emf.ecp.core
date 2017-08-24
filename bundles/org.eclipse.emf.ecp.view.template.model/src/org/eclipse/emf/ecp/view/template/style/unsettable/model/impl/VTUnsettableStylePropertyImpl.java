@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty;
 
@@ -30,6 +31,8 @@ import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyl
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettableStylePropertyImpl#getButtonAlignment
  * <em>Button Alignment</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettableStylePropertyImpl#getButtonPlacement
+ * <em>Button Placement</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,7 +42,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getButtonAlignment() <em>Button Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getButtonAlignment()
 	 * @generated
 	 * @ordered
@@ -50,7 +53,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getButtonAlignment() <em>Button Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getButtonAlignment()
 	 * @generated
 	 * @ordered
@@ -58,9 +61,31 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	protected ButtonAlignmentType buttonAlignment = BUTTON_ALIGNMENT_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getButtonPlacement() <em>Button Placement</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @see #getButtonPlacement()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final ButtonPlacementType BUTTON_PLACEMENT_EDEFAULT = ButtonPlacementType.RIGHT_OF_LABEL;
+
+	/**
+	 * The cached value of the '{@link #getButtonPlacement() <em>Button Placement</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getButtonPlacement()
+	 * @generated
+	 * @ordered
+	 */
+	protected ButtonPlacementType buttonPlacement = BUTTON_PLACEMENT_EDEFAULT;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected VTUnsettableStylePropertyImpl() {
@@ -70,7 +95,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,7 +106,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -92,7 +117,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -108,7 +133,34 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @generated
+	 */
+	@Override
+	public ButtonPlacementType getButtonPlacement() {
+		return buttonPlacement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setButtonPlacement(ButtonPlacementType newButtonPlacement) {
+		final ButtonPlacementType oldButtonPlacement = buttonPlacement;
+		buttonPlacement = newButtonPlacement == null ? BUTTON_PLACEMENT_EDEFAULT : newButtonPlacement;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT, oldButtonPlacement, buttonPlacement));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -116,6 +168,8 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 		switch (featureID) {
 		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_ALIGNMENT:
 			return getButtonAlignment();
+		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT:
+			return getButtonPlacement();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -123,7 +177,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -132,6 +186,9 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_ALIGNMENT:
 			setButtonAlignment((ButtonAlignmentType) newValue);
 			return;
+		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT:
+			setButtonPlacement((ButtonPlacementType) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -139,7 +196,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -148,6 +205,9 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_ALIGNMENT:
 			setButtonAlignment(BUTTON_ALIGNMENT_EDEFAULT);
 			return;
+		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT:
+			setButtonPlacement(BUTTON_PLACEMENT_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -155,7 +215,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -163,6 +223,8 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 		switch (featureID) {
 		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_ALIGNMENT:
 			return buttonAlignment != BUTTON_ALIGNMENT_EDEFAULT;
+		case VTUnsettablePackage.UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT:
+			return buttonPlacement != BUTTON_PLACEMENT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -170,7 +232,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -182,6 +244,8 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (buttonAlignment: "); //$NON-NLS-1$
 		result.append(buttonAlignment);
+		result.append(", buttonPlacement: "); //$NON-NLS-1$
+		result.append(buttonPlacement);
 		result.append(')');
 		return result.toString();
 	}

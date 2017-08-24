@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableFactory;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -67,6 +68,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
 	private VTUnsettableStyleProperty unsettableStyleProperty;
 	private Fan eObject;
 
+	@SuppressWarnings("rawtypes")
 	@Before
 	public void before() throws DatabindingFailedException, NoLabelFoundException {
 		realm = new DefaultRealm();
@@ -108,6 +110,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
 	 *
 	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
 		eObject = BowlingFactory.eINSTANCE.createFan();
@@ -134,7 +137,6 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
 		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];
 		final GridData gridData = (GridData) controlComposite.getLayoutData();
 		assertFalse(gridData.grabExcessHorizontalSpace);
-		final Button unsetButton = (Button) renderedComposite.getChildren()[1];
 	}
 
 	@Test
@@ -249,5 +251,103 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
 		unsetButton.notifyListeners(SWT.Selection, new Event());
 		final GridData gridData3 = (GridData) controlComposite.getLayoutData();
 		assertTrue(gridData3.grabExcessHorizontalSpace);
+	}
+
+	@Test
+	public void unsetButtonPlacementLeftAndAlignmentRight()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		unsettableStyleProperty.setButtonPlacement(ButtonPlacementType.LEFT_OF_LABEL);
+		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.RIGHT);
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		final Composite renderedComposite = (Composite) render;
+		assertTrue(renderedComposite.getChildren()[0] instanceof Button);
+		assertTrue(renderedComposite.getChildren()[1] instanceof Composite);
+		final Composite controlComposite = (Composite) renderedComposite.getChildren()[1];
+		final GridData gridData = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData.grabExcessHorizontalSpace);
+
+		// simulate button click to set attribute
+		final Button unsetButton = (Button) renderedComposite.getChildren()[0];
+		unsetButton.notifyListeners(SWT.Selection, new Event());
+		assertTrue(renderedComposite.getChildren()[0] instanceof Button);
+		// controlComposite should not change
+		assertTrue(renderedComposite.getChildren()[1] == controlComposite);
+		final GridData gridData2 = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData2.grabExcessHorizontalSpace);
+	}
+
+	@Test
+	public void unsetButtonPlacementLeftAndAlignmentLeft()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// The button alignment should make no difference when the button is placed on the left
+		unsettableStyleProperty.setButtonPlacement(ButtonPlacementType.LEFT_OF_LABEL);
+		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.LEFT);
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		final Composite renderedComposite = (Composite) render;
+		assertTrue(renderedComposite.getChildren()[0] instanceof Button);
+		assertTrue(renderedComposite.getChildren()[1] instanceof Composite);
+		final Composite controlComposite = (Composite) renderedComposite.getChildren()[1];
+		final GridData gridData = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData.grabExcessHorizontalSpace);
+
+		// simulate button click to set attribute
+		final Button unsetButton = (Button) renderedComposite.getChildren()[0];
+		unsetButton.notifyListeners(SWT.Selection, new Event());
+		assertTrue(renderedComposite.getChildren()[0] instanceof Button);
+		// controlComposite should not change
+		assertTrue(renderedComposite.getChildren()[1] == controlComposite);
+		final GridData gridData2 = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData2.grabExcessHorizontalSpace);
+	}
+
+	@Test
+	public void unsetButtonPlacementRightAndAlignmentRight()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// The button alignment should make no difference
+		unsettableStyleProperty.setButtonPlacement(ButtonPlacementType.RIGHT_OF_LABEL);
+		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.RIGHT);
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		final Composite renderedComposite = (Composite) render;
+		assertTrue(renderedComposite.getChildren()[0] instanceof Composite);
+		assertTrue(renderedComposite.getChildren()[1] instanceof Button);
+
+		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];
+		final GridData gridData = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData.grabExcessHorizontalSpace);
+
+		// simulate button click to set attribute
+		final Button unsetButton = (Button) renderedComposite.getChildren()[1];
+		unsetButton.notifyListeners(SWT.Selection, new Event());
+		// controlComposite should not change
+		assertTrue(renderedComposite.getChildren()[0] == controlComposite);
+		assertTrue(renderedComposite.getChildren()[1] instanceof Button);
+		final GridData gridData2 = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData2.grabExcessHorizontalSpace);
+	}
+
+	@Test
+	public void unsetButtonPlacementRightAndAlignmentLeft()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// The button alignment should make no difference
+		unsettableStyleProperty.setButtonPlacement(ButtonPlacementType.RIGHT_OF_LABEL);
+		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.LEFT);
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		final Composite renderedComposite = (Composite) render;
+		assertTrue(renderedComposite.getChildren()[0] instanceof Composite);
+		assertTrue(renderedComposite.getChildren()[1] instanceof Button);
+
+		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];
+		final GridData gridData = (GridData) controlComposite.getLayoutData();
+		assertFalse(gridData.grabExcessHorizontalSpace);
+
+		// simulate button click to set attribute
+		final Button unsetButton = (Button) renderedComposite.getChildren()[1];
+		unsetButton.notifyListeners(SWT.Selection, new Event());
+		// controlComposite should not change
+		assertTrue(renderedComposite.getChildren()[0] == controlComposite);
+		assertTrue(renderedComposite.getChildren()[1] instanceof Button);
+
+		final GridData gridData2 = (GridData) controlComposite.getLayoutData();
+		assertTrue(gridData2.grabExcessHorizontalSpace);
 	}
 }
