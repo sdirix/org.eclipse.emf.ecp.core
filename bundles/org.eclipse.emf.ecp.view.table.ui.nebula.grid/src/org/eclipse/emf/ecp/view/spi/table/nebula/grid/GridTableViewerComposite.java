@@ -16,20 +16,15 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
 import org.eclipse.jface.layout.AbstractColumnLayout;
-import org.eclipse.jface.viewers.AbstractTableViewer;
-import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.nebula.jface.gridviewer.GridColumnLayout;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
-import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -43,7 +38,7 @@ import org.eclipse.swt.widgets.Widget;
  * @author Jonas Helming
  *
  */
-public class GridTableViewerComposite extends AbstractTableViewerComposite {
+public class GridTableViewerComposite extends AbstractTableViewerComposite<GridTableViewer> {
 
 	private GridTableViewer gridTableViewer;
 
@@ -69,10 +64,9 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 	}
 
 	@Override
-	protected AbstractTableViewer createTableViewer(TableViewerSWTCustomization customization,
+	protected GridTableViewer createTableViewer(TableViewerSWTCustomization<GridTableViewer> customization,
 		Composite viewerComposite) {
-		// TODO: Grid ugly cast
-		gridTableViewer = (GridTableViewer) customization.createTableViewer(viewerComposite);
+		gridTableViewer = customization.createTableViewer(viewerComposite);
 		return gridTableViewer;
 	}
 
@@ -128,48 +122,13 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 		};
 	}
 
-	// TODO: could be refactored to reduce overlap with TableViewerComposite
-	// TODO: refactor (ms)
 	@Override
-	protected ViewerColumn createColumn(ColumnDescription columnDescription,
-		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer) {
-		final GridViewerColumnBuilder builder = GridViewerColumnBuilder
-			.create();
+	protected ViewerColumn createColumn(ColumnConfiguration config,
+		EMFDataBindingContext emfDataBindingContext, GridTableViewer tableViewer) {
 
-		// TODO: set correct colors here
-		// builder.setCellRenderer(new CustomSelectionColorCellRenderer(
-		// getDisplay().getSystemColor(SWT.COLOR_WHITE),
-		// getDisplay().getSystemColor(SWT.COLOR_CYAN)));
-
-		final GridViewerColumn column = builder
-			.setData(columnDescription.getData())
-			.setData(RESIZABLE, columnDescription.isResizeable())
-			.setMoveable(columnDescription.isMoveable())
-			.setStyle(columnDescription.getStyleBits())
-			.setData(WEIGHT, columnDescription.getWeight())
-			.setData(MIN_WIDTH, columnDescription.getMinWidth())
-			.build(getTableViewer());
-
-		/* bind text and tooltip */
-		final IObservableValue text = columnDescription.getColumnText();
-		emfDataBindingContext.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
-		// TODO: Grid fix
-		// final IObservableValue tooltipText = columnDescription.getColumnTooltip();
-		// emfDataBindingContext.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
-
-		/* set label provider */
-		column.setLabelProvider(columnDescription.createLabelProvider(tableViewer));
-
-		/* set editing support */
-		final Optional<EditingSupport> editingSupport = columnDescription.createEditingSupport(tableViewer);
-		if (editingSupport.isPresent()) {
-			column.setEditingSupport(editingSupport.get());
-		}
-
-		if (columnDescription.getColumnImage().isPresent()) {
-			column.getColumn().setImage(columnDescription.getColumnImage().get());
-		}
-		return column;
+		return new GridViewerColumnBuilder(config)
+			.withDatabinding(emfDataBindingContext)
+			.build(tableViewer);
 	}
 
 	@Override

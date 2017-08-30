@@ -50,11 +50,11 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.TableConfiguration;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -169,7 +169,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 					final List list = lastSelection.toList();
 					final Grid grid = (Grid) e.widget;
 					final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(new Point(e.x, e.y))
-						.getData(AbstractTableViewerComposite.DMR);
+						.getData(TableConfiguration.DMR);
 
 					Object masterValue = null;
 					EStructuralFeature structuralFeature = null;

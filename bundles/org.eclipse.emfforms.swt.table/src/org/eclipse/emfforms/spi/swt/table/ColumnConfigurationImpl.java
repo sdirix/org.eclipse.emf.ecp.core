@@ -11,24 +11,28 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ConfigurationCallback;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * Implementation of the {@link ColumnDescription}.
+ * Implementation of the {@link ColumnConfiguration}.
  *
  * @author Johannes Faltermeier
- * @author Mathias Schaefer
+ * @author Mat Hansen
  *
  */
-public class ColumnDescriptionImpl implements ColumnDescription {
+public class ColumnConfigurationImpl implements ColumnConfiguration {
 
 	private final boolean resizeable;
 	private final boolean moveable;
@@ -41,10 +45,11 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	private final Optional<EditingSupportCreator> editingSupport;
 	private final Optional<Image> image;
 	private final Map<String, Object> data;
+	private final List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks;
 
 	// BEGIN COMPLEX CODE
 	/**
-	 * Constructs a new {@link ColumnDescription}.
+	 * Constructs a new {@link ColumnConfiguration}.
 	 *
 	 * @param resizeable resizeable
 	 * @param moveable moveable
@@ -56,7 +61,7 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	 * @param labelProvider labelProvider
 	 * @param editingSupport editingSupport. May be <code>null</code> to indicate that there is no editing support
 	 */
-	public ColumnDescriptionImpl(
+	public ColumnConfigurationImpl(
 		boolean resizeable,
 		boolean moveable,
 		int styleBits,
@@ -67,7 +72,8 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 		CellLabelProviderFactory labelProvider,
 		EditingSupportCreator editingSupport,
 		Image image,
-		Map<String, Object> data) {
+		Map<String, Object> data,
+		List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks) {
 		// END COMPLEX CODE
 		this.resizeable = resizeable;
 		this.moveable = moveable;
@@ -80,6 +86,12 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 		this.editingSupport = Optional.ofNullable(editingSupport);
 		this.image = Optional.ofNullable(image);
 		this.data = data;
+		if (configurationCallbacks == null || configurationCallbacks.isEmpty()) {
+			this.configurationCallbacks = Collections.emptyList();
+		} else {
+			this.configurationCallbacks = Collections.unmodifiableList(configurationCallbacks);
+		}
+
 	}
 
 	@Override
@@ -148,6 +160,11 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	@Override
 	public Map<String, Object> getData() {
 		return data;
+	}
+
+	@Override
+	public List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> getConfigurationCallbacks() {
+		return configurationCallbacks;
 	}
 
 }

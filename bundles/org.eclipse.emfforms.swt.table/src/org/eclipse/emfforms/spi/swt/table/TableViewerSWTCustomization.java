@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.graphics.Image;
 
@@ -30,9 +31,10 @@ import org.eclipse.swt.graphics.Image;
  * @author Alexandra Buzila
  * @author Johannes Faltermeier
  *
+ * @param <T> the TableViewer implementation to use
  */
-public interface TableViewerSWTCustomization
-	extends TableViewerCompositeBuilder, TableViewerCreator<AbstractTableViewer>, ButtonBarBuilder,
+public interface TableViewerSWTCustomization<T extends AbstractTableViewer>
+	extends TableViewerCompositeBuilder, TableViewerCreator<T>, ButtonBarBuilder,
 	DNDProvider {
 
 	/**
@@ -52,22 +54,54 @@ public interface TableViewerSWTCustomization
 	/**
 	 * Returns the column descriptions which will be used to create actual columns.
 	 *
-	 * @return the {@link ColumnDescription ColumnDescriptions}
+	 * @return the {@link ColumnConfiguration ColumnDescriptions}
 	 */
-	List<ColumnDescription> getColumns();
+	List<ColumnConfiguration> getColumns();
 
 	/**
-	 * A ColumnDescription is used to describe how a viewer column shall be created.
+	 * A TableConfiguration is used to describe how a table viewer should be configured.
+	 *
+	 * Currently all configured TableConfiguration keys are passed down to each column as well.
+	 * This is subject to change.
+	 *
+	 * @author Mat Hansen <mhansen@eclipsesource.com>
+	 *
+	 */
+	interface TableConfiguration {
+
+		/** Data key for a domain model reference. */
+		String DMR = "domain_model_reference"; //$NON-NLS-1$
+
+		/**
+		 * Dummy method to satisfy CheckStyle.
+		 * TODO: Delete after this interface defines some real methods.
+		 */
+		void dummy();
+
+	}
+
+	/**
+	 * A ColumnConfiguration is used to describe how a viewer column shall be created.
 	 *
 	 * @author Johannes Faltermeier
 	 *
 	 */
-	interface ColumnDescription {
+	interface ColumnConfiguration {
 
-		/**
-		 * Constant indicating that {@link #getWeight()} has no value.
-		 */
+		/** Data key for resizable columns. */
+		String RESIZABLE = "resizable"; //$NON-NLS-1$
+
+		/** Data key for column weight. */
+		String WEIGHT = "weight"; //$NON-NLS-1$
+
+		/** Constant indicating that {@link #getWeight()} has no value. */
 		int NO_WEIGHT = -1;
+
+		/** Data key for the minimum width of the column. */
+		String MIN_WIDTH = "min_width"; //$NON-NLS-1$
+
+		/** Data key for column id. */
+		String COLUMN_ID = "column_id"; //$NON-NLS-1$
 
 		/**
 		 * <code>true</code> if resizeable, <code>false</code> otherwise.
@@ -162,6 +196,34 @@ public interface TableViewerSWTCustomization
 		 * @return data map object
 		 */
 		Map<String, Object> getData();
+
+		/**
+		 * Get the list of additional ConfigurationCallbacks.
+		 *
+		 * @return list of ConfigurationCallbacks.
+		 */
+		List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> getConfigurationCallbacks();
+
+	}
+
+	/**
+	 * Interface for ConfigurationCallbacks.
+	 *
+	 * @author Mat Hansen <mhansen@eclipsesource.com>
+	 *
+	 * @param <V> the TableViewer implementation to use
+	 * @param <C> the {@link ViewerColumn} implementation to use
+	 */
+	interface ConfigurationCallback<V extends AbstractTableViewer, C extends ViewerColumn> {
+
+		/**
+		 * Setup a custom configuration for the given viewer.
+		 *
+		 * @param config the {@link ColumnConfiguration}
+		 * @param tableViewer the table viewer
+		 * @param viewerColumn the viewer column
+		 */
+		void configure(ColumnConfiguration config, V tableViewer, C viewerColumn);
 
 	}
 

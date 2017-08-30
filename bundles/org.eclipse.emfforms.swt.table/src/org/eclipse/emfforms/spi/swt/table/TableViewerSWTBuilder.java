@@ -268,7 +268,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -279,7 +279,8 @@ public class TableViewerSWTBuilder {
 				labelProvider,
 				editingSupport,
 				image,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -315,7 +316,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -326,7 +327,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				image,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -362,7 +364,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -373,7 +375,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				image,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -407,7 +410,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -418,7 +421,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -452,7 +456,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -463,7 +467,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -486,7 +491,7 @@ public class TableViewerSWTBuilder {
 		EditingSupportCreator editingSupport) {
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				true,
 				false,
 				SWT.NONE,
@@ -497,7 +502,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -520,7 +526,7 @@ public class TableViewerSWTBuilder {
 		EditingSupportCreator editingSupport) {
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				true,
 				false,
 				SWT.NONE,
@@ -531,7 +537,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -563,7 +570,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -574,7 +581,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -606,7 +614,7 @@ public class TableViewerSWTBuilder {
 		// END COMPLEX CODE
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				resizeable,
 				moveable,
 				styleBits,
@@ -617,7 +625,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -638,7 +647,7 @@ public class TableViewerSWTBuilder {
 		CellLabelProvider labelProvider) {
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				true,
 				false,
 				SWT.NONE,
@@ -649,7 +658,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;
@@ -670,7 +680,7 @@ public class TableViewerSWTBuilder {
 		CellLabelProvider labelProvider) {
 
 		customization.addColumn(
-			new ColumnDescriptionImpl(
+			new ColumnConfigurationImpl(
 				true,
 				false,
 				SWT.NONE,
@@ -681,7 +691,8 @@ public class TableViewerSWTBuilder {
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null,
-				columnData));
+				columnData,
+				null));
 
 		columnData = new HashMap<String, Object>();
 		return this;

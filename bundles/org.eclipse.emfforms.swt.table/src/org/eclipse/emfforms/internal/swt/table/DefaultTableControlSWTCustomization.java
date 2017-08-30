@@ -47,7 +47,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public class DefaultTableControlSWTCustomization implements TableViewerSWTCustomization {
 
-	private final List<ColumnDescription> columns = new ArrayList<TableViewerSWTCustomization.ColumnDescription>();
+	private final List<ColumnConfiguration> columns = new ArrayList<TableViewerSWTCustomization.ColumnConfiguration>();
 
 	private TableViewerCompositeBuilder tableViewerCompositeBuilder = new DefaultTableViewerCompositeBuilder();
 
@@ -122,7 +122,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public List<ColumnDescription> getColumns() {
+	public List<ColumnConfiguration> getColumns() {
 		return columns;
 	}
 
@@ -176,10 +176,10 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	 * Adds a column to the table.
 	 *
 	 * @param columnDescription the
-	 *            {@link org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription
+	 *            {@link org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration
 	 *            ColumnDescription}
 	 */
-	public void addColumn(ColumnDescription columnDescription) {
+	public void addColumn(ColumnConfiguration columnDescription) {
 		columns.add(columnDescription);
 	}
 

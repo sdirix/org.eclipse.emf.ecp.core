@@ -9,55 +9,64 @@
  * Contributors:
  * jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
+package org.eclipse.emfforms.spi.swt.table;
 
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerColumnBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
-import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
-import org.eclipse.nebula.widgets.grid.GridColumn;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Widget;
 
 /**
- * The nebula grid viewer configuration helper class.
+ * The default table viewer configuration helper class.
  *
  * @author Mat Hansen <mhansen@eclipsesource.com>
  *
  */
-public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<GridTableViewer, GridViewerColumn> {
+public class DefaultTableViewerColumnBuilder
+	extends AbstractTableViewerColumnBuilder<TableViewer, TableViewerColumn> {
 
 	/**
 	 * The constructor.
 	 *
 	 * @param config the {@link ColumnConfiguration}
 	 */
-	public GridViewerColumnBuilder(ColumnConfiguration config) {
+	public DefaultTableViewerColumnBuilder(ColumnConfiguration config) {
 		super(config);
 	}
 
 	@Override
-	public GridViewerColumn createViewerColumn(GridTableViewer tableViewer) {
-		return new GridViewerColumn(tableViewer, getConfig().getStyleBits());
+	public TableViewerColumn createViewerColumn(TableViewer tableViewer) {
+		return new TableViewerColumn(tableViewer, getConfig().getStyleBits());
 	}
 
 	@Override
-	protected Item getTableColumn(GridViewerColumn viewerColumn) {
+	protected Item getTableColumn(TableViewerColumn viewerColumn) {
 		return viewerColumn.getColumn();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	protected void configureViewerColumn(GridViewerColumn viewerColumn) {
-		final GridColumn column = viewerColumn.getColumn();
-
-		column.setResizeable(getConfig().isResizeable());
-		column.setMoveable(getConfig().isMoveable());
-		// column.getColumn().setWidth(width);
+	protected void configureDatabinding(Widget column) {
+		super.configureDatabinding(column);
+		bindValue(column, WidgetProperties.tooltipText(), getConfig().getColumnTooltip());
 	}
 
 	@Override
-	protected void configureEditingSupport(GridViewerColumn viewerColumn, GridTableViewer tableViewer) {
+	protected void configureViewerColumn(TableViewerColumn viewerColumn) {
+		final TableColumn column = viewerColumn.getColumn();
+
+		column.setResizable(getConfig().isResizeable());
+		column.setMoveable(getConfig().isMoveable());
+		// column.setWidth(width);
+	}
+
+	@Override
+	protected void configureEditingSupport(TableViewerColumn viewerColumn, TableViewer tableViewer) {
 		final Optional<EditingSupport> editingSupport = getConfig().createEditingSupport(tableViewer);
 		if (editingSupport.isPresent()) {
 			viewerColumn.setEditingSupport(editingSupport.get());

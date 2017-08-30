@@ -120,6 +120,7 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.TableConfiguration;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -188,6 +189,7 @@ import org.osgi.framework.FrameworkUtil;
  *
  */
 public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableControl> {
+
 	/**
 	 * @since 1.10
 	 */
@@ -223,7 +225,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Optional<Integer> maximumHeight;
 	private Optional<Integer> visibleLines;
 	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
-	private AbstractTableViewerComposite tableViewerComposite;
+	private AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite;
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
 	private IObservableList list;
@@ -640,7 +642,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 
 				// TODO: rewrite builder (ms)
-				tableViewerSWTBuilder.setData(AbstractTableViewerComposite.DMR, dmr);
+				tableViewerSWTBuilder.setData(TableConfiguration.DMR, dmr);
 				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
 					labelProvider, editingSupportCreator, null);
 
@@ -652,7 +654,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	}
 
-	private void setupValidation(final AbstractTableViewerComposite tableViewerComposite) {
+	private void setupValidation(final AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite) {
 		if (tableViewerComposite.getValidationControls().isPresent()) {
 			final List<Control> validationControls = tableViewerComposite.getValidationControls().get();
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
@@ -665,7 +667,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
-		final AbstractTableViewerComposite tableViewerComposite) {
+		final AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite) {
 
 		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
 		if (!tableStyleProperty.isEnableSorting()) {

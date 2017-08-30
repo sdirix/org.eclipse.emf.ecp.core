@@ -16,7 +16,7 @@ import java.util.List;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
@@ -37,20 +37,9 @@ import org.eclipse.swt.widgets.Widget;
 /**
  * @author Jonas Helming
  *
+ * @param <V> the TableViewer implementation to use
  */
-public abstract class AbstractTableViewerComposite extends Composite {
-
-	// TODO: refactor these constants into ColumnDescription interface
-	/** Data key for resizable columns. */
-	public static final String RESIZABLE = "resizable"; //$NON-NLS-1$
-	/** Data key for column weight. */
-	public static final String WEIGHT = "weight"; //$NON-NLS-1$
-	/** Data key for the minimum width of the column. */
-	public static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
-	/** Data key for column id. */
-	public static final String COLUMN_ID = "column_id"; //$NON-NLS-1$
-	/** Data key for a domain model reference. */
-	public static final String DMR = "domain_model_reference"; //$NON-NLS-1$
+public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer> extends Composite {
 
 	private final EMFDataBindingContext emfDatabindingContext;
 	private Optional<List<Control>> validationControls;
@@ -69,9 +58,9 @@ public abstract class AbstractTableViewerComposite extends Composite {
 		Composite parent,
 		int style,
 		Object inputObject,
-		TableViewerSWTCustomization customization,
-		IObservableValue title,
-		IObservableValue tooltip) {
+		TableViewerSWTCustomization<V> customization,
+		IObservableValue<Object> title,
+		IObservableValue<Object> tooltip) {
 		super(parent, style);
 		emfDatabindingContext = new EMFDataBindingContext();
 		renderControl(this, customization, inputObject, emfDatabindingContext, title, tooltip);
@@ -80,7 +69,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	/**
 	 * @return the {@link AbstractTableViewer}
 	 */
-	public abstract AbstractTableViewer getTableViewer();
+	public abstract V getTableViewer();
 
 	/**
 	 *
@@ -90,9 +79,9 @@ public abstract class AbstractTableViewerComposite extends Composite {
 		return validationControls;
 	}
 
-	private void renderControl(Composite parent, TableViewerSWTCustomization customization,
-		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue title,
-		IObservableValue tooltip) {
+	private void renderControl(Composite parent, TableViewerSWTCustomization<V> customization,
+		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue<Object> title,
+		IObservableValue<Object> tooltip) {
 		customization.createCompositeLayout(parent);
 
 		final Optional<Label> titleLabel = customization.getTitleLabel();
@@ -104,7 +93,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 
 		final Composite viewerComposite = customization.getViewerComposite();
 
-		final AbstractTableViewer tableViewer = createTableViewer(customization, viewerComposite);
+		final V tableViewer = createTableViewer(customization, viewerComposite);
 
 		final Optional<Composite> buttonComposite = customization.getButtonComposite();
 		if (buttonComposite.isPresent()) {
@@ -130,10 +119,10 @@ public abstract class AbstractTableViewerComposite extends Composite {
 		final Widget[] columns = getColumns();
 		for (int i = 0; i < columns.length; i++) {
 			final Widget tableColumn = columns[i];
-			final boolean storedIsResizable = (Boolean) tableColumn.getData(RESIZABLE);
-			final Integer storedWeight = (Integer) tableColumn.getData(WEIGHT);
-			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
-			if (storedWeight == ColumnDescription.NO_WEIGHT) {
+			final boolean storedIsResizable = (Boolean) tableColumn.getData(ColumnConfiguration.RESIZABLE);
+			final Integer storedWeight = (Integer) tableColumn.getData(ColumnConfiguration.WEIGHT);
+			final Integer storedMinWidth = (Integer) tableColumn.getData(ColumnConfiguration.MIN_WIDTH);
+			if (storedWeight == ColumnConfiguration.NO_WEIGHT) {
 				layout.setColumnData(tableColumn, new ColumnPixelData(storedMinWidth, storedIsResizable));
 			} else if (storedMinWidth > 0) {
 				layout.setColumnData(tableColumn,
@@ -145,7 +134,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 		}
 	}
 
-	private void setupDragAndDrop(TableViewerSWTCustomization customization, final AbstractTableViewer tableViewer) {
+	private void setupDragAndDrop(TableViewerSWTCustomization<V> customization, final V tableViewer) {
 		if (customization.hasDND()) {
 			tableViewer.addDragSupport(customization.getDragOperations(), customization.getDragTransferTypes(),
 				customization.getDragListener(tableViewer));
@@ -179,12 +168,12 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	 *
 	 * @return the table viewer
 	 */
-	protected abstract AbstractTableViewer createTableViewer(TableViewerSWTCustomization customization,
+	protected abstract V createTableViewer(TableViewerSWTCustomization<V> customization,
 		Composite viewerComposite);
 
-	private void addColumns(TableViewerSWTCustomization customization, AbstractTableViewer tableViewer,
+	private void addColumns(TableViewerSWTCustomization<V> customization, V tableViewer,
 		EMFDataBindingContext emfDataBindingContext) {
-		for (final ColumnDescription columnDescription : customization.getColumns()) {
+		for (final ColumnConfiguration columnDescription : customization.getColumns()) {
 			/* create column */
 			// TODO move TableViewerColumnBuilder?
 			createColumn(columnDescription, emfDataBindingContext, tableViewer);
@@ -200,8 +189,8 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	 * @param emfDataBindingContext the data binding context to use
 	 * @return the viewer column
 	 */
-	protected abstract ViewerColumn createColumn(ColumnDescription columnDescription,
-		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer);
+	protected abstract ViewerColumn createColumn(ColumnConfiguration columnDescription,
+		EMFDataBindingContext emfDataBindingContext, V tableViewer);
 
 	/**
 	 * Creates a new {@link ColumnViewerEditorActivationStrategy} for the given table viewer.
@@ -224,7 +213,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 		};
 	}
 
-	private static void enableTooltipSupport(final AbstractTableViewer tableViewer) {
+	private static void enableTooltipSupport(AbstractTableViewer tableViewer) {
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 	}
 
@@ -234,7 +223,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 
 	}
 
-	private static void initTitleLabel(Label label, IObservableValue title, IObservableValue tooltip,
+	private static void initTitleLabel(Label label, IObservableValue<Object> title, IObservableValue<Object> tooltip,
 		EMFDataBindingContext emfDatabindingContext) {
 		emfDatabindingContext.bindValue(
 			WidgetProperties.text().observe(label),
