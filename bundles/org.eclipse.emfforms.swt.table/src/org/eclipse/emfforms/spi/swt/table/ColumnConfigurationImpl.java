@@ -41,8 +41,8 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 	private final int minWidth;
 	private final IObservableValue columnText;
 	private final IObservableValue tooltipText;
-	private final CellLabelProviderFactory labelProvider;
-	private final Optional<EditingSupportCreator> editingSupport;
+	private final CellLabelProviderFactory labelProviderFactory;
+	private final Optional<EditingSupportCreator> editingSupportCreator;
 	private final Optional<Image> image;
 	private final Map<String, Object> data;
 	private final List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks;
@@ -58,7 +58,7 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 	 * @param minWidth minWidth
 	 * @param columnText columnText
 	 * @param tooltipText tooltipText
-	 * @param labelProvider labelProvider
+	 * @param labelProviderFactory labelProvider
 	 * @param editingSupport editingSupport. May be <code>null</code> to indicate that there is no editing support
 	 */
 	public ColumnConfigurationImpl(
@@ -69,7 +69,7 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 		int minWidth,
 		IObservableValue columnText,
 		IObservableValue tooltipText,
-		CellLabelProviderFactory labelProvider,
+		CellLabelProviderFactory labelProviderFactory,
 		EditingSupportCreator editingSupport,
 		Image image,
 		Map<String, Object> data,
@@ -82,9 +82,12 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 		this.minWidth = minWidth;
 		this.columnText = columnText;
 		this.tooltipText = tooltipText;
-		this.labelProvider = labelProvider;
-		this.editingSupport = Optional.ofNullable(editingSupport);
+		this.labelProviderFactory = labelProviderFactory;
+		editingSupportCreator = Optional.ofNullable(editingSupport);
 		this.image = Optional.ofNullable(image);
+		if (data == null) {
+			throw new IllegalArgumentException("Data map cannot be null"); //$NON-NLS-1$
+		}
 		this.data = data;
 		if (configurationCallbacks == null || configurationCallbacks.isEmpty()) {
 			this.configurationCallbacks = Collections.emptyList();
@@ -131,15 +134,33 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 
 	@Override
 	public CellLabelProvider createLabelProvider(AbstractTableViewer columnViewer) {
-		return labelProvider.createCellLabelProvider(columnViewer);
+		return labelProviderFactory.createCellLabelProvider(columnViewer);
+	}
+
+	/**
+	 * Returns the cell label provider factory.
+	 *
+	 * @return the cell label provider factory
+	 */
+	CellLabelProviderFactory getLabelProviderFactory() {
+		return labelProviderFactory;
 	}
 
 	@Override
 	public Optional<EditingSupport> createEditingSupport(AbstractTableViewer columnViewer) {
-		if (editingSupport.isPresent()) {
-			return Optional.of(editingSupport.get().createEditingSupport(columnViewer));
+		if (editingSupportCreator.isPresent()) {
+			return Optional.of(editingSupportCreator.get().createEditingSupport(columnViewer));
 		}
 		return Optional.empty();
+	}
+
+	/**
+	 * Returns the editing support creator.
+	 *
+	 * @return the editing support creator
+	 */
+	Optional<EditingSupportCreator> getEditingSupportCreator() {
+		return editingSupportCreator;
 	}
 
 	@Override

@@ -641,10 +641,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					tempShell.dispose();
 				}
 
-				// TODO: rewrite builder (ms)
-				tableViewerSWTBuilder.setData(TableConfiguration.DMR, dmr);
-				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
-					labelProvider, editingSupportCreator, null);
+				tableViewerSWTBuilder
+					.dataMapEntry(TableConfiguration.DMR, dmr);
+
+				tableViewerSWTBuilder.column()
+					.weight(weight)
+					.minWidth(minWidth)
+					.text(text)
+					.tooltip(tooltip)
+					.labelProviderFactory(labelProvider)
+					.editingSupportCreator(editingSupportCreator)
+					.create();
 
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
@@ -940,17 +947,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 		}
 
-		tableViewerSWTBuilder.addColumn(
-			true,
-			false,
-			SWT.NONE,
-			0,
-			columnWidth,
-			columnName,
-			columnName,
-			new ValidationStatusCellLabelProvider(getVElement()),
-			null,
-			image);
+		tableViewerSWTBuilder.column()
+			.minWidth(columnWidth)
+			.text(columnName)
+			.tooltip(columnName)
+			.labelProvider(new ValidationStatusCellLabelProvider(getVElement()))
+			.image(image)
+			.create();
 
 	}
 

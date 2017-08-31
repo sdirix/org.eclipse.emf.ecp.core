@@ -9,22 +9,20 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
+ * Mat Hansen - column builder refactoring
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.internal.swt.table.DefaultTableControlSWTCustomization;
-import org.eclipse.emfforms.internal.swt.table.util.StaticCellLabelProviderFactory;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfigurationBuilder.BuilderLifeCycleListener;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
 import org.eclipse.jface.viewers.AbstractTableViewer;
-import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
@@ -48,7 +46,7 @@ public class TableViewerSWTBuilder {
 	private final IObservableValue title;
 	/** The tooltip. */
 	private final IObservableValue tooltip;
-	private Map<String, Object> columnData;
+	private final Map<String, Object> columnData;
 
 	/**
 	 * @param composite the parent {@link Composite}
@@ -132,8 +130,8 @@ public class TableViewerSWTBuilder {
 	 * Use this method to create the actual TableViewer.
 	 * </p>
 	 * <p>
-	 * The default implementation will create a viewer with the {@link SWT#MULTI}, {@link SWT#V_SCROLL},
-	 * {@link SWT#FULL_SELECTION} and {@link SWT#BORDER} style bits. The table will show the
+	 * The default implementation will create a viewer with the SWT#MULTI, SWT#V_SCROLL,
+	 * FULL_SELECTION and SWT#BORDER style bits. The table will show the
 	 * {@link org.eclipse.swt.widgets.Table#setHeaderVisible(boolean) header} and will show
 	 * {@link org.eclipse.swt.widgets.Table#setLinesVisible(boolean) lines}.
 	 * </p>
@@ -229,473 +227,35 @@ public class TableViewerSWTBuilder {
 	}
 
 	/**
-	 * Add an arbitrary key/value pair.
+	 * Add an arbitrary key/value pair to be set on every column created.
 	 *
 	 * @param key literal
 	 * @param value object
+	 * @return self
 	 */
-	public void setData(String key, Object value) {
+	public TableViewerSWTBuilder dataMapEntry(String key, Object value) {
 		columnData.put(key, value);
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @param image the column image
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		IObservableValue columnText,
-		IObservableValue tooltipText,
-		CellLabelProviderFactory labelProvider,
-		EditingSupportCreator editingSupport,
-		Image image) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				columnText,
-				tooltipText,
-				labelProvider,
-				editingSupport,
-				image,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @param image the column image
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		IObservableValue columnText,
-		IObservableValue tooltipText,
-		CellLabelProvider labelProvider,
-		EditingSupportCreator editingSupport,
-		Image image) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				columnText,
-				tooltipText,
-				new StaticCellLabelProviderFactory(labelProvider),
-				editingSupport,
-				image,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @param image the column image
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		String columnText,
-		String tooltipText,
-		CellLabelProvider labelProvider,
-		EditingSupportCreator editingSupport,
-		Image image) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				Observables.constantObservableValue(columnText, String.class),
-				Observables.constantObservableValue(tooltipText, String.class),
-				new StaticCellLabelProviderFactory(labelProvider),
-				editingSupport,
-				image,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		IObservableValue columnText,
-		IObservableValue tooltipText,
-		CellLabelProvider labelProvider,
-		EditingSupportCreator editingSupport) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				columnText,
-				tooltipText,
-				new StaticCellLabelProviderFactory(labelProvider),
-				editingSupport,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		String columnText,
-		String tooltipText,
-		CellLabelProvider labelProvider,
-		EditingSupportCreator editingSupport) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				Observables.constantObservableValue(columnText, String.class),
-				Observables.constantObservableValue(tooltipText, String.class),
-				new StaticCellLabelProviderFactory(labelProvider),
-				editingSupport,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
 	/**
-	 * Adds a column. The column is resizeable, not moveable, uses the {@link SWT#NONE} style bit, has a weight of 100
-	 * and a min width of 0 pixel.
+	 * Initializes column builder. Finish with .create();
 	 *
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @return self
+	 * @return {@link ColumnConfigurationBuilder}
 	 */
-	public TableViewerSWTBuilder addColumn(
-		IObservableValue columnText,
-		IObservableValue tooltipText,
-		CellLabelProvider labelProvider,
-		EditingSupportCreator editingSupport) {
+	public ColumnConfigurationBuilder<TableViewerSWTBuilder> column() {
+		return new ColumnConfigurationBuilder<TableViewerSWTBuilder>(this, new BuilderLifeCycleListener() {
 
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				true,
-				false,
-				SWT.NONE,
-				100,
-				0,
-				columnText,
-				tooltipText,
-				new StaticCellLabelProviderFactory(labelProvider),
-				editingSupport,
-				null,
-				columnData,
-				null));
+			@Override
+			public void onInit(ColumnConfigurationBuilder<?> childBuilder) {
+				childBuilder.dataMap(columnData);
+			}
 
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	/**
-	 * Adds a column. The column is resizeable, not moveable, uses the {@link SWT#NONE} style bit, has a weight of 100
-	 * and a min width of 0 pixel.
-	 *
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @param editingSupport the editing support
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		String columnText,
-		String tooltipText,
-		CellLabelProvider labelProvider,
-		EditingSupportCreator editingSupport) {
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				true,
-				false,
-				SWT.NONE,
-				100,
-				0,
-				Observables.constantObservableValue(columnText, String.class),
-				Observables.constantObservableValue(tooltipText, String.class),
-				new StaticCellLabelProviderFactory(labelProvider),
-				editingSupport,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a read-only column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		IObservableValue columnText,
-		IObservableValue tooltipText,
-		CellLabelProvider labelProvider) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				columnText,
-				tooltipText,
-				new StaticCellLabelProviderFactory(labelProvider),
-				null,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	// BEGIN COMPLEX CODE
-	/**
-	 * Adds a read-only column.
-	 *
-	 * @param resizeable whether the column is resizeable or not
-	 * @param moveable whether the column is moveable or not
-	 * @param styleBits the style bits for the column
-	 * @param weight the weight of the column
-	 * @param minWidth the min width in pixels
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		boolean resizeable,
-		boolean moveable,
-		int styleBits,
-		int weight,
-		int minWidth,
-		String columnText,
-		String tooltipText,
-		CellLabelProvider labelProvider) {
-		// END COMPLEX CODE
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				resizeable,
-				moveable,
-				styleBits,
-				weight,
-				minWidth,
-				Observables.constantObservableValue(columnText, String.class),
-				Observables.constantObservableValue(tooltipText, String.class),
-				new StaticCellLabelProviderFactory(labelProvider),
-				null,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	/**
-	 * Adds a read-only column. The column is resizeable, not moveable, uses the {@link SWT#NONE} style bit, has a
-	 * weight of 100 and a min width of 0 pixel.
-	 *
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		IObservableValue columnText,
-		IObservableValue tooltipText,
-		CellLabelProvider labelProvider) {
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				true,
-				false,
-				SWT.NONE,
-				100,
-				0,
-				columnText,
-				tooltipText,
-				new StaticCellLabelProviderFactory(labelProvider),
-				null,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
-	}
-
-	/**
-	 * Adds a read-only column. The column is resizeable, not moveable, uses the {@link SWT#NONE} style bit, has a
-	 * weight of 100 and a min width of 0 pixel.
-	 *
-	 * @param columnText the column text
-	 * @param tooltipText the tooltip text
-	 * @param labelProvider the label provider
-	 * @return self
-	 */
-	public TableViewerSWTBuilder addColumn(
-		String columnText,
-		String tooltipText,
-		CellLabelProvider labelProvider) {
-
-		customization.addColumn(
-			new ColumnConfigurationImpl(
-				true,
-				false,
-				SWT.NONE,
-				100,
-				0,
-				Observables.constantObservableValue(columnText, String.class),
-				Observables.constantObservableValue(tooltipText, String.class),
-				new StaticCellLabelProviderFactory(labelProvider),
-				null,
-				null,
-				columnData,
-				null));
-
-		columnData = new HashMap<String, Object>();
-		return this;
+			@Override
+			public void onCreate(ColumnConfiguration config) {
+				customization.addColumn(config);
+			}
+		});
 	}
 
 	/**
