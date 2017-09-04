@@ -385,4 +385,9 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		result.addAll(eObjectToMappedSettings.keySet());
 		return result;
 	}
+
+	@Override
+	public Set<UniqueSetting> getSettingsForControl(VControl control) {
+		return controlToSettingMap.get(control);
+	}
 }
