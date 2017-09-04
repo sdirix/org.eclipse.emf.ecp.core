@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -67,6 +68,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
+import org.eclipse.emf.emfstore.bowling.Game;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -76,6 +78,7 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -460,6 +463,63 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	@Test
+	@Ignore // Scenario is currently not supported
+	public void testShowRuleWithConditionOnAttributeOfNonContainedObject() {
+		final Game game = BowlingFactory.eINSTANCE.createGame();
+		game.setPlayer(player);
+		game.getFrames().add(1);
+
+		view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(game.eClass());
+
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getGame_Frames());
+
+		control1.setDomainModelReference(domainModelReference);
+		view.getChildren().add(control1);
+
+		final ShowRule showRule = addShowRule(control1, false);
+		showRule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo",
+			BowlingPackage.eINSTANCE.getGame_Player()));
+
+		instantiateRuleService(game);
+
+		player.setName("foo");
+		assertTrue(control1.isVisible());
+		player.setName("bar");
+		assertFalse(control1.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithConditionOnAttributeOfContainedObject() {
+		final Fan fan = BowlingFactory.eINSTANCE.createFan();
+		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
+		fan.setFavouriteMerchandise(merchandise);
+
+		view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(fan.eClass());
+
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_Gender());
+		control1.setDomainModelReference(domainModelReference);
+		view.getChildren().add(control1);
+
+		final ShowRule showRule = addShowRule(control1, false);
+		showRule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getMerchandise_Price(), new BigDecimal(5),
+			BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()));
+
+		instantiateRuleService(fan);
+		merchandise.setPrice(new BigDecimal(5));
+		assertTrue(control1.isVisible());
+		merchandise.setPrice(new BigDecimal(55));
+		assertFalse(control1.isVisible());
+	}
+
+	@Test
 	public void testInitialization() {
 		final RuleService ruleService = new RuleService();
 		final ViewModelContextStub contextStub = new ViewModelContextStub() {
@@ -604,38 +664,6 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with the second condition being
-	 * true.
-	 * Controls should be visible.
-	 */
-	@Test
-	public void testShowRuleWithOrConditionSecondConditionApplies() {
-		addLeagueShowRuleWithOrCondition(column, true,
-			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
-			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
-		instantiateRuleService();
-		league.setName("League2");
-		assertTrue(column.isVisible());
-		assertTrue(controlPName.isVisible());
-	}
-
-	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with none of the conditions being
-	 * true.
-	 * Controls should not be visible.
-	 */
-	@Test
-	public void testShowRuleWithOrConditionNoConditionApplies() {
-		addLeagueShowRuleWithOrCondition(column, true,
-			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
-			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
-		instantiateRuleService();
-		setLeagueToWrong();
-		assertFalse(column.isVisible());
-		assertFalse(controlPName.isVisible());
-	}
-
-	/**
 	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with first condition being true
 	 * while
 	 * initializing the rule service.
@@ -757,7 +785,8 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with second condition being true.
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with second condition being
+	 * true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -772,7 +801,8 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with none of the conditions being
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with none of the conditions
+	 * being
 	 * true.
 	 * Controls should not be visible.
 	 */
@@ -856,7 +886,8 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with none of the conditions being
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with none of the conditions
+	 * being
 	 * true
 	 * while initializing the rule service.
 	 * Controls should not be visible.
@@ -968,6 +999,8 @@ public class RuleService_PTest extends CommonRuleTest {
 		instantiateRuleService(fan);
 		merchandise.setName("foo");
 		assertTrue(control1.isVisible());
+		merchandise.setName("bar");
+		assertFalse(control1.isVisible());
 	}
 
 	@Test
@@ -1860,6 +1893,38 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	/**
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with the second condition being
+	 * true.
+	 * Controls should be visible.
+	 */
+	@Test
+	public void testShowRuleWithOrConditionSecondConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		league.setName("League2");
+		assertTrue(column.isVisible());
+		assertTrue(controlPName.isVisible());
+	}
+
+	/**
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with none of the conditions being
+	 * true.
+	 * Controls should not be visible.
+	 */
+	@Test
+	public void testShowRuleWithOrConditionNoConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		setLeagueToWrong();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	/**
 	 * Test propagation hide rule no child rule right to wrong.
 	 */
 	@Test
@@ -2592,7 +2657,8 @@ public class RuleService_PTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Should return the control because of the {@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule EnableRule} on
+	 * Should return the control because of the {@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule EnableRule}
+	 * on
 	 * the
 	 * control.
 	 */
