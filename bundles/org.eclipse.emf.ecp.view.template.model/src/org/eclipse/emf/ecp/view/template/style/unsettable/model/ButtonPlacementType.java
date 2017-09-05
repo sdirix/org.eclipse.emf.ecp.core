@@ -21,7 +21,9 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc -->
  * A representation of the literals of the enumeration '<em><b>Button Placement Type</b></em>',
  * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * 
+ * @since 1.14
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage#getButtonPlacementType()
  * @model

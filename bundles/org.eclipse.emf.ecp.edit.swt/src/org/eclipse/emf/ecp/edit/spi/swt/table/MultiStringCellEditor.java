@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Text;
  * separator (by default ";").
  *
  * @author Jonas Helming
- * @since 1.14.0
+ * @since 1.14
  *
  */
 public class MultiStringCellEditor extends StringBasedCellEditor {

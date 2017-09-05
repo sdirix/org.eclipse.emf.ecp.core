@@ -22,8 +22,8 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Cell editor for string based cell editors that implements a custom
  * activate method that propagates changes on first key stroke.
- * 
- * @since 1.14.0
+ *
+ * @since 1.14
  *
  */
 public abstract class StringBasedCellEditor extends TextCellEditor implements ECPCellEditor {

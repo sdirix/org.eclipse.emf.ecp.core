@@ -28,8 +28,10 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * <!-- end-user-doc -->
  * 
+ * @since 1.14
+ *        <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableFactory
  * @model kind="package"
  * @generated
@@ -39,7 +41,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "unsettable"; //$NON-NLS-1$
@@ -48,7 +50,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/style/unsettable/model"; //$NON-NLS-1$
@@ -57,7 +59,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.style.unsettable.model"; //$NON-NLS-1$
@@ -66,7 +68,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTUnsettablePackage eINSTANCE = org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl
@@ -78,7 +80,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettableStylePropertyImpl
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl#getUnsettableStyleProperty()
 	 * @generated
@@ -89,7 +91,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The feature id for the '<em><b>Button Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -99,7 +101,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The feature id for the '<em><b>Button Placement</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -109,7 +111,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -119,7 +121,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * The number of operations of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -130,7 +132,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * <em>Button Alignment Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl#getButtonAlignmentType()
 	 * @generated
@@ -142,7 +144,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * <em>Button Placement Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl#getButtonPlacementType()
 	 * @generated
@@ -155,7 +157,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Style Property</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty
 	 * @generated
@@ -168,7 +170,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * <em>Button Alignment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Button Alignment</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty#getButtonAlignment()
 	 * @see #getUnsettableStyleProperty()
@@ -182,7 +184,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * <em>Button Placement</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Button Placement</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty#getButtonPlacement()
 	 * @see #getUnsettableStyleProperty()
@@ -196,7 +198,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for enum '<em>Button Alignment Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType
 	 * @generated
@@ -209,7 +211,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for enum '<em>Button Placement Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType
 	 * @generated
@@ -220,7 +222,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -237,7 +239,7 @@ public interface VTUnsettablePackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -247,7 +249,7 @@ public interface VTUnsettablePackage extends EPackage {
 		 * Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettableStylePropertyImpl
 		 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl#getUnsettableStyleProperty()
 		 * @generated
@@ -258,7 +260,7 @@ public interface VTUnsettablePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Button Alignment</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute UNSETTABLE_STYLE_PROPERTY__BUTTON_ALIGNMENT = eINSTANCE.getUnsettableStyleProperty_ButtonAlignment();
@@ -267,7 +269,7 @@ public interface VTUnsettablePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Button Placement</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute UNSETTABLE_STYLE_PROPERTY__BUTTON_PLACEMENT = eINSTANCE.getUnsettableStyleProperty_ButtonPlacement();
@@ -278,7 +280,7 @@ public interface VTUnsettablePackage extends EPackage {
 		 * Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType
 		 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl#getButtonAlignmentType()
 		 * @generated
@@ -291,7 +293,7 @@ public interface VTUnsettablePackage extends EPackage {
 		 * Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType
 		 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.impl.VTUnsettablePackageImpl#getButtonPlacementType()
 		 * @generated

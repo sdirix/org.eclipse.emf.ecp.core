@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
  * Tester for number cell editor.
  *
  * @author Jonas Helming
- * @since 1.14.0
+ * @since 1.14
  *
  */
 public class MultiStringCellEditorTester implements ECPCellEditorTester {
