@@ -605,8 +605,7 @@ public final class SWTValidationHelper {
 
 	private VTViewTemplate getTemplate() {
 		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
-		if (vtViewTemplateProvider == null || vtViewTemplateProvider.getViewTemplate() == null
-			|| vtViewTemplateProvider.getViewTemplate().getControlValidationConfiguration() == null) {
+		if (vtViewTemplateProvider == null || vtViewTemplateProvider.getViewTemplate() == null) {
 			if (defaultTemplate == null) {
 				defaultTemplate = VTTemplateFactory.eINSTANCE.createViewTemplate();
 				final VTControlValidationTemplate validationTemplate = VTTemplateFactory.eINSTANCE
