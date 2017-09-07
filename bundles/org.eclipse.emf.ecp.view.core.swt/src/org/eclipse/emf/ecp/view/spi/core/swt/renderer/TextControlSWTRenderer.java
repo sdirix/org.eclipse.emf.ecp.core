@@ -535,6 +535,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 *
 	 * @return <code>true</code> if the control is unsettable and the unset button is left of the text field,
 	 *         <code>false</code> otherwise
+	 * @since 1.14
 	 */
 	protected boolean isUnsetButtonLeftOfControlComposite() {
 		return isControlUnsettable()
@@ -548,6 +549,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @param control The edit control created by the
 	 *            {@link org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer SimpleControlSWTRenderer}
 	 * @return the control composite containing the text field
+	 * @since 1.14
 	 */
 	protected Control getControlCompositeFromControl(Control control) {
 		if (isUnsetButtonLeftOfControlComposite()) {

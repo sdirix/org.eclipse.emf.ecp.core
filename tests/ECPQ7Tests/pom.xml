@@ -13,7 +13,14 @@
 		<build_job>ecp-develop-nightly</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
 	</properties> 
-	
+	<profiles>
+		<profile>
+			<id>release-build</id>
+			<properties>
+				<build_job>ecp-relaeseBranch</build_job>
+			</properties>
+		</profile>
+	</profiles>
 
 	<pluginRepositories>
 		<pluginRepository>

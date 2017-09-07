@@ -23,7 +23,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_18</emfstore-update-site>
+		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_19</emfstore-update-site>
 		<aut-path>/home/data/httpd/download.eclipse.org/ecp</aut-path>
 	</properties>
 	<build>

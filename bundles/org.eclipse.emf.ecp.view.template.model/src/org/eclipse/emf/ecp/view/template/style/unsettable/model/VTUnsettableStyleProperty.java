@@ -16,17 +16,19 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
- * <!-- end-user-doc -->
+ * 
+ * @since 1.14
+ *        <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty#getButtonAlignment
- * <em>Button Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty#getButtonPlacement
- * <em>Button Placement</em>}</li>
- * </ul>
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty#getButtonAlignment
+ *        <em>Button Alignment</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty#getButtonPlacement
+ *        <em>Button Placement</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage#getUnsettableStyleProperty()
  * @model
@@ -44,7 +46,7 @@ public interface VTUnsettableStyleProperty extends VTStyleProperty {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Button Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType
 	 * @see #setButtonAlignment(ButtonAlignmentType)
@@ -60,7 +62,7 @@ public interface VTUnsettableStyleProperty extends VTStyleProperty {
 	 * <em>Button Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Button Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType
 	 * @see #getButtonAlignment()
@@ -79,7 +81,7 @@ public interface VTUnsettableStyleProperty extends VTStyleProperty {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Button Placement</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType
 	 * @see #setButtonPlacement(ButtonPlacementType)
@@ -95,7 +97,7 @@ public interface VTUnsettableStyleProperty extends VTStyleProperty {
 	 * <em>Button Placement</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Button Placement</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType
 	 * @see #getButtonPlacement()

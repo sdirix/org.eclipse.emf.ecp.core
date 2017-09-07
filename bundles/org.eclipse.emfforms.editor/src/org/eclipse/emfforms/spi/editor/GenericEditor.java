@@ -402,7 +402,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @param toolbarActions The actions shown on the top area
 	 * @param createElementCallback a call back if elements are created
 	 * @return a {@link TreeMasterDetailComposite}
-	 * @since 1.14.0
+	 * @since 1.14
 	 */
 	protected TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
 		List<Action> toolbarActions, CreateElementCallback createElementCallback) {

@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Text;
  * separator (by default ";").
  *
  * @author Jonas Helming
- * @since 1.14.0
+ * @since 1.14
  *
  */
 public class MultiStringCellEditor extends StringBasedCellEditor {
@@ -86,7 +86,7 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 	 * @param parent the {@link Composite} to use as a parent.
 	 */
 	public MultiStringCellEditor(Composite parent) {
-		super(parent, SWT.RIGHT);
+		super(parent, SWT.NONE);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 	 * @param style the SWT style to set
 	 */
 	public MultiStringCellEditor(Composite parent, int style) {
-		super(parent, style | SWT.RIGHT);
+		super(parent, style);
 	}
 
 	/**

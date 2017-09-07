@@ -23,8 +23,10 @@ import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyl
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
- * <!-- end-user-doc -->
  * 
+ * @since 1.14
+ *        <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage
  * @generated
  */
@@ -33,7 +35,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static VTUnsettablePackage modelPackage;
@@ -42,7 +44,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public UnsettableAdapterFactory() {
@@ -57,7 +59,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -76,7 +78,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected UnsettableSwitch<Adapter> modelSwitch = new UnsettableSwitch<Adapter>() {
@@ -100,7 +102,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
@@ -118,7 +120,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty
 	 * @generated
@@ -134,7 +136,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
 	 * @generated
@@ -148,7 +150,7 @@ public class UnsettableAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @generated
 	 */
