@@ -108,6 +108,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	}
 
 	private SWTGridDescription gridDescription;
+	private AbstractJFaceTreeRenderer<VELEMENT>.TreeSelectionChangedListener treeSelectionChangedListener;
 
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -125,6 +126,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	@Override
 	protected void dispose() {
 		gridDescription = null;
+		getViewModelContext().unregisterViewChangeListener(treeSelectionChangedListener);
 		super.dispose();
 	}
 
@@ -311,7 +313,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(treeTableLabelProvider);
 
-		final AbstractJFaceTreeRenderer<VELEMENT>.TreeSelectionChangedListener treeSelectionChangedListener = new TreeSelectionChangedListener(
+		treeSelectionChangedListener = new TreeSelectionChangedListener(
 			getViewModelContext(), editorComposite,
 			getCategorizationElement(),
 			treeViewer, editors);
