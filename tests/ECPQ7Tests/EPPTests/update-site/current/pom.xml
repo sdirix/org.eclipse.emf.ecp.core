@@ -13,7 +13,7 @@
 
 	<properties>
     <eclipse-name>oxygen</eclipse-name>
-	<eclipse-sr>r</eclipse-sr>
+	<eclipse-sr>R</eclipse-sr>
   </properties>
   <build>
   	<plugins>
