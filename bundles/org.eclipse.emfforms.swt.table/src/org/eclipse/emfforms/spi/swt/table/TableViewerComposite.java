@@ -191,4 +191,11 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 
 	}
 
+	@Override
+	public void dispose() {
+		tableViewer.getControl().dispose();
+		tableViewer = null;
+		super.dispose();
+	}
+
 }

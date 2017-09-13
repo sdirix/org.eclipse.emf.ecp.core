@@ -161,6 +161,8 @@ import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -625,12 +627,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					weight = weightConfig.get();
 				} else {
 					// TODO ugly: we need this temporary cell editor so early just to get size information
+					final Shell tempShell = new Shell();
 					final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
-						new Table(new Shell(), SWT.NONE));
+						new Table(tempShell, SWT.NONE));
 					weight = ECPCellEditor.class.isInstance(tempCellEditor)
-						? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight() : 100;
+						? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight()
+						: 100;
 					minWidth = ECPCellEditor.class.isInstance(tempCellEditor)
-						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 10;
+						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth()
+						: 10;
+					tempShell.dispose();
 				}
 
 				// TODO: rewrite builder (ms)
@@ -1408,6 +1414,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			columnIndexToComparatorMap.clear();
 		}
+		tableControlSWTRendererButtonBarBuilder = null;
+		tableViewerComposite.dispose();
+		tableViewerComposite = null;
+		tableViewer.getControl().dispose();
+		tableViewer = null;
 		super.dispose();
 	}
 
@@ -1849,6 +1860,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private void init(AbstractTableViewer tableViewer) {
 			cellEditor = createCellEditor(tempInstance, eStructuralFeature,
 				(Composite) tableViewer.getControl());
+			tableViewer.getControl().addDisposeListener(new DisposeListener() {
+
+				@Override
+				public void widgetDisposed(DisposeEvent arg0) {
+					cellEditor.dispose();
+				}
+			});
 			if (ECPCellEditorComparator.class.isInstance(cellEditor)) {
 				columnIndexToComparatorMap.put(indexOfColumn, ECPCellEditorComparator.class.cast(cellEditor));
 			}
@@ -2329,8 +2347,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return getValidationBackgroundColor(Diagnostic.OK);
 			}
 			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
-			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
-				.getSeverity());
+			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK
+				: diagnostic.get(0)
+					.getSeverity());
 		}
 
 		/**
