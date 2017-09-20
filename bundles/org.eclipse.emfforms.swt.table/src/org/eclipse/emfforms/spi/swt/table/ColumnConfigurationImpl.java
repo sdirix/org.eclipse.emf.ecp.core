@@ -52,6 +52,9 @@ public final class ColumnConfigurationImpl implements ColumnConfiguration {
 	private final List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks;
 
 	private final Property<Boolean> visibleProperty = new SimpleProperty<Boolean>("isVisible", Boolean.TRUE); //$NON-NLS-1$
+	private final Property<Boolean> showFilterControlProperty = new SimpleProperty<Boolean>("showFilter", //$NON-NLS-1$
+		Boolean.FALSE);
+	private final Property<Object> matchFilterProperty = new SimpleProperty<Object>("filterValue", null); //$NON-NLS-1$
 
 	// BEGIN COMPLEX CODE
 	/**
@@ -208,9 +211,21 @@ public final class ColumnConfigurationImpl implements ColumnConfiguration {
 	}
 
 	@Override
+	public Property<Boolean> showFilterControl() {
+		return showFilterControlProperty;
+	}
+
+	@Override
+	public Property<Object> matchFilter() {
+		return matchFilterProperty;
+	}
+
+	@Override
 	public void dispose() {
 		visibleProperty.dispose();
-
+		showFilterControlProperty.dispose();
+		matchFilterProperty.dispose();
+		data.clear();
 	}
 
 }

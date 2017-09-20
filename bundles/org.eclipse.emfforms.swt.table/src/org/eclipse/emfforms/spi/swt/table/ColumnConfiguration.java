@@ -32,6 +32,9 @@ import org.eclipse.swt.graphics.Image;
  * @author Johannes Faltermeier
  * @author Mat Hansen
  *
+ * @noextend This class is not intended to be subclassed by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ *
  */
 // TODO: migrate all configuration options to Property<T>
 public interface ColumnConfiguration {
@@ -42,10 +45,16 @@ public interface ColumnConfiguration {
 	Feature FEATURE_COLUMN_HIDE_SHOW = TableConfiguration.FEATURE_COLUMN_HIDE_SHOW;
 
 	/**
+	 * Feature toggle for column filter support.
+	 */
+	Feature FEATURE_COLUMN_FILTER = TableConfiguration.FEATURE_COLUMN_FILTER;
+
+	/**
 	 * All configurable features.
 	 */
 	Feature[] FEATURES = {
-		FEATURE_COLUMN_HIDE_SHOW
+		FEATURE_COLUMN_HIDE_SHOW,
+		FEATURE_COLUMN_FILTER
 	};
 
 	/**
@@ -187,6 +196,20 @@ public interface ColumnConfiguration {
 	 * @return visible property
 	 */
 	Property<Boolean> visible();
+
+	/**
+	 * Toggle the visible state of the filter control.
+	 *
+	 * @return visible property
+	 */
+	Property<Boolean> showFilterControl();
+
+	/**
+	 * Set a filter on the current column.
+	 *
+	 * @return visible property
+	 */
+	Property<Object> matchFilter();
 
 	/**
 	 * Dispose this configuration and all its properties.

@@ -23,6 +23,9 @@ import org.eclipse.emfforms.common.Feature;
  * This is subject to change.
  *
  * @author Mat Hansen <mhansen@eclipsesource.com>
+ * 
+ * @noextend This class is not intended to be subclassed by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  *
  */
 public interface TableConfiguration {
@@ -34,10 +37,17 @@ public interface TableConfiguration {
 		new Feature("column_hide_show", "Enable column hide/show support", Feature.STRATEGY.INHERIT); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
+	 * Feature toggle for column filter support.
+	 */
+	Feature FEATURE_COLUMN_FILTER = //
+		new Feature("column_filter", "Enable column filter support", Feature.STRATEGY.INHERIT); //$NON-NLS-1$ //$NON-NLS-2$
+
+	/**
 	 * All configurable features.
 	 */
 	Feature[] FEATURES = {
-		FEATURE_COLUMN_HIDE_SHOW
+		FEATURE_COLUMN_HIDE_SHOW,
+		FEATURE_COLUMN_FILTER
 	};
 
 	/**

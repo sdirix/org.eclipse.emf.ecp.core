@@ -19,11 +19,10 @@ import org.eclipse.osgi.util.NLS;
  *
  */
 public class Messages extends NLS {
-
-	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages"; //$NON-NLS-1$
-	public static String GridTableViewerComposite_hideShowColumnAction;
+	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages.messages"; //$NON-NLS-1$
+	public static String GridTableViewerComposite_hideColumnAction;
 	public static String GridTableViewerComposite_showAllColumnsAction;
-
+	public static String GridTableViewerComposite_toggleFilterControlsAction;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -381,7 +381,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
 			.customizeComparator(comparator)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW);
+			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
+			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER);
 
 	}
 

@@ -16,11 +16,23 @@ import org.eclipse.emfforms.common.Property;
 import org.eclipse.emfforms.common.Property.ChangeListener;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerColumnBuilder;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
 import org.eclipse.nebula.widgets.grid.GridColumn;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * Nebula Grid viewer configuration helper class.
@@ -50,6 +62,7 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 
 		// Nebula Grid supports a few more things
 		configureHideShow(tableViewer, viewerColumn);
+		configureFiltering(tableViewer, viewerColumn);
 
 	}
 
@@ -91,6 +104,86 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 			}
 		});
 
+	}
+
+	/**
+	 * Configure column filter.
+	 *
+	 * @param tableViewer the table viewer
+	 * @param viewerColumn the viewer column to configure
+	 */
+	protected void configureFiltering(final GridTableViewer tableViewer, final GridViewerColumn viewerColumn) {
+		final GridColumn column = viewerColumn.getColumn();
+
+		getConfig().showFilterControl().addChangeListener(new ChangeListener<Boolean>() {
+
+			private Control filterControl;
+
+			@Override
+			public void valueChanged(Property<Boolean> property, Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					filterControl = createHeaderFilterControl(column.getParent());
+					column.setHeaderControl(filterControl);
+				} else {
+					column.setHeaderControl(null);
+					filterControl.dispose();
+				}
+				// hack: force header height recalculation
+				column.setWidth(column.getWidth());
+			}
+
+		});
+
+		getConfig().matchFilter().addChangeListener(new ChangeListener<Object>() {
+			@Override
+			public void valueChanged(Property<Object> property, Object oldValue, Object newValue) {
+				tableViewer.refresh();
+			}
+		});
+
+	}
+
+	/**
+	 * Creates a column filter control.
+	 *
+	 * @param parent the parent composite
+	 * @return new filter control instance
+	 */
+	protected Control createHeaderFilterControl(Composite parent) {
+
+		final Composite filterComposite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(filterComposite);
+
+		final Text txtFilter = new Text(filterComposite, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(txtFilter);
+
+		txtFilter.addModifyListener(new ModifyListener() {
+			private final Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					if (!txtFilter.isDisposed()) {
+						getConfig().matchFilter().setValue(txtFilter.getText());
+					}
+				}
+			};
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Display.getDefault().timerExec(300, runnable);
+			}
+		});
+
+		final Button btnClear = new Button(filterComposite, SWT.PUSH);
+		GridDataFactory.fillDefaults().grab(false, false).applyTo(btnClear);
+		btnClear.setText("x"); //$NON-NLS-1$
+		btnClear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				txtFilter.setText(""); //$NON-NLS-1$
+			}
+		});
+
+		return filterComposite;
 	}
 
 }

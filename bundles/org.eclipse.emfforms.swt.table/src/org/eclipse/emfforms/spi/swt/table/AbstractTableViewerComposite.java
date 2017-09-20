@@ -93,7 +93,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	/**
 	 * @return the enabledFeatures
 	 */
-	protected Set<Feature> getEnabledFeatures() {
+	public Set<Feature> getEnabledFeatures() {
 		return enabledFeatures;
 	}
 
@@ -116,6 +116,15 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	 * @param tableViewer the table viewer to configure
 	 */
 	protected void configureContextMenu(V tableViewer) {
+
+	}
+
+	/**
+	 * Configures viewer filters for the given TableViewer instance.
+	 *
+	 * @param tableViewer the table viewer to configure
+	 */
+	protected void configureViewerFilters(V tableViewer) {
 
 	}
 
@@ -153,6 +162,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 
 		setupDragAndDrop(customization, tableViewer);
 		configureContextMenu(tableViewer);
+		configureViewerFilters(tableViewer);
 
 		tableViewer.setInput(inputObject);
 
