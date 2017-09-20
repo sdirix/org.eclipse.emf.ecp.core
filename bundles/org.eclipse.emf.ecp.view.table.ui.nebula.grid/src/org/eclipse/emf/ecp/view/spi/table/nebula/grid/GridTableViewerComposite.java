@@ -16,20 +16,28 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecp.view.spi.table.nebula.grid.menu.GridColumnAction;
+import org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages.Messages;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.nebula.jface.gridviewer.GridColumnLayout;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
+import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -71,6 +79,19 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	}
 
 	@Override
+	protected void configureContextMenu(GridTableViewer tableViewer) {
+		final MenuManager menuMgr = new MenuManager();
+		menuMgr.setRemoveAllWhenShown(true);
+
+		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)) {
+			menuMgr.addMenuListener(new ColumnHideShowMenuListener());
+		}
+
+		final Menu menu = menuMgr.createContextMenu(tableViewer.getControl());
+		tableViewer.getControl().setMenu(menu);
+	}
+
+	@Override
 	protected AbstractColumnLayout createLayout(Composite viewerComposite) {
 		final GridColumnLayout layout = new GridColumnLayout();
 		viewerComposite.setLayout(layout);
@@ -88,7 +109,6 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 			final GridColumn gridColumn = gridTableViewer.getGrid().getColumns()[i];
 			gridColumn.addControlListener(columnlistener);
 		}
-
 	}
 
 	@Override
@@ -123,12 +143,29 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	}
 
 	@Override
-	protected ViewerColumn createColumn(ColumnConfiguration config,
-		EMFDataBindingContext emfDataBindingContext, GridTableViewer tableViewer) {
+	protected ViewerColumn createColumn(final ColumnConfiguration config,
+		EMFDataBindingContext emfDataBindingContext, final GridTableViewer tableViewer) {
 
-		return new GridViewerColumnBuilder(config)
+		final GridViewerColumn column = new GridViewerColumnBuilder(config)
 			.withDatabinding(emfDataBindingContext)
 			.build(tableViewer);
+
+		return column;
+	}
+
+	/**
+	 * Test whether the given value/filter combination matches.
+	 *
+	 * @param value the value to test
+	 * @param filterValue the filter value
+	 * @return true if the value matches the filter value
+	 */
+	protected boolean matchesColumnFilter(Object value, Object filterValue) {
+		if (filterValue == null) {
+			return false;
+		}
+
+		return String.valueOf(value).contains(String.valueOf(filterValue));
 	}
 
 	@Override
@@ -148,6 +185,61 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 				}
 			};
 			tableColumn.addSelectionListener(selectionAdapter);
+		}
+
+	}
+
+	/**
+	 * Column hide/show menu listener.
+	 *
+	 * @author Mat Hansen
+	 *
+	 */
+	private class ColumnHideShowMenuListener implements IMenuListener {
+
+		@Override
+		public void menuAboutToShow(IMenuManager manager) {
+
+			manager.add(new GridColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_hideShowColumnAction) {
+				@Override
+				public void run() {
+					getColumnConfiguration().visible().setValue(Boolean.FALSE);
+				}
+
+				@Override
+				public boolean isEnabled() {
+					if (!super.isEnabled()) {
+						return false;
+					}
+					return getColumnConfiguration().getEnabledFeatures()
+						.contains(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW);
+				}
+			});
+			manager.add(new GridColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_showAllColumnsAction) {
+				@Override
+				public void run() {
+					for (final Widget widget : getColumns()) {
+						getGridTableViewer().getColumnConfiguration(widget).visible().setValue(Boolean.TRUE);
+					}
+				}
+
+				@Override
+				public boolean isEnabled() {
+					return getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
+						&& hasHiddenColumns();
+				}
+
+				boolean hasHiddenColumns() {
+					for (final Widget widget : getColumns()) {
+						if (!getGridTableViewer().getColumnConfiguration(widget).visible().getValue()) {
+							return true;
+						}
+					}
+					return false;
+				}
+			});
 		}
 
 	}

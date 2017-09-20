@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.TableViewer;

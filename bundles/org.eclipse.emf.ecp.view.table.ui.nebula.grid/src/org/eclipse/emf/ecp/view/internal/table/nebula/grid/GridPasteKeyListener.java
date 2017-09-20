@@ -37,7 +37,7 @@ import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverte
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.TableConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.swt.SWT;

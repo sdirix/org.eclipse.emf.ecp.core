@@ -11,12 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emfforms.common.Feature;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
@@ -43,6 +45,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 
 	private final EMFDataBindingContext emfDatabindingContext;
 	private Optional<List<Control>> validationControls;
+	private final Set<Feature> enabledFeatures;
 
 	/**
 	 * Default constructor.
@@ -62,8 +65,36 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		IObservableValue<Object> title,
 		IObservableValue<Object> tooltip) {
 		super(parent, style);
+
 		emfDatabindingContext = new EMFDataBindingContext();
+		enabledFeatures = determineEnabledFeatures(customization);
+
 		renderControl(this, customization, inputObject, emfDatabindingContext, title, tooltip);
+	}
+
+	/**
+	 * Determine the list of enabled features (both for the table as well as the columns).
+	 *
+	 * @param customization the viewer customization
+	 * @return a set of enabled features
+	 */
+	private Set<Feature> determineEnabledFeatures(TableViewerSWTCustomization<V> customization) {
+
+		final Set<Feature> enabled = new LinkedHashSet<Feature>();
+		enabled.addAll(customization.getTableConfiguration().getEnabledFeatures());
+
+		for (final ColumnConfiguration columnConfig : customization.getColumnConfigurations()) {
+			enabled.addAll(columnConfig.getEnabledFeatures());
+		}
+
+		return enabled;
+	}
+
+	/**
+	 * @return the enabledFeatures
+	 */
+	protected Set<Feature> getEnabledFeatures() {
+		return enabledFeatures;
 	}
 
 	/**
@@ -77,6 +108,15 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	 */
 	public Optional<List<Control>> getValidationControls() {
 		return validationControls;
+	}
+
+	/**
+	 * Configures the context menu for the given TableViewer instance.
+	 *
+	 * @param tableViewer the table viewer to configure
+	 */
+	protected void configureContextMenu(V tableViewer) {
+
 	}
 
 	private void renderControl(Composite parent, TableViewerSWTCustomization<V> customization,
@@ -112,6 +152,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		addColumns(customization, tableViewer, emfDataBindingContext);
 
 		setupDragAndDrop(customization, tableViewer);
+		configureContextMenu(tableViewer);
 
 		tableViewer.setInput(inputObject);
 
@@ -173,11 +214,8 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 
 	private void addColumns(TableViewerSWTCustomization<V> customization, V tableViewer,
 		EMFDataBindingContext emfDataBindingContext) {
-		for (final ColumnConfiguration columnDescription : customization.getColumns()) {
-			/* create column */
-			// TODO move TableViewerColumnBuilder?
-			createColumn(columnDescription, emfDataBindingContext, tableViewer);
-
+		for (final ColumnConfiguration columnConfiguration : customization.getColumnConfigurations()) {
+			createColumn(columnConfiguration, emfDataBindingContext, tableViewer);
 		}
 	}
 
@@ -191,6 +229,16 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	 */
 	protected abstract ViewerColumn createColumn(ColumnConfiguration columnDescription,
 		EMFDataBindingContext emfDataBindingContext, V tableViewer);
+
+	/**
+	 * Returns the {@link ColumnConfiguration} of the given widget instance.
+	 *
+	 * @param columnWidget the widget to fetch the column configuration for
+	 * @return the {@link ColumnConfigurationImpl}
+	 */
+	public ColumnConfiguration getColumnConfiguration(Widget columnWidget) {
+		return (ColumnConfiguration) columnWidget.getData(ColumnConfiguration.ID);
+	}
 
 	/**
 	 * Creates a new {@link ColumnViewerEditorActivationStrategy} for the given table viewer.

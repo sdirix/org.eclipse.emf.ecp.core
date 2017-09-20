@@ -14,11 +14,13 @@ package org.eclipse.emfforms.spi.swt.table;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emfforms.common.Feature;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ConfigurationCallback;
+import org.eclipse.emfforms.common.Property;
+import org.eclipse.emfforms.internal.common.SimpleProperty;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
@@ -32,7 +34,9 @@ import org.eclipse.swt.graphics.Image;
  * @author Mat Hansen
  *
  */
-public class ColumnConfigurationImpl implements ColumnConfiguration {
+public final class ColumnConfigurationImpl implements ColumnConfiguration {
+
+	private final Set<Feature> enabledFeatures;
 
 	private final boolean resizeable;
 	private final boolean moveable;
@@ -47,10 +51,13 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 	private final Map<String, Object> data;
 	private final List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks;
 
+	private final Property<Boolean> visibleProperty = new SimpleProperty<Boolean>("isVisible", Boolean.TRUE); //$NON-NLS-1$
+
 	// BEGIN COMPLEX CODE
 	/**
 	 * Constructs a new {@link ColumnConfiguration}.
 	 *
+	 * @param enabledFeatures list of enabled features
 	 * @param resizeable resizeable
 	 * @param moveable moveable
 	 * @param styleBits styleBits
@@ -62,6 +69,7 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 	 * @param editingSupport editingSupport. May be <code>null</code> to indicate that there is no editing support
 	 */
 	public ColumnConfigurationImpl(
+		Set<Feature> enabledFeatures,
 		boolean resizeable,
 		boolean moveable,
 		int styleBits,
@@ -75,6 +83,7 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 		Map<String, Object> data,
 		List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks) {
 		// END COMPLEX CODE
+		this.enabledFeatures = Collections.unmodifiableSet(enabledFeatures);
 		this.resizeable = resizeable;
 		this.moveable = moveable;
 		this.styleBits = styleBits;
@@ -95,6 +104,11 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 			this.configurationCallbacks = Collections.unmodifiableList(configurationCallbacks);
 		}
 
+	}
+
+	@Override
+	public Set<Feature> getEnabledFeatures() {
+		return enabledFeatures;
 	}
 
 	@Override
@@ -186,6 +200,17 @@ public class ColumnConfigurationImpl implements ColumnConfiguration {
 	@Override
 	public List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> getConfigurationCallbacks() {
 		return configurationCallbacks;
+	}
+
+	@Override
+	public Property<Boolean> visible() {
+		return visibleProperty;
+	}
+
+	@Override
+	public void dispose() {
+		visibleProperty.dispose();
+
 	}
 
 }

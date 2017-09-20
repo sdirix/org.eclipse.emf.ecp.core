@@ -43,7 +43,7 @@ public class GridTableViewerSWTBuilder extends TableViewerSWTBuilder {
 	 * @return the {@link GridTableViewerComposite}
 	 */
 	@Override
-	public GridTableViewerComposite create() {
+	public GridTableViewerComposite build() {
 		return new GridTableViewerComposite(getComposite(), getSwtStyleBits(), getInput(), getCustomization(),
 			getTitle(), getTooltip());
 	}

@@ -9,17 +9,17 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Mat Hansen - column builder refactoring
+ * Mat Hansen - builder refactoring
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emfforms.common.Feature;
 import org.eclipse.emfforms.internal.swt.table.DefaultTableControlSWTCustomization;
-import org.eclipse.emfforms.spi.swt.table.ColumnConfigurationBuilder.BuilderLifeCycleListener;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -31,9 +31,13 @@ import org.eclipse.swt.widgets.Composite;
  *
  * @author Alexandra Buzila
  * @author Johannes Faltermeier
+ * @author Mat Hansen
  *
  */
-public class TableViewerSWTBuilder {
+public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableViewerSWTBuilder> {
+
+	private boolean tableConfigured;
+
 	/** The parent composite. */
 	private final Composite composite;
 	/** The style bits. */
@@ -46,7 +50,8 @@ public class TableViewerSWTBuilder {
 	private final IObservableValue title;
 	/** The tooltip. */
 	private final IObservableValue tooltip;
-	private final Map<String, Object> columnData;
+
+	private final Set<Feature> features = new LinkedHashSet<Feature>();
 
 	/**
 	 * @param composite the parent {@link Composite}
@@ -62,8 +67,20 @@ public class TableViewerSWTBuilder {
 		this.input = input;
 		this.title = title;
 		this.tooltip = tooltip;
-		customization = new DefaultTableControlSWTCustomization();
-		columnData = new HashMap<String, Object>();
+		customization = new DefaultTableControlSWTCustomization() {
+
+			@Override
+			public TableConfiguration getTableConfiguration() {
+				// if the table hasn't been configured, do it now (using defaults)
+				if (!tableConfigured) {
+					configureTable(TableConfigurationBuilder.usingDefaults()
+						.inheritFeatures(features)
+						.build());
+				}
+				return super.getTableConfiguration();
+			}
+
+		};
 	}
 
 	/**
@@ -90,7 +107,7 @@ public class TableViewerSWTBuilder {
 	/**
 	 * @return the customization
 	 */
-	protected DefaultTableControlSWTCustomization getCustomization() {
+	public TableViewerSWTCustomization<?> getCustomization() {
 		return customization;
 	}
 
@@ -227,35 +244,36 @@ public class TableViewerSWTBuilder {
 	}
 
 	/**
-	 * Add an arbitrary key/value pair to be set on every column created.
+	 * Configures the current table instance using the given configuration.
 	 *
-	 * @param key literal
-	 * @param value object
+	 * @param tableConfiguration the {@link TableConfiguration} to add
 	 * @return self
 	 */
-	public TableViewerSWTBuilder dataMapEntry(String key, Object value) {
-		columnData.put(key, value);
+	public TableViewerSWTBuilder configureTable(TableConfiguration tableConfiguration) {
+		customization.configureTable(tableConfiguration);
+		tableConfigured = true;
 		return this;
 	}
 
 	/**
-	 * Initializes column builder. Finish with .create();
+	 * Adds a new column.
 	 *
-	 * @return {@link ColumnConfigurationBuilder}
+	 * @param columnConfiguration the {@link ColumnConfiguration} to add
+	 * @return self
 	 */
-	public ColumnConfigurationBuilder<TableViewerSWTBuilder> column() {
-		return new ColumnConfigurationBuilder<TableViewerSWTBuilder>(this, new BuilderLifeCycleListener() {
+	public TableViewerSWTBuilder addColumn(ColumnConfiguration columnConfiguration) {
+		customization.addColumn(columnConfiguration);
+		return this;
+	}
 
-			@Override
-			public void onInit(ColumnConfigurationBuilder<?> childBuilder) {
-				childBuilder.dataMap(columnData);
-			}
+	@Override
+	public Set<Feature> getSupportedFeatures() {
+		return new LinkedHashSet<Feature>(Arrays.asList(TableConfiguration.FEATURES));
+	}
 
-			@Override
-			public void onCreate(ColumnConfiguration config) {
-				customization.addColumn(config);
-			}
-		});
+	@Override
+	public Set<Feature> getEnabledFeatures() {
+		return features;
 	}
 
 	/**
@@ -264,7 +282,14 @@ public class TableViewerSWTBuilder {
 	 *
 	 * @return the {@link TableViewerComposite}
 	 */
-	public AbstractTableViewerComposite create() {
-		return new TableViewerComposite(composite, swtStyleBits, input, customization, title, tooltip);
+	public AbstractTableViewerComposite build() {
+
+		final AbstractTableViewerComposite viewerComposite = //
+			new TableViewerComposite(composite, swtStyleBits, input, customization, title, tooltip);
+
+		viewerComposite.setData(TableConfiguration.ID, customization.getTableConfiguration());
+
+		return viewerComposite;
 	}
+
 }

@@ -112,15 +112,19 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfigurationBuilder;
 import org.eclipse.emfforms.spi.swt.table.DNDProvider;
 import org.eclipse.emfforms.spi.swt.table.EditingSupportCreator;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableConfigurationBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.TableConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -231,6 +235,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private IObservableList list;
 	private boolean isFeatureOrdered;
 	private final RunnableManager runnableManager = new RunnableManager(Display.getDefault());
+
+	private TableViewerSWTCustomization<?> customization;
 
 	/**
 	 * Default constructor.
@@ -361,8 +367,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
 			tableControlSWTRendererButtonBarBuilder = new TableControlSWTRendererButtonBarBuilder();
 
-			final TableViewerSWTBuilder tableViewerSWTBuilder = getTableViewerSWTBuilder(parent, list, labelText,
+			final TableViewerSWTBuilder tableViewerSWTBuilder = createTableViewerSWTBuilder(parent, list, labelText,
 				labelTooltipText, compositeBuilder, cp, comparator, tableControlSWTRendererButtonBarBuilder);
+
+			tableViewerSWTBuilder
+				.configureTable(TableConfigurationBuilder.usingDefaults()
+					.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+					.dataMapEntry(TableConfiguration.DMR, dmrToCheck)
+					.build());
 
 			regularColumnsStartIndex = 0;
 
@@ -376,7 +388,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			initCompositeHeight();
 
-			tableViewerComposite = tableViewerSWTBuilder.create();
+			tableViewerComposite = tableViewerSWTBuilder.build();
 
 			/* setup selection changes listener */
 			tableViewerComposite.getTableViewer().addSelectionChangedListener(new ViewerSelectionChangedListener());
@@ -403,6 +415,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			addResizeListener(tableViewerComposite.getTableViewer().getControl(), regularColumnsStartIndex);
 
+			customization = tableViewerSWTBuilder.getCustomization();
 			return tableViewerComposite;
 
 		} catch (final DatabindingFailedException ex) {
@@ -439,11 +452,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param comparator the {@link ViewerComparator}
 	 * @param tableControlSWTRendererButtonBarBuilder2 the {@link ButtonBarBuilder}
 	 * @return the {@link TableViewerSWTBuilder}
-	 * @since 1.10
+	 * @since 1.15
 	 *
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
-	protected TableViewerSWTBuilder getTableViewerSWTBuilder(Composite parent, IObservableList list,
+	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
 		TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder2) {
@@ -586,6 +599,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param tableViewerSWTBuilder the builder
 	 * @param clazz the {@EClass} of the rendered object
 	 * @param cp the content provider
+	 * @param tableConfiguration
 	 *
 	 */
 	private void addColumns(TableViewerSWTBuilder tableViewerSWTBuilder, EClass clazz,
@@ -641,17 +655,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					tempShell.dispose();
 				}
 
-				tableViewerSWTBuilder
-					.dataMapEntry(TableConfiguration.DMR, dmr);
-
-				tableViewerSWTBuilder.column()
-					.weight(weight)
-					.minWidth(minWidth)
-					.text(text)
-					.tooltip(tooltip)
-					.labelProviderFactory(labelProvider)
-					.editingSupportCreator(editingSupportCreator)
-					.create();
+				tableViewerSWTBuilder.addColumn(
+					ColumnConfigurationBuilder.usingDefaults()
+						.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+						.weight(weight)
+						.minWidth(minWidth)
+						.text(text)
+						.tooltip(tooltip)
+						.labelProviderFactory(labelProvider)
+						.editingSupportCreator(editingSupportCreator)
+						.dataMapEntry(ColumnConfiguration.DMR, dmr)
+						.build());
 
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
@@ -691,10 +705,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, boolean forColumn) {
-		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+		final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
 		if (forColumn) {
 			try {
-				return labelService.getDisplayName(dmrToCheck);
+				return labelProvider.getDisplayName(dmrToCheck);
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -706,7 +720,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
 		default:
 			try {
-				return labelService.getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
+				return labelProvider.getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -947,13 +961,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 		}
 
-		tableViewerSWTBuilder.column()
-			.minWidth(columnWidth)
-			.text(columnName)
-			.tooltip(columnName)
-			.labelProvider(new ValidationStatusCellLabelProvider(getVElement()))
-			.image(image)
-			.create();
+		tableViewerSWTBuilder.addColumn(
+			ColumnConfigurationBuilder.usingDefaults()
+				.minWidth(columnWidth)
+				.text(columnName)
+				.tooltip(columnName)
+				.labelProvider(new ValidationStatusCellLabelProvider(getVElement()))
+				.image(image)
+				.build());
 
 	}
 
@@ -1424,6 +1439,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite = null;
 		tableViewer.getControl().dispose();
 		tableViewer = null;
+
+		if (customization != null) {
+			for (final ColumnConfiguration columnConfig : customization.getColumnConfigurations()) {
+				columnConfig.visible().dispose();
+				columnConfig.dispose();
+			}
+			customization.getTableConfiguration().dispose();
+		}
+
 		super.dispose();
 	}
 

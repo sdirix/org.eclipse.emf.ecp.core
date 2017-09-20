@@ -12,16 +12,17 @@
 package org.eclipse.emfforms.spi.swt.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.common.Feature;
 import org.eclipse.emfforms.internal.swt.table.util.StaticCellLabelProviderFactory;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ConfigurationCallback;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ViewerColumn;
@@ -29,11 +30,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * Builder for {@link ColumnConfiguration}s.
+ *
  * @author Mat Hansen <mhansen@eclipsesource.com>
  *
- * @param <P> parent builder (if used in builder chain)
  */
-public class ColumnConfigurationBuilder<P> {
+public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilder<ColumnConfigurationBuilder> {
+
+	private final Set<Feature> features = new LinkedHashSet<Feature>();
 
 	private boolean resizeable = true;
 	private boolean moveable; // not movable
@@ -54,49 +58,29 @@ public class ColumnConfigurationBuilder<P> {
 	private List<ConfigurationCallback<AbstractTableViewer, ViewerColumn>> configurationCallbacks;
 
 	/**
-	 * Listener interface for this builders lifecycle, useful for builder chaining.
-	 *
-	 * @author Mat Hansen <mhansen@eclipsesource.com>
-	 *
-	 */
-	interface BuilderLifeCycleListener {
-
-		/**
-		 * Callback for child builder initialization (i.e. for inheriting defaults).
-		 *
-		 * @param childBuilder the {@link ColumnConfigurationBuilder} instance
-		 */
-		void onInit(ColumnConfigurationBuilder<?> childBuilder);
-
-		/**
-		 * Callback for child builder completion (used for builder chaining).
-		 *
-		 * @param config the created {@link ColumnConfiguration}
-		 */
-		void onCreate(ColumnConfiguration config);
-
-	}
-
-	private final Optional<P> parentBuilder;
-	private Optional<BuilderLifeCycleListener> lifeCycleListener = Optional.empty();
-
-	/**
 	 * The default constructor.
 	 */
-	public ColumnConfigurationBuilder() {
+	private ColumnConfigurationBuilder() {
 		super();
-		this.parentBuilder = null;
 	}
 
 	/**
-	 * Internal constructor used for builder chaining (currently only TableViewerSWTBuilder).
+	 * Returns a new {@link ColumnConfigurationBuilder} initialized using default values.
 	 *
-	 * @param parentBuilder the parent builder instance
-	 * @param lifeCycleListener the lifecycle listener
+	 * @return self
 	 */
-	ColumnConfigurationBuilder(P parentBuilder, BuilderLifeCycleListener lifeCycleListener) {
-		this.parentBuilder = Optional.of(parentBuilder);
-		this.lifeCycleListener = Optional.of(lifeCycleListener);
+	public static ColumnConfigurationBuilder usingDefaults() {
+		return new ColumnConfigurationBuilder();
+	}
+
+	/**
+	 * Returns a new {@link ColumnConfigurationBuilder} initialized using an existing configuration.
+	 *
+	 * @param columnConfiguration a {@link ColumnConfiguration} to use
+	 * @return self
+	 */
+	public static ColumnConfigurationBuilder usingConfiguration(ColumnConfiguration columnConfiguration) {
+		return new ColumnConfigurationBuilder(columnConfiguration);
 	}
 
 	/**
@@ -104,7 +88,7 @@ public class ColumnConfigurationBuilder<P> {
 	 *
 	 * @param columnConfiguration the {@link ColumnConfiguration} to inherit.
 	 */
-	public ColumnConfigurationBuilder(ColumnConfiguration columnConfiguration) {
+	private ColumnConfigurationBuilder(ColumnConfiguration columnConfiguration) {
 		super();
 		final ColumnConfigurationImpl config = (ColumnConfigurationImpl) columnConfiguration;
 		resizable(config.isResizeable());
@@ -117,16 +101,18 @@ public class ColumnConfigurationBuilder<P> {
 		if (config.getEditingSupportCreator().isPresent()) {
 			editingSupportCreator(config.getEditingSupportCreator().get());
 		}
-		// skip: image
-		for (final ConfigurationCallback<AbstractTableViewer, ViewerColumn> callback : config
-			.getConfigurationCallbacks()) {
-			callback(callback);
-		}
-		this.parentBuilder = null;
+		// skip: image, data
+		configurationCallbacks = config.getConfigurationCallbacks();
+	}
 
-		if (lifeCycleListener.isPresent()) {
-			lifeCycleListener.get().onInit(this);
-		}
+	@Override
+	public Set<Feature> getSupportedFeatures() {
+		return new LinkedHashSet<Feature>(Arrays.asList(ColumnConfiguration.FEATURES));
+	}
+
+	@Override
+	protected Set<Feature> getEnabledFeatures() {
+		return features;
 	}
 
 	/**
@@ -135,7 +121,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param resizable true for resizable columns
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> resizable(boolean resizable) {
+	public ColumnConfigurationBuilder resizable(boolean resizable) {
 		resizeable = resizable;
 		return this;
 	}
@@ -146,7 +132,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param moveable true for movable columns
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> moveable(boolean moveable) {
+	public ColumnConfigurationBuilder moveable(boolean moveable) {
 		this.moveable = moveable;
 		return this;
 	}
@@ -157,7 +143,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param styleBits the SWT style bits
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> styleBits(int styleBits) {
+	public ColumnConfigurationBuilder styleBits(int styleBits) {
 		this.styleBits = styleBits;
 		return this;
 	}
@@ -168,7 +154,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param weight the weight
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> weight(int weight) {
+	public ColumnConfigurationBuilder weight(int weight) {
 		this.weight = weight;
 		return this;
 	}
@@ -179,7 +165,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param minWidth the minimal width
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> minWidth(int minWidth) {
+	public ColumnConfigurationBuilder minWidth(int minWidth) {
 		this.minWidth = minWidth;
 		return this;
 	}
@@ -191,7 +177,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @return self
 	 */
 	@SuppressWarnings("rawtypes")
-	public ColumnConfigurationBuilder<P> text(IObservableValue textObservable) {
+	public ColumnConfigurationBuilder text(IObservableValue textObservable) {
 		this.textObservable = textObservable;
 		return this;
 	}
@@ -202,7 +188,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param text the column text
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> text(String text) {
+	public ColumnConfigurationBuilder text(String text) {
 		return text(Observables.constantObservableValue(text, String.class));
 	}
 
@@ -213,7 +199,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @return self
 	 */
 	@SuppressWarnings("rawtypes")
-	public ColumnConfigurationBuilder<P> tooltip(IObservableValue tooltipObservable) {
+	public ColumnConfigurationBuilder tooltip(IObservableValue tooltipObservable) {
 		this.tooltipObservable = tooltipObservable;
 		return this;
 	}
@@ -224,7 +210,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param tooltip the tooltip
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> tooltip(String tooltip) {
+	public ColumnConfigurationBuilder tooltip(String tooltip) {
 		return tooltip(Observables.constantObservableValue(tooltip, String.class));
 	}
 
@@ -234,7 +220,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param labelProviderFactory the label provider factory
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> labelProviderFactory(CellLabelProviderFactory labelProviderFactory) {
+	public ColumnConfigurationBuilder labelProviderFactory(CellLabelProviderFactory labelProviderFactory) {
 		this.labelProviderFactory = labelProviderFactory;
 		return this;
 	}
@@ -245,7 +231,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param labelProvider the label provider
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> labelProvider(CellLabelProvider labelProvider) {
+	public ColumnConfigurationBuilder labelProvider(CellLabelProvider labelProvider) {
 		return labelProviderFactory(new StaticCellLabelProviderFactory(labelProvider));
 	}
 
@@ -255,7 +241,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param editingSupportCreator the editing support creator
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> editingSupportCreator(EditingSupportCreator editingSupportCreator) {
+	public ColumnConfigurationBuilder editingSupportCreator(EditingSupportCreator editingSupportCreator) {
 		this.editingSupportCreator = editingSupportCreator;
 		return this;
 	}
@@ -266,7 +252,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param image the image
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> image(Image image) {
+	public ColumnConfigurationBuilder image(Image image) {
 		this.image = image;
 		return this;
 	}
@@ -277,7 +263,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param data the data map
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> dataMap(Map<String, Object> data) {
+	public ColumnConfigurationBuilder dataMap(Map<String, Object> data) {
 		if (!this.data.isEmpty()) {
 			throw new IllegalArgumentException("Data map values have already been set"); //$NON-NLS-1$
 		}
@@ -295,7 +281,7 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param value the data map value
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> dataMapEntry(String key, Object value) {
+	public ColumnConfigurationBuilder dataMapEntry(String key, Object value) {
 		data.put(key, value);
 		return this;
 	}
@@ -306,22 +292,23 @@ public class ColumnConfigurationBuilder<P> {
 	 * @param callback the callback
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder<P> callback(ConfigurationCallback<AbstractTableViewer, ViewerColumn> callback) {
+	public ColumnConfigurationBuilder callback(ConfigurationCallback<AbstractTableViewer, ViewerColumn> callback) {
 		if (configurationCallbacks == null) {
 			configurationCallbacks = //
-				new ArrayList<TableViewerSWTCustomization.ConfigurationCallback<AbstractTableViewer, ViewerColumn>>();
+				new ArrayList<ConfigurationCallback<AbstractTableViewer, ViewerColumn>>();
 		}
 		configurationCallbacks.add(callback);
 		return this;
 	}
 
 	/**
-	 * Create a new {@link ColumnConfiguration} based on the current builder state.
+	 * Create a new {@link ColumnConfiguration} using the current builder state.
 	 *
-	 * @return the new {@link ColumnConfiguration}
+	 * @return the {@link ColumnConfiguration}
 	 */
-	public ColumnConfiguration create() {
+	public ColumnConfiguration build() {
 		final ColumnConfiguration config = new ColumnConfigurationImpl(
+			features,
 			resizeable,
 			moveable,
 			styleBits,
@@ -335,37 +322,7 @@ public class ColumnConfigurationBuilder<P> {
 			data,
 			configurationCallbacks);
 
-		if (lifeCycleListener.isPresent()) {
-			lifeCycleListener.get().onCreate(config);
-		}
-
 		return config;
-	}
-
-	/**
-	 * Create a new {@link ColumnConfiguration} based on the current builder state.
-	 * Afterwards return the parent builder instance.
-	 *
-	 * @return the parent builder instance
-	 *
-	 * @param<P> the parent builder
-	 */
-	public P finish() {
-		create();
-		if (!parentBuilder.isPresent()) {
-			throw new IllegalAccessError("No parent builder configured"); //$NON-NLS-1$
-		}
-		return parentBuilder.get();
-	}
-
-	/**
-	 * Create a new {@link ColumnConfiguration} based on the current builder state.
-	 * Afterwards assign the new instance to the given argument.
-	 *
-	 * @param config the variable to assign the new instance to
-	 */
-	public void createAndSet(ColumnConfiguration config) {
-		config = create();
 	}
 
 }

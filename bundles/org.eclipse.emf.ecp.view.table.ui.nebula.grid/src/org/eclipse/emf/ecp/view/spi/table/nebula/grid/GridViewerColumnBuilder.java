@@ -12,8 +12,10 @@
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.common.Property;
+import org.eclipse.emfforms.common.Property.ChangeListener;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerColumnBuilder;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
@@ -21,7 +23,7 @@ import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.swt.widgets.Item;
 
 /**
- * The nebula grid viewer configuration helper class.
+ * Nebula Grid viewer configuration helper class.
  *
  * @author Mat Hansen <mhansen@eclipsesource.com>
  *
@@ -43,6 +45,15 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 	}
 
 	@Override
+	protected void configure(GridTableViewer tableViewer, GridViewerColumn viewerColumn) {
+		super.configure(tableViewer, viewerColumn);
+
+		// Nebula Grid supports a few more things
+		configureHideShow(tableViewer, viewerColumn);
+
+	}
+
+	@Override
 	protected Item getTableColumn(GridViewerColumn viewerColumn) {
 		return viewerColumn.getColumn();
 	}
@@ -53,6 +64,7 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 
 		column.setResizeable(getConfig().isResizeable());
 		column.setMoveable(getConfig().isMoveable());
+		column.setVisible(getConfig().visible().getValue());
 		// column.getColumn().setWidth(width);
 	}
 
@@ -62,6 +74,23 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 		if (editingSupport.isPresent()) {
 			viewerColumn.setEditingSupport(editingSupport.get());
 		}
+	}
+
+	/**
+	 * Configure hide/show columns toggle.
+	 *
+	 * @param tableViewer the table viewer
+	 * @param viewerColumn the viewer column to configure
+	 */
+	protected void configureHideShow(final GridTableViewer tableViewer, final GridViewerColumn viewerColumn) {
+
+		getConfig().visible().addChangeListener(new ChangeListener<Boolean>() {
+			@Override
+			public void valueChanged(Property<Boolean> property, Boolean oldValue, Boolean newValue) {
+				viewerColumn.getColumn().setVisible(newValue);
+			}
+		});
+
 	}
 
 }

@@ -15,8 +15,6 @@ import java.util.Map.Entry;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnConfiguration;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ConfigurationCallback;
 import org.eclipse.jface.databinding.swt.IWidgetValueProperty;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.AbstractTableViewer;
@@ -192,9 +190,12 @@ public abstract class AbstractTableViewerColumnBuilder<V extends AbstractTableVi
 	 * @param column the column widget to configure
 	 */
 	protected void configureContextMap(Widget column) {
+
 		for (final Entry<String, Object> entry : config.getData().entrySet()) {
 			column.setData(entry.getKey(), entry.getValue());
 		}
+
+		column.setData(ColumnConfiguration.ID, config);
 
 		column.setData(ColumnConfiguration.COLUMN_ID, columnId++);
 
