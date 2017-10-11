@@ -59,13 +59,13 @@ public abstract class AbstractSchemaExportCommandHandler<T extends EObject> exte
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		try {
-			final Collection<T> views = getObjects(event);
-			if (views == null || views.isEmpty()) {
+			final Collection<T> objects = getObjects(event);
+			if (objects == null || objects.isEmpty()) {
 				return null;
 			}
 
 			final Shell shell = HandlerUtil.getActiveShell(event);
-			openWizard(views, event, shell);
+			openWizard(objects, event, shell);
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final RuntimeException e) {
 			// END SUPRESS CATCH EXCEPTION
