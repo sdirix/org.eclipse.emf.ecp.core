@@ -23,6 +23,8 @@ import org.eclipse.emf.ecp.emf2web.controller.GenerationController
 import org.eclipse.emf.ecp.view.spi.model.VElement
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecp.view.spi.model.VView
+import org.eclipse.emf.ecp.emf2web.json.generator.seed.TypeWrapper
+import java.util.Arrays
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
@@ -45,7 +47,7 @@ class JsonGenerationController implements GenerationController {
 	
 				val schemaFile = modelGenerator.generate(eClass)
 				val schemaInfo = new GenerationInfo(GenerationInfo.MODEL_TYPE, eClass, null,
-					schemaIdentifier + "Model.json", new SeedWrapper())
+					schemaIdentifier + "Model.json", Arrays.asList(new SeedWrapper(), new TypeWrapper()))
 				schemaInfo.generatedString = schemaFile
 				result.add(schemaInfo)
 	
@@ -60,7 +62,7 @@ class JsonGenerationController implements GenerationController {
 	
 				val controllerFile = formsGenerator.generate(view)
 				val controllerInfo = new GenerationInfo(GenerationInfo.VIEW_TYPE, null, view,
-					schemaIdentifier + "View.json", new SeedWrapper())
+					schemaIdentifier + "View.json", Arrays.asList(new SeedWrapper(), new TypeWrapper()))
 				controllerInfo.generatedString = controllerFile
 				result.add(controllerInfo)
 			}

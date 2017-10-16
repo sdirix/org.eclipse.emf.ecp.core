@@ -3,14 +3,14 @@ package org.eclipse.emf.ecp.emf2web.json.generator.seed
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo
 import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper
 
-class SeedWrapper implements SchemaWrapper {
+class TypeWrapper implements SchemaWrapper {
 
 	override getName() {
-		return "JSONForms Seed Project";
+		return "JSONForms TypeScript Seed Project";
 	}
 
 	override getFileExtension() {
-		"js"
+		"ts"
 	}
 
 	override wrap(String toWrap, String type) {
@@ -27,19 +27,13 @@ class SeedWrapper implements SchemaWrapper {
 
 	def wrapModel(String model) {
 		'''
-			'use strict';
-			
-			var app = angular.module('jsonforms-seed');
-			app.value('Schema', «model» );
+			export const Schema = «model»;
 		'''
 	}
 
 	def wrapView(String view) {
 		'''
-			'use strict';
-			
-			var app = angular.module('jsonforms-seed');
-			app.value('UISchema', «view» );
+			export const UISchema = «view»;
 		'''
 	}
 

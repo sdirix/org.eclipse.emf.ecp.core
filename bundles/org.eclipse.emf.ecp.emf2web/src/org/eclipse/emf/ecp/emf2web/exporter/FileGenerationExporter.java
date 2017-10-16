@@ -80,10 +80,11 @@ public class FileGenerationExporter implements GenerationExporter {
 	 * 		The (maybe wrapped) generated content.
 	 */
 	protected String wrapGeneration(GenerationInfo generationInfo) {
-		if (generationInfo.getWrapper() == null || !generationInfo.isWrap()) {
-			return generationInfo.getGeneratedString();
+		final SchemaWrapper wrapper = generationInfo.getSelectedWrapper();
+		if (wrapper != null) {
+			return wrapper.wrap(generationInfo.getGeneratedString(), generationInfo.getType());
 		}
-		return generationInfo.getWrapper().wrap(generationInfo.getGeneratedString(), generationInfo.getType());
+		return generationInfo.getGeneratedString();
 	}
 
 	/**
@@ -160,7 +161,7 @@ public class FileGenerationExporter implements GenerationExporter {
 	 * @param fileName
 	 *            The name of the file displayed to the user.
 	 * @return
-	 *         {@code true} if the file shall be overwritten, {@code false} otherwise.
+	 * 		{@code true} if the file shall be overwritten, {@code false} otherwise.
 	 */
 	protected boolean askOverwriteAllowed(String fileName) {
 		final String title = Messages.FileGenerationExporter_OverwriteWarning;

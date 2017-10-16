@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.ui.wizard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.PojoProperties;
@@ -27,6 +30,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
+import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
@@ -42,6 +46,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
@@ -63,6 +68,7 @@ public class SelectLocationPage extends WizardPage {
 	private Text locationText;
 	private Text generatedText;
 	private Button btnWrap;
+	private Combo wrapperCombo;
 	private ControlDecoration requiredLocationDecoration;
 
 	private boolean wasAlreadyVisible;
@@ -149,17 +155,38 @@ public class SelectLocationPage extends WizardPage {
 		browseFilesystemButton.setText(Messages.getString("SelectLocationPage.BrowseFilesystemButtonLabel")); //$NON-NLS-1$
 		new Label(container, SWT.NONE);
 
-		if (generationInfo.getWrapper() != null) {
+		if (generationInfo.getWrapper() != null && generationInfo.getWrapper().size() > 0) {
 			final Group grpWrapper = new Group(container, SWT.NONE);
-			grpWrapper.setLayout(new GridLayout(1, false));
+			if (generationInfo.getWrapper().size() == 1) {
+				grpWrapper.setLayout(new GridLayout(1, false));
+			} else {
+				grpWrapper.setLayout(new GridLayout(2, false));
+			}
+
 			grpWrapper.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 			grpWrapper.setText(Messages.getString("SelectLocationPage.OptionalSettingsGroupText")); //$NON-NLS-1$
 
 			btnWrap = new Button(grpWrapper, SWT.CHECK);
-			btnWrap.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-			final String buttonText = Messages.getString("SelectLocationPage.WrapButtonText") //$NON-NLS-1$
-				+ ' ' + generationInfo.getWrapper().getName();
-			btnWrap.setText(buttonText);
+			final boolean btnWrapGrabHorizontal = generationInfo.getWrapper().size() == 1;
+			btnWrap.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, btnWrapGrabHorizontal, false, 1, 1));
+			if (generationInfo.getWrapper().size() == 1) {
+				final String buttonText = Messages.getString("SelectLocationPage.WrapButtonText") //$NON-NLS-1$
+					+ ' ' + generationInfo.getWrapper().get(generationInfo.getWrapIndex()).getName();
+				btnWrap.setText(buttonText);
+			} else {
+				// add selection combo for wrapper
+				final String buttonText = Messages.getString("SelectLocationPage.WrapButtonText"); //$NON-NLS-1$
+				btnWrap.setText(buttonText);
+
+				wrapperCombo = new Combo(grpWrapper, SWT.READ_ONLY);
+				final List<String> entries = new ArrayList<String>(generationInfo.getWrapper().size());
+				for (final SchemaWrapper wrapper : generationInfo.getWrapper()) {
+					entries.add(wrapper.getName());
+				}
+				wrapperCombo.setItems(entries.toArray(new String[entries.size()]));
+				wrapperCombo.select(0);
+				wrapperCombo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+			}
 		}
 
 		final Group grpPreview = new Group(container, SWT.NONE);
@@ -190,7 +217,7 @@ public class SelectLocationPage extends WizardPage {
 	 * Indicates if this page was already shown to the user.
 	 *
 	 * @return
-	 *         {@code true} if this page was already shown to the user, {@code false} if this page was never shown to
+	 * 		{@code true} if this page was already shown to the user, {@code false} if this page was never shown to
 	 *         the user.
 	 */
 	public boolean wasAlreadyVisible() {
@@ -354,11 +381,19 @@ public class SelectLocationPage extends WizardPage {
 		bindingContext.bindValue(observeTextGeneratedTextObserveWidget, generatedStringGenerationInfoObserveValue, null,
 			null);
 
-		if (generationInfo.getWrapper() != null) {
+		if (generationInfo.getWrapper() != null && generationInfo.getWrapper().size() > 0) {
 			final IObservableValue observeSelectionBtnWrapObserveWidget = WidgetProperties.selection().observe(btnWrap);
 			final IObservableValue wrapGenerationInfoObserveValue = PojoProperties.value("wrap") //$NON-NLS-1$
 				.observe(generationInfo);
 			bindingContext.bindValue(observeSelectionBtnWrapObserveWidget, wrapGenerationInfoObserveValue, null, null);
+		}
+
+		if (wrapperCombo != null) {
+			final IObservableValue observeSelectionWrapperComboObserveWidget = WidgetProperties.singleSelectionIndex()
+				.observe(wrapperCombo);
+			final IObservableValue wrapIndexObserveValue = PojoProperties.value("wrapIndex") //$NON-NLS-1$
+				.observe(generationInfo);
+			bindingContext.bindValue(observeSelectionWrapperComboObserveWidget, wrapIndexObserveValue, null, null);
 		}
 
 		return bindingContext;

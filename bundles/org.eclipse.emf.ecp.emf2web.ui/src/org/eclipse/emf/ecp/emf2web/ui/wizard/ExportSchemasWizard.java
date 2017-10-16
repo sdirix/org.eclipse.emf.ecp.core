@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.exporter.DialogToggleInteraction;
 import org.eclipse.emf.ecp.emf2web.exporter.GenerationExporter;
+import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -94,19 +95,64 @@ public class ExportSchemasWizard extends Wizard implements PropertyChangeListene
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
+		// change current page if necessary
+		if (GenerationInfo.class.isInstance(event.getSource())) {
+			final GenerationInfo generationInfo = GenerationInfo.class.cast(event.getSource());
+			generationInfo.removePropertyChangeListener(this);
+			if ("wrap".equals(event.getPropertyName())) { //$NON-NLS-1$
+				// update location
+				final URI newLocation = changeFileExtension(generationInfo.getLocation(),
+					generationInfo.getNameProposal(), generationInfo.getSelectedWrapper());
+				generationInfo.setLocation(newLocation);
+				updateTargetPage(generationInfo);
+			}
+			if ("wrapIndex".equals(event.getPropertyName())) { //$NON-NLS-1$
+				// update location
+				final URI newLocation = changeFileExtension(generationInfo.getLocation(),
+					generationInfo.getNameProposal(), generationInfo.getSelectedWrapper());
+				generationInfo.setLocation(newLocation);
+				updateTargetPage(generationInfo);
+			}
+			generationInfo.addPropertyChangeListener(this);
+		}
+
+		// change not visited pages
 		for (final SelectLocationPage page : getNotVisitedLocationPages()) {
 			final GenerationInfo generationInfo = page.getGenerationInfo();
 			generationInfo.removePropertyChangeListener(this);
 			if ("location".equals(event.getPropertyName())) { //$NON-NLS-1$
 				final URI newLocation = getNewLocationProposal(URI.class.cast(event.getNewValue()),
-					generationInfo.getNameProposal());
+					generationInfo.getNameProposal(), generationInfo.getSelectedWrapper());
 				generationInfo.setLocation(newLocation);
 			}
 			if ("wrap".equals(event.getPropertyName())) { //$NON-NLS-1$
 				generationInfo.setWrap(Boolean.class.cast(event.getNewValue()));
+				final URI newLocation = changeFileExtension(generationInfo.getLocation(),
+					generationInfo.getNameProposal(), generationInfo.getSelectedWrapper());
+				generationInfo.setLocation(newLocation);
+			}
+			if ("wrapIndex".equals(event.getPropertyName())) { //$NON-NLS-1$
+				final int newValue = Integer.class.cast(event.getNewValue());
+				if (generationInfo.getWrapper() != null && generationInfo.getWrapper().size() > newValue) {
+					generationInfo.setWrapIndex(Integer.class.cast(event.getNewValue()));
+					final URI newLocation = changeFileExtension(generationInfo.getLocation(),
+						generationInfo.getNameProposal(), generationInfo.getSelectedWrapper());
+					generationInfo.setLocation(newLocation);
+				}
 			}
 			generationInfo.addPropertyChangeListener(this);
 			page.getBindingContext().updateTargets();
+		}
+	}
+
+	private void updateTargetPage(GenerationInfo info) {
+		for (final IWizardPage page : getPages()) {
+			if (SelectLocationPage.class.isInstance(page)) {
+				final SelectLocationPage locationPage = SelectLocationPage.class.cast(page);
+				if (locationPage.getGenerationInfo() == info) {
+					locationPage.getBindingContext().updateTargets();
+				}
+			}
 		}
 	}
 
@@ -127,14 +173,26 @@ public class ExportSchemasWizard extends Wizard implements PropertyChangeListene
 		}
 	}
 
-	private URI getNewLocationProposal(URI location, String fileName) {
+	private URI getNewLocationProposal(URI location, String fileName, SchemaWrapper selectedWrapper) {
 		URI result = location;
 		result = result.trimSegments(1);
 		result = result.appendSegment(fileName).trimFileExtension();
-		if (location.fileExtension() != null) {
+		if (selectedWrapper != null) {
+			result = result.appendFileExtension(selectedWrapper.getFileExtension());
+		} else if (location.fileExtension() != null) {
 			result = result.appendFileExtension(location.fileExtension());
 		}
 		return result;
 	}
 
+	private URI changeFileExtension(URI location, String originalFileName, SchemaWrapper selectedWrapper) {
+		if (selectedWrapper != null) {
+			return location.trimFileExtension().appendFileExtension(selectedWrapper.getFileExtension());
+		}
+		final String originalFileExstension = location.trimSegments(1).appendSegment(originalFileName).fileExtension();
+		if (originalFileExstension != null && !originalFileExstension.equals("")) { //$NON-NLS-1$
+			return location.trimFileExtension().appendFileExtension(originalFileExstension);
+		}
+		return location;
+	}
 }

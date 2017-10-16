@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.ui.json.internal.handler;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecp.emf2web.controller.GenerationController;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator;
 import org.eclipse.emf.ecp.emf2web.json.generator.seed.SeedWrapper;
+import org.eclipse.emf.ecp.emf2web.json.generator.seed.TypeWrapper;
 
 /**
  * @author stefan
@@ -39,7 +41,7 @@ public class PureSchemaGenerationController implements GenerationController {
 
 			final String schemaFile = modelGenerator.generate(eClass);
 			final GenerationInfo schemaInfo = new GenerationInfo(GenerationInfo.MODEL_TYPE, eClass, null,
-				schemaIdentifier + "Model.json", new SeedWrapper());
+				schemaIdentifier + "Model.json", Arrays.asList(new SeedWrapper(), new TypeWrapper()));
 			schemaInfo.setGeneratedString(schemaFile);
 			result.add(schemaInfo);
 		}

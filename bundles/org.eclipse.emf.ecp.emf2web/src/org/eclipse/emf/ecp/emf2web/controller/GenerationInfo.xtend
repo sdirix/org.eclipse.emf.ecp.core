@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper
 import java.beans.PropertyChangeSupport
 import java.beans.PropertyChangeListener
+import java.util.List
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
@@ -35,10 +36,11 @@ class GenerationInfo {
 	@Accessors(PUBLIC_GETTER)val EClass eClass
 	@Accessors(PUBLIC_GETTER)val VView view
 	@Accessors(PUBLIC_GETTER)val String nameProposal
-	@Accessors(PUBLIC_GETTER)val SchemaWrapper wrapper
+	@Accessors(PUBLIC_GETTER)val List<SchemaWrapper> wrapper
 	@Accessors var String generatedString
 	@Accessors var URI location
-	@Accessors var boolean wrap
+	@Accessors var int wrapIndex = 0
+	@Accessors var boolean wrap = false
 	
 	val PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
@@ -64,5 +66,16 @@ class GenerationInfo {
 	
 	def void setWrap(boolean wrap){
 		changeSupport.firePropertyChange("wrap", this.wrap, this.wrap = wrap)
+	}
+	
+	def void setWrapIndex(int wrapIndex){
+		changeSupport.firePropertyChange("wrapIndex", this.wrapIndex, this.wrapIndex = wrapIndex)		
+	}
+	
+	def SchemaWrapper getSelectedWrapper(){
+		if(getWrapIndex < 0 || !isWrap){
+			return null
+		}
+		getWrapper().get(getWrapIndex())
 	}
 }
