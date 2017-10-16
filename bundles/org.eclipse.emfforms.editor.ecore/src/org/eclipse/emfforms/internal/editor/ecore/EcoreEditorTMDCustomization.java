@@ -22,6 +22,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emfforms.internal.editor.ecore.actions.CreateNewInstanceAction;
+import org.eclipse.emfforms.internal.editor.ecore.actions.ExportSchemaAction;
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
@@ -61,7 +62,7 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 				final MenuManager menuMgr = new MenuManager();
 				final List<MasterDetailAction> masterDetailActions = ActionCollector.newList()
 					.addCutAction(editingDomain).addCopyAction(editingDomain).addPasteAction(editingDomain)
-					.add(new CreateNewInstanceAction()).getList();
+					.add(new CreateNewInstanceAction()).add(new ExportSchemaAction()).getList();
 
 				menuMgr.setRemoveAllWhenShown(true);
 				menuMgr.addMenuListener(new EcoreEditorMenuListener(new ChildrenDescriptorCollector(), menuMgr,

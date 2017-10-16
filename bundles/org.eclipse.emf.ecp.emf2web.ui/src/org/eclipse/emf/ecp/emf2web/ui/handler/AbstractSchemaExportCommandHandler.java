@@ -37,15 +37,19 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Abstract implementation for an handler responsible for exporting view models.
+ *
+ * @param <T> the type to export
  */
 public abstract class AbstractSchemaExportCommandHandler<T extends EObject> extends AbstractHandler {
 
 	/**
-	 * This implementation uses the {@link #getViews(ExecutionEvent)}
+	 * This implementation uses the {@link #getObjects(ExecutionEvent)}
 	 * and {@link #openWizard(Collection, ExecutionEvent, Shell)} methods to open an export wizard.
 	 *
 	 * @param event {@inheritDoc}
@@ -101,8 +105,8 @@ public abstract class AbstractSchemaExportCommandHandler<T extends EObject> exte
 	 * The default implementation opens the {@link ExportSchemaWizard} using the generation handlers returned by
 	 * {@link #getGenerationController()} and {@link #getGenerationExporter()}.
 	 *
-	 * @param eObject
-	 *            The views which shall be exported.
+	 * @param objects
+	 *            The objects which shall be exported.
 	 * @param event
 	 *            The {@link ExecutionEvent} which is given by the {@link #execute(ExecutionEvent)} method.
 	 * @param shell
@@ -110,8 +114,8 @@ public abstract class AbstractSchemaExportCommandHandler<T extends EObject> exte
 	 * @return
 	 * 		The return value of the {@link WizardDialog}.
 	 */
-	protected int openWizard(Collection<? extends EObject> views, ExecutionEvent event, Shell shell) {
-		final List<GenerationInfo> generationInfos = getGenerationController().generate(views);
+	protected int openWizard(Collection<? extends EObject> objects, ExecutionEvent event, Shell shell) {
+		final List<GenerationInfo> generationInfos = getGenerationController().generate(objects);
 		final URI locationProposal = getLocationProposal(event);
 		final ExportSchemasWizard wizard = new ExportSchemasWizard(generationInfos, getGenerationExporter(),
 			locationProposal);
@@ -130,14 +134,26 @@ public abstract class AbstractSchemaExportCommandHandler<T extends EObject> exte
 	 * 		The location proposal for the export. {@code null} if no proposal could be determined.
 	 */
 	protected URI getLocationProposal(ExecutionEvent event) {
+		IFile file = null;
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil
 			.getCurrentSelection(event);
 		final Object firstElement = selection.getFirstElement();
 		if (IFile.class.isInstance(firstElement)) {
-			final IFile file = IFile.class.cast(firstElement);
+			file = IFile.class.cast(firstElement);
+		}
+		if (file == null) {
+			final IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
+			if (activeEditor != null) {
+				if (IFileEditorInput.class.isInstance(activeEditor.getEditorInput())) {
+					file = IFileEditorInput.class.cast(activeEditor.getEditorInput()).getFile();
+				}
+			}
+		}
+		if (file != null) {
 			final IContainer container = file.getParent();
 			return URI.createPlatformResourceURI(container.getFullPath().toString(), true);
 		}
+
 		return null;
 	}
 

@@ -8,6 +8,11 @@
             id="org.eclipse.emf.ecp.emf2web.ui.json.exportJSONSchemaCommand"
             name="Export to JSON Forms">
       </command>
+      <command
+            defaultHandler="org.eclipse.emf.ecp.emf2web.ui.json.internal.handler.ExportSchemaHandler"
+            id="org.eclipse.emf.ecp.emf2web.ui.json.exportPureJSONSchemaCommand"
+            name="Export to JSON Schema">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -40,6 +45,48 @@
                </visibleWhen>
             </command>
          </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <command
+               commandId="org.eclipse.emf.ecp.emf2web.ui.json.exportPureJSONSchemaCommand"
+               icon="icons/full/obj16/view.png"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecore.EClass">
+                     </instanceof>
+                  </iterate>
+               </with>
+               <with
+                     variable="activeMenuSelection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EClass">
+                     </adapt>
+                  </iterate>
+               </with>
+               <with
+                     variable="activeMenuSelection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                  </iterate>
+               </with>
+               <with
+                     variable="activeMenuSelection">
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
 
