@@ -153,6 +153,7 @@
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.extension.tests</module>
 		<module>../../tests/org.eclipse.emfforms.common.tests</module>
+		<module>../../tests/org.eclipse.emfforms.common.validation.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.legacy.tests</module>
