@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Treemasterdetail SWT Util
 Bundle-SymbolicName: org.eclipse.emfforms.swt.treemasterdetail;singleton:=true
-Bundle-Version: 1.14.0.qualifier
+Bundle-Version: 1.14.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.edit.ui.action.emfforms;version="1.14.0";x-internal:=true,
   org.eclipse.emfforms.internal.swt.treemasterdetail;version="1.14.0";x-friends:="org.eclipse.emfforms.editor.ecore",
