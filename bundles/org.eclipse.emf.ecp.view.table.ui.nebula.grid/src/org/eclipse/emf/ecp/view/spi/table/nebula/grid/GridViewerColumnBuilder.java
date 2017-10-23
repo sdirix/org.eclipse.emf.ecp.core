@@ -23,6 +23,7 @@ import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -103,10 +104,33 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 			@Override
 			public void valueChanged(Property<Boolean> property, Boolean oldValue, Boolean newValue) {
 				getConfig().matchFilter().resetToDefault();
-				viewerColumn.getColumn().setVisible(newValue);
+
+				final GridColumn column = viewerColumn.getColumn();
+				Listener hideShowListener = extractShowListener(viewerColumn.getColumn());
+				if (column.getHeaderControl() == null && hideShowListener != null) {
+					column.removeListener(SWT.Show, hideShowListener);
+					column.removeListener(SWT.Hide, hideShowListener);
+				} else {
+					hideShowListener = null;
+				}
+				column.setVisible(newValue);
+				if (hideShowListener != null) {
+					column.addListener(SWT.Show, hideShowListener);
+					column.addListener(SWT.Hide, hideShowListener);
+				}
 			}
 		});
 
+	}
+
+	private static Listener extractShowListener(final GridColumn column) {
+		for (final Listener listener : column.getListeners(SWT.Show)) {
+			if (listener.getClass().getEnclosingClass() != null
+				&& ControlEditor.class.isAssignableFrom(listener.getClass().getEnclosingClass())) {
+				return listener;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -132,6 +156,7 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 					if (filterControl != null) {
 						filterControl.dispose();
 					}
+
 					getConfig().matchFilter().resetToDefault();
 				}
 				// hack: force header height recalculation
