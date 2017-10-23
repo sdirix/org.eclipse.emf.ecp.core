@@ -146,7 +146,7 @@ public abstract class AbstractTableViewerColumnBuilder<V extends AbstractTableVi
 	 * @param valueProperty the value property to bind to
 	 * @param observable the value to bind to
 	 */
-	protected void bindValue(Widget column, IWidgetValueProperty valueProperty, IObservableValue<Object> observable) {
+	protected void bindValue(Widget column, IWidgetValueProperty valueProperty, IObservableValue observable) {
 		if (dataBindingContext == null) {
 			return;
 		}

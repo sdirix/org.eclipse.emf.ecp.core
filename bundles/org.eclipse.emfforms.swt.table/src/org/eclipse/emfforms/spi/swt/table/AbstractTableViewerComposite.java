@@ -62,8 +62,8 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		int style,
 		Object inputObject,
 		TableViewerSWTCustomization<V> customization,
-		IObservableValue<Object> title,
-		IObservableValue<Object> tooltip) {
+		IObservableValue title,
+		IObservableValue tooltip) {
 		super(parent, style);
 
 		emfDatabindingContext = new EMFDataBindingContext();
@@ -129,8 +129,8 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	}
 
 	private void renderControl(Composite parent, TableViewerSWTCustomization<V> customization,
-		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue<Object> title,
-		IObservableValue<Object> tooltip) {
+		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue title,
+		IObservableValue tooltip) {
 		customization.createCompositeLayout(parent);
 
 		final Optional<Label> titleLabel = customization.getTitleLabel();
@@ -281,7 +281,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 
 	}
 
-	private static void initTitleLabel(Label label, IObservableValue<Object> title, IObservableValue<Object> tooltip,
+	private static void initTitleLabel(Label label, IObservableValue title, IObservableValue tooltip,
 		EMFDataBindingContext emfDatabindingContext) {
 		emfDatabindingContext.bindValue(
 			WidgetProperties.text().observe(label),

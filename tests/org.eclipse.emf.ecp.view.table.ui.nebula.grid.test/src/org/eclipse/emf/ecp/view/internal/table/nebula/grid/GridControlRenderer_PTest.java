@@ -174,7 +174,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
-		final WritableList<Player> playerList = new WritableList<Player>(league.getPlayers(),
+		final WritableList playerList = new WritableList(league.getPlayers(),
 			BowlingPackage.eINSTANCE.getLeague_Players());
 
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
