@@ -25,9 +25,6 @@ import org.eclipse.swt.widgets.Display;
  */
 public class GridColumnAction extends GridAction {
 
-	private GridColumn column;
-	private ColumnConfiguration columnConfig;
-
 	/**
 	 * The constructor.
 	 *
@@ -44,34 +41,15 @@ public class GridColumnAction extends GridAction {
 		if (!super.isEnabled()) {
 			return false;
 		}
-		final Point cursorLocation = Display.getCurrent().getCursorLocation();
-
-		column = getGrid().getColumn(cursorLocation);
+		final Display currentDisplay = getGrid().getDisplay();
+		final Point cursorLocation = currentDisplay.getCursorLocation();
+		final GridColumn column = getGrid().getColumn(getGrid().toControl(cursorLocation));
 		if (column == null) {
 			return false;
 		}
-
-		columnConfig = getGridTableViewer().getColumnConfiguration(column);
+		final ColumnConfiguration columnConfig = getGridTableViewer().getColumnConfiguration(column);
 
 		return columnConfig != null;
-	}
-
-	/**
-	 * Returns the currently selected {@link GridColumn} (if any).
-	 *
-	 * @return the {@link GridColumn}
-	 */
-	protected GridColumn getColumn() {
-		return column;
-	}
-
-	/**
-	 * Returns the currently selected {@link ColumnConfiguration} (if any).
-	 *
-	 * @return the {@link ColumnConfiguration}
-	 */
-	protected ColumnConfiguration getColumnConfiguration() {
-		return columnConfig;
 	}
 
 }

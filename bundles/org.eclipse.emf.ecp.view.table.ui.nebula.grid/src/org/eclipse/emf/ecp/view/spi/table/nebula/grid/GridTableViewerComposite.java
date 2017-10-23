@@ -46,6 +46,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
@@ -195,6 +196,16 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 	}
 
+	private ColumnConfiguration getCurrentColumnConfig() {
+		final Grid grid = getTableViewer().getGrid();
+		final Point cursorLocation = grid.getDisplay().getCursorLocation();
+		final GridColumn column = grid.getColumn(grid.toControl(cursorLocation));
+		if (column == null) {
+			return null;
+		}
+		return getColumnConfiguration(column);
+	}
+
 	/**
 	 * Column hide/show menu listener.
 	 *
@@ -205,12 +216,15 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
-
+			final ColumnConfiguration columnConfiguration = getCurrentColumnConfig();
+			if (columnConfiguration == null) {
+				return;
+			}
 			manager.add(new GridColumnAction(GridTableViewerComposite.this,
 				Messages.GridTableViewerComposite_hideColumnAction) {
 				@Override
 				public void run() {
-					getColumnConfiguration().visible().setValue(Boolean.FALSE);
+					columnConfiguration.visible().setValue(Boolean.FALSE);
 				}
 
 				@Override
@@ -218,7 +232,7 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 					if (!super.isEnabled()) {
 						return false;
 					}
-					return getColumnConfiguration().getEnabledFeatures()
+					return columnConfiguration.getEnabledFeatures()
 						.contains(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW);
 				}
 			});
@@ -260,6 +274,10 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
+			final ColumnConfiguration columnConfiguration = getCurrentColumnConfig();
+			if (columnConfiguration == null) {
+				return;
+			}
 			manager.add(new GridColumnAction(GridTableViewerComposite.this,
 				Messages.GridTableViewerComposite_toggleFilterControlsAction) {
 				@Override
@@ -276,7 +294,7 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 					if (!super.isEnabled()) {
 						return false;
 					}
-					return getColumnConfiguration().getEnabledFeatures()
+					return columnConfiguration.getEnabledFeatures()
 						.contains(ColumnConfiguration.FEATURE_COLUMN_FILTER);
 				}
 			});
