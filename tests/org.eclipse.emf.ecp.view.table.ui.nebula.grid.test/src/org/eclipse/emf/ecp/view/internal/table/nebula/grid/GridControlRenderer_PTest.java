@@ -31,7 +31,6 @@ import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -158,24 +157,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
 
-		final League league = BowlingFactory.eINSTANCE.createLeague();
-
-		// add three players
-		for (final String playerName : Arrays.asList("Kliver Oahn", "Branz Feckenbauer", "Vudi Roeller")) {
-			final Player player = BowlingFactory.eINSTANCE.createPlayer();
-			player.setName(playerName);
-			league.getPlayers().add(player);
-
-			mockSetting(mock(Setting.class), player, BowlingPackage.eINSTANCE.getPlayer_Name());
-		}
-
-		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
-			.createTableDomainModelReference();
-		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
-
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
-		final WritableList playerList = new WritableList(league.getPlayers(),
-			BowlingPackage.eINSTANCE.getLeague_Players());
 
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
 		final EObject mockedEObject = mock(EObject.class);
@@ -187,15 +169,37 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				mockedObservableValue);
+
+		when(getvControl().getColumnConfigurations())
+			.thenReturn(new BasicEList<VTableColumnConfiguration>());
+
+	}
+
+	protected void mockSampleDataSet() throws DatabindingFailedException {
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+
+		// add three players
+		for (final String playerName : Arrays.asList("Kliver Oahn", "Branz Feckenbauer", "Vudi Roeller")) {
+			final Player player = BowlingFactory.eINSTANCE.createPlayer();
+			player.setName(playerName);
+			league.getPlayers().add(player);
+
+			mockSetting(mock(Setting.class), player, BowlingPackage.eINSTANCE.getPlayer_Name());
+		}
+
+		final WritableList<Player> playerList = new WritableList<Player>(league.getPlayers(),
+			BowlingPackage.eINSTANCE.getLeague_Players());
+
 		when(getDatabindingService().getObservableList(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				playerList);
 
-		final Resource resource = createResource();
-		resource.getContents().add(league);
-
 		final Setting playerSetting = mock(Setting.class);
 		mockSetting(playerSetting, league, BowlingPackage.eINSTANCE.getLeague_Players());
+
+		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 
 		// add three columns
 		for (final EStructuralFeature eStructuralFeature : Arrays.asList(
@@ -218,16 +222,13 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 
 		when(getvControl().getDomainModelReference()).thenReturn(
 			tableDomainModelReference);
-
-		when(getvControl().getColumnConfigurations())
-			.thenReturn(new BasicEList<VTableColumnConfiguration>());
-
 	}
 
 	/**
 	 * @param dmr
 	 * @throws DatabindingFailedException
 	 */
+	@SuppressWarnings("restriction")
 	private void mockColumnFeature(final VFeaturePathDomainModelReference dmr) throws DatabindingFailedException {
 		when(getDatabindingService().getValueProperty(Matchers.argThat(new BaseMatcher<VDomainModelReference>() {
 
@@ -279,7 +280,9 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 
 	@Test
 	public void testColumnHideShow()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		mockSampleDataSet();
 
 		final Control rendered = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(rendered);
@@ -288,9 +291,9 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		assertTrue(tableViewerComposite.getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW));
 
 		final Grid grid = getGrid(rendered);
-		assertEquals(grid.getColumns().length, 4); // columns defined in mockControl()
+		assertEquals(grid.getColumns().length, 4); // columns defined in mockSampleDataSet()
 
-		final GridColumn nameColumn = grid.getColumn(1);
+		final GridColumn nameColumn = grid.getColumn(1); // name column
 		assertTrue(nameColumn.isVisible());
 
 		final Object data = nameColumn.getData(ColumnConfiguration.ID);
@@ -311,7 +314,11 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 	}
 
 	@Test
-	public void testColumnFilter() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testColumnFilter()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		mockSampleDataSet();
+
 		final Control rendered = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(rendered);
 
@@ -319,7 +326,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		assertTrue(tableViewerComposite.getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_FILTER));
 
 		final Grid grid = getGrid(rendered);
-		final GridColumn nameColumn = grid.getColumn(1);
+		final GridColumn nameColumn = grid.getColumn(1); // name column
 		final Object data = nameColumn.getData(ColumnConfiguration.ID);
 		assertTrue(ColumnConfiguration.class.isInstance(data));
 
@@ -328,7 +335,11 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 			columnConfiguration.getEnabledFeatures()
 				.contains(ColumnConfiguration.FEATURE_COLUMN_FILTER));
 
-		assertEquals(3, grid.getItems().length); // 3 players/rows defined in mockControl()
+		assertEquals(3, grid.getItems().length); // 3 players/rows defined in mockSampleDataSet()
+
+		/*
+		 * test filtering
+		 */
 
 		columnConfiguration.matchFilter().setValue("er");
 		assertEquals(3, filterVisible(grid.getItems()).length);
@@ -342,7 +353,61 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		columnConfiguration.matchFilter().setValue("Kliver");
 		assertEquals(1, filterVisible(grid.getItems()).length);
 
+		/*
+		 * test clearing of filter
+		 */
+
+		columnConfiguration.showFilterControl().setValue(Boolean.FALSE);
+
+		assertEquals(3, grid.getItems().length);
+		assertEquals(3, filterVisible(grid.getItems()).length);
+
 		// TODO: check context menu items
+	}
+
+	@Test
+	public void testColumnFilterWithColumnHideShow()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		mockSampleDataSet();
+
+		final Control rendered = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		final Grid grid = getGrid(rendered);
+		final GridColumn nameColumn = grid.getColumn(1); // name column
+
+		final Object data = nameColumn.getData(ColumnConfiguration.ID);
+		final ColumnConfiguration columnConfiguration = ColumnConfiguration.class.cast(data);
+
+		assertTrue("Feature not enabled/supported. Check ColumnConfiguration.FEATURES?",
+			columnConfiguration.getEnabledFeatures()
+				.contains(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW));
+		assertTrue("Feature not enabled/supported. Check ColumnConfiguration.FEATURES?",
+			columnConfiguration.getEnabledFeatures()
+				.contains(ColumnConfiguration.FEATURE_COLUMN_FILTER));
+
+		/*
+		 * test clearing of filter
+		 */
+
+		columnConfiguration.showFilterControl().setValue(Boolean.TRUE);
+		columnConfiguration.matchFilter().setValue("foo");
+
+		assertEquals(0, filterVisible(grid.getItems()).length);
+
+		columnConfiguration.visible().setValue(Boolean.FALSE);
+
+		assertEquals(3, filterVisible(grid.getItems()).length);
+
+		/*
+		 * test for gerrit #110527 (filter again after filters have been hidden)
+		 */
+
+		columnConfiguration.visible().setValue(Boolean.TRUE);
+		columnConfiguration.showFilterControl().setValue(Boolean.TRUE);
+		columnConfiguration.matchFilter().setValue("bar");
+
+		assertEquals(0, filterVisible(grid.getItems()).length);
+
 	}
 
 	private GridItem[] filterVisible(GridItem[] items) {

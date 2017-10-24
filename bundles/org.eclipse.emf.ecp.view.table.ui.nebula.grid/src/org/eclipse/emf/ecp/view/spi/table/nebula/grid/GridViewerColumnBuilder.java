@@ -31,7 +31,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -100,6 +102,7 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 		getConfig().visible().addChangeListener(new ChangeListener<Boolean>() {
 			@Override
 			public void valueChanged(Property<Boolean> property, Boolean oldValue, Boolean newValue) {
+				getConfig().matchFilter().resetToDefault();
 				viewerColumn.getColumn().setVisible(newValue);
 			}
 		});
@@ -126,7 +129,10 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 					column.setHeaderControl(filterControl);
 				} else {
 					column.setHeaderControl(null);
-					filterControl.dispose();
+					if (filterControl != null) {
+						filterControl.dispose();
+					}
+					getConfig().matchFilter().resetToDefault();
 				}
 				// hack: force header height recalculation
 				column.setWidth(column.getWidth());
@@ -170,6 +176,15 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 			@Override
 			public void modifyText(ModifyEvent e) {
 				Display.getDefault().timerExec(300, runnable);
+			}
+		});
+
+		filterComposite.addListener(SWT.Show, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				if (!txtFilter.isDisposed() && getConfig().matchFilter().getValue() != null) {
+					txtFilter.setText(String.valueOf(getConfig().matchFilter().getValue()));
+				}
 			}
 		});
 
