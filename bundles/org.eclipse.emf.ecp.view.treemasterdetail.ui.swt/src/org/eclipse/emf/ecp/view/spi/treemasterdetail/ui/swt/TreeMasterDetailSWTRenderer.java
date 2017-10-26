@@ -272,7 +272,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			getViewModelContext().unregisterDomainChangeListener(domainModelListener);
 		}
 		domainModelListener = null;
-		treeViewer.setInput(null);
+		if (treeViewer != null) {
+			treeViewer.setInput(null);
+		}
 		super.dispose();
 	}
 
