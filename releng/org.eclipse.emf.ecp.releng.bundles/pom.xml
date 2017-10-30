@@ -186,6 +186,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.templatebridge</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.migration</module>
 
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>

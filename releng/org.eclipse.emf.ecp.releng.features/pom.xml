@@ -16,6 +16,7 @@
 
 	<modules>
 		<module>../../features/org.eclipse.emf.ecp.emfforms.idetooling.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.ide.migration.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>

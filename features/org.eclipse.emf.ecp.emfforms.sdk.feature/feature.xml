@@ -76,6 +76,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.ecp.ide.migration.feature.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature.source"
          version="0.0.0"/>
 
