@@ -361,7 +361,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-			final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
+			final ECPTableViewerComparator comparator = getVElement().isMoveUpDownDisabled()
+				? new ECPTableViewerComparator() : null;
 
 			/* render */
 			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
@@ -395,7 +396,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			tableViewerComposite.getTableViewer().addDoubleClickListener(new DoubleClickListener());
 
 			/* setup sorting via column selection */
-			setupSorting(comparator, regularColumnsStartIndex, tableViewerComposite);
+			if (getVElement().isMoveUpDownDisabled()) {
+				setupSorting(comparator, regularColumnsStartIndex, tableViewerComposite);
+			}
 
 			/* get validation icon */
 			setupValidation(tableViewerComposite);
@@ -449,7 +452,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param labelTooltipText the tooltip
 	 * @param compositeBuilder the {@link TableViewerCompositeBuilder}
 	 * @param cp the content provider
-	 * @param comparator the {@link ViewerComparator}
+	 * @param comparator the {@link ViewerComparator}; has no effect if move up/down
+	 *            functionality is enabled
 	 * @param tableControlSWTRendererButtonBarBuilder2 the {@link ButtonBarBuilder}
 	 * @return the {@link TableViewerSWTBuilder}
 	 * @since 1.15
