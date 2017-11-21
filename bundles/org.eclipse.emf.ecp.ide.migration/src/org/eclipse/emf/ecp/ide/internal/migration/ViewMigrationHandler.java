@@ -96,8 +96,14 @@ public class ViewMigrationHandler {
 		final Map<String, Optional<Diagnostic>> diagnostics = new LinkedHashMap<String, Optional<Diagnostic>>();
 
 		for (final IFile file : files) {
-			final Optional<Diagnostic> diagnostic = execute(file);
-			diagnostics.put(file.getName(), diagnostic);
+			try {
+				final Optional<Diagnostic> diagnostic = execute(file);
+				diagnostics.put(file.getName(), diagnostic);
+				// BEGIN SUPRESS CATCH EXCEPTION
+			} catch (final Exception throwable) {
+				// END SUPRESS CATCH EXCEPTION
+				continue;
+			}
 			subMonitor.worked(1);
 		}
 
