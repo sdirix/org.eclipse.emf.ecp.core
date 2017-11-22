@@ -64,7 +64,7 @@ public class EditorToolBar extends Composite {
 		final Label titleImage = new Label(this, SWT.NONE);
 		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(Activator.getDefault().getBundle()
 			.getResource("icons/view.png"));
-		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData()));
+		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData(100)));
 
 		final FormData titleImageData = new FormData();
 		final int imageOffset = -titleImage.computeSize(SWT.DEFAULT, SWT.DEFAULT).y / 2;
