@@ -17,6 +17,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -33,6 +34,8 @@ public class ViewMigrationDialog extends TitleAreaDialog {
 	private Text currentNamespaceText;
 	private String oldNamespaceFragment;
 	private String newNamespaceFragment;
+	private Button showWarningsButton;
+	private boolean showWarnings;
 
 	/**
 	 * Constructor.
@@ -86,6 +89,10 @@ public class ViewMigrationDialog extends TitleAreaDialog {
 		updatedNamespaceText = createInput(container, Messages.ViewMigrationDialog_UpdatedNSLabel);
 		label.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).create());
 
+		showWarningsButton = new Button(container, SWT.CHECK);
+		showWarningsButton.setText(Messages.ViewMigrationDialog_ShowWarnings);
+		showWarningsButton.setSelection(true);
+
 		return area;
 	}
 
@@ -129,6 +136,7 @@ public class ViewMigrationDialog extends TitleAreaDialog {
 	protected void okPressed() {
 		oldNamespaceFragment = currentNamespaceText.getText();
 		newNamespaceFragment = updatedNamespaceText.getText();
+		showWarnings = showWarningsButton.getSelection();
 		super.okPressed();
 	}
 
@@ -148,5 +156,14 @@ public class ViewMigrationDialog extends TitleAreaDialog {
 	 */
 	public String getNewNamespaceFragment() {
 		return newNamespaceFragment;
+	}
+
+	/**
+	 * Whether to show migration warnings.
+	 *
+	 * @return {@code true}, if migration warnings are to be shown
+	 */
+	public boolean shouldShowWarning() {
+		return showWarnings;
 	}
 }

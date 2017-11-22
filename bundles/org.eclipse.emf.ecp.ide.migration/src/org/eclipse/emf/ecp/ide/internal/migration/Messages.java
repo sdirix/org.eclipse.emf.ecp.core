@@ -29,6 +29,7 @@ public class Messages extends NLS {
 	public static String ViewMigrationDialog_CurrentNSLabel;
 	public static String ViewMigrationDialog_LabelText;
 	public static String ViewMigrationDialog_ShellTitle;
+	public static String ViewMigrationDialog_ShowWarnings;
 	public static String ViewMigrationDialog_UpdatedNSLabel;
 	public static String ViewMigrationResultDialog_MigrationFailureMessage;
 	public static String ViewMigrationResultDialog_MigrationSuccess;

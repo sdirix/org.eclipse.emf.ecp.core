@@ -44,13 +44,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.common.internal.validation.ValidationServiceImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -193,12 +193,12 @@ public class ViewMigrationHandler {
 	private Optional<Diagnostic> checkView(IFile file) throws IOException {
 		final LinkedHashSet<String> ecores = new LinkedHashSet<String>();
 		final VView view = ViewModelHelper.loadView(file, ecores);
-
 		try {
 			if (view != null) {
 				final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(view);
 				view.setLoadingProperties(properties);
-				return Optional.of(Diagnostician.INSTANCE.validate(view));
+				final ValidationServiceImpl validationService = new ValidationServiceImpl();
+				return Optional.of(validationService.validate(view));
 			}
 			return Optional.empty();
 		} finally {

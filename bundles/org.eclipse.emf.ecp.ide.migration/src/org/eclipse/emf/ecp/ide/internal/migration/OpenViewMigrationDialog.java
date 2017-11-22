@@ -69,8 +69,7 @@ public class OpenViewMigrationDialog extends AbstractHandler {
 							final Map<String, Optional<Diagnostic>> diagnostics = new ViewMigrationHandler(
 								dialog.getOldNamespaceFragment(),
 								dialog.getNewNamespaceFragment()).execute(viewModelFiles, subMonitor.split(80));
-
-							showResultDialog(diagnostics);
+							showResultDialog(diagnostics, dialog.shouldShowWarning());
 
 						} catch (final ViewMigrationException ex) {
 							return new Status(
@@ -92,13 +91,14 @@ public class OpenViewMigrationDialog extends AbstractHandler {
 		return null;
 	}
 
-	private void showResultDialog(final Map<String, Optional<Diagnostic>> diagnostics) {
+	private void showResultDialog(final Map<String, Optional<Diagnostic>> diagnostics, final boolean showWarnings) {
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				final ViewMigrationResultDialog dialog = new ViewMigrationResultDialog(
 					Display.getCurrent().getActiveShell(),
-					diagnostics);
+					diagnostics,
+					showWarnings);
 				dialog.open();
 			}
 		});
