@@ -13,7 +13,23 @@
 		<version>1.15.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
+	
+	<properties>
+		<test-vmargs></test-vmargs>
+	</properties>
+	
 	<profiles>
+		<profile>
+			<id>mac-tests</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<test-vmargs>-XstartOnFirstThread</test-vmargs>
+			</properties>
+		</profile>
 		<profile>
 			<id>slowTests</id>
 			<activation>
@@ -204,6 +220,7 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<argLine>${test-vmargs}</argLine>
 					<includes>
 						<include>**/*_PTest.java</include>
 						<include>**/*_ITest.java</include>

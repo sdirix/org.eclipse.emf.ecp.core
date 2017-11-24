@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Johannes Faltermeier
+ *   Johannes Faltermeier
+ *   Christian W. Damus - bug 527740
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
@@ -39,6 +40,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -847,20 +849,20 @@ public class SWTTable_PTest {
 
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
-		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
-		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelService[])
-		 */
+		@Deprecated
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
-			// TODO Auto-generated method stub
-			final ViewModelContextWithoutServices vmcws = new ViewModelContextWithoutServices(vView);
 
+			final ViewModelContextWithoutServices vmcws = new ViewModelContextWithoutServices(vView);
 			return vmcws;
+		}
+
+		@Override
+		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+			ViewModelServiceProvider viewModelServiceProvider) {
+
+			return new ViewModelContextWithoutServices(vView);
 		}
 
 		/**
