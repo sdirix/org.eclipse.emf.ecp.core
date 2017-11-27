@@ -101,6 +101,7 @@ public class ViewMigrationHandler {
 				diagnostics.put(file.getName(), diagnostic);
 				// BEGIN SUPRESS CATCH EXCEPTION
 			} catch (final Exception throwable) {
+				Activator.log(throwable);
 				// END SUPRESS CATCH EXCEPTION
 				continue;
 			}
