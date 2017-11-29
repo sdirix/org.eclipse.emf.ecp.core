@@ -132,6 +132,48 @@ public class PreSetValidationService_Test {
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
+	@Test // regression test for bug #527891
+	public void invalidCustomWithTwoValidators() {
+		final PreSetValidationServiceImpl s = new PreSetValidationServiceImpl();
+
+		final IFeatureConstraint constraint1 = new IFeatureConstraint() {
+			@Override
+			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value,
+				Map<Object, Object> context) {
+
+				if (value.equals("FOO")) {
+					return new BasicDiagnostic();
+				}
+
+				return BasicDiagnostic.toDiagnostic(
+					new Status(IStatus.ERROR, "test", IStatus.ERROR, "Value is not FOO", null));
+			}
+		};
+
+		final IFeatureConstraint constraint2 = new IFeatureConstraint() {
+			@Override
+			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value,
+				Map<Object, Object> context) {
+
+				if (value.equals("FOO")) {
+					return new BasicDiagnostic();
+				}
+
+				return BasicDiagnostic.toDiagnostic(
+					new Status(IStatus.ERROR, "test", IStatus.ERROR, "Value is still not FOO", null));
+			}
+		};
+
+		s.addConstraintValidator(TestPackage.eINSTANCE.getCustomDataType(), constraint1);
+		s.addConstraintValidator(TestPackage.eINSTANCE.getCustomDataType(), constraint2);
+
+		final Diagnostic result = s.validate(
+			TestPackage.eINSTANCE.getPerson_Custom(), "BAR", null);
+
+		assertEquals(result.getSeverity(), Diagnostic.ERROR);
+		assertEquals(2, result.getChildren().size());
+	}
+
 	@Test
 	public void loosePhoneNumberPattern() {
 		final Diagnostic result = service.validateLoose(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+");

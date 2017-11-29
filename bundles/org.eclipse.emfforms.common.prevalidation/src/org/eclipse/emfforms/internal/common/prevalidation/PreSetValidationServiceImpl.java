@@ -204,7 +204,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	@Override
 	public void addConstraintValidator(ENamedElement element, IFeatureConstraint constraint) {
 
-		if (!constraints.containsKey(constraint)) {
+		if (!constraints.containsKey(element)) {
 			constraints.put(element, new LinkedHashSet<IFeatureConstraint>());
 		}
 		constraints.get(element).add(constraint);
