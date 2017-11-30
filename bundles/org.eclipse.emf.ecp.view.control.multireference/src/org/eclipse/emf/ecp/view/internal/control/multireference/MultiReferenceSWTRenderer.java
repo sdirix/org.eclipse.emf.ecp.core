@@ -735,12 +735,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 					// Use type of the reference so that we don't get a plural (Ecore models typically
 					// have plural names for many-valued references)
 					final EClassifier type = feature.getEType();
-					final Bundle editBundle = bundleResolver.getEditBundle(type);
-					referenceDisplayName = l10n.getString(editBundle, String.format("_UI_%s_type", type.getName())); //$NON-NLS-1$
+					try {
+						final Bundle editBundle = bundleResolver.getEditBundle(type);
+						referenceDisplayName = l10n.getString(editBundle, String.format("_UI_%s_type", type.getName())); //$NON-NLS-1$
+					} catch (final NoBundleFoundException ex) {
+						referenceDisplayName = type.getName();
+					}
 				}
 			} catch (final DatabindingFailedException e) {
-				// We'll default it, below
-			} catch (final NoBundleFoundException ex) {
 				// We'll default it, below
 			}
 

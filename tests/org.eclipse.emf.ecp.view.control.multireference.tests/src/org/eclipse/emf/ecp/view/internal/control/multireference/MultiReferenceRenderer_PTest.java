@@ -35,11 +35,18 @@ import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.ETypedElement;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -407,6 +414,61 @@ public class MultiReferenceRenderer_PTest {
 	}
 
 	/**
+	 * Tests the tool-tip on the "Link" button.
+	 *
+	 * @see <a href="http://eclip.se/527736">bug 527736</a>
+	 */
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testLinkButtonTooltipReflective() {
+		final EPackage leaguePackage = EcoreFactory.eINSTANCE.createEPackage();
+		leaguePackage.setName("Example"); //$NON-NLS-1$
+		leaguePackage.setNsPrefix("example"); //$NON-NLS-1$
+		leaguePackage.setNsURI("http:///example.ecore"); //$NON-NLS-1$
+
+		final EClass leagueClass = EcoreFactory.eINSTANCE.createEClass();
+		leagueClass.setName("League"); //$NON-NLS-1$
+		final EClass playerClass = EcoreFactory.eINSTANCE.createEClass();
+		playerClass.setName("Player"); //$NON-NLS-1$
+		final EReference playersReference = EcoreFactory.eINSTANCE.createEReference();
+		playersReference.setEType(playerClass);
+		playersReference.setUpperBound(ETypedElement.UNBOUNDED_MULTIPLICITY);
+		leagueClass.getEStructuralFeatures().add(playersReference);
+
+		leaguePackage.getEClassifiers().add(leagueClass);
+		leaguePackage.getEClassifiers().add(playerClass);
+
+		final EObject league = EcoreUtil.create(leagueClass);
+
+		final IObservableList<?> observableList = EMFProperties.list(playersReference).observe(league);
+
+		Table table = null;
+
+		try {
+			// Re-stub the domain model as our league
+			when(renderer.getViewModelContext().getDomainModel()).thenReturn(league);
+			when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+				observableList);
+			final TestObservableValue observableValue = mock(TestObservableValue.class);
+			when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+				.thenReturn(observableValue);
+			when(observableValue.getObserved()).thenReturn(league);
+			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.LEAGUE__PLAYERS);
+			final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+			final Composite controlComposite = (Composite) composite.getChildren()[1];
+			table = (Table) controlComposite.getChildren()[0];
+			// BEGIN COMPLEX CODE
+		} catch (final Exception e) {
+			// END COMPLEX CODE
+			e.printStackTrace();
+			fail("Failed to render multi-reference table: " + e.getMessage()); //$NON-NLS-1$
+		}
+
+		final Button linkButton = SWTTestUtil.findControl(table.getParent().getParent(), 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Player")); //$NON-NLS-1$
+	}
+
+	/**
 	 * Tests the tool-tip on the "Create and link new" button.
 	 *
 	 * @see <a href="http://eclip.se/527736">bug 527736</a>
@@ -414,6 +476,61 @@ public class MultiReferenceRenderer_PTest {
 	@Test
 	public void testCreateAndLinkNewButtonTooltip() {
 		final Table table = createLeaguePlayersTable();
+		final Button linkButton = SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
+	}
+
+	/**
+	 * Tests the tool-tip on the "Link" button.
+	 *
+	 * @see <a href="http://eclip.se/527736">bug 527736</a>
+	 */
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testCreateAndLinkNewButtonTooltipReflective() {
+		final EPackage leaguePackage = EcoreFactory.eINSTANCE.createEPackage();
+		leaguePackage.setName("Example"); //$NON-NLS-1$
+		leaguePackage.setNsPrefix("example"); //$NON-NLS-1$
+		leaguePackage.setNsURI("http:///example.ecore"); //$NON-NLS-1$
+
+		final EClass leagueClass = EcoreFactory.eINSTANCE.createEClass();
+		leagueClass.setName("League"); //$NON-NLS-1$
+		final EClass playerClass = EcoreFactory.eINSTANCE.createEClass();
+		playerClass.setName("Player"); //$NON-NLS-1$
+		final EReference playersReference = EcoreFactory.eINSTANCE.createEReference();
+		playersReference.setEType(playerClass);
+		playersReference.setUpperBound(ETypedElement.UNBOUNDED_MULTIPLICITY);
+		leagueClass.getEStructuralFeatures().add(playersReference);
+
+		leaguePackage.getEClassifiers().add(leagueClass);
+		leaguePackage.getEClassifiers().add(playerClass);
+
+		final EObject league = EcoreUtil.create(leagueClass);
+
+		final IObservableList<?> observableList = EMFProperties.list(playersReference).observe(league);
+
+		Table table = null;
+
+		try {
+			// Re-stub the domain model as our league
+			when(renderer.getViewModelContext().getDomainModel()).thenReturn(league);
+			when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+				observableList);
+			final TestObservableValue observableValue = mock(TestObservableValue.class);
+			when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+				.thenReturn(observableValue);
+			when(observableValue.getObserved()).thenReturn(league);
+			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.LEAGUE__PLAYERS);
+			final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+			final Composite controlComposite = (Composite) composite.getChildren()[1];
+			table = (Table) controlComposite.getChildren()[0];
+			// BEGIN COMPLEX CODE
+		} catch (final Exception e) {
+			// END COMPLEX CODE
+			e.printStackTrace();
+			fail("Failed to render multi-reference table: " + e.getMessage()); //$NON-NLS-1$
+		}
+
 		final Button linkButton = SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class);
 		assertThat(linkButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
 	}
