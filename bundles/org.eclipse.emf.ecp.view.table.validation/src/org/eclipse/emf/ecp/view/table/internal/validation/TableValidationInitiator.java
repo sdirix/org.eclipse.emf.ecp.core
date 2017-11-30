@@ -16,13 +16,10 @@ import java.util.Map;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -32,12 +29,14 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
@@ -115,15 +114,15 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 					final IObservableValue observableValue;
 					try {
 						if (tableDomainModelReference.getDomainModelReference() != null) {
-							observableValue = Activator.getDefault().getEMFFormsDatabinding()
+							observableValue = context.getService(EMFFormsDatabinding.class)
 								.getObservableValue(tableDomainModelReference.getDomainModelReference(),
 									context.getDomainModel());
 						} else {
-							observableValue = Activator.getDefault().getEMFFormsDatabinding()
+							observableValue = context.getService(EMFFormsDatabinding.class)
 								.getObservableValue(tableDomainModelReference, context.getDomainModel());
 						}
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						context.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 						continue;
 					}
 					final IObserving observing = (IObserving) observableValue;
@@ -136,12 +135,12 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 					final EList<EObject> tableContents = (EList<EObject>) observed.eGet(structuralFeature, true);
 					for (final EObject tableEObject : tableContents) {
 						try {
-							final VView detailView = getView(tableControl);
+							final VView detailView = getView(tableControl, tableEObject);
 							final ViewModelContext childContext = context.getChildContext(tableEObject, tableControl,
 								detailView);
 							childContext.addContextUser(this);
 						} catch (final DatabindingFailedException ex) {
-							Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+							context.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 						}
 					}
 
@@ -158,27 +157,18 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 		return current == root;
 	}
 
-	private VView getView(VTableControl tableControl) throws DatabindingFailedException {
+	private VView getView(VTableControl tableControl, EObject newEntry) throws DatabindingFailedException {
 		VView detailView = tableControl.getDetailView();
 		if (detailView == null) {
-			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
-				.getDomainModelReference();
-			final IValueProperty valueProperty;
-			if (tableDomainModelReference.getDomainModelReference() != null) {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDomainModelReference.getDomainModelReference(), context.getDomainModel());
-			} else {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDomainModelReference, context.getDomainModel());
-			}
-			final EReference reference = (EReference) valueProperty.getValueType();
 			final VElement viewModel = context.getViewModel();
 			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
-			detailView = ViewProviderHelper.getView(
-				EcoreUtil.create(reference.getEReferenceType()),
-				properties);
+			detailView = context.getService(EMFFormsViewService.class).getView(newEntry, properties);
 		}
-
+		if (detailView == null) {
+			throw new IllegalStateException(
+				String.format("No View Model could be created for %1$s. Please check your ViewModel Provider.", //$NON-NLS-1$
+					newEntry.eClass().getName()));
+		}
 		return detailView;
 	}
 
@@ -251,10 +241,10 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 		for (final EObject newValue : notification.getNewEObjects()) {
 			try {
 				final ViewModelContext vmc = tableContextMapping.context.getChildContext(newValue,
-					tableContextMapping.control, getView(tableContextMapping.control));
+					tableContextMapping.control, getView(tableContextMapping.control, newValue));
 				vmc.addContextUser(this);
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				context.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 			}
 		}
 	}
@@ -263,10 +253,10 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 		for (final EObject oldValue : notification.getOldEObjects()) {
 			try {
 				final ViewModelContext vmc = tableContextMapping.context.getChildContext(oldValue,
-					tableContextMapping.control, getView(tableContextMapping.control));
+					tableContextMapping.control, getView(tableContextMapping.control, oldValue));
 				vmc.removeContextUser(this);
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				context.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 			}
 		}
 	}

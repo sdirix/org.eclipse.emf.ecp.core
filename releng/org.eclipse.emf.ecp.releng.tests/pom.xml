@@ -113,6 +113,7 @@
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.nebula.grid.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.table.validation.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.validation.bean.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
