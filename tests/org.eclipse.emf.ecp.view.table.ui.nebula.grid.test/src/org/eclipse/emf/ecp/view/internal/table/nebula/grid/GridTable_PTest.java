@@ -39,6 +39,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -945,6 +946,20 @@ public class GridTable_PTest {
 		 */
 		@Override
 		public VElement getParentVElement() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
+		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider)
+		 */
+		@Override
+		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+			ViewModelServiceProvider viewModelServiceProvider) {
 			// TODO Auto-generated method stub
 			return null;
 		}
