@@ -208,6 +208,8 @@
         <!-- EMF2Web -->
 		<module>../../tests/org.eclipse.emf.ecp.emf2web.json.test</module>
 		
+		<module>../../tests/org.eclipse.emfforms.datatemplate.tooling.tests</module>
+		
 	</modules>
 	
 	<build>
