@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -319,4 +320,20 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 		return NumericalHelper.setupFormat(Locale.getDefault(), instanceClass);
 	}
 
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testEffectivelyReadOnlyDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, 1,
+			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.isEnabled());
+	}
 }

@@ -7,13 +7,14 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Johannes Faltermeier
- *   Christian W. Damus - bug 527740
+ * Johannes Faltermeier
+ * Christian W. Damus - bug 527740
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -77,6 +78,7 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -515,6 +517,30 @@ public class SWTTable_PTest {
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
 		assertTableItemOrder(table, class1, class2, class3);
+	}
+
+	@Test
+	public void testTableReadonlyHidesAddRemoveButtons()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		handle.getTableControl().setReadonly(true);
+		shell.open();
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+
+		Composite buttonComposite = (Composite) render;
+		buttonComposite = (Composite) buttonComposite.getChildren()[0];
+		buttonComposite = (Composite) buttonComposite.getChildren()[0];
+		buttonComposite = (Composite) buttonComposite.getChildren()[2];
+
+		final Button addButton = (Button) buttonComposite.getChildren()[0];
+		final Button removeButton = (Button) buttonComposite.getChildren()[1];
+
+		assertFalse(addButton.getVisible());
+		assertFalse(removeButton.getVisible());
+
 	}
 
 	private TableControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)

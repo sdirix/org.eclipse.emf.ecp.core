@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -58,6 +59,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	private DefaultRealm realm;
 
 	@Before
+	@SuppressWarnings("unchecked")
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
@@ -111,6 +113,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
@@ -159,6 +162,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
+	@SuppressWarnings("unchecked")
 	private Combo setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
@@ -186,5 +190,22 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException, NoLabelFoundException {
 		labelServiceUsage();
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testEffectivelyReadOnlyDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, TestEnum.B,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.isEnabled());
 	}
 }
