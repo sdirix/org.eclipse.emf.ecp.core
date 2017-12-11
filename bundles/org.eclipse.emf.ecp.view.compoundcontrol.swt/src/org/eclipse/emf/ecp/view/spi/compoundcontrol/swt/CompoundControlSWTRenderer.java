@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.spi.compoundcontrol.swt;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -65,6 +64,8 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	private final EMFFormsLabelProvider labelProvider;
 	private EMFDataBindingContext dataBindingContext;
 	private final EMFFormsRendererFactory rendererFactory;
+
+	private LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>> elementRendererMap;
 
 	/**
 	 * Default constructor.
@@ -119,6 +120,19 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 			dataBindingContext = new EMFDataBindingContext();
 		}
 		return dataBindingContext;
+	}
+
+	/**
+	 * @return child control to renderer map
+	 * @since 1.16
+	 */
+	protected LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>> getElementRendererMap() {
+		return elementRendererMap;
+	}
+
+	private void setElementRendererMap(
+		LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>> elementRendererMap) {
+		this.elementRendererMap = elementRendererMap;
 	}
 
 	@Override
@@ -201,26 +215,26 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @since 1.8
 	 */
 	protected Control createControls(Composite parent) {
+		return createControls(parent, 0);
+	}
+
+	/**
+	 * Creates the controls composite. May skip the first cells of the child renderers.
+	 *
+	 * @param parent the parent composite
+	 * @param cellsToSkip number of cells to skip
+	 * @return the controls
+	 * @since 1.16
+	 */
+	protected Control createControls(Composite parent, int cellsToSkip) {
+		initChildRendererMap();
+
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 
-		final Map<VContainedElement, AbstractSWTRenderer<VElement>> elementRendererMap = new LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>>();
-		for (final VControl child : getVElement().getControls()) {
-			child.setLabelAlignment(LabelAlignment.NONE);
-			AbstractSWTRenderer<VElement> renderer;
-			try {
-				renderer = getRendererFactory().getRendererInstance(child, getViewModelContext());
-			} catch (final EMFFormsNoRendererException ex) {
-				getReportService().report(
-					new AbstractReport(ex, String.format("No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
-				continue;
-			}
-			elementRendererMap.put(child, renderer);
-		}
-
-		columnComposite.setLayout(getColumnLayout(elementRendererMap.size(), false));
-		for (final VContainedElement child : elementRendererMap.keySet()) {
-			final AbstractSWTRenderer<VElement> renderer = elementRendererMap.get(child);
+		columnComposite.setLayout(getColumnLayout(getElementRendererMap().size(), false));
+		for (final VContainedElement child : getElementRendererMap().keySet()) {
+			final AbstractSWTRenderer<VElement> renderer = getElementRendererMap().get(child);
 			final Composite column = new Composite(columnComposite, SWT.NONE);
 			column.setBackground(parent.getBackground());
 
@@ -228,10 +242,15 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
-			column.setLayout(getColumnLayout(gridDescription.getColumns(), false));
+			final int columns = gridDescription.getColumns() - cellsToSkip;
+			column.setLayout(getColumnLayout(columns < 1 ? 1 : columns, false));
 
 			try {
 				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
+					if (cellsToSkip > 0) {
+						cellsToSkip--;
+						continue;
+					}
 					final Control control = childGridCell.getRenderer().render(childGridCell, column);
 					if (control == null) {
 						continue;
@@ -253,6 +272,30 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		}
 
 		return columnComposite;
+	}
+
+	/**
+	 * Initialises the child control to renderer map.
+	 *
+	 * @since 1.16
+	 */
+	protected void initChildRendererMap() {
+		if (getElementRendererMap() != null) {
+			return;
+		}
+		setElementRendererMap(new LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>>());
+		for (final VControl child : getVElement().getControls()) {
+			child.setLabelAlignment(LabelAlignment.NONE);
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = getRendererFactory().getRendererInstance(child, getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(
+					new AbstractReport(ex, String.format("No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+				continue;
+			}
+			getElementRendererMap().put(child, renderer);
+		}
 	}
 
 	/**
