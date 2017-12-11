@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
-import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -34,13 +34,13 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a
- * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty} object.
+ * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class AlignmentStylePropertyItemProvider
+public class ControlLabelAlignmentStylePropertyItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider,
@@ -55,7 +55,7 @@ public class AlignmentStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	public AlignmentStylePropertyItemProvider(AdapterFactory adapterFactory) {
+	public ControlLabelAlignmentStylePropertyItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -87,10 +87,10 @@ public class AlignmentStylePropertyItemProvider
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_AlignmentStyleProperty_type_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_AlignmentStyleProperty_type_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_AlignmentStyleProperty_type"), //$NON-NLS-1$
-				VTAlignmentPackage.Literals.ALIGNMENT_STYLE_PROPERTY__TYPE,
+				getString("_UI_ControlLabelAlignmentStyleProperty_type_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_ControlLabelAlignmentStyleProperty_type_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ControlLabelAlignmentStyleProperty_type"), //$NON-NLS-1$
+				VTAlignmentPackage.Literals.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE,
 				true,
 				false,
 				false,
@@ -100,7 +100,7 @@ public class AlignmentStylePropertyItemProvider
 	}
 
 	/**
-	 * This returns AlignmentStyleProperty.gif.
+	 * This returns ControlLabelAlignmentStyleProperty.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -108,7 +108,7 @@ public class AlignmentStylePropertyItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/AlignmentStyleProperty")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ControlLabelAlignmentStyleProperty")); //$NON-NLS-1$
 	}
 
 	/**
@@ -120,10 +120,10 @@ public class AlignmentStylePropertyItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final AlignmentType labelValue = ((VTAlignmentStyleProperty) object).getType();
+		final AlignmentType labelValue = ((VTControlLabelAlignmentStyleProperty) object).getType();
 		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ? getString("_UI_AlignmentStyleProperty_type") : //$NON-NLS-1$
-			getString("_UI_AlignmentStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_ControlLabelAlignmentStyleProperty_type") : //$NON-NLS-1$
+			getString("_UI_ControlLabelAlignmentStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -138,8 +138,8 @@ public class AlignmentStylePropertyItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTAlignmentStyleProperty.class)) {
-		case VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY__TYPE:
+		switch (notification.getFeatureID(VTControlLabelAlignmentStyleProperty.class)) {
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

@@ -19,7 +19,7 @@ import org.junit.Test;
 public class TemplateChildrenDescriptorExtension_PTest {
 
 	private static final int SELECTOR_COUNT = 2;
-	private static final int PROPERTY_COUNT = 11;
+	private static final int PROPERTY_COUNT = 12;
 
 	@Test
 	public void testStyleChildren() {

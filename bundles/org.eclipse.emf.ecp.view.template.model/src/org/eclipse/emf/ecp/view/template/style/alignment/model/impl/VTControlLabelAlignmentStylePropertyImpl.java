@@ -18,23 +18,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
-import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Style Property</b></em>'.
+ * An implementation of the model object '<em><b>Control Label Alignment Style Property</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl#getType
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTControlLabelAlignmentStylePropertyImpl#getType
  * <em>Type</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container implements VTAlignmentStyleProperty {
+public class VTControlLabelAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container
+	implements VTControlLabelAlignmentStyleProperty {
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -63,7 +64,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 *
 	 * @generated
 	 */
-	protected VTAlignmentStylePropertyImpl() {
+	protected VTControlLabelAlignmentStylePropertyImpl() {
 		super();
 	}
 
@@ -75,7 +76,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return VTAlignmentPackage.Literals.ALIGNMENT_STYLE_PROPERTY;
+		return VTAlignmentPackage.Literals.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY;
 	}
 
 	/**
@@ -100,8 +101,8 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 		final AlignmentType oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY__TYPE,
-				oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE, oldType, type));
 		}
 	}
 
@@ -114,7 +115,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY__TYPE:
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE:
 			return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -129,7 +130,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY__TYPE:
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE:
 			setType((AlignmentType) newValue);
 			return;
 		}
@@ -145,7 +146,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY__TYPE:
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE:
 			setType(TYPE_EDEFAULT);
 			return;
 		}
@@ -161,7 +162,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY__TYPE:
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE:
 			return type != TYPE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -186,18 +187,19 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 		return result.toString();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty#equalStyles(org.eclipse.emf.ecp.view.template.model.VTStyleProperty)
-	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (VTAlignmentStyleProperty.class.equals(styleProperty.getClass())) {
+		if (styleProperty == null) {
 			return false;
 		}
-		final VTAlignmentStyleProperty alignmentStyleProperty = VTAlignmentStyleProperty.class.cast(styleProperty);
-		return getType() == alignmentStyleProperty.getType();
+		if (eClass() != styleProperty.eClass()) {
+			return false;
+		}
+
+		final VTControlLabelAlignmentStyleProperty other = VTControlLabelAlignmentStyleProperty.class
+			.cast(styleProperty);
+
+		return getType() == other.getType();
 	}
 
-} // VTAlignmentStylePropertyImpl
+} // VTControlLabelAlignmentStylePropertyImpl

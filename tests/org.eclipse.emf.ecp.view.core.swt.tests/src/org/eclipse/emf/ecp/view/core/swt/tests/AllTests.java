@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerRender
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlRenderer_PTest;
+import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer_PTest;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlRenderer_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -37,7 +38,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	XMLDateControlRenderer_PTest.class,
 	TextControlRenderer_PTest.class,
 	TimeBoundStringBuffer_Test.class,
-	SimpleControlSWTRenderer_PTest.class
+	SimpleControlSWTRenderer_PTest.class,
+	AbstractControlSWTRenderer_PTest.class
 })
 public class AllTests {
 	// JUnit 4 Test Suite

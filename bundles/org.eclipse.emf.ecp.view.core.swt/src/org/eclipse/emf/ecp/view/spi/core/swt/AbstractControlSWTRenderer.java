@@ -22,6 +22,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -368,7 +370,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			}
 
 			final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
-			label = new Label(parent, SWT.NONE);
+			label = new Label(parent, getLabelStyleBits());
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			SWTDataElementIdHelper.setElementIdDataWithSubId(label, getVElement(), "control_label", //$NON-NLS-1$
 				getViewModelContext());
@@ -410,6 +412,27 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 		}
 		return label;
+	}
+
+	/**
+	 * @return the style bits for the control's label
+	 * @since 1.16
+	 */
+	protected int getLabelStyleBits() {
+		final VTControlLabelAlignmentStyleProperty styleProperty = RendererUtil.getStyleProperty(
+			getVTViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTControlLabelAlignmentStyleProperty.class);
+		if (styleProperty == null) {
+			return SWT.NONE;
+		}
+		switch (styleProperty.getType()) {
+		case RIGHT:
+			return SWT.RIGHT;
+		default:
+			return SWT.NONE;
+		}
 	}
 
 	/**
