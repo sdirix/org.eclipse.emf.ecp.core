@@ -17,11 +17,12 @@ Require-Bundle: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.15.0,1.16.0
  org.eclipse.emf.ecp.view.template.model;bundle-version="[1.15.0,1.16.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
-  org.eclipse.emfforms.spi.common.report;version="[1.15.0,1.16.0)",
-  org.eclipse.jface.databinding.swt;version="0.0.0",
-  org.eclipse.jface.layout;version="0.0.0",
-  org.eclipse.swt;version="0.0.0",
-  org.eclipse.swt.widgets;version="0.0.0",
-  org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
+ org.eclipse.emfforms.spi.common.report;version="[1.15.0,1.16.0)",
+ org.eclipse.jface.databinding.swt;version="0.0.0",
+ org.eclipse.jface.layout;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.graphics;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Service-Component: OSGI-INF/CompoundControlDIRendererService.xml
 Bundle-ActivationPolicy: lazy

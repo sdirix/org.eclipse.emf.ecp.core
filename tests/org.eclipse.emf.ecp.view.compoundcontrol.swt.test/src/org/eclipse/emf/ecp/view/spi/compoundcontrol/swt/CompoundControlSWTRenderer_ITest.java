@@ -44,6 +44,8 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelwidthFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
@@ -136,6 +138,43 @@ public class CompoundControlSWTRenderer_ITest {
 		assertFalse(label.isHorizontalGrab());
 		assertFalse(label.isVerticalFill());
 		assertFalse(label.isVerticalGrab());
+
+		final SWTGridCell controls = gridDescription.getGrid().get(1);
+		assertEquals(1, controls.getColumn());
+		assertEquals(1, controls.getHorizontalSpan());
+		assertEquals(0, controls.getRow());
+		assertSame(renderer, controls.getRenderer());
+		assertTrue(controls.isHorizontalFill());
+		assertTrue(controls.isHorizontalGrab());
+		assertFalse(controls.isVerticalFill());
+		assertFalse(controls.isVerticalGrab());
+	}
+
+	@Test
+	public void testGetGridDescriptionWithWidth() {
+
+		final VTLabelWidthStyleProperty property = VTLabelwidthFactory.eINSTANCE.createLabelWidthStyleProperty();
+		property.setWidth(11);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(property);
+		Mockito.when(viewTemplateProvider.getStyleProperties(compoundControl, viewModelContext)).thenReturn(properties);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+		final SWTGridDescription gridDescription = renderer.getGridDescription(mock(SWTGridDescription.class));
+		assertEquals(2, gridDescription.getColumns());
+		assertEquals(1, gridDescription.getRows());
+		assertEquals(2, gridDescription.getGrid().size());
+
+		final SWTGridCell label = gridDescription.getGrid().get(0);
+		assertEquals(0, label.getColumn());
+		assertEquals(1, label.getHorizontalSpan());
+		assertEquals(0, label.getRow());
+		assertSame(renderer, label.getRenderer());
+		assertTrue(label.isHorizontalFill());
+		assertFalse(label.isHorizontalGrab());
+		assertFalse(label.isVerticalFill());
+		assertFalse(label.isVerticalGrab());
+		assertEquals(11, label.getPreferredSize().x);
+		assertEquals(SWT.DEFAULT, label.getPreferredSize().y);
 
 		final SWTGridCell controls = gridDescription.getGrid().get(1);
 		assertEquals(1, controls.getColumn());

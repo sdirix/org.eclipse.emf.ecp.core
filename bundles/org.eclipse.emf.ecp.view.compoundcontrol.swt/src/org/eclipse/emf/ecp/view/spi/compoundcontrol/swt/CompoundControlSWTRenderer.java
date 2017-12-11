@@ -35,6 +35,8 @@ import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -156,10 +158,18 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+
 			final SWTGridCell label = rendererGridDescription.getGrid().get(0);
 			label.setHorizontalGrab(false);
 			label.setVerticalGrab(false);
 			label.setVerticalFill(false);
+			final Optional<Integer> labelWidth = getLabelWidth();
+			if (labelWidth.isPresent()) {
+				label.setPreferredSize(
+					labelWidth.get(),
+					label.getPreferredSize() == null ? SWT.DEFAULT : label.getPreferredSize().y);
+			}
+
 			final SWTGridCell controls = rendererGridDescription.getGrid().get(1);
 			controls.setVerticalGrab(false);
 			controls.setVerticalFill(false);
@@ -235,6 +245,22 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 		labelComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 		return labelComposite;
+	}
+
+	/**
+	 * @return an optional width for the control's label
+	 * @since 1.16
+	 */
+	protected Optional<Integer> getLabelWidth() {
+		final VTLabelWidthStyleProperty styleProperty = RendererUtil.getStyleProperty(
+			getViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTLabelWidthStyleProperty.class);
+		if (styleProperty == null || !styleProperty.isSetWidth()) {
+			return Optional.empty();
+		}
+		return Optional.of(styleProperty.getWidth());
 	}
 
 	/**
