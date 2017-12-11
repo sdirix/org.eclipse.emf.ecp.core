@@ -85,7 +85,7 @@ public class ChildrenDescriptorExtension_PTest {
 	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - NUMBER_OF_EXTERNAL_COMPOSITES + 1;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
-	private final ChildrenDescriptorCollector descriptorCollector = new ChildrenDescriptorCollector();
+	private static final ChildrenDescriptorCollector DESCRIPTOR_COLLECTOR = new ChildrenDescriptorCollector();
 
 	@Test
 	public void testGroupedGridChildDescriptors() {
@@ -307,12 +307,12 @@ public class ChildrenDescriptorExtension_PTest {
 	 * @param category
 	 * @return
 	 */
-	private int getChildrenSize(EClass eClass) {
+	static int getChildrenSize(EClass eClass) {
 		final EObject eObject = getEObjectWithResource(eClass);
-		return descriptorCollector.getDescriptors(eObject).size();
+		return DESCRIPTOR_COLLECTOR.getDescriptors(eObject).size();
 	}
 
-	private EObject getEObjectWithResource(EClass eClass) {
+	private static EObject getEObjectWithResource(EClass eClass) {
 		final EObject eObject = EcoreUtil.create(eClass);
 		final AdapterFactoryEditingDomain adapterFactoryEditingDomain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
