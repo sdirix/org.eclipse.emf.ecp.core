@@ -11,9 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.controlgrid.renderer;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,6 +41,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -56,6 +60,8 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 	private SWTGridDescription rendererGridDescription;
 
 	private final EMFFormsRendererFactory rendererFactory;
+
+	private SWTGridDescription emptyGridDescription;
 
 	/**
 	 * Default Constructor.
@@ -101,6 +107,8 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		final Map<AbstractSWTRenderer<VElement>, SWTGridDescription> gridDescriptions = getGridDescriptions(
 			renderers.values());
 
+		emptyGridDescription = createGridDescriptionForEmptyCells(gridDescriptions.values());
+
 		final Map<SWTGridDescription, Integer> gridDescriptionToRequiredRendererColumnsMap = getRequiredColumnSizesOfRenderers(
 			gridDescriptions.values());
 
@@ -120,49 +128,46 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		/* render the rows */
 		for (final VControlGridRow row : getVElement().getRows()) {
 			if (row.getCells().size() == 0) {
-				renderEmptyColumn(composite, layoutColumns);
+				final Label label = new Label(composite, SWT.NONE);
+				GridDataFactory.fillDefaults().span(layoutColumns, 1).grab(false, false)
+					.applyTo(label);
 				continue;
 			}
 			/* -1 because of spacing label */
 			final int swtColumnsAvailableForRowElement = layoutColumns / row.getCells().size() - 1;
 			for (final VControlGridCell vCell : row.getCells()) {
-				/* render placeholder/controls with no renderer */
-				if (!renderers.containsKey(vCell)) {
-					renderEmptyColumn(composite, swtColumnsAvailableForRowElement);
-				}
-				/* render controls */
-				else {
-					/* render */
-					final AbstractSWTRenderer<VElement> renderer = renderers.get(vCell);
-					final SWTGridDescription swtGridDescription = gridDescriptions.get(renderer);
+				/* render */
+				final AbstractSWTRenderer<VElement> renderer = renderers.get(vCell);
+				final SWTGridDescription swtGridDescription = renderer != null
+					? gridDescriptions.get(renderer)
+					: emptyGridDescription;
 
-					/* analyze grid cells */
-					int cellsWithoutHorizontalGrab = 0;
-					int cellsWithHorizontalGrab = 0;
-					for (final SWTGridCell swtGridCell : swtGridDescription.getGrid()) {
-						if (!swtGridCell.isHorizontalGrab()) {
-							cellsWithoutHorizontalGrab++;
-						} else {
-							cellsWithHorizontalGrab++;
-						}
+				/* analyze grid cells */
+				int cellsWithoutHorizontalGrab = 0;
+				int cellsWithHorizontalGrab = 0;
+				for (final SWTGridCell swtGridCell : swtGridDescription.getGrid()) {
+					if (!swtGridCell.isHorizontalGrab()) {
+						cellsWithoutHorizontalGrab++;
+					} else {
+						cellsWithHorizontalGrab++;
 					}
-
-					/* distribute space between grabing cells as equal as possible. */
-					final int swtColumnsAvailableForGrabingCells = swtColumnsAvailableForRowElement
-						- cellsWithoutHorizontalGrab;
-					int spanForSpanningCells = 0;
-					int spanForLastSpanningCell = 0;
-					if (cellsWithHorizontalGrab > 0) {
-						spanForSpanningCells = swtColumnsAvailableForGrabingCells / cellsWithHorizontalGrab;
-						spanForLastSpanningCell = swtColumnsAvailableForGrabingCells
-							- (cellsWithHorizontalGrab - 1) * spanForSpanningCells;
-					}
-
-					/* apply layout */
-					applyLayout(composite, swtColumnsAvailableForRowElement, swtGridDescription,
-						cellsWithoutHorizontalGrab, cellsWithHorizontalGrab, spanForSpanningCells,
-						spanForLastSpanningCell);
 				}
+
+				/* distribute space between grabing cells as equal as possible. */
+				final int swtColumnsAvailableForGrabingCells = swtColumnsAvailableForRowElement
+					- cellsWithoutHorizontalGrab;
+				int spanForSpanningCells = 0;
+				int spanForLastSpanningCell = 0;
+				if (cellsWithHorizontalGrab > 0) {
+					spanForSpanningCells = swtColumnsAvailableForGrabingCells / cellsWithHorizontalGrab;
+					spanForLastSpanningCell = swtColumnsAvailableForGrabingCells
+						- (cellsWithHorizontalGrab - 1) * spanForSpanningCells;
+				}
+
+				/* apply layout */
+				applyLayout(composite, swtColumnsAvailableForRowElement, swtGridDescription,
+					cellsWithoutHorizontalGrab, cellsWithHorizontalGrab, spanForSpanningCells,
+					spanForLastSpanningCell);
 
 				/* render spacing label */
 				final Label spacing = new Label(composite, SWT.NONE);
@@ -221,7 +226,7 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 	private void applyLayout(final Composite composite, final int swtColumnsAvailableForRowElement,
 		final SWTGridDescription swtGridDescription, int cellsWithoutHorizontalGrab, int cellsWithHorizontalGrab,
 		int spanForSpanningCells, int spanForLastSpanningCell)
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		int withHorizontalGrabLeft = cellsWithHorizontalGrab;
 		int withoutHorizontalGrabLeft = cellsWithoutHorizontalGrab;
 		for (final SWTGridCell swtGridCell : swtGridDescription.getGrid()) {
@@ -231,8 +236,14 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			 */
 			final Composite wrapperComposite = new Composite(composite, SWT.NONE);
 			GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(wrapperComposite);
-			final Control control = swtGridCell.getRenderer().render(swtGridCell, wrapperComposite);
+			final Control control;
+			if (swtGridCell.getRenderer() != null) {
+				control = swtGridCell.getRenderer().render(swtGridCell, wrapperComposite);
+			} else {
+				control = new Label(wrapperComposite, SWT.NONE);
+			}
 
+			boolean withHorizontalGrab = true;
 			GridData gridData;
 			if (swtGridCell.isHorizontalGrab()) {
 				final int hSpan = withHorizontalGrabLeft == 1 ? spanForLastSpanningCell
@@ -250,6 +261,7 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control,
 					hSpan);
 			} else {
+				withHorizontalGrab = false;
 				withoutHorizontalGrabLeft--;
 				// XXX minSize is not working... preferred way of solving this would be the next line only
 				// GridDataFactory.fillDefaults().span(1, 1).grab(false, false).align(SWT.BEGINNING,
@@ -257,9 +269,20 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				gridData = createGridDataForControlWithoutHorizontalGrab(swtGridDescription, swtGridCell,
 					control);
 			}
-			wrapperComposite.setLayoutData(gridData);
 
-			GridDataFactory.createFrom(gridData).span(1, 1).applyTo(control);
+			final GridData controlGriddata = GridDataFactory.createFrom(gridData).span(1, 1).create();
+
+			if (!gridData.grabExcessHorizontalSpace && withHorizontalGrab) {
+				/* if the width of a child is limited, we should still span on the wrapper */
+				gridData.grabExcessHorizontalSpace = true;
+			}
+			if (gridData.grabExcessHorizontalSpace) {
+				/* set a minimal width hint as this will act as weight for spanning */
+				/* if a width hint was set beforehand, the control will still have the set value */
+				gridData.widthHint = 1;
+			}
+			wrapperComposite.setLayoutData(gridData);
+			control.setLayoutData(controlGriddata);
 		}
 	}
 
@@ -315,12 +338,6 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			gridData.heightHint = swtGridCell.getPreferredSize().y;
 		}
 		return gridData;
-	}
-
-	private void renderEmptyColumn(final Composite composite, final int swtColumnsAvailableForRowElement) {
-		final Label label = new Label(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().span(swtColumnsAvailableForRowElement, 1).grab(false, false)
-			.applyTo(label);
 	}
 
 	/**
@@ -428,6 +445,86 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			gridDescriptions.put(renderer, gridDescription);
 		}
 		return gridDescriptions;
+	}
+
+	/**
+	 * @param values the collected grid description of the renderers
+	 * @return a {@link SWTGridDescription} which will be used to create empty cells. Please note that the
+	 *         {@link SWTGridCell#getRenderer() renderer} of this description will be ignored, so it is fine to pass
+	 *         <code>null</code> as a renderer
+	 * @since 1.16
+	 */
+	// BEGIN COMPLEX CODE
+	protected SWTGridDescription createGridDescriptionForEmptyCells(Collection<SWTGridDescription> values) {
+		final Iterator<SWTGridDescription> iterator = values.iterator();
+
+		/* in case of no reference description, use on cell */
+		if (!iterator.hasNext()) {
+			return createEmptySingleCellGridDescription();
+		}
+
+		final SWTGridDescription first = iterator.next();
+
+		final int rows = first.getRows();
+		final int columns = first.getColumns();
+		final List<Boolean> grabHorizontal = new ArrayList<Boolean>();
+		final List<Point> sizes = new ArrayList<Point>();
+
+		for (final SWTGridCell swtGridCell : first.getGrid()) {
+			grabHorizontal.add(swtGridCell.isHorizontalGrab());
+			final Point size = swtGridCell.getPreferredSize();
+			if (size == null) {
+				sizes.add(new Point(-1, -1));
+			} else {
+				sizes.add(new Point(size.x, size.y));
+			}
+		}
+
+		while (iterator.hasNext()) {
+			final SWTGridDescription next = iterator.next();
+
+			if (rows != next.getRows()) {
+				return createEmptySingleCellGridDescription();
+			}
+
+			if (columns != next.getColumns()) {
+				return createEmptySingleCellGridDescription();
+			}
+
+			for (int i = 0; i < next.getGrid().size(); i++) {
+				final SWTGridCell swtGridCell = next.getGrid().get(i);
+				if (!swtGridCell.isHorizontalGrab()) {
+					grabHorizontal.add(false);
+				}
+				final Point sizeToCheck = swtGridCell.getPreferredSize();
+				if (sizeToCheck == null) {
+					continue;
+				}
+				final Point curSize = sizes.get(i);
+				sizes.add(new Point(
+					sizeToCheck.x > curSize.x ? sizeToCheck.x : curSize.x,
+					sizeToCheck.y > curSize.y ? sizeToCheck.y : curSize.y));
+			}
+		}
+
+		final SWTGridDescription swtGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns,
+			null);
+		for (int j = 0; j < swtGridDescription.getGrid().size(); j++) {
+			final SWTGridCell swtGridCell = swtGridDescription.getGrid().get(j);
+			swtGridCell.setHorizontalGrab(grabHorizontal.get(j));
+			swtGridCell.setHorizontalFill(grabHorizontal.get(j));
+			swtGridCell.setPreferredSize(sizes.get(j));
+		}
+
+		return swtGridDescription;
+	}
+	// END COMPLEX CODE
+
+	private static SWTGridDescription createEmptySingleCellGridDescription() {
+		final SWTGridDescription swtGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, null);
+		swtGridDescription.getGrid().get(0).setHorizontalGrab(false);
+		swtGridDescription.getGrid().get(0).setHorizontalFill(false);
+		return swtGridDescription;
 	}
 
 	@Override
