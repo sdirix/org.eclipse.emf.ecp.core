@@ -23,6 +23,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EObject;
@@ -36,6 +39,11 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
@@ -48,6 +56,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -56,6 +65,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class CompoundControlSWTRenderer_ITest {
 
@@ -70,6 +80,7 @@ public class CompoundControlSWTRenderer_ITest {
 	private ReportService reportService;
 	private EMFFormsLabelProvider emfFormsLabelProvider;
 	private EMFFormsRendererFactory emfFormsRendererFactory;
+	private VTViewTemplateProvider viewTemplateProvider;
 	private Shell shell;
 	private DefaultRealm realm;
 
@@ -82,6 +93,7 @@ public class CompoundControlSWTRenderer_ITest {
 		reportService = mock(ReportService.class);
 		emfFormsLabelProvider = mock(EMFFormsLabelProvider.class);
 		emfFormsRendererFactory = mock(EMFFormsRendererFactory.class);
+		viewTemplateProvider = Mockito.mock(VTViewTemplateProvider.class);
 	}
 
 	@After
@@ -92,7 +104,7 @@ public class CompoundControlSWTRenderer_ITest {
 
 	private CompoundControlSWTRenderer createRenderer() {
 		return new CompoundControlSWTRenderer(compoundControl, viewModelContext, reportService, emfFormsLabelProvider,
-			emfFormsRendererFactory);
+			emfFormsRendererFactory, viewTemplateProvider);
 	}
 
 	@Test
@@ -173,6 +185,129 @@ public class CompoundControlSWTRenderer_ITest {
 		assertEquals(LABEL1, Label.class.cast(labelComposite.getChildren()[0]).getText());
 		assertEquals("/", Label.class.cast(labelComposite.getChildren()[1]).getText()); //$NON-NLS-1$
 		assertEquals(LABEL2, Label.class.cast(labelComposite.getChildren()[2]).getText());
+	}
+
+	@Test
+	public void testCreateLabelAlignmentDefault() throws NoLabelFoundException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		when(emfFormsLabelProvider.getDisplayName(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL1, String.class));
+
+		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+
+		/* act */
+		final Control label = renderer.createLabel(shell);
+
+		/* assert */
+		final Composite labelComposite = Composite.class.cast(label);
+		assertFalse(GridData.class.cast(labelComposite.getChildren()[0].getLayoutData()).grabExcessHorizontalSpace);
+		assertFalse(GridData.class.cast(labelComposite.getChildren()[1].getLayoutData()).grabExcessHorizontalSpace);
+		assertTrue(GridData.class.cast(labelComposite.getChildren()[2].getLayoutData()).grabExcessHorizontalSpace);
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[0]).getAlignment());
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[1]).getAlignment());
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[2]).getAlignment());
+	}
+
+	@Test
+	public void testCreateLabelAlignmentLeft() throws NoLabelFoundException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		when(emfFormsLabelProvider.getDisplayName(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL1, String.class));
+
+		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+
+		final VTControlLabelAlignmentStyleProperty property = VTAlignmentFactory.eINSTANCE
+			.createControlLabelAlignmentStyleProperty();
+		property.setType(AlignmentType.LEFT);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(property);
+		Mockito.when(viewTemplateProvider.getStyleProperties(compoundControl, viewModelContext)).thenReturn(properties);
+
+		/* act */
+		final Control label = renderer.createLabel(shell);
+
+		/* assert */
+		final Composite labelComposite = Composite.class.cast(label);
+		assertFalse(GridData.class.cast(labelComposite.getChildren()[0].getLayoutData()).grabExcessHorizontalSpace);
+		assertFalse(GridData.class.cast(labelComposite.getChildren()[1].getLayoutData()).grabExcessHorizontalSpace);
+		assertTrue(GridData.class.cast(labelComposite.getChildren()[2].getLayoutData()).grabExcessHorizontalSpace);
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[0]).getAlignment());
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[1]).getAlignment());
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[2]).getAlignment());
+	}
+
+	@Test
+	public void testCreateLabelAlignmentRight() throws NoLabelFoundException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		when(emfFormsLabelProvider.getDisplayName(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL1, String.class));
+
+		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+
+		final VTControlLabelAlignmentStyleProperty property = VTAlignmentFactory.eINSTANCE
+			.createControlLabelAlignmentStyleProperty();
+		property.setType(AlignmentType.RIGHT);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(property);
+		Mockito.when(viewTemplateProvider.getStyleProperties(compoundControl, viewModelContext)).thenReturn(properties);
+
+		/* act */
+		final Control label = renderer.createLabel(shell);
+
+		/* assert */
+		final Composite labelComposite = Composite.class.cast(label);
+		assertTrue(GridData.class.cast(labelComposite.getChildren()[0].getLayoutData()).grabExcessHorizontalSpace);
+		assertFalse(GridData.class.cast(labelComposite.getChildren()[1].getLayoutData()).grabExcessHorizontalSpace);
+		assertFalse(GridData.class.cast(labelComposite.getChildren()[2].getLayoutData()).grabExcessHorizontalSpace);
+		assertEquals(SWT.RIGHT, Label.class.cast(labelComposite.getChildren()[0]).getAlignment());
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[1]).getAlignment());
+		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[2]).getAlignment());
 	}
 
 	@Test

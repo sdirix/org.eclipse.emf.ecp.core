@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -31,6 +32,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -67,6 +71,8 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 	private LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>> elementRendererMap;
 
+	private final VTViewTemplateProvider viewTemplateProvider;
+
 	/**
 	 * Default constructor.
 	 *
@@ -75,7 +81,8 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @param reportService the {@link ReportService}
 	 * @param labelProvider the {@link EMFFormsLabelProvider label provider}
 	 * @param rendererFactory the {@link EMFFormsRendererFactory renderer factory}
-	 * @since 1.8
+	 * @param viewTemplateProvider {@link VTViewTemplateProvider}
+	 * @since 1.16
 	 */
 	@Inject
 	public CompoundControlSWTRenderer(
@@ -83,10 +90,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsLabelProvider labelProvider,
-		EMFFormsRendererFactory rendererFactory) {
+		EMFFormsRendererFactory rendererFactory,
+		VTViewTemplateProvider viewTemplateProvider) {
 		super(vElement, viewContext, reportService);
 		this.labelProvider = labelProvider;
 		this.rendererFactory = rendererFactory;
+		this.viewTemplateProvider = viewTemplateProvider;
 	}
 
 	/**
@@ -135,6 +144,14 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		this.elementRendererMap = elementRendererMap;
 	}
 
+	/**
+	 * @return the viewTemplateProvider
+	 * @since 1.16
+	 */
+	protected VTViewTemplateProvider getViewTemplateProvider() {
+		return viewTemplateProvider;
+	}
+
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
@@ -179,15 +196,28 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		GridLayoutFactory.fillDefaults().numColumns(2 * controls.size() -
 			1).equalWidth(false).applyTo(labelComposite);
 
+		final AlignmentType labelAlignment = getLabelAlignment();
+
 		for (int i = 0; i < controls.size(); i++) {
 			if (i != 0) {
 				final Label separatorLabel = new Label(labelComposite, SWT.NONE);
-				GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(separatorLabel);
+				GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.CENTER).applyTo(separatorLabel);
 				separatorLabel.setText(SEPARATOR);
 			}
 
-			final Label label = new Label(labelComposite, SWT.NONE);
-			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(label);
+			boolean grab = false;
+			int stylebits = SWT.NONE;
+			if (labelAlignment == AlignmentType.LEFT && i == controls.size() - 1) {
+				/* if left, the last label should grow */
+				grab = true;
+			} else if (labelAlignment == AlignmentType.RIGHT && i == 0) {
+				/* if right, first column should grow and right alignment */
+				grab = true;
+				stylebits = SWT.RIGHT;
+			}
+
+			final Label label = new Label(labelComposite, stylebits);
+			GridDataFactory.fillDefaults().grab(grab, false).align(SWT.FILL, SWT.CENTER).applyTo(label);
 			final VControl control = controls.get(i);
 			try {
 				@SuppressWarnings("deprecation")
@@ -205,6 +235,22 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 		labelComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 		return labelComposite;
+	}
+
+	/**
+	 * @return the style bits for the control's label
+	 * @since 1.16
+	 */
+	protected AlignmentType getLabelAlignment() {
+		final VTControlLabelAlignmentStyleProperty styleProperty = RendererUtil.getStyleProperty(
+			getViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTControlLabelAlignmentStyleProperty.class);
+		if (styleProperty == null) {
+			return AlignmentType.LEFT;
+		}
+		return styleProperty.getType();
 	}
 
 	/**
