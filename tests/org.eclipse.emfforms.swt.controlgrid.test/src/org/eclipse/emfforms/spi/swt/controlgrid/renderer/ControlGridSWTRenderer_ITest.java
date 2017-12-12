@@ -384,9 +384,9 @@ public class ControlGridSWTRenderer_ITest {
 		simpleGrid1.getGrid().get(2).setHorizontalGrab(true);
 		simpleGrid1.getGrid().get(2).setHorizontalFill(true);
 		simpleGrid1.getGrid().get(2).setPreferredSize(null);
-		simpleGrid2.getGrid().get(2).setHorizontalGrab(true);
-		simpleGrid2.getGrid().get(2).setHorizontalFill(true);
-		simpleGrid2.getGrid().get(2).setPreferredSize(null);
+		simpleGrid2.getGrid().get(2).setHorizontalGrab(false);
+		simpleGrid2.getGrid().get(2).setHorizontalFill(false);
+		simpleGrid2.getGrid().get(2).setPreferredSize(1968, SWT.DEFAULT);
 
 		/* act */
 		final SWTGridDescription empty = renderer
@@ -410,9 +410,9 @@ public class ControlGridSWTRenderer_ITest {
 		assertEquals(16, empty.getGrid().get(1).getPreferredSize().x);
 		assertEquals(17, empty.getGrid().get(1).getPreferredSize().y);
 
-		assertTrue(empty.getGrid().get(2).isHorizontalFill());
-		assertTrue(empty.getGrid().get(2).isHorizontalGrab());
-		assertEquals(SWT.DEFAULT, empty.getGrid().get(2).getPreferredSize().x);
+		assertFalse(empty.getGrid().get(2).isHorizontalFill());
+		assertFalse(empty.getGrid().get(2).isHorizontalGrab());
+		assertEquals(1968, empty.getGrid().get(2).getPreferredSize().x);
 		assertEquals(SWT.DEFAULT, empty.getGrid().get(2).getPreferredSize().y);
 	}
 
@@ -463,11 +463,12 @@ public class ControlGridSWTRenderer_ITest {
 		assertTrue(Composite.class.isInstance(composite.getChildren()[0]));
 		final Composite wrapperComposite = Composite.class.cast(composite.getChildren()[0]);
 		assertEquals(1, wrapperComposite.getChildren().length);
+		assertGridData(wrapperComposite, 1, true);
 
 		assertTrue(Label.class.isInstance(wrapperComposite.getChildren()[0]));
 		final Label emptyCell = Label.class.cast(wrapperComposite.getChildren()[0]);
 		assertLabelIsEmpty(emptyCell);
-		assertGridData(emptyCell, 1, true);
+		assertGridData(emptyCell, 1, false);
 
 		assertTrue(Label.class.isInstance(composite.getChildren()[1]));
 		final Label spacing = Label.class.cast(composite.getChildren()[1]);

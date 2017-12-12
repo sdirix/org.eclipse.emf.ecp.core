@@ -281,6 +281,13 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				/* if a width hint was set beforehand, the control will still have the set value */
 				gridData.widthHint = 1;
 			}
+			if (!swtGridCell.isHorizontalGrab() && controlGriddata.grabExcessHorizontalSpace) {
+				/*
+				 * if we force a control to span because of layout-reasons (e.g. when only spanning cells, last cell
+				 * will span) we have to make sure that the inner control does not span
+				 */
+				controlGriddata.grabExcessHorizontalSpace = false;
+			}
 			wrapperComposite.setLayoutData(gridData);
 			control.setLayoutData(controlGriddata);
 		}
@@ -494,14 +501,14 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			for (int i = 0; i < next.getGrid().size(); i++) {
 				final SWTGridCell swtGridCell = next.getGrid().get(i);
 				if (!swtGridCell.isHorizontalGrab()) {
-					grabHorizontal.add(false);
+					grabHorizontal.set(i, false);
 				}
 				final Point sizeToCheck = swtGridCell.getPreferredSize();
 				if (sizeToCheck == null) {
 					continue;
 				}
 				final Point curSize = sizes.get(i);
-				sizes.add(new Point(
+				sizes.set(i, new Point(
 					sizeToCheck.x > curSize.x ? sizeToCheck.x : curSize.x,
 					sizeToCheck.y > curSize.y ? sizeToCheck.y : curSize.y));
 			}
