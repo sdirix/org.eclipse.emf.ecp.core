@@ -44,18 +44,22 @@ public class ViewMigrationResultDialog extends TitleAreaDialog {
 	 *
 	 * @param parentShell the parent shell
 	 * @param diagnostics the validation result of the migration
+	 * @param showWarnings whether migration warnings should be shown
 	 */
-	public ViewMigrationResultDialog(Shell parentShell, Map<String, Optional<Diagnostic>> diagnostics) {
+	public ViewMigrationResultDialog(Shell parentShell, Map<String, Optional<Diagnostic>> diagnostics,
+		boolean showWarnings) {
 		super(parentShell);
 		errors = new LinkedList<Diagnostic>();
 		unresolvedViews = new LinkedList<String>();
 
-		for (final Map.Entry<String, Optional<Diagnostic>> diagnostic : diagnostics.entrySet()) {
-			final Optional<Diagnostic> diag = diagnostic.getValue();
-			if (diag.isPresent() && diag.get().getSeverity() == Diagnostic.ERROR) {
-				errors.add(diag.get());
-			} else if (!diag.isPresent()) {
-				unresolvedViews.add(diagnostic.getKey());
+		if (showWarnings) {
+			for (final Map.Entry<String, Optional<Diagnostic>> diagnostic : diagnostics.entrySet()) {
+				final Optional<Diagnostic> diag = diagnostic.getValue();
+				if (diag.isPresent() && diag.get().getSeverity() == Diagnostic.ERROR) {
+					errors.add(diag.get());
+				} else if (!diag.isPresent()) {
+					unresolvedViews.add(diagnostic.getKey());
+				}
 			}
 		}
 	}

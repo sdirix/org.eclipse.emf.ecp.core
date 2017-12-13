@@ -399,7 +399,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		assertEquals(3, filterVisible(grid.getItems()).length);
 
 		/*
-		 * test for gerrit #110527 (filter again after filters have been hidden)
+		 * test for Gerrit #110529 (filter again after filters have been hidden)
 		 */
 
 		columnConfiguration.visible().setValue(Boolean.TRUE);
@@ -407,6 +407,13 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		columnConfiguration.matchFilter().setValue("bar");
 
 		assertEquals(0, filterVisible(grid.getItems()).length);
+
+		columnConfiguration.matchFilter().resetToDefault();
+		columnConfiguration.showFilterControl().setValue(Boolean.FALSE);
+		// will result in a NPE without Gerrit #110529
+		columnConfiguration.visible().setValue(Boolean.FALSE);
+
+		assertEquals(3, filterVisible(grid.getItems()).length);
 
 	}
 
