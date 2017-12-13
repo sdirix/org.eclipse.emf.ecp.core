@@ -417,6 +417,15 @@ public class ControlGridSWTRenderer_ITest {
 	}
 
 	@Test
+	public void testComputePreferredWidthBasedOnPixelGridSize() {
+		final ControlGridSWTRenderer renderer = createRenderer();
+		assertEquals(50, renderer.computePreferredWidthBasedOnPixelGridSize(50, 50));
+		assertEquals(100, renderer.computePreferredWidthBasedOnPixelGridSize(51, 50));
+		assertEquals(100, renderer.computePreferredWidthBasedOnPixelGridSize(99, 50));
+		assertEquals(100, renderer.computePreferredWidthBasedOnPixelGridSize(100, 50));
+	}
+
+	@Test
 	public void testRenderEmptyRow() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
 		when(swtGridCell.getColumn()).thenReturn(0);

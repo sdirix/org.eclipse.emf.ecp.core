@@ -18,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.emfforms.spi.view.controlgrid.model.VControlGrid;
 import org.eclipse.emf.emfforms.spi.view.controlgrid.model.VControlGridCell;
 import org.eclipse.emf.emfforms.spi.view.controlgrid.model.VControlGridRow;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -41,6 +43,8 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -56,6 +60,8 @@ import org.eclipse.swt.widgets.Label;
 public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 
 	private static final int SPACING = 20;
+
+	private final Map<Control, Integer> controlsToAlign = new LinkedHashMap<Control, Integer>();
 
 	private SWTGridDescription rendererGridDescription;
 
@@ -182,9 +188,27 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			renderer.finalizeRendering(composite);
 		}
 
+		/* listen for layout changes */
+		final Optional<Integer> pixelGridSize = getPixelGridSize();
+		if (pixelGridSize.isPresent() && !controlsToAlign.isEmpty()) {
+			composite.addControlListener(new AlignNonGrabbingControlsListener(composite, pixelGridSize.get()));
+		}
+
 		composite.layout(true, true);
 
 		return composite;
+	}
+
+	/**
+	 * When this returns a non-empty optional all non-spanning/grabbing controls in a spanning/grabbing parent will have
+	 * a width which is a multiple of this pixel grid size. To be more specific, the preferred size of the control will
+	 * be rounded up to match this criteria.
+	 *
+	 * @return the grid size in pixels
+	 * @since 1.16
+	 */
+	protected Optional<Integer> getPixelGridSize() {
+		return Optional.empty();
 	}
 
 	/**
@@ -223,6 +247,7 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		return SPACING;
 	}
 
+	// BEGIN COMPLEX CODE
 	private void applyLayout(final Composite composite, final int swtColumnsAvailableForRowElement,
 		final SWTGridDescription swtGridDescription, int cellsWithoutHorizontalGrab, int cellsWithHorizontalGrab,
 		int spanForSpanningCells, int spanForLastSpanningCell)
@@ -288,10 +313,30 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				 */
 				controlGriddata.grabExcessHorizontalSpace = false;
 			}
+
+			if (gridData.grabExcessHorizontalSpace && !controlGriddata.grabExcessHorizontalSpace) {
+				/* child placed in grabbing parent. Store in map to align in a nice manner */
+				int widthHint;
+				if (controlGriddata.widthHint == SWT.DEFAULT) {
+					/* if no pref size was specified via layout data use the natural width of the control */
+					widthHint = control.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+				} else {
+					widthHint = controlGriddata.widthHint;
+				}
+				controlsToAlign.put(control, widthHint);
+				final Optional<Integer> pixelGridSize = getPixelGridSize();
+				if (pixelGridSize.isPresent()) {
+					controlGriddata.widthHint = computePreferredWidthBasedOnPixelGridSize(
+						widthHint,
+						pixelGridSize.get());
+				}
+			}
+
 			wrapperComposite.setLayoutData(gridData);
 			control.setLayoutData(controlGriddata);
 		}
 	}
+	// END COMPLEX CODE
 
 	/**
 	 * Creates the {@link GridData} which will be set on control which will take a span of 1 column an have no
@@ -534,9 +579,15 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		return swtGridDescription;
 	}
 
-	@Override
-	protected void dispose() {
-		super.dispose();
+	/**
+	 * Rounds up the given width based on the given grid size.
+	 *
+	 * @param prefWidth the width to round up
+	 * @param pixelGridSize grid size
+	 * @return the new width
+	 */
+	/* package */ int computePreferredWidthBasedOnPixelGridSize(final double prefWidth, int pixelGridSize) {
+		return Double.class.cast(Math.ceil(prefWidth / pixelGridSize)).intValue() * pixelGridSize;
 	}
 
 	private static int gcd(int a, int b) {
@@ -548,5 +599,45 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 
 	private static int lcm(int a, int b) {
 		return Math.abs(a * b) / gcd(a, b);
+	}
+
+	/**
+	 * {@link ControlListener} which makes non-grabbing controls slightly bigger so that they get aligned in a more
+	 * structured way.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private final class AlignNonGrabbingControlsListener implements ControlListener {
+		private final Composite composite;
+		private final int pixelGridSize;
+
+		private AlignNonGrabbingControlsListener(Composite composite, int pixelGridSize) {
+			this.composite = composite;
+			this.pixelGridSize = pixelGridSize;
+		}
+
+		@Override
+		public void controlMoved(ControlEvent e) {
+			/* empty */
+		}
+
+		@Override
+		public void controlResized(ControlEvent e) {
+			for (final Entry<Control, Integer> entry : controlsToAlign.entrySet()) {
+				final int availableWidth = entry.getKey().getParent().getSize().x;
+				if (availableWidth == 0) {
+					continue;
+				}
+				final int prefWidth = entry.getValue();
+
+				int widthHint = computePreferredWidthBasedOnPixelGridSize(prefWidth, pixelGridSize);
+				if (widthHint > availableWidth) {
+					widthHint = prefWidth > availableWidth ? prefWidth : availableWidth;
+				}
+				GridData.class.cast(entry.getKey().getLayoutData()).widthHint = widthHint;
+			}
+			composite.layout(true, true);
+		}
 	}
 }
