@@ -197,7 +197,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Deprecated
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelService... modelServices) {
-		this(view, domainObject, new OneShotViewModelServiceProvider(modelServices));
+		this(view, domainObject, new ArrayOnceViewModelServiceProvider(modelServices));
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement, ViewModelService... modelServices) {
 
-		this(view, domainObject, parent, parentVElement, new OneShotViewModelServiceProvider(modelServices));
+		this(view, domainObject, parent, parentVElement, new ArrayOnceViewModelServiceProvider(modelServices));
 	}
 
 	/**
@@ -842,7 +842,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	public ViewModelContext getChildContext(final EObject eObject, VElement parent, VView vView,
 		ViewModelService... viewModelServices) {
 
-		return getChildContext(eObject, parent, vView, new OneShotViewModelServiceProvider(viewModelServices));
+		return getChildContext(eObject, parent, vView, new ArrayOnceViewModelServiceProvider(viewModelServices));
 	}
 
 	@Override
