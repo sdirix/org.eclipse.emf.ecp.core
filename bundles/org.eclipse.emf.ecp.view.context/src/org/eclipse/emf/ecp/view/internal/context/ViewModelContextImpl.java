@@ -816,14 +816,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	}
 
-	private void removeChildContext(EObject eObject) {
-		final Set<ViewModelContext> removedContexts = childContexts.remove(eObject);
-		if (removedContexts != null) {
-			for (final ViewModelContext removedContext : removedContexts) {
-				childContextUsers.remove(removedContext);
-			}
+	private void removeChildContext(EObject eObject, ViewModelContext context) {
+		final boolean removed = childContexts.get(eObject).remove(context);
+		if (removed) {
+			childContextUsers.remove(context);
 		}
-
+		if (childContexts.get(eObject).size() == 0) {
+			childContexts.remove(eObject);
+		}
 	}
 
 	/**
@@ -873,9 +873,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 			@Override
 			public void contextDisposed(ViewModelContext viewModelContext) {
-				removeChildContext(eObject);
+				removeChildContext(eObject, viewModelContext);
 				for (final EMFFormsContextListener contextListener : contextListeners) {
-					contextListener.childContextDisposed(childContext);
+					contextListener.childContextDisposed(viewModelContext);
 				}
 			}
 		});
