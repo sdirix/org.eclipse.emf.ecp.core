@@ -823,9 +823,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					 */
 					deleteService = new EMFDeleteServiceImpl();
 				}
-				for (final Object obj : selection.toList()) {
-					deleteService.deleteElement(obj);
-				}
+				deleteService.deleteElements(selection.toList());
 				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
 		};
@@ -1140,6 +1138,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				toUpdate.add(parent);
 				parent = provider.getParent(parent);
 			}
+		}
+		if (toUpdate.isEmpty() && !(oldDia.getDiagnostics().isEmpty() && newDia.getDiagnostics().isEmpty())) {
+			treeViewer.refresh();
+			return;
 		}
 		treeViewer.update(toUpdate.toArray(), null);
 	}
