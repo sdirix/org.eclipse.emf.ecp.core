@@ -337,18 +337,36 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return;
 		}
 		childContext.unregisterViewChangeListener(viewModelChangeListener);
-		contextParentMap.remove(childContext);
 		final ViewModelListener listener = contextListenerMap.remove(childContext);
 		listener.dispose();
+
 		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
 			if (VControl.class.isInstance(next)) {
-				vControlRemoved((VControl) next);
-				controlContextMap.remove(next);
+				final VControl controlToRemove = (VControl) next;
+				vControlParentsRemoved(childContext, controlToRemove);
+				vControlRemoved(controlToRemove);
+				controlContextMap.remove(controlToRemove);
 			}
 		}
+		contextParentMap.remove(childContext);
 		childContext.unregisterEMFFormsContextListener(this);
+	}
+
+	private void vControlParentsRemoved(EMFFormsViewContext childContext, VControl controlToRemove) {
+		VElement parentElement = contextParentMap.get(childContext);
+		while (parentElement != null) {
+			for (final UniqueSetting setting : controlToSettingMap.get(controlToRemove)) {
+				settingToControlMap.get(setting).remove(parentElement);
+				final EMFFormsViewContext context = controlContextMap.get(parentElement);
+				if (context == null) {
+					parentElement = null;
+					break;
+				}
+				parentElement = contextParentMap.get(context);
+			}
+		}
 	}
 
 	/**
