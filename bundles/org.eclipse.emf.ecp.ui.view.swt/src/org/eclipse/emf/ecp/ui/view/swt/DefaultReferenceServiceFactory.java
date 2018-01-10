@@ -23,12 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
-import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy;
@@ -38,6 +37,7 @@ import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.bazaar.StaticBid;
 import org.eclipse.emfforms.bazaar.Vendor;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
@@ -62,8 +62,8 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 
 	private final Bazaar<EObjectSelectionStrategy> eobjectSelectionStrategyBazaar = createBazaar(
 		EObjectSelectionStrategy.NULL);
-	private final Bazaar<EClassSelectionStrategy> eclassSelectionStrategyBazaar = createBazaar(
-		EClassSelectionStrategy.NULL);
+	private final Bazaar<CreateNewModelElementStrategy> createNewModelElementStrategyBazaar = createBazaar(
+		CreateNewModelElementStrategy.DEFAULT);
 	private final Bazaar<AttachmentStrategy> attachmentStrategyBazaar = createBazaar(AttachmentStrategy.DEFAULT);
 	private final Bazaar<ReferenceStrategy> referenceStrategyBazaar = createBazaar(ReferenceStrategy.DEFAULT);
 	private final Bazaar<OpenInNewContextStrategy> openInNewContextStrategyBazaar = createBazaar(
@@ -142,6 +142,25 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	}
 
 	/**
+	 * Add a create new model element strategy provider.
+	 *
+	 * @param provider the provider to add
+	 */
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
+	void addCreateNewModelElementStrategyProvider(CreateNewModelElementStrategy.Provider provider) {
+		createNewModelElementStrategyBazaar.addVendor(provider);
+	}
+
+	/**
+	 * Remove a create new model element strategy provider.
+	 *
+	 * @param provider the provider to remove
+	 */
+	void removeCreateNewModelElementStrategyProvider(CreateNewModelElementStrategy.Provider provider) {
+		createNewModelElementStrategyBazaar.removeVendor(provider);
+	}
+
+	/**
 	 * Add an open strategy provider.
 	 *
 	 * @param provider the provider to add
@@ -158,25 +177,6 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 */
 	void removeOpenInNewContextStrategyProvider(OpenInNewContextStrategy.Provider provider) {
 		openInNewContextStrategyBazaar.removeVendor(provider);
-	}
-
-	/**
-	 * Add an {@code EClass} selection strategy provider.
-	 *
-	 * @param provider the provider to add
-	 */
-	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
-	void addEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
-		eclassSelectionStrategyBazaar.addVendor(provider);
-	}
-
-	/**
-	 * Remove an {@code EClass} selection strategy provider.
-	 *
-	 * @param provider the provider to remove
-	 */
-	void removeEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
-		eclassSelectionStrategyBazaar.removeVendor(provider);
 	}
 
 	/**
@@ -246,7 +246,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 
 			// Inject customizations
 			drs.setAttachmentStrategy(createDynamicAttachmentStrategy());
-			drs.setEClassSelectionStrategy(createDynamicEClassSelectionStrategy());
+			drs.setCreateNewModelElementStrategy(createDynamicCreateNewModelElementStrategy());
 			drs.setEObjectSelectionStrategy(createDynamicEObjectSelectionStrategy());
 			drs.setOpenStrategy(createDynamicOpenInNewContextStrategy());
 			drs.setReferenceStrategy(createDynamicReferenceStrategy());
@@ -306,6 +306,21 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 		};
 	}
 
+	private CreateNewModelElementStrategy createDynamicCreateNewModelElementStrategy() {
+		return new CreateNewModelElementStrategy() {
+
+			@Override
+			public Optional<EObject> createNewModelElement(EObject owner, EReference reference) {
+				final CreateNewModelElementStrategy delegate = createNewModelElementStrategyBazaar
+					.createProduct(getBazaarContext(owner, reference));
+				if (delegate == null) {
+					return Optional.empty();
+				}
+				return delegate.createNewModelElement(owner, reference);
+			}
+		};
+	}
+
 	private ReferenceStrategy createDynamicReferenceStrategy() {
 		return new ReferenceStrategy() {
 
@@ -317,26 +332,6 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 					return false;
 				}
 				return delegate.addElementsToReference(owner, reference, objects);
-			}
-		};
-	}
-
-	private EClassSelectionStrategy createDynamicEClassSelectionStrategy() {
-		return new EClassSelectionStrategy() {
-
-			@Override
-			public Collection<EClass> collectEClasses(EObject owner, EReference reference,
-				Collection<EClass> eclasses) {
-
-				Collection<EClass> result = eclasses;
-
-				final List<EClassSelectionStrategy> delegates = eclassSelectionStrategyBazaar.createProducts(
-					getBazaarContext(owner, reference));
-				for (final EClassSelectionStrategy next : delegates) {
-					result = next.collectEClasses(owner, reference, result);
-				}
-
-				return result;
 			}
 		};
 	}

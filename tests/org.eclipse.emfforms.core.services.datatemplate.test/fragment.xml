@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated audit -->
+      <package
+            uri="http://eclipse/org/emfforms/core/services/datatemplate/test/model/audit"
+            class="org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage"
+            genModel="model/audit.genmodel"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.emfforms.core.services.datatemplate.xmi">
+      <template
+              file="templates.xmi">
+      </template>
+   </extension>
+</plugin>

@@ -296,7 +296,11 @@
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emfforms.localization</module>
 		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
-		
+	
+                <!-- DataTemplate Services -->
+                <module>../../bundles/org.eclipse.emfforms.core.services.datatemplate</module>
+                <module>../../bundles/org.eclipse.emfforms.datatemplate.model</module>
+	
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.richtext</module>
 		
