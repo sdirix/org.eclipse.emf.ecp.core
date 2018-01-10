@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -70,7 +71,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
+public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
 	private static final String NOTIME = "No time set! Click to set time.";
@@ -115,7 +116,8 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 					.thenReturn(SELECTTIME);
 
 		setup();
-		setRenderer(new DateTimeControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new DateTimeControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider(), localizationService, imageRegistryService));
 		getRenderer().init();
 	}
@@ -136,8 +138,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render, true, true);
 	}
@@ -151,8 +154,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, true, true);
 	}
@@ -322,8 +326,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	private DateTime[] setUpDatabindingTest(final IObservableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
@@ -388,8 +393,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, true, true);
@@ -417,8 +423,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, true, false);
@@ -447,8 +454,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, false, true);

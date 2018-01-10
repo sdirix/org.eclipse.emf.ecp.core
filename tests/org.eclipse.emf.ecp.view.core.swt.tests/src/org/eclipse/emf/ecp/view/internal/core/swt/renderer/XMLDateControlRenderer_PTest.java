@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -62,7 +63,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
+public class XMLDateControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
 

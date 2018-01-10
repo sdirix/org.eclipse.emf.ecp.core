@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -58,8 +59,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@SuppressWarnings("rawtypes")
-public class NumberControlRenderer_PTest extends AbstractControl_PTest {
+public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
 
