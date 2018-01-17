@@ -182,6 +182,9 @@
 		<module>../../tests/org.eclipse.emfforms.localization.tests</module>
 		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
 		
+		<!-- Bazaar -->
+		<module>../../tests/org.eclipse.emfforms.core.bazaar.tests</module>
+		
 		<module>../../tests/org.eclipse.emfforms.swt.control.text.autocomplete.tests</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.linewrapper.tests</module>

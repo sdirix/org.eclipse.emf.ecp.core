@@ -341,6 +341,9 @@
 		<!-- Nebula Table -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid</module>
 		
+		<!-- Bazaar -->
+		<module>../../bundles/org.eclipse.emfforms.core.bazaar</module>
+		
 	</modules>
 
 	<build>

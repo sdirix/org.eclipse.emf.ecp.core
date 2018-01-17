@@ -81,6 +81,9 @@
 
 		<!-- Initial validation -->
 		<module>../../features/org.eclipse.emf.ecp.view.validation.initial.feature</module>
+		
+		<!-- Bazaar -->
+		<module>../../features/org.eclipse.emfforms.core.bazaar.feature</module>
 
 		<module>../../features/org.eclipse.emf.ecp.changebroker.feature</module>
 		
