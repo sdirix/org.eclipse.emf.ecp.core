@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emfforms.bazaar.internal.BazaarImpl;
+import org.eclipse.emfforms.bazaar.internal.ThreadSafeBazaar;
 
 /**
  * A Bazaar is a flexible registry for factories to create specific objects of type T, called "product". To create a
@@ -133,6 +134,7 @@ public interface Bazaar<T> {
 		private final List<Vendor<? extends T>> vendors = new ArrayList<Vendor<? extends T>>();
 		private final Map<String, BazaarContextFunction> contextFunctions = new HashMap<String, BazaarContextFunction>();
 		private PriorityOverlapCallBack<? super T> overlapHandler;
+		private boolean isThreadSafe;
 
 		/**
 		 * Creates a new empty bazaar builder.
@@ -256,22 +258,39 @@ public interface Bazaar<T> {
 		}
 
 		/**
+		 * Request that the bazaar be thread-safe. This is useful for bazaars that
+		 * may be accessed arbitrarily by concurrent threads. By default, the builder
+		 * creates bazaars that are not thread-safe.
+		 *
+		 * @return this builder
+		 */
+		public Builder<T> threadSafe() {
+			this.isThreadSafe = true;
+			return this;
+		}
+
+		/**
 		 * Create the bazaar. Further updates to the builder will have
 		 * no effect on the resulting bazaar.
 		 *
 		 * @return the bazaar
 		 */
 		public Bazaar<T> build() {
-			final Bazaar<T> result = new BazaarImpl<T>();
+			final Bazaar<T> result;
+			if (isThreadSafe) {
+				result = new ThreadSafeBazaar<T>(vendors, contextFunctions, overlapHandler);
+			} else {
+				result = new BazaarImpl<T>();
 
-			for (final Vendor<? extends T> vendor : vendors) {
-				result.addVendor(vendor);
-			}
-			for (final Map.Entry<String, BazaarContextFunction> entry : contextFunctions.entrySet()) {
-				result.addContextFunction(entry.getKey(), entry.getValue());
-			}
-			if (overlapHandler != null) {
-				result.setPriorityOverlapCallBack(overlapHandler);
+				for (final Vendor<? extends T> vendor : vendors) {
+					result.addVendor(vendor);
+				}
+				for (final Map.Entry<String, BazaarContextFunction> entry : contextFunctions.entrySet()) {
+					result.addContextFunction(entry.getKey(), entry.getValue());
+				}
+				if (overlapHandler != null) {
+					result.setPriorityOverlapCallBack(overlapHandler);
+				}
 			}
 
 			return result;

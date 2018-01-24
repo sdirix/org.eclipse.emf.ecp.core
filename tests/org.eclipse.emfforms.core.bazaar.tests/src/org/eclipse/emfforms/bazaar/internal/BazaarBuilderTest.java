@@ -27,19 +27,27 @@ import org.eclipse.emfforms.bazaar.Bazaar.PriorityOverlapCallBack;
 import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.Vendor;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test cases for the {@link org.eclipse.emfforms.bazaar.Bazaar.Builder} class.
  *
  * @author Christian W. Damus
  */
+@RunWith(Parameterized.class)
 public class BazaarBuilderTest {
+
+	private final BazaarVariant variant;
 
 	/**
 	 * Initializes me.
 	 */
-	public BazaarBuilderTest() {
+	public BazaarBuilderTest(BazaarVariant variant) {
 		super();
+
+		this.variant = variant;
 	}
 
 	@Test
@@ -132,13 +140,18 @@ public class BazaarBuilderTest {
 	// Test framework
 	//
 
-	static Bazaar.Builder<MyProduct> basicFixture() {
-		return Bazaar.Builder.<MyProduct> empty()
+	@Parameters(name = "{0}")
+	public static Object[] parameters() {
+		return BazaarVariant.values();
+	}
+
+	Bazaar.Builder<MyProduct> basicFixture() {
+		return variant.<MyProduct> builder()
 			.addContextFunction(String.class, new BazaarContextFunctionParameter1("")); //$NON-NLS-1$
 	}
 
-	static Bazaar.Builder<MyProduct> vendorFixture(Vendor<? extends MyProduct>... vendors) {
-		return Bazaar.Builder.with(asList(vendors))
+	Bazaar.Builder<MyProduct> vendorFixture(Vendor<? extends MyProduct>... vendors) {
+		return variant.builder(asList(vendors))
 			.addContextFunction(String.class, new BazaarContextFunctionParameter1("")); //$NON-NLS-1$
 	}
 

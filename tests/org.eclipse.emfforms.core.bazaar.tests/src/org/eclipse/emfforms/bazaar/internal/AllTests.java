@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 529542
  ******************************************************************************/
 package org.eclipse.emfforms.bazaar.internal;
 
@@ -22,7 +23,10 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ Bazaar_ITest.class, BazaarBuilderTest.class })
+@SuiteClasses({ Bazaar_ITest.class,
+	BazaarBuilderTest.class,
+	ThreadSafeBazaar_ITest.class,
+})
 public class AllTests {
 
 }

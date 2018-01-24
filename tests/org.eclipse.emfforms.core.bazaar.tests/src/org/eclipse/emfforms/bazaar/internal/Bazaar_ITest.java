@@ -8,6 +8,7 @@
  *
  * Contributors:
  * jonas - initial API and implementation
+ * Christian W. Damus - bug 529542
  ******************************************************************************/
 package org.eclipse.emfforms.bazaar.internal;
 
@@ -41,24 +42,35 @@ import org.eclipse.emfforms.bazaar.BazaarContextFunction;
 import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.bazaar.Vendor;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author jonas
  *
  */
+@RunWith(Parameterized.class)
 public class Bazaar_ITest {
 
 	public static final String TESTSTRING = ""; //$NON-NLS-1$
-	private BazaarImpl<MyProduct> bazaar;
+	private final BazaarImpl<MyProduct> bazaar;
 
 	/**
-	 * @throws java.lang.Exception
+	 * Initializes me with the bazaar variant to create.
+	 *
+	 * @param variant the bazaar variant
 	 */
-	@Before
-	public void setUp() throws Exception {
-		bazaar = new BazaarImpl<MyProduct>();
+	public Bazaar_ITest(BazaarVariant variant) {
+		super();
+
+		bazaar = variant.createBazaarImpl();
+	}
+
+	@Parameters(name = "{0}")
+	public static Object[] parameters() {
+		return BazaarVariant.values();
 	}
 
 	@Test
