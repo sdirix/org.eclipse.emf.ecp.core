@@ -43,11 +43,18 @@ public interface Bazaar<T> {
 
 	/**
 	 * Adds a {@link Vendor} to the bazaar. Will be queried if a product is requested, the best fitting will create the
-	 * product.
+	 * product. Has no effect if the {@code vendor} is already present in this bazaar.
 	 *
 	 * @param vendor the {@link Vendor}
 	 */
 	void addVendor(Vendor<? extends T> vendor);
+
+	/**
+	 * Removes a {@link Vendor} from the bazaar. Has no effect if the {@code vendor} is not present in this bazaar.
+	 *
+	 * @param vendor the {@link Vendor} to remove
+	 */
+	void removeVendor(Vendor<? extends T> vendor);
 
 	/**
 	 * Adds a {@link BazaarContextFunction} to this {@link Bazaar} to exchange existing parameters to a parameter

@@ -58,6 +58,11 @@ public class BazaarImpl<T> implements Bazaar<T> {
 		vendors.add(vendor);
 	}
 
+	@Override
+	public void removeVendor(Vendor<? extends T> vendor) {
+		vendors.remove(vendor);
+	}
+
 	/**
 	 * Returns the product which is provided with the highest priority by any {@link Vendor}.
 	 *

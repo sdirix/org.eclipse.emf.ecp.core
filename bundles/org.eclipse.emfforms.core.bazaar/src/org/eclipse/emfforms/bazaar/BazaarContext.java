@@ -57,7 +57,7 @@ public interface BazaarContext {
 		 *
 		 * @param values initial context values
 		 */
-		private Builder(Map<String, Object> values) {
+		private Builder(Map<String, ?> values) {
 			super();
 
 			contextMap.putAll(values);
@@ -78,7 +78,7 @@ public interface BazaarContext {
 		 * @param values initial context values
 		 * @return an initialized builder
 		 */
-		public static Builder with(Map<String, Object> values) {
+		public static Builder with(Map<String, ?> values) {
 			return new Builder(values);
 		}
 

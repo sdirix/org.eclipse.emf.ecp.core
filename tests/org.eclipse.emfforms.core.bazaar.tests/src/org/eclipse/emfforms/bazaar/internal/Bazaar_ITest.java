@@ -22,11 +22,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -200,16 +202,14 @@ public class Bazaar_ITest {
 
 	@Test
 	public void testCreateEclipseContextOneObject() {
-		final BazaarContext bazaarContextMock = mock(BazaarContext.class);
-		final HashMap<String, Object> mockMap = new HashMap<String, Object>();
-		final Object mock = mock(Object.class);
-		mockMap.put(TESTSTRING, mock);
-		when(bazaarContextMock.getContextMap()).thenReturn(mockMap);
+		final Object value = new Object();
+		final BazaarContext bazaarContext = BazaarContext.Builder.with(
+			Collections.singletonMap(TESTSTRING, value)).build();
 
-		final IEclipseContext eclipseContext = bazaar.createEclipseContext(bazaarContextMock);
+		final IEclipseContext eclipseContext = bazaar.createEclipseContext(bazaarContext);
 
 		final Object actual = eclipseContext.get(TESTSTRING);
-		assertSame(mock, actual);
+		assertSame(value, actual);
 	}
 
 	@Test
@@ -416,6 +416,27 @@ public class Bazaar_ITest {
 		final List<MyProduct> createdProducts = bazaar.createProducts(bazaarContext);
 
 		assertTrue(createdProducts.isEmpty());
+	}
+
+	@Test
+	public void testRemoveVendor() {
+		final Vendor<MyProduct> vendor = new VendorPriority1Parameter0();
+		final Vendor<MyProduct> vendor2 = new VendorPriority2Parameter1();
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(String.class, TESTSTRING);
+
+		Vendor<?> bestVendor = bazaar.getBestVendor(context);
+
+		assumeThat(bestVendor, is((Object) vendor2));
+
+		bazaar.removeVendor(vendor2);
+
+		bestVendor = bazaar.getBestVendor(context);
+
+		assertThat(bestVendor, is((Object) vendor));
 	}
 
 }
