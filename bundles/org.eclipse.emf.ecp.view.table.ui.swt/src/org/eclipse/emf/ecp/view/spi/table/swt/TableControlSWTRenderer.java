@@ -360,7 +360,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
 
 			final ECPTableViewerComparator comparator = getVElement().isMoveUpDownDisabled()
-				? new ECPTableViewerComparator() : null;
+				? new ECPTableViewerComparator()
+				: null;
 
 			/* render */
 			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
@@ -1381,6 +1382,43 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Helper method which uses an EMFForms observable value to get the setting for the given
+	 * {@link VDomainModelReference}.
+	 *
+	 * @param dmr the {@link VDomainModelReference}
+	 * @param eObject the {@link EObject} to get the setting for
+	 * @return an Optional<Setting>
+	 *
+	 * @since 1.16
+	 */
+	protected Optional<Setting> getSettingFromObservable(VDomainModelReference dmr, EObject eObject) {
+		@SuppressWarnings("rawtypes")
+		IObservableValue observableValue = null;
+		try {
+			observableValue = getEMFFormsDatabinding().getObservableValue(dmr, eObject);
+
+			final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
+			final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
+
+			// Given EClass has no such feature
+			if (observed == null || observed.eClass().getFeatureID(feature) == -1) {
+				return Optional.empty();
+			}
+
+			return Optional.of(((InternalEObject) eObject).eSetting(feature));
+
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new DatabindingFailedReport(ex));
+			return Optional.empty();
+		} finally {
+			if (observableValue != null) {
+				observableValue.dispose();
+			}
+		}
+
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
@@ -1454,8 +1492,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * Get called by the {@link ECPTableViewerComparator} in order to compare the given objects.
 	 *
 	 * @param viewer the tavle viewer
-	 * @param e1 the first object of the comparison
-	 * @param e2 the second object of the comparison
+	 * @param left the first object of the comparison
+	 * @param right the second object of the comparison
 	 * @param propertyIndex index of the selection column. the index is aligned with the index of the associated column
 	 *            domain model reference
 	 * @param direction {@link SWT#NONE}, {@link SWT#UP} or {@link SWT#DOWN} according to the indication displayed at
@@ -1466,53 +1504,34 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *         element is greater than the second element
 	 * @since 1.8
 	 */
-	protected int compare(Viewer viewer, Object e1, Object e2, int direction, int propertyIndex) {
+	protected int compare(Viewer viewer, Object left, Object right, int direction, int propertyIndex) {
 		if (direction == 0) {
 			return 0;
 		}
+
 		// We might have ignored columns at the beginning
 		propertyIndex = propertyIndex - regularColumnsStartIndex;
 		int rc = 0;
-		final EObject object1 = (EObject) e1;
-		final EObject object2 = (EObject) e2;
-
-		Object value1;
-		Object value2;
 
 		final VDomainModelReference dmr = ((VTableDomainModelReference) getVElement().getDomainModelReference())
 			.getColumnDomainModelReferences().get(propertyIndex);
-		final EMFFormsDatabinding emfFormsDatabinding = getEMFFormsDatabinding();
 
-		try {
-			final IObservableValue observableValue1 = emfFormsDatabinding.getObservableValue(dmr, object1);
-			final EStructuralFeature structuralFeature1 = (EStructuralFeature) observableValue1.getValueType();
-			final EObject observed1 = (EObject) ((IObserving) observableValue1).getObserved();
-			value1 = observed1.eGet(structuralFeature1, true);
-			observableValue1.dispose();
-		} catch (final DatabindingFailedException ex) {
-			value1 = null;
-		}
+		final Optional<Setting> leftSetting = getSettingFromObservable(dmr, (EObject) left);
+		final Optional<Setting> rightSetting = getSettingFromObservable(dmr, (EObject) right);
 
-		try {
-			final IObservableValue observableValue2 = emfFormsDatabinding.getObservableValue(dmr, object2);
-			final EStructuralFeature structuralFeature2 = (EStructuralFeature) observableValue2.getValueType();
-			final EObject observed2 = (EObject) ((IObserving) observableValue2).getObserved();
-			value2 = observed2.eGet(structuralFeature2, true);
-			observableValue2.dispose();
-		} catch (final DatabindingFailedException ex) {
-			value2 = null;
-		}
+		final Object leftValue = leftSetting.isPresent() ? leftSetting.get().get(true) : null;
+		final Object rightValue = rightSetting.isPresent() ? rightSetting.get().get(true) : null;
 
 		if (columnIndexToComparatorMap.containsKey(propertyIndex)) {
-			return columnIndexToComparatorMap.get(propertyIndex).compare(value1, value2, direction);
+			return columnIndexToComparatorMap.get(propertyIndex).compare(leftValue, rightValue, direction);
 		}
 
-		if (value1 == null) {
+		if (leftValue == null) {
 			rc = 1;
-		} else if (value2 == null) {
+		} else if (rightValue == null) {
 			rc = -1;
 		} else {
-			rc = value1.toString().compareTo(value2.toString());
+			rc = leftValue.toString().compareTo(rightValue.toString());
 		}
 		// If descending order, flip the direction
 		if (direction == 2) {
@@ -1807,30 +1826,26 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
 				.getDomainModelReference();
-			IObservableValue observableValue;
-			try {
-				if (tableDMR.getDomainModelReference() != null) {
-					observableValue = getEMFFormsDatabinding().getObservableValue(
-						tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
-				} else {
-					observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
-						getViewModelContext().getDomainModel());
-				}
-			} catch (final DatabindingFailedException ex) {
-				getReportService().report(new DatabindingFailedReport(ex));
+			Optional<Setting> setting;
+
+			if (tableDMR.getDomainModelReference() != null) {
+				setting = getSettingFromObservable(tableDMR.getDomainModelReference(),
+					getViewModelContext().getDomainModel());
+			} else {
+				setting = getSettingFromObservable(tableDMR, getViewModelContext().getDomainModel());
+			}
+
+			if (setting.isPresent()) {
 				return;
 			}
-			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-			observableValue.dispose();
 
 			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 			showValidationSummaryTooltip(showValidationSummaryTooltip);
 
-			final Collection<?> collection = (Collection<?>) eObject.eGet(structuralFeature, true);
+			final Collection<?> collection = (Collection<?>) setting.get().get(true);
 			if (!collection.isEmpty()) {
 				for (final Object object : collection) {
-					tableViewer.update(object, null);
+					getTableViewer().update(object, null);
 				}
 			}
 		}
@@ -2293,44 +2308,33 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			this.table = table;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
-		 */
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			IObservableValue observableValue;
-			try {
-				observableValue = getEMFFormsDatabinding()
-					.getObservableValue(dmr, domainObject);
-			} catch (final DatabindingFailedException ex) {
-				getReportService().report(new DatabindingFailedReport(ex));
+
+			final Optional<Setting> setting = getSettingFromObservable(dmr, domainObject);
+			if (!setting.isPresent()) {
 				return null;
 			}
-			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
-			observableValue.dispose();
 
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			if (vDiagnostic != null) {
 				final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostic(domainObject,
 					feature));
 				if (message != null && !message.isEmpty()) {
-					return ECPTooltipModifierHelper.modifyString(message, setting);
+					return ECPTooltipModifierHelper.modifyString(message, setting.get());
 				}
 			}
-			final Object value = eObject.eGet(structuralFeature, true);
+			final Object value = setting.get().get(true);
 			if (value == null) {
 				return null;
 			}
-			final String tooltip = ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting);
+			final String tooltip = ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting.get());
 			if (tooltip == null || tooltip.isEmpty()) {
 				return null;
 			}
 			return tooltip;
+
 		}
 
 		@Override
@@ -2441,9 +2445,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (!shouldCreateCellEditor(element)) {
 				return false;
 			}
+
+			// TODO: use getSettingFromObservable(dmr, eObject) instead?
 			final IObservableValue observableValue = valueProperty.observe(element);
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+
+			// Given EClass has no such feature
+			if (eObject == null || eObject.eClass().getFeatureID(structuralFeature) == -1) {
+				return false;
+			}
+
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
 
 			if (isDisabled(eObject, domainModelReference)
