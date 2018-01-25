@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.16.0,1.17.0
   org.eclipse.jface.databinding;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
-  org.osgi.framework;version="0.0.0",
-  org.osgi.service.component.annotations;version="0.0.0";resolution:=optional
+ org.eclipse.emf.ecp.edit.spi.swt.util;version="[1.16.0,1.17.0)",
+ org.osgi.framework;version="0.0.0",
+ org.osgi.service.component.annotations;version="0.0.0";resolution:=optional
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.swt.control.text.richtext.renderer.RichTextControlSWTRendererService.xml
 Bundle-ActivationPolicy: lazy
