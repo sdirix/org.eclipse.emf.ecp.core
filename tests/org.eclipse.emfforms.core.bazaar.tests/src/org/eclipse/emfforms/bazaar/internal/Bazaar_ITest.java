@@ -318,6 +318,67 @@ public class Bazaar_ITest {
 	}
 
 	@Test
+	public void testOneStaticBid() {
+		final Vendor<MyProduct> vendor = new VendorWithStaticBid0();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor, bestVendor);
+	}
+
+	@Test
+	public void testTwoStaticBids() {
+		final Vendor<MyProduct> vendor = new VendorWithStaticBid0();
+		final Vendor<MyProduct> vendor2 = new VendorWithStaticBid2();
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor2, bestVendor);
+	}
+
+	@Test
+	public void testStaticAndDynamicBidsDynamicWins() {
+		final Vendor<MyProduct> vendor = new VendorWithStaticBid0();
+		final Vendor<MyProduct> vendor2 = new VendorPriority1Parameter0();
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor2, bestVendor);
+	}
+
+	@Test
+	public void testStaticAndDynamicBidsStaticWins() {
+		final Vendor<MyProduct> vendor = new VendorWithStaticBid2();
+		final Vendor<MyProduct> vendor2 = new VendorPriority1Parameter0();
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor, bestVendor);
+	}
+
+	@Test
+	public void testOverlappingBidsStaticDynamic() {
+		final Vendor<MyProduct> vendor = new VendorWithStaticBid2();
+		final Vendor<MyProduct> vendor2 = new VendorPriority2Parameter0();
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+
+		@SuppressWarnings("unchecked")
+		final PriorityOverlapCallBack<MyProduct> priorityOverlapCallBackMock = mock(PriorityOverlapCallBack.class);
+
+		bazaar.setPriorityOverlapCallBack(priorityOverlapCallBackMock);
+
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> best = bazaar.getBestVendor(context);
+
+		verify(priorityOverlapCallBackMock, times(1)).priorityOverlap(vendor, vendor2);
+		assertThat(best, is((Object) vendor));
+	}
+
+	@Test
 	public void testCreateProductNoParameter0() {
 		final MyProduct myProductMock = mock(MyProduct.class);
 		final Vendor<MyProduct> vendor = new VendorCreatingProductParameter0(myProductMock);

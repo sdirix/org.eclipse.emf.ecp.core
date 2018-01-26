@@ -37,6 +37,7 @@ import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.bazaar.Exchange;
 import org.eclipse.emfforms.bazaar.Precondition;
 import org.eclipse.emfforms.bazaar.Preconditions;
+import org.eclipse.emfforms.bazaar.StaticBid;
 import org.eclipse.emfforms.bazaar.Vendor;
 
 /**
@@ -163,6 +164,12 @@ public class BazaarImpl<T> implements Bazaar<T> {
 		}
 
 		Double result = null; // Assume no bid
+
+		result = staticBid(vendor);
+		if (result != null) {
+			return result;
+		}
+
 		try {
 			result = (Double) ContextInjectionFactory.invoke(vendor, Bid.class, context);
 		} catch (final InjectionException e) {
@@ -172,6 +179,14 @@ public class BazaarImpl<T> implements Bazaar<T> {
 		}
 
 		return result;
+	}
+
+	private Double staticBid(Vendor<? extends T> vendor) {
+		final StaticBid staticBid = vendor.getClass().getAnnotation(StaticBid.class);
+		if (staticBid != null) {
+			return staticBid.bid();
+		}
+		return null;
 	}
 
 	private Queue<Vendor<? extends T>> createVendorPriorityQueue(IEclipseContext context) {

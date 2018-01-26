@@ -9,28 +9,16 @@
  * Contributors:
  * jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.bazaar;
+package org.eclipse.emfforms.bazaar.internal;
 
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import org.eclipse.emfforms.bazaar.StaticBid;
+import org.eclipse.emfforms.bazaar.Vendor;
 
 /**
- * Allows a vendor to do a static bid. Will be called only if {@link Precondition}s are met. Not {@link Bid} will be
- * called after a {@link StaticBid}.
- *
  * @author jonas
  *
  */
-@Retention(RUNTIME)
-@Target(TYPE)
-public @interface StaticBid {
-	/**
-	 *
-	 * @return the static bid
-	 */
-	double bid();
+@StaticBid(bid = 0)
+public class VendorWithStaticBid0 implements Vendor<MyProduct> {
 
 }
