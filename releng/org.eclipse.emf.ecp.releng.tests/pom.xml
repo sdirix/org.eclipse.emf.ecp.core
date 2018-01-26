@@ -130,6 +130,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.validation.diagnostician.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ide.util.test</module>	
+		<module>../../tests/org.eclipse.emf.ecp.ide.editor.view.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ide.view.service.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.core.swt.tests</module>	
 		<module>../../tests/org.eclipse.emf.ecp.view.viewproxy.test</module>
