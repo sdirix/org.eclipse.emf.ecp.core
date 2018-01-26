@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.bazaar.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -34,6 +35,8 @@ import org.eclipse.emfforms.bazaar.BazaarContextFunction;
 import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.bazaar.Exchange;
+import org.eclipse.emfforms.bazaar.Precondition;
+import org.eclipse.emfforms.bazaar.Preconditions;
 import org.eclipse.emfforms.bazaar.Vendor;
 
 /**
@@ -155,8 +158,11 @@ public class BazaarImpl<T> implements Bazaar<T> {
 	}
 
 	private Double bid(Vendor<? extends T> vendor, IEclipseContext context) {
-		Double result = null; // Assume no bid
+		if (!checkPreConditions(vendor, context)) {
+			return null;
+		}
 
+		Double result = null; // Assume no bid
 		try {
 			result = (Double) ContextInjectionFactory.invoke(vendor, Bid.class, context);
 		} catch (final InjectionException e) {
@@ -260,6 +266,42 @@ public class BazaarImpl<T> implements Bazaar<T> {
 		}
 
 		return ret;
+	}
+
+	/**
+	 * Checks the {@link Precondition}s for a given vendor.
+	 *
+	 * @param vendor The {@link Vendor} to check the {@link Precondition} for.
+	 * @param context The {@link IEclipseContext} to provide the {@link Precondition}
+	 * @return whether the {@link Precondition}s are fulfilled
+	 */
+	public boolean checkPreConditions(Vendor<? extends T> vendor, IEclipseContext context) {
+		final Set<Precondition> preConditionList = new LinkedHashSet<Precondition>();
+		final Precondition preConditionAnnotation = vendor.getClass().getAnnotation(Precondition.class);
+		if (preConditionAnnotation != null) {
+			preConditionList.add(preConditionAnnotation);
+		}
+		final Preconditions conditions = vendor.getClass().getAnnotation(Preconditions.class);
+		if (conditions != null) {
+			preConditionList.addAll(Arrays.asList(conditions.preconditions()));
+		}
+		for (final Precondition preCondition : preConditionList) {
+			if (!checkPreCondition(preCondition, vendor, context)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean checkPreCondition(Precondition preCondition, Vendor<? extends T> vendor, IEclipseContext context) {
+		if (preCondition.value().equals(Precondition.UNASSIGNED)) {
+			return context.containsKey(preCondition.key());
+		}
+		final Object object = context.get(preCondition.key());
+		if (object == null) {
+			return false;
+		}
+		return object.equals(preCondition.value());
 	}
 
 }

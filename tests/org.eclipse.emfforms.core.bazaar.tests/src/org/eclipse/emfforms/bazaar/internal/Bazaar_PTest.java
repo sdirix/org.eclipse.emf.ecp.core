@@ -13,13 +13,17 @@ package org.eclipse.emfforms.bazaar.internal;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import javax.inject.Named;
 
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.BazaarContextFunction;
 import org.eclipse.emfforms.bazaar.Bid;
+import org.eclipse.emfforms.bazaar.Vendor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,4 +77,50 @@ public class Bazaar_PTest {
 		assertThat(createdProduct, is(myProductMock2));
 	}
 
+	@Test
+	public void testPreConditionPerformanceNoMatch() {
+		final IEclipseContext context = EclipseContextFactory.create();
+		// Add another value, otherwise, empty context is too fast
+		context.set(TESTSTRING, mock(Object.class));
+		assertTrue(doComparison(true, context));
+	}
+
+	@Test
+	public void testPreConditionPerformanceMatch() {
+		final IEclipseContext context = EclipseContextFactory.create();
+		// Add another value, otherwise, empty context is too fast
+		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
+		assertTrue(doComparison(false, context));
+	}
+
+	/**
+	 *
+	 * @return if expectedTheWithPreConditionsBetter, true if that is the case. Otherwise true, if with precondition not
+	 *         more the 50% slower
+	 */
+	public boolean doComparison(boolean expectedTheWithPreConditionsBetter, IEclipseContext context) {
+		final int iterations = 50000;
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
+		bazaar.addVendor(vendor);
+		long currentTimeMillis = System.currentTimeMillis();
+		for (int i = 0; i < iterations; i++) {
+			bazaar.getBestVendor(context);
+		}
+		final long withPreConditions = System.currentTimeMillis() - currentTimeMillis;
+		bazaar.removeVendor(vendor);
+
+		final Vendor<MyProduct> vendor2 = new VendorWithoutPrecondition();
+		bazaar.addVendor(vendor2);
+		currentTimeMillis = System.currentTimeMillis();
+		for (int i = 0; i < iterations; i++) {
+			bazaar.getBestVendor(context);
+		}
+		final long withoutPreConditions = System.currentTimeMillis() - currentTimeMillis;
+
+		if (expectedTheWithPreConditionsBetter) {
+			return withPreConditions < withoutPreConditions;
+		}
+		return 1.5 * withoutPreConditions > withPreConditions;
+
+	}
 }

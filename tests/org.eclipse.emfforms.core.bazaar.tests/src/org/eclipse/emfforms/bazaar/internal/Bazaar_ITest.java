@@ -18,6 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -168,6 +169,152 @@ public class Bazaar_ITest {
 
 		final IEclipseContext context = EclipseContextFactory.create();
 		bazaar.getBestVendor(context);
+	}
+
+	@Test
+	public void testVendorNoMatchingPreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertNull(bestVendor);
+	}
+
+	@Test
+	public void testVendorMatchingPreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition(0);
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor, bestVendor);
+	}
+
+	@Test
+	public void testVendorMatchingNoValuePreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithNoValuePrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertNotNull(bestVendor);
+	}
+
+	@Test
+	public void testVendorWithNullInContextNoValuePreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithNoValuePrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, null);
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertNotNull(bestVendor);
+	}
+
+	@Test
+	public void testVendorNotMatchingNoValuePreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithNoValuePrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertNull(bestVendor);
+
+	}
+
+	@Test
+	public void testTwoVendorOneMatchingPreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition(0);
+		final Vendor<MyProduct> vendor2 = new VendorWithTwoPreconditions(1);
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor, bestVendor);
+	}
+
+	@Test
+	public void testTwoVendorNoMatchingPreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
+		final Vendor<MyProduct> vendor2 = new VendorWithTwoPreconditions();
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertNull(bestVendor);
+	}
+
+	@Test
+	public void testTwoVendorBothMatchingPreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition(1);
+		final Vendor<MyProduct> vendor2 = new VendorWithTwoPreconditions(0);
+		bazaar.addVendor(vendor);
+		bazaar.addVendor(vendor2);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
+		context.set(VendorWithTwoPreconditions.KEY1, VendorWithTwoPreconditions.VALUE1);
+		context.set(VendorWithTwoPreconditions.KEY2, VendorWithTwoPreconditions.VALUE2);
+		final Vendor<? extends MyProduct> bestVendor = bazaar.getBestVendor(context);
+		assertSame(vendor, bestVendor);
+	}
+
+	@Test
+	public void testNoMatchingPreConditionKey() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		final boolean checkPreConditions = bazaar.checkPreConditions(vendor, context);
+		assertFalse(checkPreConditions);
+	}
+
+	@Test
+	public void testNoMatchingPreConditionValue() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, mock(Object.class));
+		final boolean checkPreConditions = bazaar.checkPreConditions(vendor, context);
+		assertFalse(checkPreConditions);
+	}
+
+	@Test
+	public void testTwoPreConditionsNoMatch() {
+		final Vendor<MyProduct> vendor = new VendorWithTwoPreconditions();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithTwoPreconditions.KEY1, mock(Object.class));
+		final boolean checkPreConditions = bazaar.checkPreConditions(vendor, context);
+		assertFalse(checkPreConditions);
+	}
+
+	@Test
+	public void testTwoPreConditionsOneNoMatch() {
+		final Vendor<MyProduct> vendor = new VendorWithTwoPreconditions();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithTwoPreconditions.KEY1, VendorWithTwoPreconditions.VALUE1);
+		final boolean checkPreConditions = bazaar.checkPreConditions(vendor, context);
+		assertFalse(checkPreConditions);
+	}
+
+	@Test
+	public void testTwoPreConditionsBothMatch() {
+		final Vendor<MyProduct> vendor = new VendorWithTwoPreconditions();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithTwoPreconditions.KEY1, VendorWithTwoPreconditions.VALUE1);
+		context.set(VendorWithTwoPreconditions.KEY2, VendorWithTwoPreconditions.VALUE2);
+		final boolean checkPreConditions = bazaar.checkPreConditions(vendor, context);
+		assertTrue(checkPreConditions);
+	}
+
+	@Test
+	public void testMatchingPreCondition() {
+		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
+		bazaar.addVendor(vendor);
+		final IEclipseContext context = EclipseContextFactory.create();
+		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
+		final boolean checkPreConditions = bazaar.checkPreConditions(vendor, context);
+		assertTrue(checkPreConditions);
 	}
 
 	@Test
