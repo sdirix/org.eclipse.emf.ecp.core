@@ -22,11 +22,12 @@
 		<junit-version>4.11</junit-version>
 		<checkstyle-version>8.5</checkstyle-version>
 		
+		<jacoco.percentage.instruction>0.60</jacoco.percentage.instruction>
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.exclusions>**/model/**,**/test/**</sonar.exclusions>
+		<sonar.exclusions>**/model/**,**/test/**, **/*_PTest.java,**/*_Test.java, **/*_ITest.java,**/AllTests.java,**/AllIntegrationTests.java, **/Messages.java,</sonar.exclusions>
 		
 		<target-rcp>ecp</target-rcp>
 		<target-rap>ecpRAP</target-rap>
@@ -271,6 +272,27 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+					</execution>
+					<execution>
+					    <id>jacoco-check</id>
+					    <phase>test</phase>
+					    <goals>
+						<goal>check</goal>
+					    </goals>
+					    <configuration>
+						<rules>
+						    <rule implementation="org.jacoco.maven.RuleConfiguration">
+							<element>BUNDLE</element>
+							<limits>
+							    <limit implementation="org.jacoco.report.check.Limit">
+								<counter>INSTRUCTION</counter>
+								<value>COVEREDRATIO</value>
+								<minimum>${jacoco.percentage.instruction}</minimum>
+							    </limit>
+							</limits>
+						    </rule>
+						</rules>
+					    </configuration>
 					</execution>
 				</executions>
 			</plugin>
