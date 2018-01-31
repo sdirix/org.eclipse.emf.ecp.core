@@ -23,7 +23,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	SelectAttributes_Test.class,
 	ControlGenerator_PTest.class,
-	Helper_Test.class
+	Helper_Test.class,
+	GenerateControlsHandler_Test.class
 })
 public class AllTests {
 

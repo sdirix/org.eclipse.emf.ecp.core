@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
@@ -61,13 +62,11 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
 		IItemPropertyDescriptor propertyDescriptor = null;
 		for (final EStructuralFeature feature : features) {
-			propertyDescriptor =
-				adapterFactoryItemDelegator
-					.getPropertyDescriptor(EcoreUtil.create(sad.getRootClass()), feature);
+			propertyDescriptor = adapterFactoryItemDelegator
+				.getPropertyDescriptor(EcoreUtil.create(sad.getRootClass()), feature);
 			if (propertyDescriptor != null) {
 				featuresToAdd.add(feature);
-			}
-			else {
+			} else {
 				logInvalidFeature(feature.getName(), sad.getRootClass().getName());
 			}
 		}
@@ -168,7 +167,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		if (object == null) {
 			return false;
 		}
-		return object instanceof VView || object instanceof VContainedContainer;
+		return object instanceof VView || object instanceof VContainer;
 	}
 
 	/**
