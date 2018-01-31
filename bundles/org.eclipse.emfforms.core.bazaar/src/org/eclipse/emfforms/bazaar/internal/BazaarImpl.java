@@ -199,6 +199,10 @@ public class BazaarImpl<T> implements Bazaar<T> {
 			} // else the vendor refuses to bid
 		}
 
+		if (priorities.isEmpty()) {
+			return new PriorityQueue<Vendor<? extends T>>();
+		}
+
 		final Comparator<Vendor<? extends T>> ordering = new Comparator<Vendor<? extends T>>() {
 			@Override
 			public int compare(Vendor<? extends T> o1, Vendor<? extends T> o2) {
@@ -207,7 +211,8 @@ public class BazaarImpl<T> implements Bazaar<T> {
 			}
 		};
 
-		final PriorityQueue<Vendor<? extends T>> result = new PriorityQueue<Vendor<? extends T>>(ordering);
+		final PriorityQueue<Vendor<? extends T>> result = new PriorityQueue<Vendor<? extends T>>(priorities.size(),
+			ordering);
 		result.addAll(priorities.keySet());
 
 		return result;

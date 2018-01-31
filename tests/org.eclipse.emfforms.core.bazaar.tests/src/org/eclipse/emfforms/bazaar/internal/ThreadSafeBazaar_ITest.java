@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.bazaar.internal;
 
-import static java.lang.Integer.parseUnsignedInt;
+import static java.lang.Integer.parseInt;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -261,7 +261,7 @@ public class ThreadSafeBazaar_ITest {
 				return 100.0;
 			}
 
-			return Math.abs(16 - parseUnsignedInt(product, 16));
+			return Math.abs(16 - parseInt(product, 16)); // Should be non-negative
 		}
 
 		private String lastChar(String s) {
