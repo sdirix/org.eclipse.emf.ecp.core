@@ -47,6 +47,7 @@ Require-Bundle: org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.
   org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="[1.16.0,1.17.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
-  org.eclipse.emfforms.internal.editor.ecore.controls;version="[1.16.0,1.17.0)",
-  org.eclipse.emfforms.spi.swt.core.di;version="[1.16.0,1.17.0)";resolution:=optional,
-  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
+ org.eclipse.emfforms.bazaar;version="1.16.0",
+ org.eclipse.emfforms.internal.editor.ecore.controls;version="[1.16.0,1.17.0)",
+ org.eclipse.emfforms.spi.swt.core.di;version="[1.16.0,1.17.0)";resolution:=optional,
+ org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
