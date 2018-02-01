@@ -15,4 +15,7 @@
   <packaging>eclipse-plugin</packaging>
   <version>1.16.0-SNAPSHOT</version>
 
+  <properties>
+  	<jacoco.percentage.instruction>0.1</jacoco.percentage.instruction>
+  </properties>
 </project>

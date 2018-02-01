@@ -16,4 +16,8 @@
   <version>1.16.0-SNAPSHOT</version>
 
   <groupId>org.eclipse.emf.ecp</groupId>
+  
+  <properties>
+  	<jacoco.percentage.instruction>0.4</jacoco.percentage.instruction>
+  </properties>
 </project>

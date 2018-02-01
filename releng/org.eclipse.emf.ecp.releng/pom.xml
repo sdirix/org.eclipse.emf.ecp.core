@@ -22,12 +22,12 @@
 		<junit-version>4.11</junit-version>
 		<checkstyle-version>8.5</checkstyle-version>
 		
-		<jacoco.percentage.instruction>0.60</jacoco.percentage.instruction>
+		<jacoco.percentage.instruction>0.5</jacoco.percentage.instruction>
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.exclusions>**/model/**,**/test/**, **/*_PTest.java,**/*_Test.java, **/*_ITest.java,**/AllTests.java,**/AllIntegrationTests.java, **/Messages.java,</sonar.exclusions>
+		<sonar.exclusions>**/model/**,**/test/**,**/tests/**, **/*_PTest.java,**/*_Test.java, **/*_ITest.java,**/AllTests.java,**/AllIntegrationTests.java, **/Messages.java,</sonar.exclusions>
 		
 		<target-rcp>ecp</target-rcp>
 		<target-rap>ecpRAP</target-rap>
@@ -261,10 +261,10 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.4.201502262128</version>
+				<version>0.8.0</version> 
 				<configuration>
 					<destFile>${sonar.jacoco.reportPath}</destFile>
-					<append>true</append> 
+					<append>true</append>
 				</configuration>
 				<executions>
 					<execution>
@@ -275,23 +275,31 @@
 					</execution>
 					<execution>
 					    <id>jacoco-check</id>
-					    <phase>test</phase>
 					    <goals>
-						<goal>check</goal>
+							<goal>check</goal>
 					    </goals>
 					    <configuration>
-						<rules>
-						    <rule implementation="org.jacoco.maven.RuleConfiguration">
-							<element>BUNDLE</element>
-							<limits>
-							    <limit implementation="org.jacoco.report.check.Limit">
-								<counter>INSTRUCTION</counter>
-								<value>COVEREDRATIO</value>
-								<minimum>${jacoco.percentage.instruction}</minimum>
-							    </limit>
-							</limits>
-						    </rule>
-						</rules>
+							<rules>
+							    <rule>
+									<element>BUNDLE</element>
+									<limits>
+									    <limit>
+										<counter>INSTRUCTION</counter>
+										<value>COVEREDRATIO</value>
+										<minimum>${jacoco.percentage.instruction}</minimum>
+									    </limit>
+									</limits>
+							    </rule>
+							</rules>
+							<dataFile>${sonar.jacoco.reportPath}</dataFile>
+							<excludes>
+								<exclude>**/emf/edit/ui/**</exclude>
+								<exclude>**/model/**</exclude>
+								<exclude>**/car/**</exclude>
+								<exclude>**/test/**</exclude>
+								<exclude>**/tests/**</exclude>
+								<exclude>**/*Test*</exclude>
+							</excludes>
 					    </configuration>
 					</execution>
 				</executions>

@@ -43,4 +43,5 @@
 	</build>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<version>1.16.0-SNAPSHOT</version>
+	
 </project>

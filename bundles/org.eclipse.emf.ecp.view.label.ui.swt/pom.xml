@@ -15,4 +15,8 @@
   <packaging>eclipse-plugin</packaging>
 
   <groupId>org.eclipse.emf.ecp</groupId>
+  
+  <properties>
+  	<jacoco.percentage.instruction>0.0</jacoco.percentage.instruction>
+  </properties>
 </project>

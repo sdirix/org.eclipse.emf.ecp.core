@@ -26,6 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ Bazaar_ITest.class,
 	BazaarBuilderTest.class,
 	ThreadSafeBazaar_ITest.class,
+	Bazaar_PTest.class
 })
 public class AllTests {
 

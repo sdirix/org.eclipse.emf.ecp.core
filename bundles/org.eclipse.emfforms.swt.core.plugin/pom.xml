@@ -13,4 +13,8 @@
 
   <artifactId>org.eclipse.emfforms.swt.core.plugin</artifactId>
 <packaging>eclipse-plugin</packaging>
+
+  <properties>
+  	<jacoco.percentage.instruction>0.4</jacoco.percentage.instruction>
+  </properties>
 </project>
