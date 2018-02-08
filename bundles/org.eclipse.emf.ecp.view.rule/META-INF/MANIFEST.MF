@@ -24,5 +24,6 @@ Service-Component: OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.OrConditionSe
  OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.FalseConditionService.xml,
  OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.IterateConditionService.xml,
  OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.NotConditionService.xml,
- OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.TrueConditionService.xml
+ OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.TrueConditionService.xml,
+ OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.IsProxyConditionService.xml
 Bundle-ActivationPolicy: lazy
