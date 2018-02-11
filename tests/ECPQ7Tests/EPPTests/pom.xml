@@ -95,6 +95,7 @@
 						<vmArgs>
 							<vmArg>-Xmx2g</vmArg>
 							<vmArg>-Dorg.eclipse.swt.browser.DefaultType=mozilla</vmArg>
+                        	<vmArg>${failsafeArgline}</vmArg>
 						</vmArgs>
 					</aut>
 					<projects>

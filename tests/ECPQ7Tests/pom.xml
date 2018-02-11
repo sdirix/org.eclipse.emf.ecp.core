@@ -66,6 +66,7 @@
 							to find the report if generated in this project) -->
 						<configuration>
 							<destFile>${project.basedir}/target/jacoco-rcptt.exec</destFile>
+							<propertyName>failsafeArgline</propertyName>
 						</configuration>
 					</execution>
 				</executions>

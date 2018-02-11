@@ -31,6 +31,9 @@
 							<arg>-changeableClass</arg>
 							
 						</args>
+						<vmArgs>
+	                        <vmArg>${failsafeArgline}</vmArg>
+	                    </vmArgs>
 					</aut>
 					<testOptions>
 					    <!-- Timeout for all tests, in seconds -->
