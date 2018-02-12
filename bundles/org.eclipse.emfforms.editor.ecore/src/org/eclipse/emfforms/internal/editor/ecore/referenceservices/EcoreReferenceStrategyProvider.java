@@ -44,6 +44,11 @@ public class EcoreReferenceStrategyProvider extends ReferenceServiceCustomizatio
 		super();
 	}
 
+	@Override
+	protected boolean handles(EObject owner, EReference reference) {
+		return reference == EcorePackage.Literals.EREFERENCE__EOPPOSITE;
+	}
+
 	/**
 	 * Create the reference strategy.
 	 *
