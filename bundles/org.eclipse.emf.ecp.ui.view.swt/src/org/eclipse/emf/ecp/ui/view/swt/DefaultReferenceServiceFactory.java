@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
+import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 
 import java.util.Collection;
 import java.util.Dictionary;
@@ -126,7 +127,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 *
 	 * @param provider the provider to add
 	 */
-	@Reference(cardinality = MULTIPLE)
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
 	void addAttachmentStrategyProvider(AttachmentStrategy.Provider provider) {
 		attachmentStrategyBazaar.addVendor(provider);
 	}
@@ -145,7 +146,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 *
 	 * @param provider the provider to add
 	 */
-	@Reference(cardinality = MULTIPLE)
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
 	void addOpenInNewContextStrategyProvider(OpenInNewContextStrategy.Provider provider) {
 		openInNewContextStrategyBazaar.addVendor(provider);
 	}
@@ -164,7 +165,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 *
 	 * @param provider the provider to add
 	 */
-	@Reference(cardinality = MULTIPLE)
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
 	void addEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
 		eclassSelectionStrategyBazaar.addVendor(provider);
 	}
@@ -183,7 +184,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 *
 	 * @param provider the provider to add
 	 */
-	@Reference(cardinality = MULTIPLE)
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
 	void addEObjectSelectionStrategyProvider(EObjectSelectionStrategy.Provider provider) {
 		eobjectSelectionStrategyBazaar.addVendor(provider);
 	}
@@ -202,7 +203,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 *
 	 * @param provider the provider to add
 	 */
-	@Reference(cardinality = MULTIPLE)
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
 	void addReferenceStrategyProvider(ReferenceStrategy.Provider provider) {
 		referenceStrategyBazaar.addVendor(provider);
 	}
