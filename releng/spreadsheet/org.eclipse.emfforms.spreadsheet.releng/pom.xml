@@ -20,12 +20,13 @@
 		<mav-surefire-version>2.16</mav-surefire-version>
 		<junit-version>4.11</junit-version>
 		<checkstyle-version>8.5</checkstyle-version>
+		<jacoco-version>0.8.0</jacoco-version>
 		
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.exclusions>**/model/**,**/test/**</sonar.exclusions>
+		<sonar.jacoco.reportPath>../../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.exclusions>**/test/**,**/tests/**, **/*_PTest.java,**/*_Test.java, **/*_ITest.java,**/AllTests.java,**/AllIntegrationTests.java, **/Messages.java,</sonar.exclusions>
 		
 		<target-spreadsheet>emfforms_spreadsheet</target-spreadsheet>
 	</properties>
@@ -234,7 +235,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.4.201502262128</version>
+				<version>${jacoco-version}</version>
 				<configuration>
 					<destFile>${sonar.jacoco.reportPath}</destFile>
 					<append>true</append> 
