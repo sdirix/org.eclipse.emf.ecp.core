@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.editor.controls.test;
 
+import org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
