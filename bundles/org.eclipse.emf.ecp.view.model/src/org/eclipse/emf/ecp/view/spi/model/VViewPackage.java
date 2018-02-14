@@ -55,7 +55,7 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/170"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1170"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -443,15 +443,16 @@ public interface VViewPackage extends EPackage {
 	int VIEW__CHILDREN = ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Ecore Path</b></em>' attribute.
+	 * The feature id for the '<em><b>Ecore Paths</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.3
+	 * @since 1.16
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW__ECORE_PATH = ELEMENT_FEATURE_COUNT + 2;
+	int VIEW__ECORE_PATHS = ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Loading Properties</b></em>' containment reference.
@@ -1085,7 +1086,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getHasTooltip()
 	 * @generated
@@ -1098,7 +1098,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1110,7 +1109,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1332,18 +1330,20 @@ public interface VViewPackage extends EPackage {
 	EReference getView_Children();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore
-	 * Path</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePaths
+	 * <em>Ecore Paths</em>}'.
 	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
+	 * 
+	 * @since 1.16
 	 *        <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Ecore Path</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath()
+	 *
+	 * @return the meta object for the attribute list '<em>Ecore Paths</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getEcorePaths()
 	 * @see #getView()
 	 * @generated
+	 *
 	 */
-	EAttribute getView_EcorePath();
+	EAttribute getView_EcorePaths();
 
 	/**
 	 * Returns the meta object for the containment reference
@@ -1484,7 +1484,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Has Tooltip</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
 	 * @generated
@@ -1498,7 +1497,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Tooltip</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip()
 	 * @see #getHasTooltip()
@@ -1877,14 +1875,15 @@ public interface VViewPackage extends EPackage {
 		EReference VIEW__CHILDREN = eINSTANCE.getView_Children();
 
 		/**
-		 * The meta object literal for the '<em><b>Ecore Path</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Ecore Paths</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 *
-		 * @since 1.3
+		 * @since 1.16
 		 *        <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
-		EAttribute VIEW__ECORE_PATH = eINSTANCE.getView_EcorePath();
+		EAttribute VIEW__ECORE_PATHS = eINSTANCE.getView_EcorePaths();
 
 		/**
 		 * The meta object literal for the '<em><b>Loading Properties</b></em>' containment reference feature.
@@ -2009,7 +2008,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.13
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getHasTooltip()
 		 * @generated
@@ -2022,7 +2020,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.13
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute HAS_TOOLTIP__TOOLTIP = eINSTANCE.getHasTooltip_Tooltip();

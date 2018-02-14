@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test._140to170;
+package org.eclipse.emf.ecp.view.edapt.test._140to1170;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -24,6 +24,6 @@ import org.junit.runners.Suite;
 	TableNewDMROldNS_PTest.class,
 	EmptyTableWithUUID_PTest.class
 })
-public class All140to170Tests {
+public class All140to1170Tests {
 
 }

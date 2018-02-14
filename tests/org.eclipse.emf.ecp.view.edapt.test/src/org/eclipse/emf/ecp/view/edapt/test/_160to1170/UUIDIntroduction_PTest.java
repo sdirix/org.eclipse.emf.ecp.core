@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test._160to170;
+package org.eclipse.emf.ecp.view.edapt.test._160to1170;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

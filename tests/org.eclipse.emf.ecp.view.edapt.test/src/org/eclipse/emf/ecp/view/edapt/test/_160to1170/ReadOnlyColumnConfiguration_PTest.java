@@ -9,51 +9,39 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test._140to170;
+package org.eclipse.emf.ecp.view.edapt.test._160to1170;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
-/**
- * Checks whether uuids are preserved during migration
- *
- * @author jfaltermeier
- *
- */
-public class EmptyTableWithUUID_PTest extends AbstractMigrationTest {
+public class ReadOnlyColumnConfiguration_PTest extends AbstractMigrationTest {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest#performTest()
-	 */
 	@Override
 	// BEGIN SUPRESS CATCH EXCEPTION
 	protected void performTest() throws Exception {// END SUPRESS CATCH EXCEPTION
 		assertFalse(getMigrator().checkMigration(getURI()));
 		getMigrator().performMigration(getURI());
 		final VView view = getMigratedView();
-		assertEquals(1, view.getChildren().size());
-		assertTrue(VTableControl.class.isInstance(view.getChildren().get(0)));
 		final VTableControl tableControl = VTableControl.class.cast(view.getChildren().get(0));
-		assertEquals("_bfW9gBsWEeWtk5zWlGll4Q", XMIResource.class.cast(view.eResource()).getID(view));
-		assertEquals("_bfW9gRsWEeWtk5zWlGll4Q", XMIResource.class.cast(view.eResource()).getID(tableControl));
+		final VReadOnlyColumnConfiguration columnConfiguration = VReadOnlyColumnConfiguration.class
+			.cast(tableControl.getColumnConfigurations().get(0));
+		final VDomainModelReference reference = columnConfiguration.getColumnDomainReferences().get(0);
+		final VDomainModelReference expectedReference = VTableDomainModelReference.class
+			.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
+			.get(0);
+		assertSame(expectedReference, reference);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest#getPath()
-	 */
 	@Override
 	protected String getPath() {
-		return "140/EmptyTableWithUUID.view";
+		return "160/League.view";
 	}
 
 }

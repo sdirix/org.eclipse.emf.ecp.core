@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test._160to170;
+package org.eclipse.emf.ecp.view.edapt.test._160to1170;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -21,6 +21,6 @@ import org.junit.runners.Suite;
 	ReadOnlyColumnConfiguration_PTest.class,
 	DomainWithModelAsPackageName_PTest.class
 })
-public class All160to170Tests {
+public class All160to1170Tests {
 
 }
