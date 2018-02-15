@@ -18,7 +18,7 @@
 		<profile>
 			<id>release-build</id>
 			<properties>
-				<build_job>ecp-relaeseBranch</build_job>
+				<build_job>release-full</build_job>
 			</properties>
 		</profile>
 		<profile>
