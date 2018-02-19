@@ -14,20 +14,6 @@
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
 		<jacoco-version>0.7.9</jacoco-version>
 	</properties> 
-	<profiles>
-		<profile>
-			<id>release-build</id>
-			<properties>
-				<currentBuild>${project.basedir}/../../releng/</currentBuild>
-			</properties>
-		</profile>
-		<profile>
-			<id>full-build</id>
-			<properties>
-				<currentBuild>${project.basedir}/../../releng/</currentBuild>
-			</properties>
-		</profile>
-	</profiles>
 
 	<pluginRepositories>
 		<pluginRepository>
