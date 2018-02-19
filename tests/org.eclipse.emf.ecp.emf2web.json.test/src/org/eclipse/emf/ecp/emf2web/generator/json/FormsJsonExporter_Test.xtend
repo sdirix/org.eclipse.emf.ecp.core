@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.emf2web.json.generator.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.util.ReferenceHelper
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory
 
-class FormsJsonExporterTest {
+class FormsJsonExporter_Test {
 	private FormsJsonGenerator exporter;
 	val testName = "testName";
 	val testReference = "testReference";
@@ -71,8 +71,8 @@ class FormsJsonExporterTest {
 		val firstCategory = VCategorizationFactory.eINSTANCE.createCategory
 		val secondCategory = VCategorizationFactory.eINSTANCE.createCategory
 		
-		firstCategory.name = "First"
-		secondCategory.name = "Second"
+		firstCategory.label = "First"
+		secondCategory.label = "Second"
 		
 		val firstControl = VViewFactory.eINSTANCE.createControl
 		val secondControl = VViewFactory.eINSTANCE.createControl
@@ -106,9 +106,7 @@ class FormsJsonExporterTest {
 		      "elements": [{
 		      	  "type": "Control",
 		      	  "label": "«testName»",
-		      	  "scope": {
-			  		  "$ref": "«testReference»"
-			  	  }
+		      	  "scope": "«testReference»"
 			  	}
 		      ]
 		    },
@@ -118,9 +116,7 @@ class FormsJsonExporterTest {
 		      "elements": [{
 		      	  "type": "Control",
 		      	  "label": "«testName»",
-		      	  "scope": {
-			  		  "$ref": "«testReference»"
-			  	  }
+		      	  "scope": "«testReference»"
 			  	}
 		      ]
 		    }		  
@@ -147,9 +143,7 @@ class FormsJsonExporterTest {
 		    },
 		    {
 		      "type": "Control",
-		      "scope": {
-			  	"$ref": "«testReference»"
-			  },
+		      "scope": "«testReference»",
 		      "label": "«testName»"
 		    }
 			]
@@ -264,16 +258,12 @@ class FormsJsonExporterTest {
 			    {
 			      "type": "Control",
 			      "label": "«testName»",
-			      "scope": {
-			      	"$ref": "«testReference»"
-			      }
+			      "scope": "«testReference»"
 			    },
 			    {
 			      "type": "Control",
 			      "label": "«testName»",
-			      "scope": {
-			      	"$ref": "«testReference»"
-			      }
+			      "scope": "«testReference»"
 			    }
 			  ]
 			}
@@ -289,9 +279,7 @@ class FormsJsonExporterTest {
 			    {
 			      "type": "Control",
 			      "label": "«testName»",
-			      "scope": {
-			      	"$ref": "«testReference»"
-			      }
+			      "scope": "«testReference»"
 			    }
 			  ]
 			}
@@ -365,9 +353,7 @@ class FormsJsonExporterTest {
 		    {
 		      "type": "Control",
 		      "label": "«testName»",
-		      "scope": {
-		      	"$ref": "«testReference»"
-		      }
+		      "scope": "«testReference»"
 		    }
 		'''
 		.toJsonElement

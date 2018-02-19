@@ -40,7 +40,6 @@ class FormsJsonGenerator extends JsonGenerator {
 	private static final val CATEGORIZATION = "Categorization"
 	private static final val CATEGORY = "Category"
 	private static final val SCOPE = "scope"
-	private static final val REF = "$ref"
 	private static final val LABEL = "label"
 	
 	ReferenceHelper refHelper
@@ -108,7 +107,7 @@ class FormsJsonGenerator extends JsonGenerator {
 	private def dispatch JsonElement createJsonFormsElement(VContainer container){
 		val jsonObject = new JsonObject
 		jsonObject.withType(container.type)
-		if(container.name!=null) {
+		if(container.name!==null) {
 			jsonObject.withLabel(container.label.displayLabel)
 		}
 		jsonObject.withElements(container.children)
@@ -124,9 +123,7 @@ class FormsJsonGenerator extends JsonGenerator {
 	}
 	
 	private def withScope(JsonObject jsonObject, String ref) {
-		val scope = new JsonObject
-		scope.with(REF, ref)
-		jsonObject.with(SCOPE, scope)
+		jsonObject.with(SCOPE, ref)
 	}
 	
 	private def withLabel(JsonObject jsonObject, String label) {

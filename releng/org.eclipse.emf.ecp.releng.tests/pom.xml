@@ -199,12 +199,33 @@
         <module>../../tests/org.eclipse.emfforms.swt.controlgrid.test</module>
 
         <module>../../tests/org.eclipse.emfforms.swt.treemasterdetail.test</module>
+        
+        <!-- EMF2Web -->
+		<module>../../tests/org.eclipse.emf.ecp.emf2web.json.test</module>
+		
 	</modules>
 	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<outputDirectory>bin</outputDirectory>
 		<plugins>
+			<!-- build tests written in xtend -->
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>2.7.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<!-- optionally you can configure a different target folder -->
+						<configuration>
+							<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- to disable use -Dcheckstyle.skip -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -212,6 +233,7 @@
 				<version>2.17</version>
 				<configuration>
 					<configLocation>../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyleTest.xml</configLocation>
+					<propertiesLocation>../org.eclipse.emf.ecp.releng/checkstyle/checkstyle_maven.properties</propertiesLocation>
 					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>

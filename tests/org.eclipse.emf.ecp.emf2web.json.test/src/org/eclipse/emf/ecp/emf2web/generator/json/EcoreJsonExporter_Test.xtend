@@ -13,7 +13,7 @@ import static org.junit.Assert.*
 import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator
 import org.eclipse.emf.ecore.EClassifier
 
-class EcoreJsonExporterTest {
+class EcoreJsonExporter_Test {
 	static final val ECORE_PACKAGE = EcorePackage.eINSTANCE
 	static final val ECORE_FACTORY = EcoreFactory.eINSTANCE
 	static final val TEST_ECLASS_NAME = "TestEClass";
@@ -31,7 +31,7 @@ class EcoreJsonExporterTest {
 
 	def buildEnum() {
 		val eEnum = ECORE_FACTORY.createEEnum
-		eEnum.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		eEnum.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME
 		for (String literal : testEnumValues) {
 			val enumLiteral = ECORE_FACTORY.createEEnumLiteral
 			enumLiteral.name = literal
@@ -43,12 +43,12 @@ class EcoreJsonExporterTest {
 	@Test
 	def void createJsonSchemaElementFromEClassWithOptionalSingleReference() {
 		val eClass = ECORE_FACTORY.createEClass
-		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		eClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME
 		
 		val refClass = ECORE_FACTORY.createEClass
-		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+		refClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME + "2"
 
-		val eReference = eReference(-1, -1, refClass)
+		val eReference = eReference(-1, 1, refClass)
 		eClass.getEStructuralFeatures.add(eReference)
 
 		val result = exporter.createJsonElement(eClass)
@@ -58,10 +58,10 @@ class EcoreJsonExporterTest {
 	@Test
 	def void createJsonSchemaElementFromEClassWithMandatorySingleReference() {
 		val eClass = ECORE_FACTORY.createEClass
-		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		eClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME
 		
 		val refClass = ECORE_FACTORY.createEClass
-		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+		refClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME + "2"
 
 		val eReference = eReference(1, 1, refClass)
 		eClass.getEStructuralFeatures.add(eReference)
@@ -73,10 +73,10 @@ class EcoreJsonExporterTest {
 	@Test
 	def void createJsonSchemaElementFromEClassWithOptionalMultiReference() {
 		val eClass = ECORE_FACTORY.createEClass
-		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		eClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME
 		
 		val refClass = ECORE_FACTORY.createEClass
-		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+		refClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME + "2"
 
 		val eReference = eReference(-1, 10, refClass)
 		eClass.getEStructuralFeatures.add(eReference)
@@ -88,10 +88,10 @@ class EcoreJsonExporterTest {
 	@Test
 	def void createJsonSchemaElementFromEClassWithMandatoryMultiReference() {
 		val eClass = ECORE_FACTORY.createEClass
-		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		eClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME
 		
 		val refClass = ECORE_FACTORY.createEClass
-		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+		refClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME + "2"
 
 		val eReference = eReference(1, 10, refClass)
 		eClass.getEStructuralFeatures.add(eReference)
@@ -103,15 +103,15 @@ class EcoreJsonExporterTest {
 	@Test
 	def void createJsonSchemaElementFromEClassWithCircleReference() {
 		val eClass = ECORE_FACTORY.createEClass
-		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		eClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME
 		
 		val refClass = ECORE_FACTORY.createEClass
-		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+		refClass.name = EcoreJsonExporter_Test.TEST_ECLASS_NAME + "2"
 
-		val eReference = eReference(-1, -1, refClass)
+		val eReference = eReference(-1, 1, refClass)
 		eClass.getEStructuralFeatures.add(eReference)
 		
-		val eReference2 = eReference(-1, -1, eClass)
+		val eReference2 = eReference(-1, 1, eClass)
 		refClass.getEStructuralFeatures.add(eReference2)
 
 		val result = exporter.createJsonElement(eClass)
