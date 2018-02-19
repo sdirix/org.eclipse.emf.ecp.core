@@ -18,13 +18,13 @@
 		<profile>
 			<id>release-build</id>
 			<properties>
-				<build_job>release-full</build_job>
+				<currentBuild>${project.basedir}/../../releng/</currentBuild>
 			</properties>
 		</profile>
 		<profile>
 			<id>full-build</id>
 			<properties>
-				<build_job>ecp-develop-full</build_job>
+				<currentBuild>${project.basedir}/../../releng/</currentBuild>
 			</properties>
 		</profile>
 	</profiles>
