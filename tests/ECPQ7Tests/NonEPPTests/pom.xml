@@ -15,13 +15,13 @@
 		<profile>
 			<id>release-build</id>
 			<properties>
-				<currentBuild>${project.baseUri}/../../../releng</currentBuild>
+				<currentBuild>${project.basedir}/../../../releng</currentBuild>
 			</properties>
 		</profile>
 		<profile>
 			<id>full-build</id>
 			<properties>
-				<currentBuild>${project.baseUri}/../../../releng</currentBuild>
+				<currentBuild>${project.basedir}/../../../releng</currentBuild>
 			</properties>
 		</profile>
 	</profiles>
