@@ -9,7 +9,7 @@
  * Contributors:
  * Stefan Dirix - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.json.generator
+package org.eclipse.emf.ecp.emf2web.json.generator.xtend
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonElement

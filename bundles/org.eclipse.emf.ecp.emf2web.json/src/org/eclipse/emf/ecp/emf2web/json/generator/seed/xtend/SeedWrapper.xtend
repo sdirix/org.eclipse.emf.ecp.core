@@ -1,6 +1,6 @@
-package org.eclipse.emf.ecp.emf2web.json.generator.seed
+package org.eclipse.emf.ecp.emf2web.json.generator.seed.xtend
 
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo
 import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper
 
 class SeedWrapper implements SchemaWrapper {

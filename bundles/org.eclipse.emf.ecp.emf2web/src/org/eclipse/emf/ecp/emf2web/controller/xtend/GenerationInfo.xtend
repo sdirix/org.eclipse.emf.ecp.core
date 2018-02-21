@@ -9,7 +9,7 @@
  * Contributors:
  * Stefan Dirix - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.controller
+package org.eclipse.emf.ecp.emf2web.controller.xtend
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecp.view.spi.model.VView

@@ -11,7 +11,7 @@
  * Philip Langer - re-implementation based on Gson 
  * Florian Zoubek - bug fixing
  *******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.json.generator
+package org.eclipse.emf.ecp.emf2web.json.generator.xtend
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
@@ -26,11 +26,11 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 
-import static extension org.eclipse.emf.ecp.emf2web.util.TypeMapper.isBooleanType
-import static extension org.eclipse.emf.ecp.emf2web.util.TypeMapper.isDateType
-import static extension org.eclipse.emf.ecp.emf2web.util.TypeMapper.isEnumType
-import static extension org.eclipse.emf.ecp.emf2web.util.TypeMapper.isIntegerType
-import static extension org.eclipse.emf.ecp.emf2web.util.TypeMapper.isNumberType
+import static extension org.eclipse.emf.ecp.emf2web.util.xtend.TypeMapper.isBooleanType
+import static extension org.eclipse.emf.ecp.emf2web.util.xtend.TypeMapper.isDateType
+import static extension org.eclipse.emf.ecp.emf2web.util.xtend.TypeMapper.isEnumType
+import static extension org.eclipse.emf.ecp.emf2web.util.xtend.TypeMapper.isIntegerType
+import static extension org.eclipse.emf.ecp.emf2web.util.xtend.TypeMapper.isNumberType
 import java.util.HashSet
 
 /** 

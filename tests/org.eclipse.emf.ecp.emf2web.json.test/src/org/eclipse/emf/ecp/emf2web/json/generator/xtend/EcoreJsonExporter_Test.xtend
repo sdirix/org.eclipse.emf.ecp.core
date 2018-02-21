@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecp.emf2web.generator.json
+package org.eclipse.emf.ecp.emf2web.json.generator.xtend
 
 import com.google.gson.JsonParser
 import java.util.ArrayList
@@ -10,7 +10,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator
+import org.eclipse.emf.ecp.emf2web.json.generator.xtend.EcoreJsonGenerator
 import org.eclipse.emf.ecore.EClassifier
 
 class EcoreJsonExporter_Test {

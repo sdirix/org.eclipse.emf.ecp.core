@@ -9,17 +9,17 @@
  * Contributors:
  * Stefan Dirix - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.json.controller
+package org.eclipse.emf.ecp.emf2web.json.controller.xtend
 
 import java.util.Collection
 import java.util.LinkedList
 import java.util.List
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo
-import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator
-import org.eclipse.emf.ecp.emf2web.json.generator.FormsJsonGenerator
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo
+import org.eclipse.emf.ecp.emf2web.json.generator.xtend.EcoreJsonGenerator
+import org.eclipse.emf.ecp.emf2web.json.generator.xtend.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.util.ReferenceHelperImpl
 import org.eclipse.emf.ecp.view.spi.model.VView
-import org.eclipse.emf.ecp.emf2web.controller.GenerationController
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationController
 import org.eclipse.emf.ecp.view.spi.model.VElement
 
 /**

@@ -9,7 +9,7 @@
  * Contributors:
  * Stefan Dirix - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.util
+package org.eclipse.emf.ecp.emf2web.util.xtend
 
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EcorePackage

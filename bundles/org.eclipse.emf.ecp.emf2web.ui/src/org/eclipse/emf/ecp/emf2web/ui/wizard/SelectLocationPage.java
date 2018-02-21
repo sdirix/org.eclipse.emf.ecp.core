@@ -28,7 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;

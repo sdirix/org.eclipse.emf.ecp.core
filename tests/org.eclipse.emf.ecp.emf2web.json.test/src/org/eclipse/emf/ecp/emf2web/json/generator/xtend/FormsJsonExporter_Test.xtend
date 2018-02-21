@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecp.emf2web.generator.json
+package org.eclipse.emf.ecp.emf2web.json.generator.xtend
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.emf.ecp.emf2web.json.generator.FormsJsonGenerator
+import org.eclipse.emf.ecp.emf2web.json.generator.xtend.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.util.ReferenceHelper
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory
 

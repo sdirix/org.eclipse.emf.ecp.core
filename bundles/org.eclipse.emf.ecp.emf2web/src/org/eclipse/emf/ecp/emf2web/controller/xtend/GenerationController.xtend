@@ -9,7 +9,7 @@
  * Contributors:
  * Stefan Dirix - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.controller
+package org.eclipse.emf.ecp.emf2web.controller.xtend
 
 import java.util.List
 import java.util.Collection
