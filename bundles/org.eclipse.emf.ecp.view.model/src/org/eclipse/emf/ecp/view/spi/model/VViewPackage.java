@@ -1,4 +1,3 @@
-// CHECKSTYLE.OFF: FileLength|RegexpHeader
 /**
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
@@ -10,6 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
+// CHECKSTYLE.OFF: FileLength
 package org.eclipse.emf.ecp.view.spi.model;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -1082,7 +1082,7 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 *
@@ -1095,7 +1095,7 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 *
@@ -1107,7 +1107,7 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Has Tooltip</em>' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 *
@@ -1481,7 +1481,7 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 *
@@ -1495,7 +1495,7 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip
 	 * <em>Tooltip</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
 	 *
@@ -2006,7 +2006,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.13
 		 *        <!-- end-user-doc -->
 		 *
@@ -2019,7 +2019,7 @@ public interface VViewPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.13
 		 *        <!-- end-user-doc -->
 		 *
