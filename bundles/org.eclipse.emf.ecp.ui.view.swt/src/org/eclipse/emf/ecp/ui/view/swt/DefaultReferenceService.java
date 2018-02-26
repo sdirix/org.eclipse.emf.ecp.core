@@ -97,20 +97,25 @@ public class DefaultReferenceService implements ReferenceService {
 		return 2;
 	}
 
+	@Deprecated
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
+		addNewModelElements(eObject, eReference, true);
+	}
+
+	@Override
+	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 		if (eReference.isContainer()) {
-			// TODO language
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
 				"Operation not permitted for container references!");//$NON-NLS-1$
-			return;
+			return Optional.empty();
 		}
 
 		final Optional<EObject> newMEInstanceOptional = createNewModelElementStrategy.createNewModelElement(eObject,
 			eReference);
 
 		if (!newMEInstanceOptional.isPresent()) {
-			return;
+			return Optional.empty();
 		}
 		final EObject newMEInstance = newMEInstanceOptional.get();
 
@@ -120,7 +125,11 @@ public class DefaultReferenceService implements ReferenceService {
 
 		referenceStrategy.addElementsToReference(eObject, eReference, singleton(newMEInstance));
 
-		openInNewContext(newMEInstance);
+		if (openInNewContext) {
+			openInNewContext(newMEInstance);
+		}
+
+		return newMEInstanceOptional;
 	}
 
 	@Override

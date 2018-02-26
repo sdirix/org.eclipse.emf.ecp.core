@@ -9,7 +9,7 @@
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.table.ui.swt.test;
+package org.eclipse.emf.ecp.view.table.test.common;
 
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;

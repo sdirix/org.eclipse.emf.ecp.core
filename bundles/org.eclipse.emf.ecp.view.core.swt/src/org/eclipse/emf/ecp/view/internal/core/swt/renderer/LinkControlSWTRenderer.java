@@ -285,7 +285,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				try {
 					final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
 					final EReference eReference = (EReference) getModelValue().getValueType();
-					getReferenceService().addNewModelElements(eObject, eReference);
+					getReferenceService().addNewModelElements(eObject, eReference, true);
 				} catch (final DatabindingFailedException ex) {
 					getReportService().report(new DatabindingFailedReport(ex));
 				}

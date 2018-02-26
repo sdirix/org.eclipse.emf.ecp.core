@@ -11,22 +11,32 @@
  * Christian W. Damus - bug 527740
  *
  *******************************************************************************/
-package org.eclipse.emf.ecp.view.table.ui.swt.test;
+package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -35,7 +45,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -55,13 +69,17 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
+import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
@@ -104,6 +122,7 @@ public class SWTTable_PTest {
 	private static PrintStream systemErr;
 	private Shell shell;
 	private EObject domainElement;
+	private ComposedAdapterFactory adapterFactory;
 
 	@BeforeClass
 	public static void beforeClass() {
@@ -129,6 +148,17 @@ public class SWTTable_PTest {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
 		domainElement = eClass;
+
+		// Add domain element to resource with editing domain
+		final ResourceSet rs = new ResourceSetImpl();
+		adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(
+			adapterFactory, new BasicCommandStack(), rs);
+		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(editingDomain));
+		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+		resource.getContents().add(domainElement);
 	}
 
 	@After
@@ -136,13 +166,14 @@ public class SWTTable_PTest {
 		if (!log.isEmpty()) {
 			fail("Unexpected log to System.err: " + log);
 		}
+		adapterFactory.dispose();
 	}
 
 	@Test
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
-		final TableControlHandle handle = createUninitializedTableWithoutColumns();
+		final TableControlHandle handle = TableTestUtil.createUninitializedTableWithoutColumns();
 		//
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(Label.class.isInstance(render));// Error label with error text
@@ -157,7 +188,7 @@ public class SWTTable_PTest {
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		domainElement = createEClass;
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
@@ -175,7 +206,7 @@ public class SWTTable_PTest {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
 		domainElement = view;
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
@@ -197,7 +228,7 @@ public class SWTTable_PTest {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
@@ -215,7 +246,7 @@ public class SWTTable_PTest {
 	public void testTableWithoutColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		// setup model
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
@@ -233,7 +264,7 @@ public class SWTTable_PTest {
 	@Test
 	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
@@ -409,7 +440,7 @@ public class SWTTable_PTest {
 		((EClass) domainElement).getESuperTypes().add(class3);
 
 		// table control
-		final VTableControl tableControl = createTableControl();
+		final VTableControl tableControl = TableTestUtil.createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
 		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
@@ -471,7 +502,7 @@ public class SWTTable_PTest {
 		((EClass) domainElement).getESuperTypes().add(class3);
 
 		// table control
-		final VTableControl tableControl = createTableControl();
+		final VTableControl tableControl = TableTestUtil.createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
 		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
@@ -541,6 +572,194 @@ public class SWTTable_PTest {
 		assertFalse(addButton.getVisible());
 		assertFalse(removeButton.getVisible());
 
+	}
+
+	@Test
+	public void testTable_AddRow_WithTableService() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
+
+		// mock the TableControlService used to create a new element
+		final TableControlService tableService = mock(TableControlService.class);
+		final EClass newEClass = EcoreFactory.eINSTANCE.createEClass();
+		newEClass.setName("NewlyAddedEClass");
+		when(tableService.createNewElement(any(EClass.class), any(EObject.class), any(EStructuralFeature.class)))
+			.thenReturn(Optional.of((EObject) newEClass));
+
+		final ViewModelContextWithoutServices context = new ViewModelContextWithoutServices(handle.getTableControl());
+		context.addService(tableService, TableControlService.class);
+
+		// Render the table
+		final TableControlSWTRenderer tableRenderer = TableControlSWTRenderer.class
+			.cast(rendererFactory.getRendererInstance(
+				handle.getTableControl(), context));
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
+			fail();
+		}
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+
+		// The domain model is initialized with one super type in #init()
+		assertEquals(1, table.getItemCount());
+
+		// Add a new row
+		tableRenderer.addRow(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+
+		// Verify that the new EClass was added to the domain object and the table, and that the TableControlService was
+		// used
+		assertEquals(2, table.getItemCount());
+		assertEquals(2, EClass.class.cast(domainElement).getESuperTypes().size());
+		assertEquals(newEClass, EClass.class.cast(domainElement).getESuperTypes().get(1));
+		assertEquals(1, table.getSelectionIndex());
+		verify(tableService).createNewElement(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+	}
+
+	@Test
+	public void testTable_AddRow_WithTableService_EmptyResult()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
+
+		// mock the TableControlService used to create a new element
+		final TableControlService tableService = mock(TableControlService.class);
+		when(tableService.createNewElement(any(EClass.class), any(EObject.class), any(EStructuralFeature.class)))
+			.thenReturn(Optional.<EObject> empty());
+
+		final ViewModelContextWithoutServices context = new ViewModelContextWithoutServices(handle.getTableControl());
+		context.addService(tableService, TableControlService.class);
+
+		// Render the table
+		final TableControlSWTRenderer tableRenderer = TableControlSWTRenderer.class
+			.cast(rendererFactory.getRendererInstance(
+				handle.getTableControl(), context));
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
+			fail();
+		}
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+
+		// The domain model is initialized with one super type in #init()
+		assertEquals(1, table.getItemCount());
+
+		// Add a new row
+		tableRenderer.addRow(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+
+		// Verify that the no new EClass was added to the domain object and the table, and that the TableControlService
+		// was used
+		assertEquals(1, table.getItemCount());
+		assertEquals(1, EClass.class.cast(domainElement).getESuperTypes().size());
+		verify(tableService).createNewElement(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+	}
+
+	@Test
+	public void testTable_AddRow_WithTableService_NullResult()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
+
+		// mock the TableControlService to return null
+		final TableControlService tableService = mock(TableControlService.class);
+		when(tableService.createNewElement(any(EClass.class), any(EObject.class), any(EStructuralFeature.class)))
+			.thenReturn(null);
+		// mock the ReferenceService used to create a new element
+		final EClass newEClass = EcoreFactory.eINSTANCE.createEClass();
+		newEClass.setName("NewlyAddedEClass");
+		final ReferenceService referenceService = mock(ReferenceService.class);
+		when(referenceService.addNewModelElements(any(EObject.class), any(EReference.class), anyBoolean()))
+			.thenReturn(Optional.of((EObject) newEClass));
+
+		final ViewModelContextWithoutServices context = new ViewModelContextWithoutServices(handle.getTableControl());
+		context.addService(tableService, TableControlService.class);
+		context.addService(referenceService, ReferenceService.class);
+
+		// Render the table
+		final TableControlSWTRenderer tableRenderer = TableControlSWTRenderer.class
+			.cast(rendererFactory.getRendererInstance(
+				handle.getTableControl(), context));
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
+			fail();
+		}
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+
+		// The domain model is initialized with one super type in #init()
+		assertEquals(1, table.getItemCount());
+
+		// Add a new row
+		tableRenderer.addRow(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+
+		// Verify that the new EClass was added although the table service returned null
+		assertEquals(2, table.getItemCount());
+		assertEquals(2, EClass.class.cast(domainElement).getESuperTypes().size());
+		assertEquals(1, table.getSelectionIndex());
+		verify(tableService).createNewElement(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		verify(referenceService).addNewModelElements(domainElement, EcorePackage.eINSTANCE.getEClass_ESuperTypes(),
+			false);
+	}
+
+	@Test
+	public void testTable_AddRow_WithReferenceService()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
+
+		// mock the ReferenceService used to create a new element
+		final EClass newEClass = EcoreFactory.eINSTANCE.createEClass();
+		newEClass.setName("NewlyAddedEClass");
+		final ReferenceService referenceService = mock(ReferenceService.class);
+		when(referenceService.addNewModelElements(any(EObject.class), any(EReference.class), anyBoolean()))
+			.thenReturn(Optional.of((EObject) newEClass));
+
+		final ViewModelContextWithoutServices context = new ViewModelContextWithoutServices(handle.getTableControl());
+		context.addService(referenceService, ReferenceService.class);
+
+		// Render the table
+		final TableControlSWTRenderer tableRenderer = TableControlSWTRenderer.class
+			.cast(rendererFactory.getRendererInstance(
+				handle.getTableControl(), context));
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
+			fail();
+		}
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+
+		// The domain model is initialized with one super type in #init()
+		assertEquals(1, table.getItemCount());
+
+		// Add a new row
+		tableRenderer.addRow(EcorePackage.eINSTANCE.getEClass(), domainElement,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+
+		// Verify that the new EClass was added to the domain object and the table, and that the reference service was
+		// used
+		assertEquals(2, table.getItemCount());
+		assertEquals(2, EClass.class.cast(domainElement).getESuperTypes().size());
+		assertEquals(newEClass, EClass.class.cast(domainElement).getESuperTypes().get(1));
+		assertEquals(1, table.getSelectionIndex());
+		verify(referenceService).addNewModelElements(domainElement, EcorePackage.eINSTANCE.getEClass_ESuperTypes(),
+			false);
 	}
 
 	private TableControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)
@@ -620,44 +839,15 @@ public class SWTTable_PTest {
 	}
 
 	private static TableControlHandle createTableWithTwoTableColumns() {
-		final TableControlHandle tableControlHandle = createInitializedTableWithoutTableColumns();
-		final VDomainModelReference tableColumn1 = createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final TableControlHandle tableControlHandle = TableTestUtil.createInitializedTableWithoutTableColumns();
+		final VDomainModelReference tableColumn1 = TableTestUtil
+			.createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 
 		tableControlHandle.addFirstTableColumn(tableColumn1);
-		final VDomainModelReference tableColumn2 = createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference tableColumn2 = TableTestUtil
+			.createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 		return tableControlHandle;
-	}
-
-	public static VDomainModelReference createTableColumn(EStructuralFeature feature) {
-		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		reference.setDomainModelEFeature(feature);
-		return reference;
-	}
-
-	public static TableControlHandle createInitializedTableWithoutTableColumns() {
-		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
-			.createTableDomainModelReference();
-		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
-		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
-
-		return tableControlHandle;
-	}
-
-	public static TableControlHandle createUninitializedTableWithoutColumns() {
-		final VTableControl tableControl = createTableControl();
-		return new TableControlHandle(tableControl);
-	}
-
-	/**
-	 * @return
-	 */
-	private static VTableControl createTableControl() {
-		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
-		tc.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
-		return tc;
 	}
 
 	private TableViewer getTableViewerFromRenderer(AbstractSWTRenderer<VElement> renderer) {
@@ -689,6 +879,7 @@ public class SWTTable_PTest {
 
 		private final VElement view;
 		private final EMFFormsContextProvider contextProvider;
+		private final Map<Class<?>, Object> services = new LinkedHashMap<Class<?>, Object>();
 
 		@SuppressWarnings("restriction")
 		ViewModelContextWithoutServices(VElement view) {
@@ -770,6 +961,10 @@ public class SWTTable_PTest {
 			// not needed
 		}
 
+		public <T> void addService(T service, Class<? super T> serviceClass) {
+			services.put(serviceClass, service);
+		}
+
 		/**
 		 * {@inheritDoc}
 		 *
@@ -778,6 +973,9 @@ public class SWTTable_PTest {
 		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
 			if (EMFFormsContextProvider.class.equals(serviceType)) {
+				return true;
+			}
+			if (services.containsKey(serviceType)) {
 				return true;
 			}
 			return false;
@@ -794,7 +992,7 @@ public class SWTTable_PTest {
 			if (EMFFormsContextProvider.class.equals(serviceType)) {
 				return (T) contextProvider;
 			}
-			return null;
+			return (T) services.get(serviceType);
 		}
 
 		/**

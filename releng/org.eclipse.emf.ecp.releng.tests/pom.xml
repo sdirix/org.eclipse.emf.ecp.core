@@ -77,6 +77,7 @@
 	<modules>
 		<!-- Bundles/Features -->
 		<module>../../bundles/org.eclipse.emf.ecp.test.common</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.table.test.common</module>
 		<module>../../tests/org.eclipse.emfforms.swt.common.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
         	<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>

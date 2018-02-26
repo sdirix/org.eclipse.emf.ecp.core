@@ -189,7 +189,7 @@ public class DefaultReferenceService_PTest {
 	public void addNewModelElements() {
 		final EClass foo = (EClass) testPackage.getEClassifier("Foo");
 
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS, true);
 		// test that an operation was added to foo
 		assertThat(foo.getEOperations().size(), is(1));
 
@@ -200,7 +200,7 @@ public class DefaultReferenceService_PTest {
 	@Test
 	public void attachDefaultCase_inOwner() {
 		final EClass foo = (EClass) testPackage.getEClassifier("Foo");
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS, true);
 		assertThat(foo.getEOperations(), CoreMatchers.<EOperation> hasItem(anything()));
 		final EOperation op = foo.getEOperations().get(0);
 
@@ -213,7 +213,7 @@ public class DefaultReferenceService_PTest {
 	@Test
 	public void attachDefaultCase_inAncestorOfOwner() {
 		final EClass foo = (EClass) testPackage.getEClassifier("Foo");
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES, true);
 		assertThat(foo.getESuperTypes(), CoreMatchers.<EClass> hasItem(anything()));
 		final EClass supertype = foo.getESuperTypes().get(0);
 
@@ -232,7 +232,7 @@ public class DefaultReferenceService_PTest {
 		testPackage.getEClassifiers().remove(foo);
 		resource.getContents().add(foo);
 
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES, true);
 		assertThat(foo.getESuperTypes(), CoreMatchers.<EClass> hasItem(anything()));
 		final EClass supertype = foo.getESuperTypes().get(0);
 

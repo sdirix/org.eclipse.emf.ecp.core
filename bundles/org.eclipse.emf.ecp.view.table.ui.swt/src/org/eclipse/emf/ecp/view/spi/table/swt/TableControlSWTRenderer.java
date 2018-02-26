@@ -36,8 +36,6 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -50,6 +48,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
@@ -66,7 +65,6 @@ import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -1328,24 +1326,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.6
 	 */
 	protected void addRow(EClass clazz, EObject eObject, EStructuralFeature structuralFeature) {
-		Optional<EObject> eObjectToAdd;
+		Optional<EObject> eObjectToAdd = null;
 
-		/* no table service available, fall back to default */
-		if (!getViewModelContext().hasService(TableControlService.class)) {
-			if (clazz.isAbstract() || clazz.isInterface()) {
-				getReportService().report(new StatusReport(
-					new Status(IStatus.WARNING, "org.eclipse.emf.ecp.view.table.ui.swt", //$NON-NLS-1$
-						String.format("The class %1$s is abstract or an interface.", clazz.getName())))); //$NON-NLS-1$
-				eObjectToAdd = Optional.empty();
-			} else {
-				eObjectToAdd = Optional.of(clazz.getEPackage().getEFactoryInstance().create(clazz));
-			}
-		}
-		/* table service available */
-		else {
+		/* table service available => use specific behavior to create row */
+		if (getViewModelContext().hasService(TableControlService.class)) {
 			final TableControlService tableService = getViewModelContext()
 				.getService(TableControlService.class);
 			eObjectToAdd = tableService.createNewElement(clazz, eObject, structuralFeature);
+		}
+		/* no table service available, fall back to default */
+		if (eObjectToAdd == null) {
+			final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+			eObjectToAdd = referenceService.addNewModelElements(eObject, EReference.class.cast(structuralFeature),
+				false);
 		}
 
 		if (!eObjectToAdd.isPresent()) {
