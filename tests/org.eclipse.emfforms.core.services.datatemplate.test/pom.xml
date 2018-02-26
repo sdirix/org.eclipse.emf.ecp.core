@@ -21,6 +21,10 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<excludes>
+						<!-- Creating the wizard dialog does not properly work on the hudson -->
+						<exclude>**/SelectSubclassAndTemplateWizard_PTest.java</exclude>
+					</excludes>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
 				</configuration>
@@ -28,32 +32,12 @@
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
-			<configuration>
+				<configuration>
 					<dependency-resolution>
 						<extraRequirements>
 							<requirement>
 								<type>p2-installable-unit</type>
-								<id>org.eclipse.emf.ecp.view.swt.layout</id>
-								<versionRange>0.0.0</versionRange>
-							</requirement>
-							<requirement>
-								<type>p2-installable-unit</type>
-								<id>org.eclipse.emfforms.core.services.databinding.featurepath</id>
-								<versionRange>0.0.0</versionRange>
-							</requirement>
-							<requirement>
-								<type>p2-installable-unit</type>
-								<id>org.eclipse.emfforms.core.services.structuralchange</id>
-								<versionRange>0.0.0</versionRange>
-							</requirement>
-							<requirement>
-								<type>p2-installable-unit</type>
-								<id>org.eclipse.emfforms.core.services.emf</id>
-								<versionRange>0.0.0</versionRange>
-							</requirement>
-							<requirement>
-								<type>p2-installable-unit</type>
-								<id>org.eclipse.emfforms.core.services.locale.default</id>
+								<id>org.eclipse.equinox.ds</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 						</extraRequirements>

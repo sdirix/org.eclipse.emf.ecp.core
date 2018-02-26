@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage
  * @generated
  */
@@ -27,17 +26,14 @@ public interface AuditFactory extends EFactory {
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	AuditFactory eINSTANCE = org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AuditFactoryImpl
-		.init();
+	AuditFactory eINSTANCE = org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AuditFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Guest User</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return a new object of class '<em>Guest User</em>'.
 	 * @generated
 	 */
@@ -47,7 +43,6 @@ public interface AuditFactory extends EFactory {
 	 * Returns a new object of class '<em>Registered User</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return a new object of class '<em>Registered User</em>'.
 	 * @generated
 	 */
@@ -57,7 +52,6 @@ public interface AuditFactory extends EFactory {
 	 * Returns a new object of class '<em>Admin User</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return a new object of class '<em>Admin User</em>'.
 	 * @generated
 	 */
@@ -67,7 +61,6 @@ public interface AuditFactory extends EFactory {
 	 * Returns a new object of class '<em>User Group</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return a new object of class '<em>User Group</em>'.
 	 * @generated
 	 */
@@ -77,7 +70,6 @@ public interface AuditFactory extends EFactory {
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

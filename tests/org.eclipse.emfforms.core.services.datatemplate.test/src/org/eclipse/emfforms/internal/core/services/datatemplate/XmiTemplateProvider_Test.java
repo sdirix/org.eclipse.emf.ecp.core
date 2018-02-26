@@ -45,18 +45,18 @@ public class XmiTemplateProvider_Test {
 	@Before
 	public void setUp() {
 		adminTemplate = DataTemplateFactory.eINSTANCE.createTemplate();
-		adminTemplate.setName("Admin Template");
+		adminTemplate.setName("Admin Template"); //$NON-NLS-1$
 		guestTemplate = DataTemplateFactory.eINSTANCE.createTemplate();
-		guestTemplate.setName("Guest Template");
+		guestTemplate.setName("Guest Template"); //$NON-NLS-1$
 		registeredTemplate = DataTemplateFactory.eINSTANCE.createTemplate();
-		registeredTemplate.setName("Registered Template");
+		registeredTemplate.setName("Registered Template"); //$NON-NLS-1$
 
 		final AdminUser adminUser = AuditFactory.eINSTANCE.createAdminUser();
-		adminUser.setLogin("admin");
+		adminUser.setLogin("admin"); //$NON-NLS-1$
 		final GuestUser guestUser = AuditFactory.eINSTANCE.createGuestUser();
-		guestUser.setLogin("guest");
+		guestUser.setLogin("guest"); //$NON-NLS-1$
 		final RegisteredUser registeredUser = AuditFactory.eINSTANCE.createRegisteredUser();
-		registeredUser.setLogin("registered");
+		registeredUser.setLogin("registered"); //$NON-NLS-1$
 
 		adminTemplate.setInstance(adminUser);
 		guestTemplate.setInstance(guestUser);

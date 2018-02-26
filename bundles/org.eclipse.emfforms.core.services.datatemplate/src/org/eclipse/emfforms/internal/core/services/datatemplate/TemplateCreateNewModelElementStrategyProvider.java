@@ -14,10 +14,11 @@ package org.eclipse.emfforms.internal.core.services.datatemplate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy.Provider;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceServiceCustomizationVendor;
@@ -25,6 +26,9 @@ import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.Template;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Display;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -41,6 +45,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 public class TemplateCreateNewModelElementStrategyProvider
 	extends ReferenceServiceCustomizationVendor<CreateNewModelElementStrategy> implements Provider {
 	private final Set<TemplateProvider> templateProviders = new LinkedHashSet<TemplateProvider>();
+	private EMFFormsLocalizationService localizationService;
 
 	/**
 	 * Register a template provider implementation.
@@ -59,6 +64,16 @@ public class TemplateCreateNewModelElementStrategyProvider
 	 */
 	void unregisterTemplateProvider(TemplateProvider templateProvider) {
 		templateProviders.remove(templateProvider);
+	}
+
+	/**
+	 * Called by the framework to set the {@link EMFFormsLocalizationService}.
+	 *
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 */
+	@Reference
+	void setLocalizationService(EMFFormsLocalizationService localizationService) {
+		this.localizationService = localizationService;
 	}
 
 	@Override
@@ -116,28 +131,41 @@ public class TemplateCreateNewModelElementStrategyProvider
 				return Optional.empty();
 			}
 
+			final Set<EClass> subClasses = new LinkedHashSet<EClass>(
+				EMFUtils.getSubClasses(reference.getEReferenceType()));
 			Template selected = availableTemplates.iterator().next();
 			if (availableTemplates.size() > 1) {
-				final Set<Template> selectedElements = showSelectModelInstancesDialog(availableTemplates);
+				final Optional<Template> selectedElement = showSelectModelInstancesDialog(subClasses,
+					availableTemplates);
 
-				if (selectedElements == null || selectedElements.isEmpty()) {
+				if (selectedElement.isPresent()) {
+					selected = selectedElement.get();
+				} else {
 					return Optional.empty();
 				}
-				selected = selectedElements.iterator().next();
 			}
 
 			return Optional.of(EcoreUtil.copy(selected.getInstance()));
 		}
 
 		/**
-		 * Show a model instance selection dialog.
+		 * Show a model instance selection dialog to first select a sub class and then a fitting template.
 		 *
+		 * @param subClasses the sub classes to choose from
 		 * @param availableInstances the instances to choose from
 		 * @return the instances selected by the user
 		 */
-		protected <T extends EObject> Set<T> showSelectModelInstancesDialog(
-			Set<T> availableInstances) {
-			return SelectModelElementWizardFactory.openModelElementSelectionDialog(availableInstances, false);
+		protected Optional<Template> showSelectModelInstancesDialog(Set<EClass> subClasses,
+			Set<Template> availableInstances) {
+			final SelectSubclassAndTemplateWizard wizard = new SelectSubclassAndTemplateWizard(
+				localizationService.getString(TemplateCreateNewModelElementStrategyProvider.class,
+					MessageKeys.TemplateCreateNewModelElementStrategyProvider_wizardTitle),
+				subClasses, availableInstances, localizationService);
+
+			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
+			wd.open();
+
+			return wizard.getSelectedTemplate();
 		}
 	}
 }

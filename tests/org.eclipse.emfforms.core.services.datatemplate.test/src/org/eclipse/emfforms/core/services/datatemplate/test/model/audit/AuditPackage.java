@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,7 +41,7 @@ public interface AuditPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNAME = "audit";
+	String eNAME = "audit"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -50,7 +50,7 @@ public interface AuditPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://eclipse/org/emfforms/core/services/datatemplate/test/model/audit";
+	String eNS_URI = "http://eclipse/org/emfforms/core/services/datatemplate/test/model/audit"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -59,7 +59,7 @@ public interface AuditPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emfforms.core.services.datatemplate.test.model.audit";
+	String eNS_PREFIX = "org.eclipse.emfforms.core.services.datatemplate.test.model.audit"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.
@@ -499,6 +499,79 @@ public interface AuditPackage extends EPackage {
 	int USER_GROUP_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the
+	 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AbstractSubUserImpl <em>Abstract
+	 * Sub User</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AbstractSubUserImpl
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AuditPackageImpl#getAbstractSubUser()
+	 * @generated
+	 */
+	int ABSTRACT_SUB_USER = 6;
+
+	/**
+	 * The feature id for the '<em><b>Display Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER__DISPLAY_NAME = USER__DISPLAY_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Login</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER__LOGIN = USER__LOGIN;
+
+	/**
+	 * The feature id for the '<em><b>Password</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER__PASSWORD = USER__PASSWORD;
+
+	/**
+	 * The feature id for the '<em><b>Delegates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER__DELEGATES = USER__DELEGATES;
+
+	/**
+	 * The number of structural features of the '<em>Abstract Sub User</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER_FEATURE_COUNT = USER_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Abstract Sub User</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER_OPERATION_COUNT = USER_OPERATION_COUNT + 0;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User
 	 * <em>User</em>}'.
 	 * <!-- begin-user-doc -->
@@ -665,6 +738,19 @@ public interface AuditPackage extends EPackage {
 	EReference getUserGroup_Admins();
 
 	/**
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AbstractSubUser <em>Abstract Sub
+	 * User</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Abstract Sub User</em>'.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AbstractSubUser
+	 * @generated
+	 */
+	EClass getAbstractSubUser();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -828,6 +914,19 @@ public interface AuditPackage extends EPackage {
 		 * @generated
 		 */
 		EReference USER_GROUP__ADMINS = eINSTANCE.getUserGroup_Admins();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AbstractSubUserImpl
+		 * <em>Abstract Sub User</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AbstractSubUserImpl
+		 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.AuditPackageImpl#getAbstractSubUser()
+		 * @generated
+		 */
+		EClass ABSTRACT_SUB_USER = eINSTANCE.getAbstractSubUser();
 
 	}
 

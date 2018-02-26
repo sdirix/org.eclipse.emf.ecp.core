@@ -21,4 +21,5 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="admins" upperBound="-1"
         eType="#//PrivilegedUser"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractSubUser" abstract="true" eSuperTypes="#//User"/>
 </ecore:EPackage>

@@ -62,20 +62,20 @@ public class XmiTemplateProvider_PTest {
 			}
 		}
 
-		assertNotNull("The XmiTemplateProvider was not registered", provider);
+		assertNotNull("The XmiTemplateProvider was not registered", provider); //$NON-NLS-1$
 
 		// Get templates by reflection
-		final Field templatesField = provider.getClass().getDeclaredField("templates");
+		final Field templatesField = provider.getClass().getDeclaredField("templates"); //$NON-NLS-1$
 		templatesField.setAccessible(true);
 		final Map<EClass, LinkedHashSet<Template>> templates = (Map<EClass, LinkedHashSet<Template>>) templatesField
 			.get(provider);
 
 		assertEquals(2, templates.keySet().size());
 		final LinkedHashSet<Template> set1 = templates.get(AuditPackage.eINSTANCE.getAdminUser());
-		assertEquals("There should be exactly one template for AdminUser", 1, set1.size());
+		assertEquals("There should be exactly one template for AdminUser", 1, set1.size()); //$NON-NLS-1$
 
 		final LinkedHashSet<Template> set2 = templates.get(AuditPackage.eINSTANCE.getRegisteredUser());
-		assertEquals("There should be exactly one template for RegisteredUser", 1, set2.size());
+		assertEquals("There should be exactly one template for RegisteredUser", 1, set2.size()); //$NON-NLS-1$
 	}
 
 }

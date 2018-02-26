@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AbstractSubUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AdminUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditFactory;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
@@ -29,14 +30,14 @@ import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGrou
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass userEClass = null;
@@ -44,7 +45,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass privilegedUserEClass = null;
@@ -52,7 +53,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass guestUserEClass = null;
@@ -60,7 +61,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass registeredUserEClass = null;
@@ -68,7 +69,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass adminUserEClass = null;
@@ -76,10 +77,18 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass userGroupEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass abstractSubUserEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -92,7 +101,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	 * if one already exists.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage#eNS_URI
 	 * @see #init()
@@ -105,7 +114,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -118,7 +127,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -153,7 +162,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -164,7 +173,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -175,7 +184,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -186,7 +195,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,7 +206,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -208,7 +217,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -219,7 +228,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -230,7 +239,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -241,7 +250,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -252,7 +261,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -263,7 +272,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -274,7 +283,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -285,7 +294,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -296,7 +305,18 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getAbstractSubUser() {
+		return abstractSubUserEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -307,7 +327,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -317,7 +337,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents() {
@@ -345,12 +365,14 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 		createEAttribute(userGroupEClass, USER_GROUP__NAME);
 		createEReference(userGroupEClass, USER_GROUP__USERS);
 		createEReference(userGroupEClass, USER_GROUP__ADMINS);
+
+		abstractSubUserEClass = createEClass(ABSTRACT_SUB_USER);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -360,7 +382,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -384,41 +406,45 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 		registeredUserEClass.getESuperTypes().add(getUser());
 		adminUserEClass.getESuperTypes().add(getRegisteredUser());
 		adminUserEClass.getESuperTypes().add(getPrivilegedUser());
+		abstractSubUserEClass.getESuperTypes().add(getUser());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(userEClass, User.class, "User", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getUser_DisplayName(), ecorePackage.getEString(), "displayName", null, 0, 1, User.class,
+		initEClass(userEClass, User.class, "User", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getUser_DisplayName(), ecorePackage.getEString(), "displayName", null, 0, 1, User.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUser_Login(), ecorePackage.getEString(), "login", null, 0, 1, User.class, !IS_TRANSIENT,
+		initEAttribute(getUser_Login(), ecorePackage.getEString(), "login", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUser_Password(), ecorePackage.getEString(), "password", null, 0, 1, User.class, !IS_TRANSIENT,
+		initEAttribute(getUser_Password(), ecorePackage.getEString(), "password", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUser_Delegates(), getRegisteredUser(), null, "delegates", null, 0, -1, User.class,
+		initEReference(getUser_Delegates(), getRegisteredUser(), null, "delegates", null, 0, -1, User.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(privilegedUserEClass, PrivilegedUser.class, "PrivilegedUser", IS_ABSTRACT, IS_INTERFACE,
+		initEClass(privilegedUserEClass, PrivilegedUser.class, "PrivilegedUser", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(guestUserEClass, GuestUser.class, "GuestUser", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(guestUserEClass, GuestUser.class, "GuestUser", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(registeredUserEClass, RegisteredUser.class, "RegisteredUser", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(registeredUserEClass, RegisteredUser.class, "RegisteredUser", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(adminUserEClass, AdminUser.class, "AdminUser", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(adminUserEClass, AdminUser.class, "AdminUser", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(userGroupEClass, UserGroup.class, "UserGroup", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(userGroupEClass, UserGroup.class, "UserGroup", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getUserGroup_Name(), ecorePackage.getEString(), "name", null, 0, 1, UserGroup.class,
+		initEAttribute(getUserGroup_Name(), ecorePackage.getEString(), "name", null, 0, 1, UserGroup.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUserGroup_Users(), getUser(), null, "users", null, 0, -1, UserGroup.class, !IS_TRANSIENT,
+		initEReference(getUserGroup_Users(), getUser(), null, "users", null, 0, -1, UserGroup.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEReference(getUserGroup_Admins(), getPrivilegedUser(), null, "admins", null, 0, -1, UserGroup.class,
+		initEReference(getUserGroup_Admins(), getPrivilegedUser(), null, "admins", null, 0, -1, UserGroup.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+
+		initEClass(abstractSubUserEClass, AbstractSubUser.class, "AbstractSubUser", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

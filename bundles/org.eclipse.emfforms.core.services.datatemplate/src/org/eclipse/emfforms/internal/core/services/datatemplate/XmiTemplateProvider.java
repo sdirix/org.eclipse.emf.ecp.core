@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(name = "XmiTemplateProvider")
 public class XmiTemplateProvider implements TemplateProvider {
 
-	private static final String FILE_ATTRIBUTE = "file";
-	private static final String EXTENSION_POINT = "org.eclipse.emfforms.core.services.datatemplate.xmi";
+	private static final String FILE_ATTRIBUTE = "file"; //$NON-NLS-1$
+	private static final String EXTENSION_POINT = "org.eclipse.emfforms.core.services.datatemplate.xmi"; //$NON-NLS-1$
 
 	private final Map<EClass, LinkedHashSet<Template>> templates = new LinkedHashMap<EClass, LinkedHashSet<Template>>();
 	private ReportService reportService;
@@ -81,7 +81,7 @@ public class XmiTemplateProvider implements TemplateProvider {
 					.getResource(configurationElement.getAttribute(FILE_ATTRIBUTE));
 				final ResourceSet resourceSet = new ResourceSetImpl();
 				// resourceSet.getLoadOptions().putAll(LOAD_OPTIONS);
-				final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI"));
+				final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
 				final InputStream inputStream = resourceURL.openStream();
 				try {
 					resource.load(inputStream, null);
@@ -91,7 +91,7 @@ public class XmiTemplateProvider implements TemplateProvider {
 					inputStream.close();
 				}
 			} catch (final IOException ex) {
-				reportService.report(new AbstractReport(ex, "An Exception occured while reading in a data template."));
+				reportService.report(new AbstractReport(ex, "An Exception occured while reading in a data template.")); //$NON-NLS-1$
 			}
 		}
 	}
@@ -146,7 +146,7 @@ public class XmiTemplateProvider implements TemplateProvider {
 	void registerTemplate(Template template) {
 		if (template.getInstance() == null) {
 			reportService.report(new AbstractReport(
-				"Ignoring template '{0}', as it does not contain a valid EObject instance", template.getName()));
+				"Ignoring template '{0}', as it does not contain a valid EObject instance", template.getName())); //$NON-NLS-1$
 			return;
 		}
 

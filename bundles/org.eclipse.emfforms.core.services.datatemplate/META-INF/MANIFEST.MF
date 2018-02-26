@@ -15,8 +15,14 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/XmiTemplateProvider.xml,
- OSGI-INF/TemplateCreateNewModelElementStrategyProvider.xml
+ OSGI-INF/TemplateCreateNewModelElementStrategyProvider.xml,
+ OSGI-INF/BlankTemplateProvider.xml
 Export-Package: org.eclipse.emfforms.core.services.datatemplate;version="1.16.0",
  org.eclipse.emfforms.internal.core.services.datatemplate;version="1.16.0";x-internal:=true
 Bundle-Vendor: Eclipse Modeling Project
-Import-Package: org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
+Import-Package: org.eclipse.jface.dialogs;version="0.0.0",
+ org.eclipse.jface.viewers;version="0.0.0",
+ org.eclipse.jface.window;version="0.0.0",
+ org.eclipse.jface.wizard;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -343,11 +343,11 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 		}
 
 		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (displayName: ");
+		result.append(" (displayName: "); //$NON-NLS-1$
 		result.append(displayName);
-		result.append(", login: ");
+		result.append(", login: "); //$NON-NLS-1$
 		result.append(login);
-		result.append(", password: ");
+		result.append(", password: "); //$NON-NLS-1$
 		result.append(password);
 		result.append(')');
 		return result.toString();
