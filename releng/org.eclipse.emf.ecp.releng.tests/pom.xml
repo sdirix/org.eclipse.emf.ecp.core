@@ -200,6 +200,8 @@
 
         <module>../../tests/org.eclipse.emfforms.swt.treemasterdetail.test</module>
         
+        <module>../../tests/org.eclipse.emfforms.rulerepository.tooling.test</module>
+
         <!-- EMF2Web -->
 		<module>../../tests/org.eclipse.emf.ecp.emf2web.json.test</module>
 		
