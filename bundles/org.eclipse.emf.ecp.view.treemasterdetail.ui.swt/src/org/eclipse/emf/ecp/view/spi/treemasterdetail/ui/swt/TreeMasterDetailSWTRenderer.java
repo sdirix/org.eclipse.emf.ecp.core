@@ -136,6 +136,8 @@ import org.osgi.framework.FrameworkUtil;
 @SuppressWarnings("deprecation")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
+	private static final String ENABLE_MULTI_EDIT = "enableMultiEdit"; //$NON-NLS-1$
+
 	/**
 	 * Default Constructor.
 	 *
@@ -888,7 +890,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
 					ViewModelContext childContext;
-					if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) {
+					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE) {
 						childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, (EObject) selected,
 							new TreeMasterDetailReferenceService(referenceService));
 					} else {
@@ -914,7 +916,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		private Object getSelection(IStructuredSelection selection) {
 			Object treeSelected = selection != null ? selection.getFirstElement() : null;
-			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE
+			if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE
 				&& treeSelected instanceof EObject && selection.size() > 1) {
 				boolean allOfSameType = true;
 				final EObject dummy = EcoreUtil.create(((EObject) treeSelected).eClass());
