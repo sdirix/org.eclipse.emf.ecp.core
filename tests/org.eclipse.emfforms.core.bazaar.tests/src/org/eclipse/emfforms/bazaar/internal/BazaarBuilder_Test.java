@@ -37,14 +37,14 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Christian W. Damus
  */
 @RunWith(Parameterized.class)
-public class BazaarBuilderTest {
+public class BazaarBuilder_Test {
 
 	private final BazaarVariant variant;
 
 	/**
 	 * Initializes me.
 	 */
-	public BazaarBuilderTest(BazaarVariant variant) {
+	public BazaarBuilder_Test(BazaarVariant variant) {
 		super();
 
 		this.variant = variant;

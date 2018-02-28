@@ -16,7 +16,7 @@
 	
 	
 	<properties>
-		<test-vmargs></test-vmargs>
+		<baseTestArgLine></baseTestArgLine>
 	</properties>
 	
 	<profiles>
@@ -28,7 +28,7 @@
 				</os>
 			</activation>
 			<properties>
-				<test-vmargs>-XstartOnFirstThread</test-vmargs>
+				<baseTestArgLine>-XstartOnFirstThread</baseTestArgLine>
 			</properties>
 		</profile>
 		<profile>
@@ -230,7 +230,7 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<argLine>${test-vmargs}</argLine>
+					<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
 					<includes>
 						<include>**/*_PTest.java</include>
 						<include>**/*_ITest.java</include>
@@ -251,15 +251,18 @@
 						<configuration>
 							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
 							<includes>
-				            	<include>**/*_Test.java</include>
+								<include>**/*_Test.java</include>
 							</includes>
 							<testFailureIgnore>true</testFailureIgnore>
-				        </configuration>
+							<!-- Sets the VM argument line used when unit tests are run. -->
+							<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
+						</configuration>
 						<goals>
 							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
+				<configuration></configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -52,7 +52,7 @@ import org.junit.runners.Parameterized.Parameters;
  *
  */
 @RunWith(Parameterized.class)
-public class Bazaar_ITest {
+public class Bazaar_Test {
 
 	public static final String TESTSTRING = ""; //$NON-NLS-1$
 	private final BazaarImpl<MyProduct> bazaar;
@@ -62,7 +62,7 @@ public class Bazaar_ITest {
 	 *
 	 * @param variant the bazaar variant
 	 */
-	public Bazaar_ITest(BazaarVariant variant) {
+	public Bazaar_Test(BazaarVariant variant) {
 		super();
 
 		bazaar = variant.createBazaarImpl();
