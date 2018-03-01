@@ -16,10 +16,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	UUIDIntroductionTest.class,
-	LabelAlignmentTest.class,
-	ReadOnlyColumnConfigurationTest.class,
-	DomainWithModelAsPackageNameTest.class
+	UUIDIntroduction_PTest.class,
+	LabelAlignment_PTest.class,
+	ReadOnlyColumnConfiguration_PTest.class,
+	DomainWithModelAsPackageName_PTest.class
 })
 public class All160to170Tests {
 

@@ -14,9 +14,11 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
+	<properties>
+		<baseTestArgLine></baseTestArgLine>
+	</properties>
+	
 	<profiles>
-		
-		
 		<profile>
 			<id>build-server</id>
 			<build>
@@ -83,6 +85,7 @@
 						<include>**/*_ITest.java</include>
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
+					<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
 				</configuration>
 			</plugin>
 			
@@ -101,6 +104,7 @@
 				            	<include>**/*_Test.java</include>
 							</includes>
 							<testFailureIgnore>true</testFailureIgnore>
+							<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
 				        </configuration>
 						<goals>
 							<goal>test</goal>
