@@ -109,8 +109,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
-		
-		
+		<module>../../tests/org.eclipse.emf.ecp.view.model.preview.common.test</module>		
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.nebula.grid.test</module>
@@ -239,6 +238,7 @@
 						<include>**/*_ITest.java</include>
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
+					<failIfNoTests>false</failIfNoTests>
 				</configuration>
 			</plugin>
 			
@@ -257,6 +257,7 @@
 								<include>**/*_Test.java</include>
 							</includes>
 							<testFailureIgnore>true</testFailureIgnore>
+							<failIfNoTests>false</failIfNoTests>
 							<!-- Sets the VM argument line used when unit tests are run. -->
 							<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
 						</configuration>
