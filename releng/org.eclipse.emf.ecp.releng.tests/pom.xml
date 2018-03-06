@@ -234,11 +234,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.17</version>
+				<version>${mav-checkstyle-version}</version>
 				<configuration>
-				<configLocation>../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyleTest.xml</configLocation>
-				<excludes>**/xtend/**/*</excludes>
-				<failsOnError>false</failsOnError>
+					<configLocation>../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyleTest.xml</configLocation>
+					<excludes>**/xtend/**/*</excludes>
+					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
 					<execution>
@@ -248,6 +248,13 @@
 						<phase>verify</phase>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle-version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			
 			<!-- tycho surefire include/exclude pattern -->
