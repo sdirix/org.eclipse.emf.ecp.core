@@ -615,7 +615,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return t;
 			}
 		}
-		if (parentContext != null) {
+		if (parentContext != null && parentContext.hasService(serviceType)) {
 			return parentContext.getService(serviceType);
 		}
 

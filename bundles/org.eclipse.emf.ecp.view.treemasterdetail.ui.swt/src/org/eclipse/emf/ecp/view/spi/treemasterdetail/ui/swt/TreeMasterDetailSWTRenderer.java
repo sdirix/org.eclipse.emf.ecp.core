@@ -208,6 +208,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
+			if (getVElement().isEffectivelyReadonly() || !getVElement().isEffectivelyEnabled()) {
+				return;
+			}
 			if (treeViewer.getSelection().isEmpty()) {
 				fillMenu(null, manager);
 				return;
@@ -897,6 +900,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						childContext = getViewModelContext().getChildContext((EObject) selected,
 							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
 					}
+					childContext.getViewModel().setReadonly(
+						childContext.getViewModel().isEffectivelyReadonly() || getVElement().isEffectivelyReadonly());
+					childContext.getViewModel().setEnabled(
+						childContext.getViewModel().isEffectivelyEnabled() && getVElement().isEffectivelyEnabled());
+					// visible does not make any sense
 
 					manipulateViewContext(childContext);
 					ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
@@ -1070,6 +1078,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			return resultImage;
 		}
 
+	}
+
+	@Override
+	protected void applyEnable() {
+		treeViewer.setSelection(new StructuredSelection(treeViewer.getStructuredSelection().getFirstElement()));
 	}
 
 	/**
