@@ -4,9 +4,10 @@
     modelDirectory="/org.eclipse.emfforms.datatemplate.model/src" modelPluginID="org.eclipse.emfforms.datatemplate.model"
     modelName="DataTemplate" modelPluginClass="" editPluginClass="org.eclipse.emfforms.datatemplate.provider.DatatemplateEditPlugin"
     editorPluginClass="org.eclipse.emfforms.datatemplate.presentation.DatatemplateEditorPlugin"
-    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
-    operationReflection="true" importOrganizing="true">
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore" operationReflection="true"
+    importOrganizing="true" cleanup="true">
   <foreignModel>datatemplate.ecore</foreignModel>
   <genPackages prefix="DataTemplate" basePackage="org.eclipse.emfforms" disposableProviderFactory="true"
       ecorePackage="datatemplate.ecore#/">

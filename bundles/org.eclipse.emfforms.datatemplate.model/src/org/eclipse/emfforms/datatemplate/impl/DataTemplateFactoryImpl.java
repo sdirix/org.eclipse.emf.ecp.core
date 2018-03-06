@@ -25,6 +25,7 @@ import org.eclipse.emfforms.datatemplate.TemplateCollection;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplateFactory {
@@ -32,16 +33,17 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static DataTemplateFactory init() {
 		try {
-			DataTemplateFactory theDataTemplateFactory = (DataTemplateFactory)EPackage.Registry.INSTANCE.getEFactory(DataTemplatePackage.eNS_URI);
+			final DataTemplateFactory theDataTemplateFactory = (DataTemplateFactory) EPackage.Registry.INSTANCE
+				.getEFactory(DataTemplatePackage.eNS_URI);
 			if (theDataTemplateFactory != null) {
 				return theDataTemplateFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new DataTemplateFactoryImpl();
@@ -51,6 +53,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public DataTemplateFactoryImpl() {
@@ -60,53 +63,60 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case DataTemplatePackage.TEMPLATE: return createTemplate();
-			case DataTemplatePackage.TEMPLATE_COLLECTION: return createTemplateCollection();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case DataTemplatePackage.TEMPLATE:
+			return createTemplate();
+		case DataTemplatePackage.TEMPLATE_COLLECTION:
+			return createTemplateCollection();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Template createTemplate() {
-		TemplateImpl template = new TemplateImpl();
+		final TemplateImpl template = new TemplateImpl();
 		return template;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public TemplateCollection createTemplateCollection() {
-		TemplateCollectionImpl templateCollection = new TemplateCollectionImpl();
+		final TemplateCollectionImpl templateCollection = new TemplateCollectionImpl();
 		return templateCollection;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public DataTemplatePackage getDataTemplatePackage() {
-		return (DataTemplatePackage)getEPackage();
+		return (DataTemplatePackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

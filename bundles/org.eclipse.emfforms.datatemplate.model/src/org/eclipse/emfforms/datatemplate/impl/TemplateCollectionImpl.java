@@ -32,7 +32,7 @@ import org.eclipse.emfforms.datatemplate.TemplateCollection;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl#getTemplates <em>Templates</em>}</li>
+ * <li>{@link org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl#getTemplates <em>Templates</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,6 +42,7 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	 * The cached value of the '{@link #getTemplates() <em>Templates</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getTemplates()
 	 * @generated
 	 * @ordered
@@ -51,6 +52,7 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected TemplateCollectionImpl() {
@@ -60,6 +62,7 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -70,12 +73,14 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EList<Template> getTemplates() {
 		if (templates == null) {
-			templates = new EObjectContainmentEList<Template>(Template.class, this, DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES);
+			templates = new EObjectContainmentEList<Template>(Template.class, this,
+				DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES);
 		}
 		return templates;
 	}
@@ -83,13 +88,14 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
-				return ((InternalEList<?>)getTemplates()).basicRemove(otherEnd, msgs);
+		case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
+			return ((InternalEList<?>) getTemplates()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -97,13 +103,14 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
-				return getTemplates();
+		case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
+			return getTemplates();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,16 +118,17 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
-				getTemplates().clear();
-				getTemplates().addAll((Collection<? extends Template>)newValue);
-				return;
+		case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
+			getTemplates().clear();
+			getTemplates().addAll((Collection<? extends Template>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -128,14 +136,15 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
-				getTemplates().clear();
-				return;
+		case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
+			getTemplates().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -143,13 +152,14 @@ public class TemplateCollectionImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
-				return templates != null && !templates.isEmpty();
+		case DataTemplatePackage.TEMPLATE_COLLECTION__TEMPLATES:
+			return templates != null && !templates.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
