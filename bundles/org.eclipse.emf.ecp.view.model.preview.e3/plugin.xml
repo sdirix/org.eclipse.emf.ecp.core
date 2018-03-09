@@ -82,12 +82,6 @@
             label="Open Preview"
             location="toolbar">
       </MasterDetailAction>
-      <MasterDetailAction
-            command="org.eclipse.emf.ecp.view.model.internal.preview.actions.AddResourceHandler"
-            imagePath="org.eclipse.emf.ecp.view.model.preview.e3.MasterDetailAction1"
-            label="Add Resource"
-            location="toolbar">
-      </MasterDetailAction>
    </extension>
    <extension
          point="org.eclipse.emfforms.editor.toolbarActions">

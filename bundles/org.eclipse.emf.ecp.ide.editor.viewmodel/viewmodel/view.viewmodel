@@ -20,6 +20,11 @@
           <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/model/1170#//View/rootEClass"/>
         </domainModelReference>
       </children>
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_YBW0RBFuEeiGqtClCQBJBQ" name="Control ecorePath">
+	    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_YBW0RRFuEeiGqtClCQBJBQ">
+	      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/1170#//View/ecorePaths"/>
+	    </domainModelReference>
+	  </children>
     </detailView>
   </children>
 </org.eclipse.emf.ecp.view.model:View>
