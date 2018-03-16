@@ -473,7 +473,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		downButton.setEnabled(false);
 	}
 
-	private void createUpDownButtons(Composite composite, IObservableList list) {
+	/**
+	 * @since 1.17
+	 */
+	protected void createUpDownButtons(Composite composite, IObservableList list) {
 		final Image up = getImage(ICONS_ARROW_UP_PNG);
 		final Image down = getImage(ICONS_ARROW_DOWN_PNG);
 
@@ -792,6 +795,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			if (!selection.isEmpty()) {
 				editingDomain.getCommandStack().execute(RemoveCommand.create(editingDomain, eObject, attribute,
 					selection.toList()));
+				postRemove(selection);
 			}
 		}
 	}
@@ -823,10 +827,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
 				final Object defaultValue = getValueForNewRow(attribute);
+				if (defaultValue == null) {
+					return;
+				}
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
 				editingDomain.getCommandStack()
 					.execute(AddCommand.create(editingDomain, eObject, attribute, defaultValue));
-				tableViewer.refresh();
 			} catch (final IllegalStateException ex) {
 				/* logged by getValueForNewRow* already */
 			}
@@ -1037,6 +1043,16 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		upButtonSelectionAdapter.setObservableList(list);
 		downButtonSelectionAdapter.setObservableList(list);
 		observableSupport.setObservableList(list);
+	}
+
+	/**
+	 * This is called after the selected elements were deleted so that the user can handle this removal.
+	 *
+	 * @param selection The {@link IStructuredSelection} of the TableViewer before deletion.
+	 * @since 1.17
+	 */
+	protected void postRemove(IStructuredSelection selection) {
+		// do nothing
 	}
 
 	/**
