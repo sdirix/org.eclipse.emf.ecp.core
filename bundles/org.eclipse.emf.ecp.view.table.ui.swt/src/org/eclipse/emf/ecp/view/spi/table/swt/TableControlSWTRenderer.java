@@ -1835,7 +1835,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				setting = getSettingFromObservable(tableDMR, getViewModelContext().getDomainModel());
 			}
 
-			if (setting.isPresent()) {
+			if (!setting.isPresent()) {
 				return;
 			}
 
