@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
+ * Christian W. Damus - bug 529138
  */
 package org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl;
 
@@ -221,6 +222,17 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getUser_SubUsers() {
+		return (EReference) userEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EClass getPrivilegedUser() {
 		return privilegedUserEClass;
 	}
@@ -309,6 +321,28 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getUserGroup_RegisteredUsers() {
+		return (EReference) userGroupEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EReference getUserGroup_Guests() {
+		return (EReference) userGroupEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EClass getAbstractSubUser() {
 		return abstractSubUserEClass;
 	}
@@ -352,6 +386,7 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 		createEAttribute(userEClass, USER__LOGIN);
 		createEAttribute(userEClass, USER__PASSWORD);
 		createEReference(userEClass, USER__DELEGATES);
+		createEReference(userEClass, USER__SUB_USERS);
 
 		privilegedUserEClass = createEClass(PRIVILEGED_USER);
 
@@ -365,6 +400,8 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 		createEAttribute(userGroupEClass, USER_GROUP__NAME);
 		createEReference(userGroupEClass, USER_GROUP__USERS);
 		createEReference(userGroupEClass, USER_GROUP__ADMINS);
+		createEReference(userGroupEClass, USER_GROUP__REGISTERED_USERS);
+		createEReference(userGroupEClass, USER_GROUP__GUESTS);
 
 		abstractSubUserEClass = createEClass(ABSTRACT_SUB_USER);
 	}
@@ -419,6 +456,9 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 		initEReference(getUser_Delegates(), getRegisteredUser(), null, "delegates", null, 0, -1, User.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEReference(getUser_SubUsers(), getAbstractSubUser(), null, "subUsers", null, 0, -1, User.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(privilegedUserEClass, PrivilegedUser.class, "PrivilegedUser", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
@@ -440,6 +480,12 @@ public class AuditPackageImpl extends EPackageImpl implements AuditPackage {
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
 		initEReference(getUserGroup_Admins(), getPrivilegedUser(), null, "admins", null, 0, -1, UserGroup.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getUserGroup_RegisteredUsers(), getRegisteredUser(), null, "registeredUsers", null, 0, -1, //$NON-NLS-1$
+			UserGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUserGroup_Guests(), getGuestUser(), null, "guests", null, 0, -1, UserGroup.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 

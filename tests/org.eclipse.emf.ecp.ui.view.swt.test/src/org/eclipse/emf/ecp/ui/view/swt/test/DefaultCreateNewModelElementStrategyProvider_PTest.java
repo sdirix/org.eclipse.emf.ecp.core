@@ -26,16 +26,12 @@ import static org.mockito.Mockito.calls;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
@@ -44,15 +40,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy.Provider;
 import org.eclipse.emf.ecp.ui.view.swt.reference.DefaultCreateNewModelElementStrategyProvider;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emfforms.bazaar.Bazaar;
 import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.Bid;
@@ -134,41 +125,14 @@ public class DefaultCreateNewModelElementStrategyProvider_PTest {
 	@Test
 	public void createNewElementWithChildCreationDescriptor() {
 
-		// Set up an item provider to create a template-based child descriptor
-		final AdapterFactory customFactory = mock(AdapterFactory.class,
-			withSettings().extraInterfaces(ComposeableAdapterFactory.class));
-		final EEnum template = EcoreFactory.eINSTANCE.createEEnum();
-		template.setName("NewEnum1");
-		class NewChildFactory extends ItemProviderAdapter implements IEditingDomainItemProvider {
-			NewChildFactory(AdapterFactory factory) {
-				super(factory);
-			}
-
-			@Override
-			public boolean isAdapterForType(Object type) {
-				// I am a fake Ecore item provider adapter, so I should respond like one
-				return type instanceof AdapterFactory || type == IEditingDomainItemProvider.class;
-			}
-
-			@Override
-			protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-				newChildDescriptors.add(
-					createChildParameter(EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, EcoreUtil.copy(template)));
-			}
-		}
-
-		when(customFactory.adapt(any(EPackage.class), same(IEditingDomainItemProvider.class)))
-			.thenReturn(new NewChildFactory(customFactory));
-		when(customFactory.adapt((Object) any(EPackage.class), same(IEditingDomainItemProvider.class)))
-			.thenReturn(new NewChildFactory(customFactory));
-		when(customFactory.adaptNew(any(EPackage.class), same(IEditingDomainItemProvider.class)))
-			.thenReturn(new NewChildFactory(customFactory));
-
+		// Set up an item provider to create a template-based child descriptor.
 		// Create a container object in the context of an editing domain in order to let the
 		// framework get child creation descriptors
-		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(customFactory,
-			new BasicCommandStack());
-		final Resource res = domain.getResourceSet().createResource(URI.createURI("bogus://test/foo.ecore"));
+		final EEnum template = EcoreFactory.eINSTANCE.createEEnum();
+		template.setName("NewEnum1");
+		final Resource res = new EMFEditNewChildFactoryBuilder()
+			.addTemplate(EPackage.class, EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, template)
+			.buildResource();
 		final EPackage testPackage = EcoreFactory.eINSTANCE.createEPackage();
 		res.getContents().add(testPackage);
 

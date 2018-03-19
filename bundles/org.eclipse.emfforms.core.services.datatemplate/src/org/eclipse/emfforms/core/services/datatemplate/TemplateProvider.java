@@ -8,37 +8,51 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 529138
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.datatemplate;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emfforms.datatemplate.Template;
 
 /**
  * Template provider interface.
  *
  * @author Mat Hansen <mhansen@eclipsesource.com>
- * @since 1.16
- *
+ * @since 1.17
  */
 public interface TemplateProvider {
 
 	/**
-	 * Checks whether the template provider can provide templates matching the given (super) type.
+	 * Queries whether the provider can provide templates that may be assigned
+	 * to the given {@code reference} of the given {@code owner} object.
 	 *
-	 * @param superType the type to match for
-	 * @return true if the provider provides templates
+	 * @param owner the object owning a {@code reference} to be assigned from a template
+	 * @param reference a reference feature of the {@code owner} that is to be assigned from a template.
+	 *            If the {@code reference} is a {@link EReference#isContainment() containment} then
+	 *            the {@code owner} would be the {@link EObject#eContainer() container} of the template
+	 *
+	 * @return whether I have any templates to offer
 	 */
-	boolean canProvide(EClass superType);
+	boolean canProvideTemplates(EObject owner, EReference reference);
 
 	/**
-	 * Provides a set of templates containing any available template for the given type or one of its sub types.
+	 * Obtains templates wrapping objects that can be assigned to the given
+	 * {@code reference} of the given {@code owner} object. This will only
+	 * be called for an {@code owner} and {@code reference} for which the
+	 * receiver previously answered {@code true} to an invocation of the
+	 * {@link #canProvideTemplates(EObject, EReference)} query.
 	 *
-	 * @param superType The type for which templates will be provided
-	 * @return a set of suitable templates (might be empty)
+	 * @param owner the object owning a {@code reference} to be assigned from a template
+	 * @param reference a reference feature of the {@code owner} that is to be assigned from a template.
+	 *            If the {@code reference} is a {@link EReference#isContainment() containment} then
+	 *            the {@code owner} would be the {@link EObject#eContainer() container} of the template
+	 *
+	 * @return my available templates, or an empty set if none (never {@code null})
 	 */
-	Set<Template> provide(EClass superType);
+	Set<Template> provideTemplates(EObject owner, EReference reference);
 
 }

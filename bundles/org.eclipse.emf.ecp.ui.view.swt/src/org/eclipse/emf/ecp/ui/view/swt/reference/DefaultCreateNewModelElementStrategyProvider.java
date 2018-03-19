@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  * @since 1.17
  *
  */
-@Component(name = "DefaultCreateNewModelElementStrategyProvider", property = "service.ranking:Integer=1")
+@Component(name = "DefaultCreateNewModelElementStrategyProvider", property = "service.ranking:Integer=1", service = {
+	Provider.class, DefaultCreateNewModelElementStrategyProvider.class })
 public class DefaultCreateNewModelElementStrategyProvider
 	extends ReferenceServiceCustomizationVendor<CreateNewModelElementStrategy> implements Provider {
 	private static <T> Bazaar<T> createBazaar(T defaultStrategy) {
@@ -121,7 +122,7 @@ public class DefaultCreateNewModelElementStrategyProvider
 	}
 
 	/**
-	 * The {@link ReportService} to use for errors
+	 * The {@link ReportService} to use for errors.
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
@@ -217,6 +218,70 @@ public class DefaultCreateNewModelElementStrategyProvider
 		return new DefaultStrategy(classSelectionStrategy);
 	}
 
+	/**
+	 * Obtain a mapping of new objects provided by an {@code owner}'s edit provider, by class.
+	 *
+	 * @param owner the owner of a reference in which to create an object
+	 * @param reference the reference in which to create an object
+	 *
+	 * @return a mapping of edit-provider supplied possible children
+	 */
+	public Map<EClass, EObject> getNewObjectsByDescriptors(EObject owner, EReference reference) {
+		final Collection<CommandParameter> descriptors = getNewChildDescriptors(owner, reference);
+		if (descriptors.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		final Map<EClass, EObject> result = new LinkedHashMap<EClass, EObject>();
+		for (final CommandParameter next : descriptors) {
+			final EObject object = next.getEValue();
+			result.put(object.eClass(), object);
+		}
+		return result;
+	}
+
+	/**
+	 * Obtain new child descriptors from the {@code owner}'s edit provider.
+	 *
+	 * @param owner the owner of a reference in which to create an object
+	 * @param reference the reference in which to create an object
+	 * @return the new child descriptors
+	 */
+	private Collection<CommandParameter> getNewChildDescriptors(EObject owner, EReference reference) {
+		final EClass referenceType = reference.getEReferenceType();
+
+		final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(owner);
+		if (!(domain instanceof AdapterFactoryEditingDomain)) {
+			return Collections.emptyList();
+		}
+
+		final AdapterFactory factory = ((AdapterFactoryEditingDomain) domain).getAdapterFactory();
+		if (factory == null) {
+			return Collections.emptyList();
+		}
+
+		final IEditingDomainItemProvider itemProvider = (IEditingDomainItemProvider) factory.adapt(owner,
+			IEditingDomainItemProvider.class);
+		if (itemProvider == null) {
+			return Collections.emptyList();
+		}
+
+		// The item provider offers new child descriptors for probably multiple containment references.
+		// We want only those compatible with our reference
+		final Collection<?> descriptors = itemProvider.getNewChildDescriptors(owner, domain, null);
+		final Collection<CommandParameter> result = new ArrayList<CommandParameter>(descriptors.size());
+		for (final Object next : descriptors) {
+			if (next instanceof CommandParameter) {
+				final CommandParameter newChild = (CommandParameter) next;
+				if (referenceType.isInstance(newChild.getEValue())) {
+					result.add(newChild);
+				}
+			}
+		}
+
+		return result;
+	}
+
 	//
 	// Nested types
 	//
@@ -263,69 +328,6 @@ public class DefaultCreateNewModelElementStrategyProvider
 				return Optional.of(result);
 			}
 			return Optional.ofNullable(getModelElementInstanceFromList(classes, availableChildren));
-		}
-
-		/**
-		 * Getting a mapping of new objects provided by an {@code owner}'s edit provider, by class.
-		 *
-		 * @param owner the owner of a reference in which to create an object
-		 * @param reference the reference in which to create an object
-		 * @return a mapping of edit-provider supplied possible children
-		 */
-		private Map<EClass, EObject> getNewObjectsByDescriptors(EObject owner, EReference reference) {
-			final Collection<CommandParameter> descriptors = getNewChildDescriptors(owner, reference);
-			if (descriptors.isEmpty()) {
-				return Collections.emptyMap();
-			}
-
-			final Map<EClass, EObject> result = new LinkedHashMap<EClass, EObject>();
-			for (final CommandParameter next : descriptors) {
-				final EObject object = next.getEValue();
-				result.put(object.eClass(), object);
-			}
-			return result;
-		}
-
-		/**
-		 * Obtain new child descriptors from the {@code owner}'s edit provider.
-		 *
-		 * @param owner the owner of a reference in which to create an object
-		 * @param reference the reference in which to create an object
-		 * @return the new child descriptors
-		 */
-		private Collection<CommandParameter> getNewChildDescriptors(EObject owner, EReference reference) {
-			final EClass referenceType = reference.getEReferenceType();
-
-			final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(owner);
-			if (!(domain instanceof AdapterFactoryEditingDomain)) {
-				return Collections.emptyList();
-			}
-
-			final AdapterFactory factory = ((AdapterFactoryEditingDomain) domain).getAdapterFactory();
-			if (factory == null) {
-				return Collections.emptyList();
-			}
-
-			final IEditingDomainItemProvider itemProvider = (IEditingDomainItemProvider) factory.adapt(owner,
-				IEditingDomainItemProvider.class);
-			if (itemProvider == null) {
-				return Collections.emptyList();
-			}
-
-			// The item provider offers new child descriptors for probably multiple containment references.
-			// We want only those compatible with our reference
-			final Collection<?> descriptors = itemProvider.getNewChildDescriptors(owner, domain, null);
-			final Collection<CommandParameter> result = new ArrayList<CommandParameter>(descriptors.size());
-			for (final Object next : descriptors) {
-				if (next instanceof CommandParameter) {
-					final CommandParameter newChild = (CommandParameter) next;
-					if (referenceType.isInstance(newChild.getEValue())) {
-						result.add(newChild);
-					}
-				}
-			}
-
-			return result;
 		}
 
 		/**

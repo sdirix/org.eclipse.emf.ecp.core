@@ -8,9 +8,11 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 529138
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.datatemplate.test;
 
+import org.eclipse.emfforms.internal.core.services.datatemplate.BlankTemplateProvider_PTest;
 import org.eclipse.emfforms.internal.core.services.datatemplate.SelectSubclassAndTemplateWizard_PTest;
 import org.eclipse.emfforms.internal.core.services.datatemplate.XmiTemplateProvider_PTest;
 import org.junit.runner.RunWith;
@@ -24,7 +26,8 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ XmiTemplateProvider_PTest.class, SelectSubclassAndTemplateWizard_PTest.class })
+@SuiteClasses({ XmiTemplateProvider_PTest.class, SelectSubclassAndTemplateWizard_PTest.class,
+	BlankTemplateProvider_PTest.class })
 public class AllPluginTests {
 
 }

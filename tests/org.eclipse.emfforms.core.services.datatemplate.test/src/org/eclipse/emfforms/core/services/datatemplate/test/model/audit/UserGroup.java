@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getUsers <em>Users</em>}</li>
  *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getAdmins <em>Admins</em>}</li>
+ *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getRegisteredUsers <em>Registered Users</em>}</li>
+ *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getGuests <em>Guests</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage#getUserGroup()
@@ -90,5 +92,37 @@ public interface UserGroup extends EObject {
 	 * @generated
 	 */
 	EList<PrivilegedUser> getAdmins();
+
+	/**
+	 * Returns the value of the '<em><b>Registered Users</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.RegisteredUser}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Registered Users</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Registered Users</em>' reference list.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage#getUserGroup_RegisteredUsers()
+	 * @model
+	 * @generated
+	 */
+	EList<RegisteredUser> getRegisteredUsers();
+
+	/**
+	 * Returns the value of the '<em><b>Guests</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.GuestUser}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guests</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guests</em>' reference list.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage#getUserGroup_Guests()
+	 * @model
+	 * @generated
+	 */
+	EList<GuestUser> getGuests();
 
 } // UserGroup

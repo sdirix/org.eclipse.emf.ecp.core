@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Munich - initial API and implementation"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Munich - initial API and implementation"
     modelDirectory="/org.eclipse.emfforms.core.services.datatemplate.test/src" modelPluginID="org.eclipse.emfforms.core.services.datatemplate.test"
-    modelName="Audit" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    modelName="Audit" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
     language="" operationReflection="true" importOrganizing="true">
   <foreignModel>audit.ecore</foreignModel>
@@ -13,6 +13,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//User/login"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//User/password"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//User/delegates"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//User/subUsers"/>
     </genClasses>
     <genClasses image="false" ecoreClass="audit.ecore#//PrivilegedUser"/>
     <genClasses ecoreClass="audit.ecore#//GuestUser"/>
@@ -22,6 +23,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//UserGroup/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//UserGroup/users"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//UserGroup/admins"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//UserGroup/registeredUsers"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//UserGroup/guests"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="audit.ecore#//AbstractSubUser"/>
   </genPackages>
 </genmodel:GenModel>

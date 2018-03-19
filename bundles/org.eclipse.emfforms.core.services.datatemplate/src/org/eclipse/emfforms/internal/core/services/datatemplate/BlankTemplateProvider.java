@@ -8,17 +8,23 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 529138
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
+import org.eclipse.emf.ecp.ui.view.swt.reference.DefaultCreateNewModelElementStrategyProvider;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.DataTemplateFactory;
 import org.eclipse.emfforms.datatemplate.Template;
@@ -44,6 +50,8 @@ public class BlankTemplateProvider implements TemplateProvider {
 	private BundleResolver bundleResolver;
 	private EMFFormsLocalizationService localizationService;
 
+	private DefaultCreateNewModelElementStrategyProvider defaultNewElementStrategyProvider;
+
 	/**
 	 * Creates a new {@link BlankTemplateProvider} instance.
 	 */
@@ -53,7 +61,7 @@ public class BlankTemplateProvider implements TemplateProvider {
 
 	/**
 	 * Sets the {@link EMFFormsLocalizationService}.
-	 * 
+	 *
 	 * @param localizationService The {@link EMFFormsLocalizationService}
 	 */
 	@Reference
@@ -61,10 +69,22 @@ public class BlankTemplateProvider implements TemplateProvider {
 		this.localizationService = localizationService;
 	}
 
+	/**
+	 * Sets the default new-element strategy provider for creation of "blank" template instances.
+	 *
+	 * @param defaultNewElementStrategyProvider the default new-element strategy provider
+	 */
+	@Reference
+	void setDefaultNewElementStrategyProvider(
+		DefaultCreateNewModelElementStrategyProvider defaultNewElementStrategyProvider) {
+
+		this.defaultNewElementStrategyProvider = defaultNewElementStrategyProvider;
+	}
+
 	@Override
-	public boolean canProvide(EClass superType) {
+	public boolean canProvideTemplates(EObject owner, EReference reference) {
 		// We can only provide a blank template if the type or at least one of its sub classes is concrete.
-		for (final EClass subClass : EMFUtils.getSubClasses(superType)) {
+		for (final EClass subClass : EMFUtils.getSubClasses(reference.getEReferenceType())) {
 			if (!subClass.isAbstract() && !subClass.isInterface()) {
 				return true;
 			}
@@ -74,26 +94,36 @@ public class BlankTemplateProvider implements TemplateProvider {
 	}
 
 	@Override
-	public Set<Template> provide(EClass superType) {
-		final LinkedHashSet<Template> result = new LinkedHashSet<Template>();
-		final Collection<EClass> subClasses = EMFUtils.getSubClasses(superType);
-		for (final EClass subClass : subClasses) {
-			if (!subClass.isAbstract() && !subClass.isInterface()) {
-				result.add(createTemplate(subClass));
+	public Set<Template> provideTemplates(EObject owner, EReference reference) {
+		Map<EClass, EObject> descriptors = defaultNewElementStrategyProvider == null
+			? Collections.<EClass, EObject> emptyMap()
+			: defaultNewElementStrategyProvider.getNewObjectsByDescriptors(owner, reference);
+		if (descriptors.isEmpty()) {
+			// Just create actually blank instances of all possible subtypes
+			descriptors = new HashMap<EClass, EObject>();
+			final Collection<EClass> subClasses = EMFUtils.getSubClasses(reference.getEReferenceType());
+			for (final EClass subClass : subClasses) {
+				if (!subClass.isAbstract() && !subClass.isInterface()) {
+					descriptors.put(subClass, EcoreUtil.create(subClass));
+				}
 			}
 		}
 
+		final LinkedHashSet<Template> result = new LinkedHashSet<Template>();
+		for (final Map.Entry<EClass, EObject> next : descriptors.entrySet()) {
+			result.add(createTemplate(next.getKey(), next.getValue()));
+		}
 		return result;
 	}
 
 	/**
 	 * Creates a blank template for the given type.
 	 *
-	 * @param type The {@link EClass} specifying the type
+	 * @param type the type of the {@code instance} to wrap in a template
+	 * @param instance the instance of the template {@code type}
 	 * @return The blank {@link Template}
 	 */
-	protected Template createTemplate(EClass type) {
-		final EObject instance = EcoreUtil.create(type);
+	protected Template createTemplate(EClass type, EObject instance) {
 		final Template template = DataTemplateFactory.eINSTANCE.createTemplate();
 		template.setInstance(instance);
 

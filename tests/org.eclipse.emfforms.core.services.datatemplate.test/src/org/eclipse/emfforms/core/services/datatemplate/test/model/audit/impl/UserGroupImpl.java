@@ -20,7 +20,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.GuestUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.PrivilegedUser;
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.RegisteredUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup;
 
@@ -38,6 +40,10 @@ import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGrou
  * <em>Users</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.UserGroupImpl#getAdmins
  * <em>Admins</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.UserGroupImpl#getRegisteredUsers
+ * <em>Registered Users</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.UserGroupImpl#getGuests
+ * <em>Guests</em>}</li>
  * </ul>
  *
  * @generated
@@ -86,6 +92,28 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @ordered
 	 */
 	protected EList<PrivilegedUser> admins;
+
+	/**
+	 * The cached value of the '{@link #getRegisteredUsers() <em>Registered Users</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getRegisteredUsers()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<RegisteredUser> registeredUsers;
+
+	/**
+	 * The cached value of the '{@link #getGuests() <em>Guests</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getGuests()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<GuestUser> guests;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -170,6 +198,35 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
+	public EList<RegisteredUser> getRegisteredUsers() {
+		if (registeredUsers == null) {
+			registeredUsers = new EObjectResolvingEList<RegisteredUser>(RegisteredUser.class, this,
+				AuditPackage.USER_GROUP__REGISTERED_USERS);
+		}
+		return registeredUsers;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EList<GuestUser> getGuests() {
+		if (guests == null) {
+			guests = new EObjectResolvingEList<GuestUser>(GuestUser.class, this, AuditPackage.USER_GROUP__GUESTS);
+		}
+		return guests;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case AuditPackage.USER_GROUP__NAME:
@@ -178,6 +235,10 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 			return getUsers();
 		case AuditPackage.USER_GROUP__ADMINS:
 			return getAdmins();
+		case AuditPackage.USER_GROUP__REGISTERED_USERS:
+			return getRegisteredUsers();
+		case AuditPackage.USER_GROUP__GUESTS:
+			return getGuests();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -203,6 +264,14 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 			getAdmins().clear();
 			getAdmins().addAll((Collection<? extends PrivilegedUser>) newValue);
 			return;
+		case AuditPackage.USER_GROUP__REGISTERED_USERS:
+			getRegisteredUsers().clear();
+			getRegisteredUsers().addAll((Collection<? extends RegisteredUser>) newValue);
+			return;
+		case AuditPackage.USER_GROUP__GUESTS:
+			getGuests().clear();
+			getGuests().addAll((Collection<? extends GuestUser>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -225,6 +294,12 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 		case AuditPackage.USER_GROUP__ADMINS:
 			getAdmins().clear();
 			return;
+		case AuditPackage.USER_GROUP__REGISTERED_USERS:
+			getRegisteredUsers().clear();
+			return;
+		case AuditPackage.USER_GROUP__GUESTS:
+			getGuests().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -244,6 +319,10 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 			return users != null && !users.isEmpty();
 		case AuditPackage.USER_GROUP__ADMINS:
 			return admins != null && !admins.isEmpty();
+		case AuditPackage.USER_GROUP__REGISTERED_USERS:
+			return registeredUsers != null && !registeredUsers.isEmpty();
+		case AuditPackage.USER_GROUP__GUESTS:
+			return guests != null && !guests.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

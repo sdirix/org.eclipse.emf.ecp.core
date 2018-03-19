@@ -8,6 +8,7 @@
  *
  * Contributors:
  * lucas - initial API and implementation
+ * Christian W. Damus - bug 529138
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
@@ -44,6 +45,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 @Component(name = "TemplateCreateNewModelElementStrategyProvider", property = "service.ranking:Integer=10")
 public class TemplateCreateNewModelElementStrategyProvider
 	extends ReferenceServiceCustomizationVendor<CreateNewModelElementStrategy> implements Provider {
+
 	private final Set<TemplateProvider> templateProviders = new LinkedHashSet<TemplateProvider>();
 	private EMFFormsLocalizationService localizationService;
 
@@ -91,10 +93,10 @@ public class TemplateCreateNewModelElementStrategyProvider
 	private Set<Template> collectAvailableTemplates(EObject eObject, EReference eReference) {
 		final Set<Template> templates = new LinkedHashSet<Template>();
 		for (final TemplateProvider provider : templateProviders) {
-			if (!provider.canProvide(eReference.getEReferenceType())) {
+			if (!provider.canProvideTemplates(eObject, eReference)) {
 				continue;
 			}
-			templates.addAll(provider.provide(eReference.getEReferenceType()));
+			templates.addAll(provider.provideTemplates(eObject, eReference));
 
 		}
 		return templates;

@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 529138
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
@@ -21,7 +22,10 @@ import static org.mockito.Mockito.when;
 import java.util.Collection;
 import java.util.Set;
 
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditFactory;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User;
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup;
 import org.eclipse.emfforms.datatemplate.Template;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
@@ -67,22 +71,26 @@ public class BlankTemplateProvider_Test {
 
 	@Test
 	public void testCanProvide_ConcreteClass() {
-		assertTrue(provider.canProvide(AuditPackage.eINSTANCE.getGuestUser()));
+		final UserGroup group = AuditFactory.eINSTANCE.createUserGroup();
+		assertTrue(provider.canProvideTemplates(group, AuditPackage.Literals.USER_GROUP__ADMINS));
 	}
 
 	@Test
 	public void testCanProvide_ConcreteSubClass() {
-		assertTrue(provider.canProvide(AuditPackage.eINSTANCE.getUser()));
+		final UserGroup group = AuditFactory.eINSTANCE.createUserGroup();
+		assertTrue(provider.canProvideTemplates(group, AuditPackage.Literals.USER_GROUP__USERS));
 	}
 
 	@Test
 	public void testCanProvide_NoConcreteSubClass() {
-		assertFalse(provider.canProvide(AuditPackage.eINSTANCE.getAbstractSubUser()));
+		final User user = AuditFactory.eINSTANCE.createGuestUser();
+		assertFalse(provider.canProvideTemplates(user, AuditPackage.Literals.USER__SUB_USERS));
 	}
 
 	@Test
 	public void testProvide_NoSubClasses() {
-		final Set<Template> result = provider.provide(AuditPackage.eINSTANCE.getPrivilegedUser());
+		final UserGroup group = AuditFactory.eINSTANCE.createUserGroup();
+		final Set<Template> result = provider.provideTemplates(group, AuditPackage.Literals.USER_GROUP__ADMINS);
 		assertEquals(1, result.size());
 		final Template template = result.iterator().next();
 		assertEquals(AuditPackage.eINSTANCE.getAdminUser(), template.getInstance().eClass());
@@ -91,7 +99,8 @@ public class BlankTemplateProvider_Test {
 
 	@Test
 	public void testProvide_ConcreteSubClasses() {
-		final Set<Template> result = provider.provide(AuditPackage.eINSTANCE.getUser());
+		final UserGroup group = AuditFactory.eINSTANCE.createUserGroup();
+		final Set<Template> result = provider.provideTemplates(group, AuditPackage.Literals.USER_GROUP__USERS);
 		assertEquals(3, result.size());
 		assertTrue(hasTemplateWithName(result, "Blank AdminUser")); //$NON-NLS-1$
 		assertTrue(hasTemplateWithName(result, "Blank GuestUser")); //$NON-NLS-1$
@@ -110,7 +119,8 @@ public class BlankTemplateProvider_Test {
 
 	@Test
 	public void testProvide_NonConcreteSubClass() {
-		final Set<Template> result = provider.provide(AuditPackage.eINSTANCE.getAbstractSubUser());
+		final User user = AuditFactory.eINSTANCE.createGuestUser();
+		final Set<Template> result = provider.provideTemplates(user, AuditPackage.Literals.USER__SUB_USERS);
 		assertEquals(0, result.size());
 	}
 }

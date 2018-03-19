@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
+ * Christian W. Damus - bug 529138
  */
 package org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl;
 
@@ -19,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AbstractSubUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.RegisteredUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User;
@@ -39,6 +41,8 @@ import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User;
  * <em>Password</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.UserImpl#getDelegates
  * <em>Delegates</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl.UserImpl#getSubUsers <em>Sub
+ * Users</em>}</li>
  * </ul>
  *
  * @generated
@@ -120,6 +124,17 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 	 * @ordered
 	 */
 	protected EList<RegisteredUser> delegates;
+
+	/**
+	 * The cached value of the '{@link #getSubUsers() <em>Sub Users</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getSubUsers()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AbstractSubUser> subUsers;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -243,6 +258,21 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 	 * @generated
 	 */
 	@Override
+	public EList<AbstractSubUser> getSubUsers() {
+		if (subUsers == null) {
+			subUsers = new EObjectResolvingEList<AbstractSubUser>(AbstractSubUser.class, this,
+				AuditPackage.USER__SUB_USERS);
+		}
+		return subUsers;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case AuditPackage.USER__DISPLAY_NAME:
@@ -253,6 +283,8 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 			return getPassword();
 		case AuditPackage.USER__DELEGATES:
 			return getDelegates();
+		case AuditPackage.USER__SUB_USERS:
+			return getSubUsers();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -280,6 +312,10 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 			getDelegates().clear();
 			getDelegates().addAll((Collection<? extends RegisteredUser>) newValue);
 			return;
+		case AuditPackage.USER__SUB_USERS:
+			getSubUsers().clear();
+			getSubUsers().addAll((Collection<? extends AbstractSubUser>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -305,6 +341,9 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 		case AuditPackage.USER__DELEGATES:
 			getDelegates().clear();
 			return;
+		case AuditPackage.USER__SUB_USERS:
+			getSubUsers().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -326,6 +365,8 @@ public abstract class UserImpl extends MinimalEObjectImpl.Container implements U
 			return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
 		case AuditPackage.USER__DELEGATES:
 			return delegates != null && !delegates.isEmpty();
+		case AuditPackage.USER__SUB_USERS:
+			return subUsers != null && !subUsers.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

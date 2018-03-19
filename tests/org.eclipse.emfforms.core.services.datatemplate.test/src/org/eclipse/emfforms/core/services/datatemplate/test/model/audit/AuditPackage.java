@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
+ * Christian W. Damus - bug 529138
  */
 package org.eclipse.emfforms.core.services.datatemplate.test.model.audit;
 
@@ -124,6 +125,16 @@ public interface AuditPackage extends EPackage {
 	int USER__DELEGATES = 3;
 
 	/**
+	 * The feature id for the '<em><b>Sub Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int USER__SUB_USERS = 4;
+
+	/**
 	 * The number of structural features of the '<em>User</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -131,7 +142,7 @@ public interface AuditPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER_FEATURE_COUNT = 4;
+	int USER_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>User</em>' class.
@@ -195,6 +206,16 @@ public interface AuditPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIVILEGED_USER__DELEGATES = USER__DELEGATES;
+
+	/**
+	 * The feature id for the '<em><b>Sub Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int PRIVILEGED_USER__SUB_USERS = USER__SUB_USERS;
 
 	/**
 	 * The number of structural features of the '<em>Privileged User</em>' class.
@@ -270,6 +291,16 @@ public interface AuditPackage extends EPackage {
 	int GUEST_USER__DELEGATES = USER__DELEGATES;
 
 	/**
+	 * The feature id for the '<em><b>Sub Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GUEST_USER__SUB_USERS = USER__SUB_USERS;
+
+	/**
 	 * The number of structural features of the '<em>Guest User</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -341,6 +372,16 @@ public interface AuditPackage extends EPackage {
 	 * @ordered
 	 */
 	int REGISTERED_USER__DELEGATES = USER__DELEGATES;
+
+	/**
+	 * The feature id for the '<em><b>Sub Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int REGISTERED_USER__SUB_USERS = USER__SUB_USERS;
 
 	/**
 	 * The number of structural features of the '<em>Registered User</em>' class.
@@ -416,6 +457,16 @@ public interface AuditPackage extends EPackage {
 	int ADMIN_USER__DELEGATES = REGISTERED_USER__DELEGATES;
 
 	/**
+	 * The feature id for the '<em><b>Sub Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ADMIN_USER__SUB_USERS = REGISTERED_USER__SUB_USERS;
+
+	/**
 	 * The number of structural features of the '<em>Admin User</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -479,6 +530,26 @@ public interface AuditPackage extends EPackage {
 	int USER_GROUP__ADMINS = 2;
 
 	/**
+	 * The feature id for the '<em><b>Registered Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int USER_GROUP__REGISTERED_USERS = 3;
+
+	/**
+	 * The feature id for the '<em><b>Guests</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int USER_GROUP__GUESTS = 4;
+
+	/**
 	 * The number of structural features of the '<em>User Group</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -486,7 +557,7 @@ public interface AuditPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER_GROUP_FEATURE_COUNT = 3;
+	int USER_GROUP_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>User Group</em>' class.
@@ -550,6 +621,16 @@ public interface AuditPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_SUB_USER__DELEGATES = USER__DELEGATES;
+
+	/**
+	 * The feature id for the '<em><b>Sub Users</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SUB_USER__SUB_USERS = USER__SUB_USERS;
 
 	/**
 	 * The number of structural features of the '<em>Abstract Sub User</em>' class.
@@ -635,6 +716,19 @@ public interface AuditPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getUser_Delegates();
+
+	/**
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User#getSubUsers <em>Sub Users</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference list '<em>Sub Users</em>'.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User#getSubUsers()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EReference getUser_SubUsers();
 
 	/**
 	 * Returns the meta object for class
@@ -738,6 +832,33 @@ public interface AuditPackage extends EPackage {
 	EReference getUserGroup_Admins();
 
 	/**
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getRegisteredUsers
+	 * <em>Registered Users</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference list '<em>Registered Users</em>'.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getRegisteredUsers()
+	 * @see #getUserGroup()
+	 * @generated
+	 */
+	EReference getUserGroup_RegisteredUsers();
+
+	/**
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getGuests <em>Guests</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference list '<em>Guests</em>'.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup#getGuests()
+	 * @see #getUserGroup()
+	 * @generated
+	 */
+	EReference getUserGroup_Guests();
+
+	/**
 	 * Returns the meta object for class
 	 * '{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AbstractSubUser <em>Abstract Sub
 	 * User</em>}'.
@@ -822,6 +943,15 @@ public interface AuditPackage extends EPackage {
 		 * @generated
 		 */
 		EReference USER__DELEGATES = eINSTANCE.getUser_Delegates();
+
+		/**
+		 * The meta object literal for the '<em><b>Sub Users</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference USER__SUB_USERS = eINSTANCE.getUser_SubUsers();
 
 		/**
 		 * The meta object literal for the
@@ -914,6 +1044,24 @@ public interface AuditPackage extends EPackage {
 		 * @generated
 		 */
 		EReference USER_GROUP__ADMINS = eINSTANCE.getUserGroup_Admins();
+
+		/**
+		 * The meta object literal for the '<em><b>Registered Users</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference USER_GROUP__REGISTERED_USERS = eINSTANCE.getUserGroup_RegisteredUsers();
+
+		/**
+		 * The meta object literal for the '<em><b>Guests</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference USER_GROUP__GUESTS = eINSTANCE.getUserGroup_Guests();
 
 		/**
 		 * The meta object literal for the

@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
+ * Christian W. Damus - bug 529138
  */
 package org.eclipse.emfforms.core.services.datatemplate.test.model.audit;
 
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User#getLogin <em>Login</em>}</li>
  *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User#getDelegates <em>Delegates</em>}</li>
+ *   <li>{@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User#getSubUsers <em>Sub Users</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage#getUser()
@@ -127,5 +129,23 @@ public interface User extends EObject {
 	 * @generated
 	 */
 	EList<RegisteredUser> getDelegates();
+
+	/**
+	 * Returns the value of the '<em><b>Sub Users</b></em>' reference list.
+	 * The list contents are of type
+	 * {@link org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AbstractSubUser}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sub Users</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Sub Users</em>' reference list.
+	 * @see org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage#getUser_SubUsers()
+	 * @model
+	 * @generated
+	 */
+	EList<AbstractSubUser> getSubUsers();
 
 } // User

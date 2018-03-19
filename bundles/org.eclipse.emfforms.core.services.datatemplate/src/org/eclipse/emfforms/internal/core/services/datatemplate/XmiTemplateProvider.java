@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 529138
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
@@ -23,6 +24,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -97,15 +100,17 @@ public class XmiTemplateProvider implements TemplateProvider {
 	}
 
 	@Override
-	public boolean canProvide(EClass superType) {
+	public boolean canProvideTemplates(EObject owner, EReference reference) {
+		final EClass referenceType = reference.getEReferenceType();
+
 		// if we have a key for the given template we surely have at least one template
-		if (templates.containsKey(superType)) {
+		if (templates.containsKey(referenceType)) {
 			return true;
 		}
 
 		// otherwise we have to analyze all keys and see if our type is a super type (of at least one)
 		for (final EClass type : templates.keySet()) {
-			if (superType.isSuperTypeOf(type)) {
+			if (referenceType.isSuperTypeOf(type)) {
 				return true;
 			}
 		}
@@ -113,11 +118,12 @@ public class XmiTemplateProvider implements TemplateProvider {
 	}
 
 	@Override
-	public Set<Template> provide(EClass superType) {
+	public Set<Template> provideTemplates(EObject owner, EReference reference) {
 		final Set<Template> matchingTemplates = new LinkedHashSet<Template>();
+		final EClass referenceType = reference.getEReferenceType();
 
 		for (final EClass type : templates.keySet()) {
-			if (!superType.isSuperTypeOf(type)) {
+			if (!referenceType.isSuperTypeOf(type)) {
 				continue;
 			}
 			matchingTemplates.addAll(templates.get(type));
