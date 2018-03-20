@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,11 +9,10 @@
  * Contributors:
  * Martin Fleck - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.editor.ecore.controls;
+package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import javax.inject.Inject;
 
-import org.eclipse.emf.ecp.view.internal.control.multireference.MultiReferenceSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -23,12 +22,11 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 
 /**
- * Renderer for ESuperTypes reference of {@link org.eclipse.emf.ecore.EClass EClass}.
+ * Multi Reference renderer that only allows linking existing objects but not creating new ones.
  *
  * @author Martin Fleck
  *
  */
-@SuppressWarnings("restriction")
 public class LinkOnlyMultiReferenceRenderer extends MultiReferenceSWTRenderer {
 
 	/**
