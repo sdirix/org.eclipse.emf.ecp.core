@@ -12,6 +12,9 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
+import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
+import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -22,15 +25,22 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy.Provider;
+import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceServiceCustomizationVendor;
+import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategyUtil;
+import org.eclipse.emfforms.bazaar.Bazaar;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.Template;
+import org.eclipse.emfforms.spi.bazaar.BazaarUtil;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
@@ -48,6 +58,47 @@ public class TemplateCreateNewModelElementStrategyProvider
 
 	private final Set<TemplateProvider> templateProviders = new LinkedHashSet<TemplateProvider>();
 	private EMFFormsLocalizationService localizationService;
+
+	private final Bazaar<EClassSelectionStrategy> eclassSelectionStrategyBazaar = BazaarUtil.createBazaar(
+		EClassSelectionStrategy.NULL);
+	private ComponentContext context;
+
+	/**
+	 * Activates me.
+	 *
+	 * @param context my component context
+	 */
+	@Activate
+	void activate(ComponentContext context) {
+		this.context = context;
+	}
+
+	/**
+	 * Deactivates me.
+	 */
+	@Deactivate
+	void deactivate() {
+		context = null;
+	}
+
+	/**
+	 * Add an {@code EClass} selection strategy provider.
+	 *
+	 * @param provider the provider to add
+	 */
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
+	public void addEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
+		eclassSelectionStrategyBazaar.addVendor(provider);
+	}
+
+	/**
+	 * Remove an {@code EClass} selection strategy provider.
+	 *
+	 * @param provider the provider to remove
+	 */
+	void removeEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
+		eclassSelectionStrategyBazaar.removeVendor(provider);
+	}
 
 	/**
 	 * Register a template provider implementation.
@@ -90,7 +141,7 @@ public class TemplateCreateNewModelElementStrategyProvider
 	 * @param eReference the {@link EReference} to find templates for
 	 * @return list of available templates
 	 */
-	private Set<Template> collectAvailableTemplates(EObject eObject, EReference eReference) {
+	protected Set<Template> collectAvailableTemplates(EObject eObject, EReference eReference) {
 		final Set<Template> templates = new LinkedHashSet<Template>();
 		for (final TemplateProvider provider : templateProviders) {
 			if (!provider.canProvideTemplates(eObject, eReference)) {
@@ -109,7 +160,9 @@ public class TemplateCreateNewModelElementStrategyProvider
 	 */
 	@Create
 	public CreateNewModelElementStrategy createCreateNewModelElementStrategy() {
-		return new Strategy();
+		final EClassSelectionStrategy eClassSelectionStrategy = ReferenceStrategyUtil
+			.createDynamicEClassSelectionStrategy(eclassSelectionStrategyBazaar, context);
+		return new Strategy(eClassSelectionStrategy);
 	}
 
 	/**
@@ -119,6 +172,13 @@ public class TemplateCreateNewModelElementStrategyProvider
 	 * @author Lucas Koehler
 	 */
 	private class Strategy implements CreateNewModelElementStrategy {
+		private final EClassSelectionStrategy classSelectionStrategy;
+
+		Strategy(final EClassSelectionStrategy classSelectionStrategy) {
+			super();
+			this.classSelectionStrategy = classSelectionStrategy;
+		}
+
 		/**
 		 * {@inheritDoc}
 		 * <p>
@@ -133,8 +193,11 @@ public class TemplateCreateNewModelElementStrategyProvider
 				return Optional.empty();
 			}
 
-			final Set<EClass> subClasses = new LinkedHashSet<EClass>(
+			final Set<EClass> availableClasses = new LinkedHashSet<EClass>(
 				EMFUtils.getSubClasses(reference.getEReferenceType()));
+			final Set<EClass> subClasses = new LinkedHashSet<EClass>(
+				classSelectionStrategy.collectEClasses(owner, reference, availableClasses));
+
 			Template selected = availableTemplates.iterator().next();
 			if (availableTemplates.size() > 1) {
 				final Optional<Template> selectedElement = showSelectModelInstancesDialog(subClasses,

@@ -18,12 +18,8 @@ import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -42,11 +38,9 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emfforms.bazaar.Bazaar;
-import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.Create;
-import org.eclipse.emfforms.bazaar.StaticBid;
-import org.eclipse.emfforms.bazaar.Vendor;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.bazaar.BazaarUtil;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -71,34 +65,9 @@ import org.osgi.service.component.annotations.Reference;
 	Provider.class, DefaultCreateNewModelElementStrategyProvider.class })
 public class DefaultCreateNewModelElementStrategyProvider
 	extends ReferenceServiceCustomizationVendor<CreateNewModelElementStrategy> implements Provider {
-	private static <T> Bazaar<T> createBazaar(T defaultStrategy) {
-		final Bazaar.Builder<T> builder = builder(defaultStrategy);
-		return builder.build();
-	}
 
-	private static <T> Bazaar.Builder<T> builder(final T defaultStrategy) {
-		/**
-		 * A vendor of the default, that tries to lose every bid.
-		 */
-		@StaticBid(bid = Double.NEGATIVE_INFINITY)
-		class DefaultVendor implements Vendor<T> {
-			/**
-			 * Return the default strategy.
-			 *
-			 * @return the default strategy
-			 */
-			@Create
-			public T createDefault() {
-				return defaultStrategy;
-			}
-		}
-
-		final Bazaar.Builder<T> result = Bazaar.Builder.empty();
-		return result.threadSafe().add(new DefaultVendor());
-	}
-
-	private final Bazaar<EClassSelectionStrategy> eclassSelectionStrategyBazaar = createBazaar(
-		EClassSelectionStrategy.NULL);
+	private final Bazaar<EClassSelectionStrategy> eclassSelectionStrategyBazaar = BazaarUtil
+		.createBazaar(EClassSelectionStrategy.NULL);
 	private ComponentContext context;
 	private ReportService reportService;
 
@@ -149,62 +118,9 @@ public class DefaultCreateNewModelElementStrategyProvider
 		context = null;
 	}
 
-	private BazaarContext getBazaarContext(EObject owner, EReference reference) {
-		return baseContext(owner, reference).build();
-	}
-
-	private BazaarContext.Builder baseContext(EObject owner, EReference reference) {
-		return BazaarContext.Builder.with(adapt(context.getProperties()))
-			.put(EObject.class, owner)
-			.put(EReference.class, reference);
-	}
-
-	/**
-	 * Adapt a {@code dictionary} as a map.
-	 *
-	 * @param dictionary a dictionary
-	 * @return the {@code dictionary}, as a map
-	 */
-	static Map<String, ?> adapt(Dictionary<String, ?> dictionary) {
-		// The OSGi implementation of the read-only properties for all sorts of
-		// things is a map
-		if (dictionary instanceof Map<?, ?>) {
-			@SuppressWarnings("unchecked")
-			final Map<String, ?> result = (Map<String, ?>) dictionary;
-			return result;
-		}
-
-		final Map<String, Object> result = new HashMap<String, Object>();
-		for (final Enumeration<String> keys = dictionary.keys(); keys.hasMoreElements();) {
-			final String next = keys.nextElement();
-			result.put(next, dictionary.get(next));
-		}
-		return result;
-	}
-
 	@Override
 	protected boolean handles(EObject owner, EReference reference) {
 		return true;
-	}
-
-	private EClassSelectionStrategy createDynamicEClassSelectionStrategy() {
-		return new EClassSelectionStrategy() {
-
-			@Override
-			public Collection<EClass> collectEClasses(EObject owner, EReference reference,
-				Collection<EClass> eclasses) {
-
-				Collection<EClass> result = eclasses;
-
-				final List<EClassSelectionStrategy> delegates = eclassSelectionStrategyBazaar.createProducts(
-					getBazaarContext(owner, reference));
-				for (final EClassSelectionStrategy next : delegates) {
-					result = next.collectEClasses(owner, reference, result);
-				}
-
-				return result;
-			}
-		};
 	}
 
 	/**
@@ -214,7 +130,8 @@ public class DefaultCreateNewModelElementStrategyProvider
 	 */
 	@Create
 	public CreateNewModelElementStrategy createCreateNewModelElementStrategy() {
-		final EClassSelectionStrategy classSelectionStrategy = createDynamicEClassSelectionStrategy();
+		final EClassSelectionStrategy classSelectionStrategy = ReferenceStrategyUtil
+			.createDynamicEClassSelectionStrategy(eclassSelectionStrategyBazaar, context);
 		return new DefaultStrategy(classSelectionStrategy);
 	}
 
