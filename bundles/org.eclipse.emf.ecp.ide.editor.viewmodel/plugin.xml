@@ -24,6 +24,9 @@
       <file
             filePath="viewmodel/TableDomainModelReference.view">
       </file>
+      <file
+            filePath="viewmodel/ReadOnlyColumnConfiguration.view">
+      </file>
    </extension>
 
 </plugin>
