@@ -265,6 +265,12 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		}
 
 		@Override
+		public void createControl(Composite parent) {
+			super.createControl(parent);
+			getSelectionComposite().getViewer().setLabelProvider(new EClassLabelProvider(localizationService));
+		}
+
+		@Override
 		protected ISelectionChangedListener getSelectionChangedListener() {
 			return new ISelectionChangedListener() {
 

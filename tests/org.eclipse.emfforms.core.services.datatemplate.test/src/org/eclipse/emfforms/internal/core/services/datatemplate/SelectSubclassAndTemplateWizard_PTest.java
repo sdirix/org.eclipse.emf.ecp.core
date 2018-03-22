@@ -38,9 +38,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.osgi.framework.Bundle;
 
 /**
  * Plugin tests for the {@link SelectSubclassAndTemplateWizard}.
@@ -63,6 +67,36 @@ public class SelectSubclassAndTemplateWizard_PTest {
 	public void setUp() throws SWTException {
 		localizationService = mock(EMFFormsLocalizationService.class);
 		when(localizationService.getString(any(Class.class), any(String.class))).thenReturn(""); //$NON-NLS-1$
+		when(localizationService.getString(any(Bundle.class), any(String.class))).thenAnswer(
+			new Answer<String>() {
+				@SuppressWarnings("nls")
+				@Override
+				public String answer(InvocationOnMock invocation) throws Throwable {
+					final String key = (String) invocation.getArguments()[1];
+					if ("_UI_AbstractSubUser_type".equals(key)) {
+						return "Abstract Sub User";
+					}
+					if ("_UI_AdminUser_type".equals(key)) {
+						return "Admin User";
+					}
+					if ("_UI_GuestUser_type".equals(key)) {
+						return "Guest User";
+					}
+					if ("_UI_PrivilegedUser_type".equals(key)) {
+						return "Privileged User";
+					}
+					if ("_UI_RegisteredUser_type".equals(key)) {
+						return "Registered User";
+					}
+					if ("_UI_UserGroup_type".equals(key)) {
+						return "User Group";
+					}
+					if ("_UI_User_type".equals(key)) {
+						return "User";
+					}
+					return "";
+				}
+			});
 		shell = new Shell();
 	}
 
@@ -119,8 +153,9 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(2, subClassTable.getItemCount());
 
 		// Select the registered user class
-		selectTableItem(subClassTable, 1);
+		final TableItem item = selectTableItem(subClassTable, 1);
 		SWTTestUtil.waitForUIThread();
+		assertEquals("Registered User", item.getText()); //$NON-NLS-1$
 
 		// verify button enablement
 		assertFalse(backButton.isEnabled());
@@ -265,9 +300,9 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(2, subClassTable.getItemCount());
 
 		// Select the guest user class
-		selectTableItem(subClassTable, 1);
-
+		final TableItem item = selectTableItem(subClassTable, 1);
 		SWTTestUtil.waitForUIThread();
+		assertEquals("Guest User", item.getText()); //$NON-NLS-1$
 
 		// Because there is only one template for the guest user EClass the wizard should offer to finish directly but
 		// not to go to the template selection page
@@ -458,14 +493,17 @@ public class SelectSubclassAndTemplateWizard_PTest {
 	 *
 	 * @param table
 	 * @param index
+	 * @return the selected table item
 	 */
-	private void selectTableItem(Table table, int index) {
+	private TableItem selectTableItem(Table table, int index) {
 		table.setSelection(index);
 		final Event event = new Event();
 		event.type = SWT.Selection;
 		event.widget = table;
-		event.item = table.getItem(index);
+		final TableItem result = table.getItem(index);
+		event.item = result;
 		table.notifyListeners(SWT.Selection, event);
+		return result;
 	}
 
 	/**

@@ -20,4 +20,13 @@
               file="templates.xmi">
       </template>
    </extension>
+   
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- Fake an Edit bundle for mocking the provision of labels. -->
+      <factory
+            uri="http://eclipse/org/emfforms/core/services/datatemplate/test/model/audit"
+            class="org.eclipse.emf.common.notify.impl.AdapterFactoryImpl"
+            supportedTypes=""/>
+   </extension>
+   
 </plugin>

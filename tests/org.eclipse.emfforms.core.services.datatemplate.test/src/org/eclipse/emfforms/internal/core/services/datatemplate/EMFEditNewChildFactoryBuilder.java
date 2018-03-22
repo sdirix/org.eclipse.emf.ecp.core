@@ -73,7 +73,7 @@ public final class EMFEditNewChildFactoryBuilder {
 	}
 
 	public Resource buildResource() {
-		return buildEditingDomain().getResourceSet().createResource(URI.createURI("bogus://test/foo.xmi"));
+		return buildEditingDomain().getResourceSet().createResource(URI.createURI("bogus://test/foo.xmi")); //$NON-NLS-1$
 	}
 
 	public EMFEditNewChildFactoryBuilder addTemplate(Class<? extends EObject> owner, EReference reference,
