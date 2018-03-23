@@ -354,6 +354,16 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		childContext.unregisterEMFFormsContextListener(this);
 	}
 
+	/**
+	 * Get all settings associated with the given control to remove.
+	 * For every setting, remove its mapping to any parent element of the given child context.
+	 * This is necessary when the child context is removed from this setting to control mapper in order to avoid
+	 * mappings to deleted settings after a child context was removed.
+	 *
+	 * @param childContext The child {@link EMFFormsViewContext} that will be removed from this setting to control
+	 *            mapper
+	 * @param controlToRemove The {@link VControl} that will be removed from this setting to control mapper
+	 */
 	private void vControlParentsRemoved(EMFFormsViewContext childContext, VControl controlToRemove) {
 		VElement parentElement = contextParentMap.get(childContext);
 		while (parentElement != null) {
@@ -413,6 +423,10 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 
 	@Override
 	public Set<UniqueSetting> getSettingsForControl(VControl control) {
-		return controlToSettingMap.get(control);
+		final Set<UniqueSetting> settings = controlToSettingMap.get(control);
+		if (settings == null) {
+			return Collections.emptySet();
+		}
+		return settings;
 	}
 }
