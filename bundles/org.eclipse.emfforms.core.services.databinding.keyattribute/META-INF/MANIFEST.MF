@@ -16,3 +16,4 @@ Import-Package: org.eclipse.emfforms.spi.core.services.databinding.emf;version="
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
 Service-Component: OSGI-INF/KeyAttributeDomainModelReferenceConverter.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.core.services.databinding.keyattribute

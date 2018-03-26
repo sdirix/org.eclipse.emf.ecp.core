@@ -27,3 +27,4 @@ Import-Package: org.eclipse.core.resources;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0",
  org.osgi.service.component.annotations;version="1.2.0"
+Automatic-Module-Name: org.eclipse.emf.ecp.view.model.preview.common

@@ -51,3 +51,4 @@ Service-Component: OSGI-INF/InstanceTypeNameSWTRendererService.xml,
  OSGI-INF/ecoreOpenInNewContextStrategyProvider.xml,
  OSGI-INF/ecoreReferenceStrategyProvider.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.editor.ecore

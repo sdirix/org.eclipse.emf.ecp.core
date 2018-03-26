@@ -30,3 +30,4 @@ Import-Package: org.eclipse.emf.ecp.edit.spi.swt.util;version="[1.17.0,1.18.0]",
  org.eclipse.swt.widgets;version="0.0.0",
  org.eclipse.ui.dialogs;version="0.0.0";ui.workbench=split
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.mappingdmr.tooling

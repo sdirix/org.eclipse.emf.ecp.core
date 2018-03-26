@@ -16,3 +16,4 @@ Import-Package: org.eclipse.emf.ecp.common.spi.asserts;version="[1.17.0,1.18.0]"
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.core.services.structuralchange.index.StructuralChangeTesterIndex.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.core.services.structuralchange.index

@@ -28,3 +28,4 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.framework;version="1.8.0"
 Service-Component: OSGI-INF/testControlSWTRendererServiceDI.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.swt.core.di.tests

@@ -21,3 +21,4 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emfforms.core.services.legacy;bundle-version="[1.17.0,1.18.0]",
  org.eclipse.emfforms.core.services;bundle-version="[1.17.0,1.18.0]"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Automatic-Module-Name: org.eclipse.emf.ecp.view.unset.test

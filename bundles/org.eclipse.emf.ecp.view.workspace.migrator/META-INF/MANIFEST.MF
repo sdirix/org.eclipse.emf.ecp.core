@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.emf.ecp.view.migrator;bundle-version="[1.17.0,1.18.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Service-Component: OSGI-INF/workspaceMigrator.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.workspace.migrator

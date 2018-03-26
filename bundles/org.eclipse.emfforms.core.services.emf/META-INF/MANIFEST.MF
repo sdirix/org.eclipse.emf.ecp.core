@@ -28,3 +28,4 @@ Import-Package: org.eclipse.core.databinding.observable;version="0.0.0",
   org.osgi.framework;version="[1.6.0,2.0.0)"
 Service-Component: OSGI-INF/emfLabelProvider.xml, OSGI-INF/emfLabelProviderDefault.xml, OSGI-INF/databindingService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.core.services.emf

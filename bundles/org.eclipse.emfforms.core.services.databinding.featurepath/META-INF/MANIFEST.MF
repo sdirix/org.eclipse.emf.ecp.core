@@ -13,3 +13,4 @@ Import-Package: org.eclipse.emfforms.spi.core.services.databinding;version="[1.1
  org.eclipse.emfforms.spi.core.services.databinding.emf;version="[1.17.0,1.18.0]"
 Service-Component: OSGI-INF/featurePathDomainModelReferenceConverterService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.core.services.databinding.featurepath

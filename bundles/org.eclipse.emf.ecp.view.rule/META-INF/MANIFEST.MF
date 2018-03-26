@@ -30,3 +30,4 @@ Service-Component: OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.OrConditionSe
  OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.TrueConditionService.xml,
  OSGI-INF/org.eclipse.emf.ecp.view.internal.rule.IsProxyConditionService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.rule

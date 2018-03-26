@@ -31,3 +31,4 @@ Import-Package: org.eclipse.core.databinding.observable.list;version="0.0.0",
  org.osgi.service.component.annotations;version="[1.0.0,2.0.0)";resolution:=optional
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.core.services.controlmapper.SettingToControlMapFactoryImpl.xml,OSGI-INF/org.eclipse.emfforms.internal.core.services.mappingprovider.EMFFormsMappingProviderManagerImpl.xml,OSGI-INF/org.eclipse.emfforms.internal.core.services.scoped.EMFFormsViewServiceManagerImpl.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.core.services

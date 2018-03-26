@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt;bundle-version=
  org.eclipse.emf.ecp.view.template.tooling;bundle-version="[1.17.0,1.18.0]"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.ide.editor.view.templatebridge

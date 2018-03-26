@@ -8,3 +8,4 @@ Export-Package: org.eclipse.emf.ecp.view.table.edapt._140to150;version="1.17.0";
 Require-Bundle: org.eclipse.emf.edapt.migration;bundle-version="[1.0.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.table.edapt

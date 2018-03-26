@@ -30,3 +30,4 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.service.component.annotations;version="0.0.0";resolution:=optional
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.swt.control.text.autocomplete.renderer.AutocompleteTextControlSWTRendererService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.swt.control.text.autocomplete

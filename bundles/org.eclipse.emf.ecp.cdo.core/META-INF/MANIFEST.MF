@@ -16,3 +16,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.h2;version="[1.0.2.qualifier,2.0.0)",
   org.h2.jdbcx;version="[1.0.2.qualifier,2.0.0)"
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.cdo.core

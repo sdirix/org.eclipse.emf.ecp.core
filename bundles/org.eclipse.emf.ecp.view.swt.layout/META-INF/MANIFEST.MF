@@ -15,3 +15,4 @@ Import-Package: org.eclipse.jface.layout;version="0.0.0",
   org.osgi.service.component.annotations;version="1.2.0"
 Service-Component: OSGI-INF/org.eclipse.emf.ecp.view.swt.internal.layout.ECPLayoutProvider.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.swt.layout

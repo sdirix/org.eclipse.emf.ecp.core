@@ -17,3 +17,4 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emfforms.core.services.domainexpander.table;bundle-version="[1.17.0,1.18.0]",
  org.eclipse.emfforms.core.services.domainexpander.index;bundle-version="[1.17.0,1.18.0]"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Automatic-Module-Name: org.eclipse.emfforms.spreadsheet.core.renderer.table.tests

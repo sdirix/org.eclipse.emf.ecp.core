@@ -15,3 +15,4 @@ Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.17.0,1.18.0]",
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)"
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization.EMFFormsCategorizationElementRendererService.xml,OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization.EMFFormsCategorizationRendererService.xml,OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization.EMFFormsCategoryRendererService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.spreadsheet.core.renderer.categorization

@@ -35,3 +35,4 @@ Import-Package: com.ibm.icu.text;version="52.1.1",
   org.eclipse.swt.widgets;version="0.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Automatic-Module-Name: org.eclipse.emf.ecp.view.core.swt.tests

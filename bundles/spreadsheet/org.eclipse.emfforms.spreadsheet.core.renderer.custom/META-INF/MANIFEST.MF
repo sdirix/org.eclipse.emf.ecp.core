@@ -12,3 +12,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.osgi.service.component.annotations;version="[1.2.0,2.0.0)"
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.custom.EMFFormsSpreadsheetCustomControlRendererService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.spreadsheet.core.renderer.custom

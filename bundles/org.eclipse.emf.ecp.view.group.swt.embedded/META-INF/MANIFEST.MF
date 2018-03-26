@@ -22,3 +22,4 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.framework;version="1.6.0"
 Service-Component: OSGI-INF/embeddedGroupRendererService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.group.swt.embedded

@@ -16,3 +16,4 @@ Import-Package: org.eclipse.emfforms.spi.swt.core.layout;version="[1.17.0,1.18.0
  org.osgi.service.component.annotations;version="1.2.0"
 Service-Component: OSGI-INF/org.eclipse.emf.ecp.view.internal.util.swt.rap.EMFFormsSWTLayoutDirect.xml,OSGI-INF/org.eclipse.emf.ecp.view.internal.util.swt.rap.RAPImageRegistryService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.util.swt.rap

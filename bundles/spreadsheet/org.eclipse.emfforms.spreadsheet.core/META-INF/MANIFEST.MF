@@ -39,3 +39,4 @@ Import-Package: org.eclipse.emf.databinding;version="0.0.0",
  org.eclipse.emfforms.spi.localization;version="[1.17.0,1.18.0]",
  org.osgi.framework;version="1.6.0",
  org.osgi.service.component.annotations;version="1.2.0"
+Automatic-Module-Name: org.eclipse.emfforms.spreadsheet.core

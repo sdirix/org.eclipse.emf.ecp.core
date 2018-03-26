@@ -39,3 +39,4 @@ Import-Package: javax.inject;version="1.0.0",
 Service-Component: OSGI-INF/multiReferenceRendererService.xml,
  OSGI-INF/LinkOnlyMultiReferenceRendererService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.view.control.multireference

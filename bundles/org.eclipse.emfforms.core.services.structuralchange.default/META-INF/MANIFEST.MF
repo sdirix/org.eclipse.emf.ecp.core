@@ -11,3 +11,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.osgi.service.component.annotations;version="0.0.0"
 Service-Component: OSGI-INF/StructuralChangeTesterDefault.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.core.services.structuralchange.default

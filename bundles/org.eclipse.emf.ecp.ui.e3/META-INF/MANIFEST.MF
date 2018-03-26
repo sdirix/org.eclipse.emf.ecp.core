@@ -40,3 +40,4 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
 Eclipse-ExtensibleAPI: true
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Automatic-Module-Name: org.eclipse.emf.ecp.ui.e3

@@ -10,3 +10,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.rap.rwt.service;version="0.0.0"
 Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.ecp.core.rap.sessionprovider.test

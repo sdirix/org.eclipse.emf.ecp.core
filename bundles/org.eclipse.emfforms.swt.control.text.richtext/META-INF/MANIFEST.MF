@@ -27,3 +27,4 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.service.component.annotations;version="0.0.0";resolution:=optional
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.swt.control.text.richtext.renderer.RichTextControlSWTRendererService.xml
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emfforms.swt.control.text.richtext
