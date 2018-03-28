@@ -98,6 +98,7 @@
 		<module>../../releng/org.eclipse.emf.ecp.rap.products</module>
 		
 		<module>../../releng/org.eclipse.emf.ecp.releng.bundles</module>
+		<module>../../releng/org.eclipse.emf.ecp.releng.i18n</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.features</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.tests</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.examples</module>
