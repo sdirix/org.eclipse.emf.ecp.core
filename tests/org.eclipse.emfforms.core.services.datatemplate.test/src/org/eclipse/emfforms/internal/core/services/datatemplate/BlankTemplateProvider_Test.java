@@ -20,6 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.Set;
 
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditFactory;
@@ -34,6 +35,7 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.ComponentContext;
 
 /**
  * Unit tests for {@link BlankTemplateProvider}.
@@ -67,6 +69,8 @@ public class BlankTemplateProvider_Test {
 		final BundleResolver bundleResolver = mock(BundleResolver.class);
 		provider.setBundleResolver(bundleResolver);
 		provider.setLocalizationService(localizationService);
+		final ComponentContext context = mock(ComponentContext.class);
+		when(context.getProperties()).thenReturn(new Hashtable<String, Object>());
 	}
 
 	@Test

@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * A custom class for rendering the TemplateInstance control.
  * This controls does not allow to add an existing Reference only to create new ones.
- * 
+ *
  * @author Eugen Neufeld
  *
  */
@@ -62,6 +62,11 @@ public class TemplateInstanceRenderer extends LinkControlSWTRenderer {
 	@Override
 	protected void createAddReferenceButton(Composite parent, String elementDisplayName) {
 		// do nothing
+	}
+
+	@Override
+	protected boolean openNewReferenceInContext() {
+		return false;
 	}
 
 }

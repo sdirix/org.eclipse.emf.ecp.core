@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.ui.view.swt.reference;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -58,6 +59,9 @@ public final class ReferenceStrategyUtil {
 
 				final List<EClassSelectionStrategy> delegates = bazaar.createProducts(
 					createBazaarContext(context, owner, reference));
+				// sort from low to high
+				Collections.reverse(delegates);
+
 				for (final EClassSelectionStrategy next : delegates) {
 					result = next.collectEClasses(owner, reference, result);
 				}

@@ -147,7 +147,16 @@ public class TemplateCreateNewModelElementStrategyProvider
 			if (!provider.canProvideTemplates(eObject, eReference)) {
 				continue;
 			}
-			templates.addAll(provider.provideTemplates(eObject, eReference));
+			Set<Template> provideTemplates;
+			if (provider instanceof BlankTemplateProvider) {
+				final EClassSelectionStrategy eClassSelectionStrategy = ReferenceStrategyUtil
+					.createDynamicEClassSelectionStrategy(eclassSelectionStrategyBazaar, context);
+				provideTemplates = ((BlankTemplateProvider) provider).provideTemplates(eObject, eReference,
+					eClassSelectionStrategy);
+			} else {
+				provideTemplates = provider.provideTemplates(eObject, eReference);
+			}
+			templates.addAll(provideTemplates);
 
 		}
 		return templates;

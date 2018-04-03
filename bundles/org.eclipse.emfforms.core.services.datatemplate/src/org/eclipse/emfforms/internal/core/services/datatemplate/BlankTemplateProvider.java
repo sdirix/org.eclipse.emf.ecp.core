@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.ui.view.swt.reference.DefaultCreateNewModelElementStrategyProvider;
+import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.DataTemplateFactory;
 import org.eclipse.emfforms.datatemplate.Template;
@@ -95,6 +96,20 @@ public class BlankTemplateProvider implements TemplateProvider {
 
 	@Override
 	public Set<Template> provideTemplates(EObject owner, EReference reference) {
+		return provideTemplates(owner, reference, EClassSelectionStrategy.NULL);
+	}
+
+	/**
+	 * The actual method which creates the templates. This Method uses the provided {@link EClassSelectionStrategy} to
+	 * filter possible templates.
+	 *
+	 * @param owner The {@link EObject} to which the templates should be added
+	 * @param reference The {@link EReference} to which the templates should be added
+	 * @param eClassSelectionStrategy The {@link EClassSelectionStrategy} to use for filtering
+	 * @return The Set of Templates created by this {@link TemplateProvider}
+	 */
+	public Set<Template> provideTemplates(EObject owner, EReference reference,
+		EClassSelectionStrategy eClassSelectionStrategy) {
 		Map<EClass, EObject> descriptors = defaultNewElementStrategyProvider == null
 			? Collections.<EClass, EObject> emptyMap()
 			: defaultNewElementStrategyProvider.getNewObjectsByDescriptors(owner, reference);
@@ -109,6 +124,9 @@ public class BlankTemplateProvider implements TemplateProvider {
 			}
 		}
 
+		final Collection<EClass> allowedEClasses = eClassSelectionStrategy.collectEClasses(owner, reference,
+			new LinkedHashSet<EClass>(descriptors.keySet()));
+		descriptors.keySet().retainAll(allowedEClasses);
 		final LinkedHashSet<Template> result = new LinkedHashSet<Template>();
 		for (final Map.Entry<EClass, EObject> next : descriptors.entrySet()) {
 			result.add(createTemplate(next.getKey(), next.getValue()));

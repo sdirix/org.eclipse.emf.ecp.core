@@ -101,7 +101,9 @@ public class DefaultCreateNewModelElementStrategyProvider_PTest {
 	@Test
 	public void testEClassSelectionStrategy() {
 		final EClassSelectionStrategy strategy = forceEClass(EcorePackage.eINSTANCE.getEPackage());
-		provider.addEClassSelectionStrategyProvider(new TestEClassSelectionStrategyProvider(1.0, strategy));
+		final TestEClassSelectionStrategyProvider selectionStrategyProvider = new TestEClassSelectionStrategyProvider(
+			POSITIVE_INFINITY, strategy);
+		provider.addEClassSelectionStrategyProvider(selectionStrategyProvider);
 
 		final CreateNewModelElementStrategy createProduct = bazaar
 			.createProduct(context);
@@ -113,6 +115,7 @@ public class DefaultCreateNewModelElementStrategyProvider_PTest {
 		inOrder(strategy).verify(strategy, calls(1)).collectEClasses(isNull(EObject.class),
 			same(EcorePackage.eINSTANCE.getEClass_EAllAttributes()),
 			anyCollectionOf(EClass.class));
+		provider.removeEClassSelectionStrategyProvider(selectionStrategyProvider);
 	}
 
 	/**
@@ -138,8 +141,9 @@ public class DefaultCreateNewModelElementStrategyProvider_PTest {
 
 		// We don't want a user class selection prompt dialog, so force the EEnum class
 		final EClassSelectionStrategy strategy = forceEClass(EcorePackage.Literals.EENUM);
-		provider.addEClassSelectionStrategyProvider(new TestEClassSelectionStrategyProvider(
-			POSITIVE_INFINITY, strategy));
+		final TestEClassSelectionStrategyProvider selectionStrategyProvider = new TestEClassSelectionStrategyProvider(
+			POSITIVE_INFINITY, strategy);
+		provider.addEClassSelectionStrategyProvider(selectionStrategyProvider);
 
 		// Run the test
 		final CreateNewModelElementStrategy createProduct = bazaar.createProduct(context);
@@ -152,6 +156,7 @@ public class DefaultCreateNewModelElementStrategyProvider_PTest {
 
 		// The item provider configured the new object
 		assertThat(type.getName(), is("NewEnum1"));
+		provider.removeEClassSelectionStrategyProvider(selectionStrategyProvider);
 	}
 
 	//

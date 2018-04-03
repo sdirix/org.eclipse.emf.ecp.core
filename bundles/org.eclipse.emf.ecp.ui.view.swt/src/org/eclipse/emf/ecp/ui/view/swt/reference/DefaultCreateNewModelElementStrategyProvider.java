@@ -86,7 +86,7 @@ public class DefaultCreateNewModelElementStrategyProvider
 	 *
 	 * @param provider the provider to remove
 	 */
-	void removeEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
+	public void removeEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
 		eclassSelectionStrategyBazaar.removeVendor(provider);
 	}
 
