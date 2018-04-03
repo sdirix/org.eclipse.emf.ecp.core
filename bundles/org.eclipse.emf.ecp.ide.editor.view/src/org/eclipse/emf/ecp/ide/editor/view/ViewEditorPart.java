@@ -660,7 +660,7 @@ public class ViewEditorPart extends EditorPart implements
 				final VView view = getView();
 
 				// TODO: remove? Should probably handled manually by the user instead.
-				if ((view.getEcorePaths() == null
+				if ((view.getEcorePaths().isEmpty()
 					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePaths().get(0)) == null)
 					&& view.getRootEClass() != null && view.getRootEClass().eIsProxy()) {
 
