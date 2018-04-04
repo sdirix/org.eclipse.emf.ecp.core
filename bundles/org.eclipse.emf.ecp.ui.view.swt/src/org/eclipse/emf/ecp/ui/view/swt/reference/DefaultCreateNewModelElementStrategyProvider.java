@@ -22,21 +22,18 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy.Provider;
 import org.eclipse.emf.edit.command.CommandParameter;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emfforms.bazaar.Bazaar;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.common.Optional;
@@ -165,27 +162,13 @@ public class DefaultCreateNewModelElementStrategyProvider
 	 * @return the new child descriptors
 	 */
 	private Collection<CommandParameter> getNewChildDescriptors(EObject owner, EReference reference) {
-		final EClass referenceType = reference.getEReferenceType();
-
-		final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(owner);
-		if (!(domain instanceof AdapterFactoryEditingDomain)) {
-			return Collections.emptyList();
-		}
-
-		final AdapterFactory factory = ((AdapterFactoryEditingDomain) domain).getAdapterFactory();
-		if (factory == null) {
-			return Collections.emptyList();
-		}
-
-		final IEditingDomainItemProvider itemProvider = (IEditingDomainItemProvider) factory.adapt(owner,
-			IEditingDomainItemProvider.class);
-		if (itemProvider == null) {
-			return Collections.emptyList();
-		}
 
 		// The item provider offers new child descriptors for probably multiple containment references.
 		// We want only those compatible with our reference
-		final Collection<?> descriptors = itemProvider.getNewChildDescriptors(owner, domain, null);
+
+		final Collection<?> descriptors = new ChildrenDescriptorCollector().getDescriptors(owner);
+
+		final EClass referenceType = reference.getEReferenceType();
 		final Collection<CommandParameter> result = new ArrayList<CommandParameter>(descriptors.size());
 		for (final Object next : descriptors) {
 			if (next instanceof CommandParameter) {
