@@ -129,4 +129,12 @@
       </package>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated annotationSelector -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/annotation/model"
+            class="org.eclipse.emf.ecp.view.template.selector.annotation.model.VTAnnotationPackage"
+            genModel="model/annotationSelector.genmodel"/>
+   </extension>
+
 </plugin>
