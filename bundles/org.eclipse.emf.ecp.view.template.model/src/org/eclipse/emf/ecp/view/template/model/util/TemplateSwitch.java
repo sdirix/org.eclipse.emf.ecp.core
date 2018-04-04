@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
@@ -136,6 +137,14 @@ public class TemplateSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case VTTemplatePackage.MULTI_STYLE_SELECTOR_CONTAINER: {
+			final VTMultiStyleSelectorContainer multiStyleSelectorContainer = (VTMultiStyleSelectorContainer) theEObject;
+			T result = caseMultiStyleSelectorContainer(multiStyleSelectorContainer);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -234,6 +243,22 @@ public class TemplateSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStyleSelectorContainer(VTStyleSelectorContainer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Multi Style Selector Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Multi Style Selector Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMultiStyleSelectorContainer(VTMultiStyleSelectorContainer object) {
 		return null;
 	}
 

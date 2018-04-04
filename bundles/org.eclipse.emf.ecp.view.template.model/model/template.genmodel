@@ -48,5 +48,8 @@
     <genClasses image="false" ecoreClass="template.ecore#//StyleSelectorContainer">
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//StyleSelectorContainer/selector"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="template.ecore#//MultiStyleSelectorContainer">
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//MultiStyleSelectorContainer/selectors"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.util.TemplateSwitch;
@@ -341,6 +342,21 @@ public class HierarchyItemProviderAdapterFactory extends HierarchyAdapterFactory
 			public Object caseStyleSelectorContainer(VTStyleSelectorContainer object) {
 				newChildDescriptors
 					.add(createChildParameter(VTTemplatePackage.Literals.STYLE_SELECTOR_CONTAINER__SELECTOR,
+						VTHierarchyFactory.eINSTANCE.createHierarchySelector()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 *
+			 * @generated
+			 */
+			@Override
+			public Object caseMultiStyleSelectorContainer(VTMultiStyleSelectorContainer object) {
+				newChildDescriptors
+					.add(createChildParameter(VTTemplatePackage.Literals.MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS,
 						VTHierarchyFactory.eINSTANCE.createHierarchySelector()));
 
 				return null;

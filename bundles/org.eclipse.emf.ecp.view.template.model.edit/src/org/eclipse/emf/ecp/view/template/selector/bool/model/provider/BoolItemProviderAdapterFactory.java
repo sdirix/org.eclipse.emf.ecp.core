@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,9 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * EclipseSource Munich - initial API and implementation
+ * Johannes Faltermeier - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.provider;
+package org.eclipse.emf.ecp.view.template.selector.bool.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.util.TemplateSwitch;
-import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementFactory;
-import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage;
-import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.util.ViewModelElementAdapterFactory;
+import org.eclipse.emf.ecp.view.template.selector.bool.model.VTBoolFactory;
+import org.eclipse.emf.ecp.view.template.selector.bool.model.VTBoolPackage;
+import org.eclipse.emf.ecp.view.template.selector.bool.model.util.BoolAdapterFactory;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
@@ -54,8 +54,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  *
  * @generated
  */
-public class ViewModelElementItemProviderAdapterFactory extends ViewModelElementAdapterFactory implements
-	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender {
+public class BoolItemProviderAdapterFactory extends BoolAdapterFactory
+	implements ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -82,7 +82,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		ViewModelElementSelectorEditPlugin.INSTANCE, VTViewModelElementPackage.eNS_URI);
+		BoolSelectorEditPlugin.INSTANCE, VTBoolPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -100,7 +100,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 *
 	 * @generated
 	 */
-	public ViewModelElementItemProviderAdapterFactory() {
+	public BoolItemProviderAdapterFactory() {
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -110,29 +110,28 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 
 	/**
 	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector} instances.
+	 * {@link org.eclipse.emf.ecp.view.template.selector.bool.model.VTAndSelector} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected ViewModelElementSelectorItemProvider viewModelElementSelectorItemProvider;
+	protected AndSelectorItemProvider andSelectorItemProvider;
 
 	/**
-	 * This creates an adapter for a
-	 * {@link org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.template.selector.bool.model.VTAndSelector}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public Adapter createViewModelElementSelectorAdapter() {
-		if (viewModelElementSelectorItemProvider == null) {
-			viewModelElementSelectorItemProvider = new ViewModelElementSelectorItemProvider(this);
+	public Adapter createAndSelectorAdapter() {
+		if (andSelectorItemProvider == null) {
+			andSelectorItemProvider = new AndSelectorItemProvider(this);
 		}
 
-		return viewModelElementSelectorItemProvider;
+		return andSelectorItemProvider;
 	}
 
 	/**
@@ -281,8 +280,8 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 */
 	@Override
 	public void dispose() {
-		if (viewModelElementSelectorItemProvider != null) {
-			viewModelElementSelectorItemProvider.dispose();
+		if (andSelectorItemProvider != null) {
+			andSelectorItemProvider.dispose();
 		}
 	}
 
@@ -342,7 +341,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			public Object caseStyleSelectorContainer(VTStyleSelectorContainer object) {
 				newChildDescriptors
 					.add(createChildParameter(VTTemplatePackage.Literals.STYLE_SELECTOR_CONTAINER__SELECTOR,
-						VTViewModelElementFactory.eINSTANCE.createViewModelElementSelector()));
+						VTBoolFactory.eINSTANCE.createAndSelector()));
 
 				return null;
 			}
@@ -357,7 +356,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			public Object caseMultiStyleSelectorContainer(VTMultiStyleSelectorContainer object) {
 				newChildDescriptors
 					.add(createChildParameter(VTTemplatePackage.Literals.MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS,
-						VTViewModelElementFactory.eINSTANCE.createViewModelElementSelector()));
+						VTBoolFactory.eINSTANCE.createAndSelector()));
 
 				return null;
 			}
@@ -395,7 +394,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 		 */
 		@Override
 		public ResourceLocator getResourceLocator() {
-			return ViewModelElementSelectorEditPlugin.INSTANCE;
+			return BoolSelectorEditPlugin.INSTANCE;
 		}
 	}
 

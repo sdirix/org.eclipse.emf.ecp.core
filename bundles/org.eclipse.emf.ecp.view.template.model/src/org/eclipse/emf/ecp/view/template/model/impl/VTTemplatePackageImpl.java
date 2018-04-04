@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
@@ -80,6 +81,14 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	private EClass styleSelectorContainerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass multiStyleSelectorContainerEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -495,6 +504,28 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	@Override
+	public EClass getMultiStyleSelectorContainer() {
+		return multiStyleSelectorContainerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getMultiStyleSelectorContainer_Selectors() {
+		return (EReference) multiStyleSelectorContainerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public VTTemplateFactory getTemplateFactory() {
 		return (VTTemplateFactory) getEFactoryInstance();
 	}
@@ -558,6 +589,9 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 
 		styleSelectorContainerEClass = createEClass(STYLE_SELECTOR_CONTAINER);
 		createEReference(styleSelectorContainerEClass, STYLE_SELECTOR_CONTAINER__SELECTOR);
+
+		multiStyleSelectorContainerEClass = createEClass(MULTI_STYLE_SELECTOR_CONTAINER);
+		createEReference(multiStyleSelectorContainerEClass, MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS);
 	}
 
 	/**
@@ -685,6 +719,12 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getStyleSelectorContainer_Selector(), getStyleSelector(), null, "selector", null, 1, 1, //$NON-NLS-1$
 			VTStyleSelectorContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(multiStyleSelectorContainerEClass, VTMultiStyleSelectorContainer.class,
+			"MultiStyleSelectorContainer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getMultiStyleSelectorContainer_Selectors(), getStyleSelector(), null, "selectors", null, 2, //$NON-NLS-1$
+			-1, VTMultiStyleSelectorContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource

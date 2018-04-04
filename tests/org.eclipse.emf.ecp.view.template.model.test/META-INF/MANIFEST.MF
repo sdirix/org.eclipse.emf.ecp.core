@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.model.test
 Bundle-Version: 1.17.0.qualifier
 Fragment-Host: org.eclipse.emf.ecp.view.template.model;bundle-version="[1.17.0,1.18.0]"
 Export-Package: org.eclipse.emf.ecp.view.template.selector.annotation.model.impl;version="1.17.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.template.selector.bool.model.impl;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.hierarchy.model.impl;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.alignment.model.impl;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.labelwidth.model.impl;version="1.17.0";x-internal:=true

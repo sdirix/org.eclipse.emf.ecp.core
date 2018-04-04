@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
@@ -112,6 +113,11 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseStyleSelectorContainer(VTStyleSelectorContainer object) {
 			return createStyleSelectorContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseMultiStyleSelectorContainer(VTMultiStyleSelectorContainer object) {
+			return createMultiStyleSelectorContainerAdapter();
 		}
 
 		@Override
@@ -228,6 +234,23 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStyleSelectorContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer <em>Multi Style Selector
+	 * Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer
+	 * @generated
+	 */
+	public Adapter createMultiStyleSelectorContainerAdapter() {
 		return null;
 	}
 

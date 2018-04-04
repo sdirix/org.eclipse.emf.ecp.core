@@ -9,6 +9,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: org.eclipse.emf.ecp.view.template.model.provider;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.annotation.model.provider;version="1.17.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.template.selector.bool.model.provider;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.provider;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.provider;version="1.17.0";x-internal:=true,

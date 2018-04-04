@@ -376,7 +376,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTStyleSelectorContainerImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleSelectorContainer()
 	 * @generated
@@ -389,7 +388,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -401,7 +399,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -413,7 +410,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -534,6 +530,53 @@ public interface VTTemplatePackage extends EPackage {
 	 * @ordered
 	 */
 	int STYLE_SELECTOR_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl
+	 * <em>Multi Style Selector Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getMultiStyleSelectorContainer()
+	 * @generated
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER = 6;
+
+	/**
+	 * The feature id for the '<em><b>Selectors</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Multi Style Selector Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Multi Style Selector Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER_OPERATION_COUNT = 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate <em>View
@@ -939,7 +982,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Style Selector Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer
 	 * @generated
@@ -953,13 +995,40 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the containment reference '<em>Selector</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer#getSelector()
 	 * @see #getStyleSelectorContainer()
 	 * @generated
 	 */
 	EReference getStyleSelectorContainer_Selector();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer
+	 * <em>Multi Style Selector Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Multi Style Selector Container</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer
+	 * @generated
+	 */
+	EClass getMultiStyleSelectorContainer();
+
+	/**
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer#getSelectors <em>Selectors</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference list '<em>Selectors</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer#getSelectors()
+	 * @see #getMultiStyleSelectorContainer()
+	 * @generated
+	 */
+	EReference getMultiStyleSelectorContainer_Selectors();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1293,7 +1362,6 @@ public interface VTTemplatePackage extends EPackage {
 		 *
 		 * @since 1.17
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTStyleSelectorContainerImpl
 		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleSelectorContainer()
 		 * @generated
@@ -1306,10 +1374,34 @@ public interface VTTemplatePackage extends EPackage {
 		 *
 		 * @since 1.17
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference STYLE_SELECTOR_CONTAINER__SELECTOR = eINSTANCE.getStyleSelectorContainer_Selector();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl <em>Multi Style
+		 * Selector Container</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.17
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getMultiStyleSelectorContainer()
+		 * @generated
+		 */
+		EClass MULTI_STYLE_SELECTOR_CONTAINER = eINSTANCE.getMultiStyleSelectorContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Selectors</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.17
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS = eINSTANCE.getMultiStyleSelectorContainer_Selectors();
 
 	}
 
