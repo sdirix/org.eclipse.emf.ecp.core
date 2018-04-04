@@ -137,4 +137,12 @@
             genModel="model/annotationSelector.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated hierarchySelector -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/hierarchy/model"
+            class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.VTHierarchyPackage"
+            genModel="model/hierarchySelector.genmodel"/>
+   </extension>
+
 </plugin>

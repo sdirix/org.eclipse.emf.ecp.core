@@ -253,4 +253,23 @@
             class="org.eclipse.emf.ecp.view.template.selector.annotation.model.provider.AnnotationItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
 
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated hierarchySelector -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/hierarchy/model"
+            class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider.HierarchyItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated hierarchySelector -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider.HierarchyItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
 </plugin>

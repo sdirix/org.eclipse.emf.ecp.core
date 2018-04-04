@@ -20,7 +20,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.template.model.VTStyle;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.util.TemplateSwitch;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementFactory;
@@ -127,8 +127,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 */
 	@Override
 	public Adapter createViewModelElementSelectorAdapter() {
-		if (viewModelElementSelectorItemProvider == null)
-		{
+		if (viewModelElementSelectorItemProvider == null) {
 			viewModelElementSelectorItemProvider = new ViewModelElementSelectorItemProvider(this);
 		}
 
@@ -190,11 +189,9 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -269,8 +266,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -342,10 +338,9 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			 * @generated
 			 */
 			@Override
-			public Object caseStyle(VTStyle object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VTTemplatePackage.Literals.STYLE__SELECTOR,
+			public Object caseStyleSelectorContainer(VTStyleSelectorContainer object) {
+				newChildDescriptors
+					.add(createChildParameter(VTTemplatePackage.Literals.STYLE_SELECTOR_CONTAINER__SELECTOR,
 						VTViewModelElementFactory.eINSTANCE.createViewModelElementSelector()));
 
 				return null;

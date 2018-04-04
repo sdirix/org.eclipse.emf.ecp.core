@@ -20,7 +20,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.template.model.VTStyle;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.util.TemplateSwitch;
 import org.eclipse.emf.ecp.view.template.selector.annotation.model.VTAnnotationFactory;
@@ -338,9 +338,10 @@ public class AnnotationItemProviderAdapterFactory extends AnnotationAdapterFacto
 			 * @generated
 			 */
 			@Override
-			public Object caseStyle(VTStyle object) {
-				newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.STYLE__SELECTOR,
-					VTAnnotationFactory.eINSTANCE.createAnnotationSelector()));
+			public Object caseStyleSelectorContainer(VTStyleSelectorContainer object) {
+				newChildDescriptors
+					.add(createChildParameter(VTTemplatePackage.Literals.STYLE_SELECTOR_CONTAINER__SELECTOR,
+						VTAnnotationFactory.eINSTANCE.createAnnotationSelector()));
 
 				return null;
 			}

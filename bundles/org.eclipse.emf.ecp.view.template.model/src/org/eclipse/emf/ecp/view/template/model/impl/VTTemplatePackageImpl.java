@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
@@ -71,6 +72,14 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	private EClass styleSelectorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass styleSelectorContainerEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -431,7 +440,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	@Override
-	public EReference getStyle_Selector() {
+	public EReference getStyle_Properties() {
 		return (EReference) styleEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -442,20 +451,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	@Override
-	public EReference getStyle_Properties()
-	{
-		return (EReference) styleEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EClass getStyleProperty()
-	{
+	public EClass getStyleProperty() {
 		return stylePropertyEClass;
 	}
 
@@ -466,8 +462,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	@Override
-	public EClass getStyleSelector()
-	{
+	public EClass getStyleSelector() {
 		return styleSelectorEClass;
 	}
 
@@ -478,8 +473,29 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	@Override
-	public VTTemplateFactory getTemplateFactory()
-	{
+	public EClass getStyleSelectorContainer() {
+		return styleSelectorContainerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getStyleSelectorContainer_Selector() {
+		return (EReference) styleSelectorContainerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VTTemplateFactory getTemplateFactory() {
 		return (VTTemplateFactory) getEFactoryInstance();
 	}
 
@@ -499,8 +515,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -535,12 +550,14 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL);
 
 		styleEClass = createEClass(STYLE);
-		createEReference(styleEClass, STYLE__SELECTOR);
 		createEReference(styleEClass, STYLE__PROPERTIES);
 
 		stylePropertyEClass = createEClass(STYLE_PROPERTY);
 
 		styleSelectorEClass = createEClass(STYLE_SELECTOR);
+
+		styleSelectorContainerEClass = createEClass(STYLE_SELECTOR_CONTAINER);
+		createEReference(styleSelectorContainerEClass, STYLE_SELECTOR_CONTAINER__SELECTOR);
 	}
 
 	/**
@@ -559,8 +576,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -576,6 +592,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		styleEClass.getESuperTypes().add(getStyleSelectorContainer());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(viewTemplateEClass, VTViewTemplate.class, "ViewTemplate", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
@@ -654,9 +671,6 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(styleEClass, VTStyle.class, "Style", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getStyle_Selector(), getStyleSelector(), null, "selector", null, 1, 1, VTStyle.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
 		initEReference(getStyle_Properties(), getStyleProperty(), null, "properties", null, 0, -1, VTStyle.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
@@ -666,6 +680,12 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 
 		initEClass(styleSelectorEClass, VTStyleSelector.class, "StyleSelector", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(styleSelectorContainerEClass, VTStyleSelectorContainer.class, "StyleSelectorContainer", IS_ABSTRACT, //$NON-NLS-1$
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getStyleSelectorContainer_Selector(), getStyleSelector(), null, "selector", null, 1, 1, //$NON-NLS-1$
+			VTStyleSelectorContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

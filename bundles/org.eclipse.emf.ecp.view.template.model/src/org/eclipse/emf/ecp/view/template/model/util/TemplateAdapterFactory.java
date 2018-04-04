@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 
@@ -31,8 +32,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
  * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage
  * @generated
  */
-public class TemplateAdapterFactory extends AdapterFactoryImpl
-{
+public class TemplateAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -49,10 +49,8 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public TemplateAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public TemplateAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VTTemplatePackage.eINSTANCE;
 		}
 	}
@@ -68,14 +66,11 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -88,45 +83,42 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected TemplateSwitch<Adapter> modelSwitch =
-		new TemplateSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseViewTemplate(VTViewTemplate object)
-			{
-				return createViewTemplateAdapter();
-			}
+	protected TemplateSwitch<Adapter> modelSwitch = new TemplateSwitch<Adapter>() {
+		@Override
+		public Adapter caseViewTemplate(VTViewTemplate object) {
+			return createViewTemplateAdapter();
+		}
 
-			@Override
-			public Adapter caseControlValidationTemplate(VTControlValidationTemplate object)
-			{
-				return createControlValidationTemplateAdapter();
-			}
+		@Override
+		public Adapter caseControlValidationTemplate(VTControlValidationTemplate object) {
+			return createControlValidationTemplateAdapter();
+		}
 
-			@Override
-			public Adapter caseStyle(VTStyle object)
-			{
-				return createStyleAdapter();
-			}
+		@Override
+		public Adapter caseStyle(VTStyle object) {
+			return createStyleAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleProperty(VTStyleProperty object)
-			{
-				return createStylePropertyAdapter();
-			}
+		@Override
+		public Adapter caseStyleProperty(VTStyleProperty object) {
+			return createStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleSelector(VTStyleSelector object)
-			{
-				return createStyleSelectorAdapter();
-			}
+		@Override
+		public Adapter caseStyleSelector(VTStyleSelector object) {
+			return createStyleSelectorAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseStyleSelectorContainer(VTStyleSelectorContainer object) {
+			return createStyleSelectorContainerAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -138,8 +130,7 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -155,15 +146,14 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTViewTemplate
 	 * @generated
 	 */
-	public Adapter createViewTemplateAdapter()
-	{
+	public Adapter createViewTemplateAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate <em>Control Validation Template</em>}
-	 * '.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate <em>Control Validation
+	 * Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -173,8 +163,7 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate
 	 * @generated
 	 */
-	public Adapter createControlValidationTemplateAdapter()
-	{
+	public Adapter createControlValidationTemplateAdapter() {
 		return null;
 	}
 
@@ -190,8 +179,7 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyle
 	 * @generated
 	 */
-	public Adapter createStyleAdapter()
-	{
+	public Adapter createStyleAdapter() {
 		return null;
 	}
 
@@ -207,8 +195,7 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
 	 * @generated
 	 */
-	public Adapter createStylePropertyAdapter()
-	{
+	public Adapter createStylePropertyAdapter() {
 		return null;
 	}
 
@@ -224,8 +211,23 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector
 	 * @generated
 	 */
-	public Adapter createStyleSelectorAdapter()
-	{
+	public Adapter createStyleSelectorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer <em>Style Selector Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer
+	 * @generated
+	 */
+	public Adapter createStyleSelectorContainerAdapter() {
 		return null;
 	}
 
@@ -238,8 +240,7 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 
