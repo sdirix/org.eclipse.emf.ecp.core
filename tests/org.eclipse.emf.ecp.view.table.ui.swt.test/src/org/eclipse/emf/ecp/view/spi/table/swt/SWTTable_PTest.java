@@ -251,14 +251,16 @@ public class SWTTable_PTest {
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 
-		assertEquals(domainElement.eClass().getEAttributes().size(),
+		// see bug #533262, TableColumnGenerator now includes attributes from super types
+		// if this is not desired the user has to specify the columns in the view model
+		assertEquals(domainElement.eClass().getEAllAttributes().size(),
 			VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
 				.getColumnDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
 		final Table table = (Table) control;
-		assertEquals(3, table.getColumnCount());
+		assertEquals(domainElement.eClass().getEAllAttributes().size() + 1, table.getColumnCount());
 	}
 
 	@Test

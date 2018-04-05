@@ -227,14 +227,16 @@ public class GridTable_PTest {
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 
-		assertEquals(domainElement.eClass().getEAttributes().size(),
+		// see bug #533262, TableColumnGenerator now includes attributes from super types
+		// if this is not desired the user has to specify the columns in the view model
+		assertEquals(domainElement.eClass().getEAllAttributes().size(),
 			VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
 				.getColumnDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Grid);
 		final Grid table = (Grid) control;
-		assertEquals(3, table.getColumnCount());
+		assertEquals(domainElement.eClass().getEAllAttributes().size() + 1, table.getColumnCount());
 	}
 
 	@Test
@@ -923,7 +925,7 @@ public class GridTable_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
 		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
 		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider)
