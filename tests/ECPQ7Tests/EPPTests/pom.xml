@@ -83,6 +83,7 @@
 								<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
 								<features>
 									<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
+									<feature>org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group</feature>
 								</features>
 							</injection>
 						</injections>
