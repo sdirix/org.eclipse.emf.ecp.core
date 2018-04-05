@@ -82,7 +82,7 @@ public class AnnotationItemProviderAdapterFactory extends AnnotationAdapterFacto
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		AnnotationInHierarchySelectorEditPlugin.INSTANCE, VTAnnotationPackage.eNS_URI);
+		AnnotationSelectorEditPlugin.INSTANCE, VTAnnotationPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -395,7 +395,7 @@ public class AnnotationItemProviderAdapterFactory extends AnnotationAdapterFacto
 		 */
 		@Override
 		public ResourceLocator getResourceLocator() {
-			return AnnotationInHierarchySelectorEditPlugin.INSTANCE;
+			return AnnotationSelectorEditPlugin.INSTANCE;
 		}
 	}
 

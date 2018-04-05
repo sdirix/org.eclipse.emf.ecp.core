@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.template.model.provider.TemplateEditPlugin;
  *
  * @generated
  */
-public final class AnnotationInHierarchySelectorEditPlugin extends EMFPlugin {
+public final class AnnotationSelectorEditPlugin extends EMFPlugin {
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ public final class AnnotationInHierarchySelectorEditPlugin extends EMFPlugin {
 	 *
 	 * @generated
 	 */
-	public static final AnnotationInHierarchySelectorEditPlugin INSTANCE = new AnnotationInHierarchySelectorEditPlugin();
+	public static final AnnotationSelectorEditPlugin INSTANCE = new AnnotationSelectorEditPlugin();
 
 	/**
 	 * Keep track of the singleton.
@@ -48,7 +48,7 @@ public final class AnnotationInHierarchySelectorEditPlugin extends EMFPlugin {
 	 *
 	 * @generated
 	 */
-	public AnnotationInHierarchySelectorEditPlugin() {
+	public AnnotationSelectorEditPlugin() {
 		super(new ResourceLocator[] {
 			TemplateEditPlugin.INSTANCE,
 		});

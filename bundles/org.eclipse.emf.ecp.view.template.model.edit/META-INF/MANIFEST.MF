@@ -7,8 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.ecp.view.template.model.provider.TemplateEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.ecp.view.template.model.provider;version="1.17.0";x-internal:=true,
- org.eclipse.emf.ecp.view.template.selector.annotation.model.provider;version="1.17.0";x-internal:=true,
+Export-Package: org.eclipse.emf.ecp.view.template.model.provider;version="1.17.0";x-friends:="org.eclipse.emf.ecp.view.template.annotation.model.edit",
  org.eclipse.emf.ecp.view.template.selector.bool.model.provider;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.provider;version="1.17.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider;version="1.17.0";x-internal:=true,
