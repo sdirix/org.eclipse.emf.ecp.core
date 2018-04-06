@@ -98,6 +98,7 @@
 								<features>
 									<feature>org.eclipse.net4j.sdk.feature.group</feature>
 									<feature>org.eclipse.ocl.all.sdk.feature.group</feature>
+									<feature>org.eclipse.emf.feature.group</feature>
 								</features>
 							</injection>
 						</injections>
