@@ -12,10 +12,12 @@
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emfforms.common.Optional;
@@ -179,9 +181,16 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		final Set<Template> availableTemplates = new LinkedHashSet<Template>();
 		if (eClass != null) {
 			for (final Template template : allTemplates) {
-				if (eClass.isSuperTypeOf(template.getInstance().eClass())) {
-					availableTemplates.add(template);
+				try {
+					if (eClass.isSuperTypeOf(template.getInstance().eClass())) {
+						availableTemplates.add(template);
+					}
 				}
+				// CHECKSTYLE.OFF: IllegalCatch
+				catch (final RuntimeException e) {
+					// ignore as somebody broke the eclass method
+				}
+				// CHECKSTYLE.ON: IllegalCatch
 			}
 		}
 
@@ -238,7 +247,7 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 	 */
 	class SubClassSelectionPage extends SelectionPage {
 		private final Set<EClass> availableEClasses;
-		private SelectionComposite<TableViewer> selectionComposite;
+		private SelectionComposite<TreeViewer> selectionComposite;
 
 		/**
 		 * Create a new sub class selection page that allows to select one of the available e classes.
@@ -259,7 +268,8 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		@Override
 		protected SelectionComposite<? extends ColumnViewer> getSelectionComposite() {
 			if (selectionComposite == null) {
-				selectionComposite = CompositeFactory.getTableSelectionComposite(availableEClasses.toArray(), false);
+				selectionComposite = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
+					new HashSet<EPackage>(), availableEClasses);
 			}
 			return selectionComposite;
 		}
@@ -267,7 +277,6 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		@Override
 		public void createControl(Composite parent) {
 			super.createControl(parent);
-			getSelectionComposite().getViewer().setLabelProvider(new EClassLabelProvider(localizationService));
 		}
 
 		@Override

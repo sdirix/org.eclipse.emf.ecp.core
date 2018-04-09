@@ -21,10 +21,6 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<excludes>
-						<!-- Creating the wizard dialog does not properly work on the hudson -->
-						<exclude>**/SelectSubclassAndTemplateWizard_PTest.java</exclude>
-					</excludes>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
 				</configuration>

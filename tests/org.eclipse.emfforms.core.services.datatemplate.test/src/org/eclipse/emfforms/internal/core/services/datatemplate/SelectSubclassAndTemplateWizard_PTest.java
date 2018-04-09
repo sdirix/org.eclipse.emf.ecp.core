@@ -18,10 +18,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
@@ -39,6 +42,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -149,13 +154,13 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		final Composite subClassPageComposite = (Composite) pagesComposite.getChildren()[0];
 		final Composite templateSelectionPageComposite = (Composite) pagesComposite.getChildren()[1];
 
-		final Table subClassTable = (Table) subClassPageComposite.getChildren()[2];
+		final Tree subClassTable = (Tree) subClassPageComposite.getChildren()[2];
 		assertEquals(2, subClassTable.getItemCount());
 
 		// Select the registered user class
-		final TableItem item = selectTableItem(subClassTable, 1);
+		final TreeItem item = selectTreeItem(subClassTable, 1);
 		SWTTestUtil.waitForUIThread();
-		assertEquals("Registered User", item.getText()); //$NON-NLS-1$
+		assertEquals("RegisteredUser", item.getText()); //$NON-NLS-1$
 
 		// verify button enablement
 		assertFalse(backButton.isEnabled());
@@ -296,13 +301,13 @@ public class SelectSubclassAndTemplateWizard_PTest {
 			.getChildren()[1];
 		final Composite subClassPageComposite = (Composite) pagesComposite.getChildren()[0];
 
-		final Table subClassTable = (Table) subClassPageComposite.getChildren()[2];
-		assertEquals(2, subClassTable.getItemCount());
+		final Tree subClassTree = (Tree) subClassPageComposite.getChildren()[2];
+		assertEquals(2, subClassTree.getItemCount());
 
 		// Select the guest user class
-		final TableItem item = selectTableItem(subClassTable, 1);
+		final TreeItem item = selectTreeItem(subClassTree, 1);
 		SWTTestUtil.waitForUIThread();
-		assertEquals("Guest User", item.getText()); //$NON-NLS-1$
+		assertEquals("GuestUser", item.getText()); //$NON-NLS-1$
 
 		// Because there is only one template for the guest user EClass the wizard should offer to finish directly but
 		// not to go to the template selection page
@@ -369,11 +374,11 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		final Composite subClassPageComposite = (Composite) pagesComposite.getChildren()[0];
 		final Composite templateSelectionPageComposite = (Composite) pagesComposite.getChildren()[1];
 
-		final Table subClassTable = (Table) subClassPageComposite.getChildren()[2];
+		final Tree subClassTable = (Tree) subClassPageComposite.getChildren()[2];
 		assertEquals(2, subClassTable.getItemCount());
 
 		// Select the admin user class
-		selectTableItem(subClassTable, 0);
+		selectTreeItem(subClassTable, 0);
 
 		SWTTestUtil.waitForUIThread();
 
@@ -392,7 +397,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		SWTTestUtil.clickButton(backButton);
 
 		// Select guest user class and click next again
-		selectTableItem(subClassTable, 1);
+		selectTreeItem(subClassTable, 1);
 		SWTTestUtil.waitForUIThread();
 		assertTrue(nextButton.isEnabled());
 		SWTTestUtil.clickButton(nextButton);
@@ -477,6 +482,30 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertFalse(templateOptional.isPresent());
 	}
 
+	@Test
+	public void testGetAvailableTemplates() {
+		final Set<EClass> subClasses = Collections.emptySet();
+		final Set<Template> templates = new LinkedHashSet<Template>();
+		// corupt eclass
+		final Template templateInvalid = mock(Template.class);
+		final EObject templateInstanceInvalid = mock(EObject.class);
+		when(templateInvalid.getInstance()).thenReturn(templateInstanceInvalid);
+		when(templateInstanceInvalid.eClass()).thenThrow(new IllegalArgumentException());
+		templates.add(templateInvalid);
+		// valid template
+		final Template templateValid = mock(Template.class);
+		final EObject templateInstanceValid = mock(EObject.class);
+		when(templateValid.getInstance()).thenReturn(templateInstanceValid);
+		when(templateInstanceValid.eClass()).thenReturn(EcorePackage.eINSTANCE.getEAttribute());
+		templates.add(templateValid);
+
+		final SelectSubclassAndTemplateWizard wizard = new SelectSubclassAndTemplateWizard("", subClasses, templates, //$NON-NLS-1$
+			localizationService);
+		final Set<Template> filteredTemplates = wizard.getAvailableTemplates(EcorePackage.eINSTANCE.getEAttribute());
+		assertEquals(1, filteredTemplates.size());
+		assertEquals(templateValid, filteredTemplates.iterator().next());
+	}
+
 	/**
 	 * Gets the button composite containing the cancel, finish, and sometimes the back and next buttons.
 	 *
@@ -484,7 +513,9 @@ public class SelectSubclassAndTemplateWizard_PTest {
 	 * @return The {@link Composite} containing the wizard's buttons
 	 */
 	private Composite getButtonComposite(final WizardDialog wizardDialog) {
-		final Composite buttonComposite = (Composite) Composite.class.cast(wizardDialog.buttonBar).getChildren()[0];
+		final Composite buttonBar = (Composite) wizardDialog.buttonBar;
+		// take the second as the first is a toolbar with help entries
+		final Composite buttonComposite = (Composite) buttonBar.getChildren()[1];
 		return buttonComposite;
 	}
 
@@ -495,6 +526,17 @@ public class SelectSubclassAndTemplateWizard_PTest {
 	 * @param index
 	 * @return the selected table item
 	 */
+	private TreeItem selectTreeItem(Tree tree, int index) {
+		tree.setSelection(tree.getItem(index));
+		final Event event = new Event();
+		event.type = SWT.Selection;
+		event.widget = tree;
+		final TreeItem result = tree.getItem(index);
+		event.item = result;
+		tree.notifyListeners(SWT.Selection, event);
+		return result;
+	}
+
 	private TableItem selectTableItem(Table table, int index) {
 		table.setSelection(index);
 		final Event event = new Event();

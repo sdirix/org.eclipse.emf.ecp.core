@@ -46,6 +46,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.osgi.service.component.ComponentContext;
@@ -72,26 +73,25 @@ public class TemplateCreateNewModelElementStrategyProvider_Test {
 	public void testHandles_availableTemplates() {
 		final TemplateProvider canProvide = mock(TemplateProvider.class);
 		when(canProvide.canProvideTemplates(any(EObject.class), any(EReference.class))).thenReturn(true);
-		final LinkedHashSet<Template> canProvideTemplates = new LinkedHashSet<Template>(2);
-		final Template template = mock(Template.class);
-		canProvideTemplates.add(template);
-		when(canProvide.provideTemplates(any(EObject.class), any(EReference.class))).thenReturn(canProvideTemplates);
 
 		final TemplateProvider cannotProvide = mock(TemplateProvider.class);
 		when(cannotProvide.canProvideTemplates(any(EObject.class), any(EReference.class))).thenReturn(false);
 		strategyProvider.registerTemplateProvider(canProvide);
-		strategyProvider.unregisterTemplateProvider(cannotProvide);
+		strategyProvider.registerTemplateProvider(cannotProvide);
 
 		final EObject eObject = mock(EObject.class);
 		final EReference eReference = mock(EReference.class);
 		assertTrue(strategyProvider.handles(eObject, eReference));
+		final InOrder inOrder = Mockito.inOrder(canProvide, cannotProvide);
+		inOrder.verify(canProvide, Mockito.times(1)).canProvideTemplates(any(EObject.class), any(EReference.class));
+		inOrder.verify(cannotProvide, Mockito.never()).canProvideTemplates(any(EObject.class), any(EReference.class));
 	}
 
 	@Test
 	public void testHandles_noAvailableTemplates() {
 		final TemplateProvider cannotProvide = mock(TemplateProvider.class);
 		when(cannotProvide.canProvideTemplates(any(EObject.class), any(EReference.class))).thenReturn(false);
-		strategyProvider.unregisterTemplateProvider(cannotProvide);
+		strategyProvider.registerTemplateProvider(cannotProvide);
 
 		final EObject eObject = mock(EObject.class);
 		final EReference eReference = mock(EReference.class);

@@ -131,7 +131,12 @@ public class TemplateCreateNewModelElementStrategyProvider
 
 	@Override
 	protected boolean handles(EObject owner, EReference reference) {
-		return collectAvailableTemplates(owner, reference).size() > 0;
+		for (final TemplateProvider provider : templateProviders) {
+			if (provider.canProvideTemplates(owner, reference)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
