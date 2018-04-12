@@ -20,7 +20,19 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.ecp.emfstore.internal.ui.handler.ShowHistoryViewHelper;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to open the EMFStore History View.
+ *
+ * @see ShowHistoryViewHelper#showHistoryView(Object, Shell)
+ * @author Eugen Neufeld
+ */
 public class ShowHistoryViewHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 * @param object The currently selected {@link Object}
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object) {

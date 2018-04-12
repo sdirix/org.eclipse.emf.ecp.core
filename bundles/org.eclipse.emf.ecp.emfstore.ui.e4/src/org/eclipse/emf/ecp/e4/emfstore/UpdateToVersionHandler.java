@@ -21,7 +21,19 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.handler.UpdateProjectHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to trigger an update to a specific version.
+ *
+ * @see UpdateProjectHelper#updateToVersion(InternalProject, Shell)
+ * @author Eugen Neufeld
+ */
 public class UpdateToVersionHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 * @param project The currently selected {@link InternalProject}
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional InternalProject project) {

@@ -16,7 +16,18 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecp.emfstore.internal.ui.handler.ImportProjectHelper;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to trigger the import of an ecp project.
+ *
+ * @see ImportProjectHelper#importProject(Shell)
+ * @author Eugen Neufeld
+ */
 public class ImportProjectHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 */
 	@Execute
 	public void execute(Shell shell) {
 		ImportProjectHelper.importProject(shell);

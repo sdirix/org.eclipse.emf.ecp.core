@@ -21,7 +21,19 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.internal.ui.handler.CheckoutBranchHelper;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to trigger branch checkout.
+ *
+ * @see CheckoutBranchHandler#execute(Shell, EMFStoreProjectWrapper)
+ * @author Eugen Neufeld
+ */
 public class CheckoutBranchHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 * @param projectWrapper The currently selected {@link EMFStoreProjectWrapper}
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional EMFStoreProjectWrapper projectWrapper) {

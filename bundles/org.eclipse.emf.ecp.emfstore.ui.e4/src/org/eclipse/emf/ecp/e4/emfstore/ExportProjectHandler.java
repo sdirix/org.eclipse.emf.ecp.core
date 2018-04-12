@@ -21,7 +21,19 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.handler.ExportProjectHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to trigger the export of an ecp project.
+ *
+ * @see ExportProjectHelper#exportProject(InternalProject, Shell)
+ * @author Eugen Neufeld
+ */
 public class ExportProjectHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 * @param ecpProject The currently selected {@link ECPProject}
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) ECPProject ecpProject) {

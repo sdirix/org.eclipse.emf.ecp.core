@@ -21,7 +21,19 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.handler.UndoLastOperationHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to trigger an undo on a project.
+ *
+ * @see UndoLastOperationHelper#undo(InternalProject, Shell)
+ * @author Eugen Neufeld
+ */
 public class UndoHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 * @param project The currently selected {@link InternalProject}
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional InternalProject project) {

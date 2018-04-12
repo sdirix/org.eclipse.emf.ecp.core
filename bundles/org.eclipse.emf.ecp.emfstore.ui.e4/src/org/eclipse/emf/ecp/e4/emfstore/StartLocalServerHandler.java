@@ -16,15 +16,28 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecp.emfstore.internal.ui.handler.StartLocalServerHelper;
 import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
-import org.osgi.service.log.LogService;
 
+/**
+ * Handler to start a local EMFStore Server.
+ *
+ * @see StartLocalServerHelper#startLocalServer()
+ * @author Eugen Neufeld
+ */
 @SuppressWarnings("restriction")
 public class StartLocalServerHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 */
 	@Execute
-	public void execute(LogService logService) {
+	public void execute() {
 		StartLocalServerHelper.startLocalServer();
 	}
 
+	/**
+	 * Called by the framework to check whether handler is enabled.
+	 * 
+	 * @return true if enabled, false otherwise
+	 */
 	@CanExecute
 	public boolean isEnabled() {
 		return EMFStoreController.getInstance() == null;

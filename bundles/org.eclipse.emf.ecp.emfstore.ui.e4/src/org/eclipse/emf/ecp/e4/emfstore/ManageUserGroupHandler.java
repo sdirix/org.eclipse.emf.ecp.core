@@ -21,7 +21,19 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.handler.ManageUserGroupHelper;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to trigger the management of user groups.
+ *
+ * @see ManageUserGroupHelper#mangeUser(InternalRepository, Shell)
+ * @author Eugen Neufeld
+ */
 public class ManageUserGroupHandler {
+	/**
+	 * Called by the framework when handler is triggered.
+	 *
+	 * @param shell The current {@link Shell}
+	 * @param ecpRepository The currently selected {@link InternalRepository}
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional InternalRepository ecpRepository) {
