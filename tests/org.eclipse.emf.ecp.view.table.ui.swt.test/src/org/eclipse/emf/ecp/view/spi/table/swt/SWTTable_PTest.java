@@ -36,10 +36,12 @@ import java.util.Set;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -48,10 +50,12 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
+import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -69,6 +73,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
 import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
@@ -114,6 +119,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
+@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTTable_PTest {
 	private static String log;
@@ -764,6 +770,95 @@ public class SWTTable_PTest {
 			false);
 	}
 
+	/**
+	 * Tests that the table's summary validation icon's tooltip shows validation messages related directly to the
+	 * table's reference even if the table style property 'showValidationSummaryTooltip' is false (this is the case by
+	 * default). Furthermore, the test checks that validation messages of objects contained in the table's reference are
+	 * not shown in this case.
+	 *
+	 * @throws EMFFormsNoRendererException
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void testTable_summaryToolTip_defaultSettings()
+		throws EMFFormsNoRendererException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// ----- Create Test Model
+		final EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		final EClass foo = EcoreFactory.eINSTANCE.createEClass();
+		foo.setName("Foo");
+		final EClass bar = EcoreFactory.eINSTANCE.createEClass();
+		bar.setName("Bar");
+		ePackage.getEClassifiers().add(foo);
+		ePackage.getEClassifiers().add(bar);
+
+		final EReference fooToBar = EcoreFactory.eINSTANCE.createEReference();
+		fooToBar.setContainment(true);
+		fooToBar.setEType(bar);
+		fooToBar.setLowerBound(1);
+		fooToBar.setUpperBound(-1);
+		fooToBar.setName("fooToBar");
+		foo.getEStructuralFeatures().add(fooToBar);
+
+		final EAttribute barAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		barAttribute.setEType(EcorePackage.Literals.ESTRING);
+		barAttribute.setName("barAttribute");
+		bar.getEStructuralFeatures().add(barAttribute);
+		barAttribute.setLowerBound(1);
+		barAttribute.setUpperBound(1);
+		// -----
+
+		final VTableDomainModelReference tableDmr = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		final VFeaturePathDomainModelReference featureDmr = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		featureDmr.setDomainModelEFeature(fooToBar);
+		tableDmr.setDomainModelReference(featureDmr);
+
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
+		tableControl.setDomainModelReference(tableDmr);
+
+		domainElement = EcoreUtil.create(foo);
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(bar);
+		view.getChildren().add(tableControl);
+		final ViewModelContext context = new ViewModelContextImpl(view, domainElement);
+
+		// Render the table
+		final TableControlSWTRenderer tableRenderer = TableControlSWTRenderer.class
+			.cast(rendererFactory.getRendererInstance(
+				tableControl, context));
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
+			fail();
+		}
+
+		// Get the validation icon
+		Composite composite = (Composite) render;
+		composite = (Composite) composite.getChildren()[0];
+		composite = (Composite) composite.getChildren()[0];
+		final Label validationIcon = (Label) composite.getChildren()[1];
+
+		// Apply validation and wait for Async operation to finish
+		tableRenderer.applyValidation();
+		SWTTestUtil.waitForUIThread();
+
+		assertEquals("The tooltip text should contain the multiplicity error.",
+			"The feature 'fooToBar' of 'Foo' with 0 values must have at least 1 values",
+			validationIcon.getToolTipText());
+
+		// Add a new Bar object to the foo to bar reference. This removes the validation error from the reference and
+		// adds a validation error on the created Bar object.
+		((EList) domainElement.eGet(fooToBar)).add(EcoreUtil.create(bar));
+
+		// Apply validation and wait for Async operation to finish
+		tableRenderer.applyValidation();
+		SWTTestUtil.waitForUIThread();
+
+		assertEquals("The tool tip text should be empty.", "", validationIcon.getToolTipText());
+	}
+
 	private TableControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)
 		throws EMFFormsNoRendererException {
 		final ViewModelContextWithoutServices viewModelContext = new ViewModelContextWithoutServices(tableControl);
@@ -883,7 +978,6 @@ public class SWTTable_PTest {
 		private final EMFFormsContextProvider contextProvider;
 		private final Map<Class<?>, Object> services = new LinkedHashMap<Class<?>, Object>();
 
-		@SuppressWarnings("restriction")
 		ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
 			contextProvider = new org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl();

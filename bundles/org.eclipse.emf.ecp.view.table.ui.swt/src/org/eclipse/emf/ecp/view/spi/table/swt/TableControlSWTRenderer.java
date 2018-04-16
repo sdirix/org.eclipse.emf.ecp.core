@@ -1840,7 +1840,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 
 			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-			showValidationSummaryTooltip(showValidationSummaryTooltip);
+			showValidationSummaryTooltip(setting.get(), showValidationSummaryTooltip);
 
 			final Collection<?> collection = (Collection<?>) setting.get().get(true);
 			if (!collection.isEmpty()) {
@@ -1851,11 +1851,24 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		// extracted in order to avoid checkstyle complexity warning
-		private void showValidationSummaryTooltip(boolean doShow) {
+		private void showValidationSummaryTooltip(Setting tableSetting, boolean doShow) {
 			if (doShow) {
 				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
 					.getMessage(), null));
+				return;
 			}
+
+			// Even if the display of a validation summary tooltip is disabled, we still show validation errors directly
+			// related to the table feature (e.g. multiplicity errors)
+			final StringBuilder builder = new StringBuilder();
+			final List<Diagnostic> tableDiagnostics = getVElement().getDiagnostic()
+				.getDiagnostic(tableSetting.getEObject(), tableSetting.getEStructuralFeature());
+			for (final Diagnostic diagnostic : tableDiagnostics) {
+				builder.append(diagnostic.getMessage());
+				builder.append("\n"); //$NON-NLS-1$
+			}
+			final String toolTipText = ECPTooltipModifierHelper.modifyString(builder.toString().trim(), null);
+			validationIcon.setToolTipText(toolTipText);
 		}
 	}
 
