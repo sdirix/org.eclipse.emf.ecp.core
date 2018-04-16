@@ -113,7 +113,7 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 			if (selection != null && selection.length > 0) {
 				return Optional.of((Template) selection[0]);
 			}
-		} else {
+		} else if (selectedSubClass != null) {
 			final Set<Template> templates = getAvailableTemplates(selectedSubClass);
 			if (templates.iterator().hasNext()) {
 				return Optional.of(templates.iterator().next());
@@ -165,7 +165,9 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 	 */
 	protected void setSubClass(EClass subClass) {
 		// Necessary to update in case the user goes back in the wizard and selects a different sub class.
-		final Set<Template> availableTemplates = getAvailableTemplates(subClass);
+		final Set<Template> availableTemplates = subClass != null
+			? getAvailableTemplates(subClass)
+			: Collections.<Template> emptySet();
 		showTemplateSelectionPage = availableTemplates.size() > 1;
 		modelElementPage.updateSelectionComposite(availableTemplates);
 		selectedSubClass = subClass;
@@ -288,10 +290,14 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 					final IStructuredSelection sel = (IStructuredSelection) getSelectionComposite().getViewer()
 						.getSelection();
 
-					if (sel != null && !sel.isEmpty()) {
+					if (sel != null && !sel.isEmpty() && EClass.class.isInstance(sel.getFirstElement())) {
+						setErrorMessage(null);
 						setSubClass((EClass) sel.getFirstElement());
 						setPageComplete(true);
 					} else {
+						setErrorMessage(localizationService.getString(SelectSubclassAndTemplateWizard.class,
+							MessageKeys.SelectSubclassAndTemplateWizard_selectEClass));
+						setSubClass(null);
 						setPageComplete(false);
 					}
 				}
@@ -320,7 +326,8 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		@Override
 		protected SelectionComposite<? extends ColumnViewer> getSelectionComposite() {
 			if (selectionComposite == null) {
-				final Set<Template> templates = selectedSubClass != null ? getAvailableTemplates(selectedSubClass)
+				final Set<Template> templates = selectedSubClass != null
+					? getAvailableTemplates(selectedSubClass)
 					: Collections.<Template> emptySet();
 				selectionComposite = CompositeFactory.getTableSelectionComposite(templates, false);
 			}

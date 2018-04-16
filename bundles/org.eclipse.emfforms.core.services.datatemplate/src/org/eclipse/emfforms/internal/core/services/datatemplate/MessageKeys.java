@@ -24,5 +24,6 @@ public interface MessageKeys {
 	String SelectSubclassAndTemplateWizard_selectTemplateDescription = "SelectSubclassAndTemplateWizard_selectTemplateDescription"; //$NON-NLS-1$
 	String SelectSubclassAndTemplateWizard_selectSubClassTitle = "SelectSubclassAndTemplateWizard_selectSubClassTitle"; //$NON-NLS-1$
 	String SelectSubclassAndTemplateWizard_selectSubClassDescription = "SelectSubclassAndTemplateWizard_selectSubClassDescription"; //$NON-NLS-1$
+	String SelectSubclassAndTemplateWizard_selectEClass = "SelectSubclassAndTemplateWizard_selectEClass"; //$NON-NLS-1$
 	String TemplateCreateNewModelElementStrategyProvider_wizardTitle = "TemplateCreateNewModelElementStrategyProvider_wizardTitle"; //$NON-NLS-1$
 }
