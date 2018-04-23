@@ -141,36 +141,26 @@ public final class ViewModelHelper {
 	public static VView loadView(IFile file, Collection<String> registeredEcores) throws IOException {
 		final String path = file.getLocation().toString();
 		final VView view = loadView(path);
+		registerReferencedEcores(view, registeredEcores);
 		if (view != null && !viewIsResolved(view)) {
-			return tryResolve(view, path, registeredEcores);
+			EcoreUtil.resolveAll(view);
 		}
-
 		return view;
 	}
 
-	private static VView tryResolve(VView view, String path, Collection<String> registeredEcores) throws IOException {
-		EcoreUtil.resolveAll(view);
-		if (viewIsResolved(view)) {
-			return view;
-		}
-
-		if (view.getEcorePaths() == null) {
-			throw new FileNotFoundException(path);
+	private static void registerReferencedEcores(VView view, Collection<String> registeredEcores)
+		throws IOException {
+		if (view == null || view.getEcorePaths() == null) {
+			return;
 		}
 		for (final String ecorePath : view.getEcorePaths()) {
 			if (ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath) == null) {
-				throw new FileNotFoundException(path);
+				throw new FileNotFoundException(ecorePath);
 			}
 
 			EcoreHelper.registerEcore(ecorePath);
 			registeredEcores.add(ecorePath);
 		}
-
-		final VView reloadView = loadView(path);
-		if (reloadView != null && !viewIsResolved(reloadView)) {
-			EcoreUtil.resolveAll(reloadView);
-		}
-		return reloadView;
 	}
 
 	/**
