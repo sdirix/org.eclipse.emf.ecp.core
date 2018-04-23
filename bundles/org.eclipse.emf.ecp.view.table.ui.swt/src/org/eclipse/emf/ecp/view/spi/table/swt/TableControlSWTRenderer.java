@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +37,7 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -54,6 +56,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.internal.table.swt.RunnableManager;
@@ -171,6 +174,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -201,6 +205,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.10
 	 */
 	protected static final String TABLE_CUSTOM_VARIANT = "org_eclipse_emf_ecp_control_table"; //$NON-NLS-1$
+	/**
+	 * @since 1.17
+	 */
+	protected static final Point VALIDATION_PREFERRED_SIZE = new Point(16, 17);
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
@@ -272,13 +280,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			// create special grid for compact mode
 			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
-				if (getVElement().getLabelAlignment() == LabelAlignment.NONE) {
-					rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
-				} else {
-					rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, this);
+				final boolean includeLabel = getVElement().getLabelAlignment() != LabelAlignment.NONE;
+				if (getVElement().getLabelAlignment() == LabelAlignment.TOP) {
+					Activator.getInstance().log(IStatus.WARNING, MessageFormat.format(
+						Messages.TableControlSWTRenderer_LabelAlignmentTopNotSupportForRenderModeCompactVertically,
+						getVElement().getName()));
 				}
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createCompactGrid(includeLabel, true, this);
 			} else {
 				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 			}
@@ -295,10 +304,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		// Compact
+		// compact label
 		if (gridCell.getColumn() == 0 && rendererGridDescription.getColumns() == 3) {
 			return createLabel(parent);
 		}
+		// compact validation
 		if (gridCell.getColumn() == 0 && rendererGridDescription.getColumns() == 2
 			|| gridCell.getColumn() == 1 && rendererGridDescription.getColumns() == 3) {
 			validationIcon = createValidationIcon(parent);

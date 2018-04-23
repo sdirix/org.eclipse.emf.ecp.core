@@ -188,7 +188,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (rendererGridDescription == null) {
 			// create special grid for compact mode
 			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
-				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createCompactGrid(false, true, this);
 			} else {
 				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 			}
@@ -276,13 +276,16 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			// Default
 			return renderMultiAttributeControl(cell, parent);
 		}
-		// Compact
+		// Compact: render validation icon
 		if (cell.getColumn() == 0 && rendererGridDescription.getColumns() > 1) {
 			validationIcon = createValidationIcon(parent);
 			GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
 			return validationIcon;
 		}
+		// Compact: render list and buttons next to each other
 		final Composite composite = new Composite(parent, SWT.NONE);
+		composite.setBackground(parent.getBackground());
+
 		try {
 			final IObservableList list = getEMFFormsDatabinding().getObservableList(
 				getVElement().getDomainModelReference(),

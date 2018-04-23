@@ -11,11 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.view.control.multiattribute;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -30,13 +37,19 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.model.common.AbstractGridCell.Alignment;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -90,6 +103,7 @@ public class MultiAttributeSWTRenderer_ITest {
 		emfFormsDatabinding = Mockito.mock(EMFFormsDatabinding.class);
 		emfFormsLabelProvider = Mockito.mock(EMFFormsLabelProvider.class);
 		vtViewTemplateProvider = Mockito.mock(VTViewTemplateProvider.class);
+
 		imageRegistryService = Mockito.mock(ImageRegistryService.class);
 
 		final IObservableValue<Serializable> displayName = Observables.constantObservableValue(
@@ -103,6 +117,16 @@ public class MultiAttributeSWTRenderer_ITest {
 			String.class);
 		Mockito.doReturn(description).when(emfFormsLabelProvider)
 			.getDescription(Matchers.any(VDomainModelReference.class), Matchers.any(EObject.class));
+	}
+
+	public void setupCompact() {
+		final Set<VTStyleProperty> properties = new HashSet<VTStyleProperty>();
+		final VTTableStyleProperty tableStyleProperty = VTTableStylePropertyFactory.eINSTANCE
+			.createTableStyleProperty();
+		tableStyleProperty.setRenderMode(RenderMode.COMPACT_VERTICALLY);
+		properties.add(tableStyleProperty);
+		Mockito.when(vtViewTemplateProvider.getStyleProperties(Matchers.any(VElement.class),
+			Matchers.any(ViewModelContext.class))).thenReturn(properties);
 	}
 
 	@After
@@ -380,6 +404,25 @@ public class MultiAttributeSWTRenderer_ITest {
 
 		/* assert */
 		assertFalse(upButton.getEnabled());
+	}
+
+	@Test
+	public void compactRendererDescription() {
+		setupCompact();
+		final MultiAttributeSWTRenderer renderer = createRenderer();
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+
+		assertThat(gridDescription.getColumns(), is(equalTo(2)));
+
+		final SWTGridCell validationCell = gridDescription.getGrid().get(0);
+		assertThat(validationCell.getPreferredSize(), notNullValue());
+		assertThat(validationCell.isHorizontalGrab(), is(false));
+		assertThat(validationCell.getVerticalAlignment(), is(Alignment.BEGINNING));
+
+		final SWTGridCell mainCell = gridDescription.getGrid().get(1);
+		assertThat(mainCell.getPreferredSize(), nullValue());
+		assertThat(mainCell.isHorizontalGrab(), is(true));
+		assertThat(mainCell.isVerticalGrab(), is(true));
 	}
 
 }
