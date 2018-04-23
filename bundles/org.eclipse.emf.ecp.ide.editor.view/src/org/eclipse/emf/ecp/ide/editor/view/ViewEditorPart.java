@@ -171,7 +171,7 @@ public class ViewEditorPart extends EditorPart implements
 		}
 
 		try {
-			registerEcore();
+			registerEcore(resource);
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final Exception e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
@@ -305,7 +305,18 @@ public class ViewEditorPart extends EditorPart implements
 					Messages.WorkspaceMigrationDialog_Description);
 				final List<URI> toMigrate = new ArrayList<URI>();
 				if (migrateWorkspace) {
-					toMigrate.addAll(getWorkspaceURIsToMigrate(resourceURI));
+					for (final URI uri : getWorkspaceURIsToMigrate(resourceURI)) {
+						final Resource workspaceResource = editingDomain.getResourceSet().getResource(uri, true);
+						try {
+							registerEcore(workspaceResource);
+							toMigrate.add(uri);
+						} catch (final IOException ex) {
+							Activator.getDefault().getLog()
+								.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, MessageFormat.format(
+									Messages.ViewEditorPart_WorkspaceMigrationError,
+									resourceURI.toString()), ex));
+						}
+					}
 				}
 				toMigrate.add(resourceURI);
 				final IRunnableWithProgress runnable = new IRunnableWithProgress() {
@@ -365,7 +376,14 @@ public class ViewEditorPart extends EditorPart implements
 		}
 		try {
 			final ArrayList<URI> urIsToMigrate = workspaceMigrator.getURIsToMigrate();
-			urIsToMigrate.remove(resourceURI);
+
+			// Get the editors's resource uri as a uri with an absolute file path and remove it from the workspace URIs
+			// to migrate in order to avoid migrating it two times (this would throw an exception).
+			final IResource findMember = ResourcesPlugin.getWorkspace().getRoot()
+				.findMember(resourceURI.toPlatformString(true));
+			final String osString = findMember.getLocation().toOSString();
+			urIsToMigrate.remove(URI.createFileURI(osString));
+
 			if (urIsToMigrate.size() > 0) {
 				final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 				final ListSelectionDialog migrationDialog = MigrationDialogHelper
@@ -430,8 +448,8 @@ public class ViewEditorPart extends EditorPart implements
 		showView();
 	}
 
-	private void registerEcore() throws IOException {
-		for (final String ecorePath : ViewModelHelper.getEcorePaths(resource)) {
+	private void registerEcore(Resource viewResource) throws IOException {
+		for (final String ecorePath : ViewModelHelper.getEcorePaths(viewResource)) {
 			if (ecorePath == null) {
 				return;
 			}
