@@ -84,7 +84,6 @@ public class ComponentItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(CoffeePackage.Literals.COMPONENT__CHILDREN);
-			childrenFeatures.add(CoffeePackage.Literals.COMPONENT__ACTIVITIES);
 		}
 		return childrenFeatures;
 	}
@@ -128,8 +127,10 @@ public class ComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Component.class)) {
-		case CoffeePackage.COMPONENT__CHILDREN:
 		case CoffeePackage.COMPONENT__ACTIVITIES:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+		case CoffeePackage.COMPONENT__CHILDREN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}

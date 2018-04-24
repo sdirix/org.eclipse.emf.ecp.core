@@ -123,7 +123,6 @@ public class ControlUnitItemProvider extends ComponentItemProvider {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(CoffeePackage.Literals.CONTROL_UNIT__PROCESSOR);
 			childrenFeatures.add(CoffeePackage.Literals.CONTROL_UNIT__RAM);
-			childrenFeatures.add(CoffeePackage.Literals.CONTROL_UNIT__DISPLAY);
 		}
 		return childrenFeatures;
 	}
@@ -181,12 +180,12 @@ public class ControlUnitItemProvider extends ComponentItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ControlUnit.class)) {
+		case CoffeePackage.CONTROL_UNIT__DISPLAY:
 		case CoffeePackage.CONTROL_UNIT__USER_DESCRIPTION:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case CoffeePackage.CONTROL_UNIT__PROCESSOR:
 		case CoffeePackage.CONTROL_UNIT__RAM:
-		case CoffeePackage.CONTROL_UNIT__DISPLAY:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -210,9 +209,6 @@ public class ControlUnitItemProvider extends ComponentItemProvider {
 
 		newChildDescriptors.add(createChildParameter(CoffeePackage.Literals.CONTROL_UNIT__RAM,
 			CoffeeFactory.eINSTANCE.createRAM()));
-
-		newChildDescriptors.add(createChildParameter(CoffeePackage.Literals.CONTROL_UNIT__DISPLAY,
-			CoffeeFactory.eINSTANCE.createDisplay()));
 	}
 
 }

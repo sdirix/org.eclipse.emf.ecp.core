@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.group.model="http://org/eclipse/emf/ecp/view/group/model" xmlns:org.eclipse.emf.ecp.view.horizontal.model="http://org/eclipse/emf/ecp/view/horizontal/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmlns:org.eclipse.emf.ecp.view.vertical.model="http://org/eclipse/emf/ecp/view/vertical/model" xmi:id="_4iBP4EDKEeifDej7n0aGUQ" name="ControlUnit">
   <rootEClass href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit"/>
-  <ecorePaths>/org.eclipse.emfforms.coffee.model/model/Coffee.ecore</ecorePaths>
   <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_-_7ugEDKEeifDej7n0aGUQ" name="Processor">
     <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_BTCZkEDLEeifDej7n0aGUQ">
       <children xsi:type="org.eclipse.emf.ecp.view.vertical.model:VerticalLayout" xmi:id="_O-wisEDLEeifDej7n0aGUQ">
@@ -46,6 +45,22 @@
       </children>
     </children>
   </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_qiwOYEfKEeiITNwhimMT5w" name="Display">
+    <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_0s6VQEfKEeiITNwhimMT5w">
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_rvl08EfKEeiITNwhimMT5w" name="Control width">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_wQoXMEfKEeiITNwhimMT5w">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Display/width"/>
+          <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/display"/>
+        </domainModelReference>
+      </children>
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_wqhd4EfKEeiITNwhimMT5w" name="Control height">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_yTUAoEfKEeiITNwhimMT5w">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Display/height"/>
+          <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/display"/>
+        </domainModelReference>
+      </children>
+    </children>
+  </children>
   <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_9cWmcEDLEeifDej7n0aGUQ">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_BM7VEEDMEeifDej7n0aGUQ">
       <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_BuvosEDMEeifDej7n0aGUQ">
@@ -79,4 +94,5 @@
       </domainModelReference>
     </children>
   </children>
+  <ecorePaths>/org.eclipse.emfforms.coffee.model/model/Coffee.ecore</ecorePaths>
 </org.eclipse.emf.ecp.view.model:View>
