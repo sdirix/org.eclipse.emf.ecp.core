@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -503,7 +504,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	private InternalEObject getInstanceOf(EClass clazz) {
-		return InternalEObject.class.cast(clazz.getEPackage().getEFactoryInstance().create(clazz));
+		EObject tempInstance;
+		if (clazz.isInterface() || clazz.isAbstract() || clazz.getInstanceClass() == null) {
+			tempInstance = new DynamicEObjectImpl(clazz);
+		} else {
+			tempInstance = EcoreUtil.create(clazz);
+		}
+		return InternalEObject.class.cast(tempInstance);
 	}
 
 	private void createContent(Composite composite, IObservableList list) {
