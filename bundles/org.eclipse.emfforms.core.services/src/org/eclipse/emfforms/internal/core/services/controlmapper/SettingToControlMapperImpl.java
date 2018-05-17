@@ -373,18 +373,20 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 * @param controlToRemove The {@link VControl} that will be removed from this setting to control mapper
 	 */
 	private void vControlParentsRemoved(EMFFormsViewContext childContext, VControl controlToRemove) {
-		VElement parentElement = contextParentMap.get(childContext);
-		while (parentElement != null) {
-			for (final UniqueSetting setting : controlToSettingMap.get(controlToRemove)) {
-				settingToControlMap.get(setting).remove(parentElement);
-				final EMFFormsViewContext context = controlContextMap.get(parentElement);
-				if (context == null) {
-					parentElement = null;
-					break;
-				}
-				parentElement = contextParentMap.get(context);
-			}
+		if (childContext == null) {
+			return;
 		}
+		final VElement parentElement = contextParentMap.get(childContext);
+		if (parentElement == null) {
+			return;
+		}
+		// remove the mapping of each setting of the removed control to the parent element
+		for (final UniqueSetting setting : controlToSettingMap.get(controlToRemove)) {
+			settingToControlMap.get(setting).remove(parentElement);
+		}
+		// Then compute the parent of the parent element
+		final EMFFormsViewContext parentContext = controlContextMap.get(parentElement);
+		vControlParentsRemoved(parentContext, controlToRemove);
 	}
 
 	/**
