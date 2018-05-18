@@ -474,6 +474,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
+	 * Create the up and down buttons.
+	 *
+	 * @param composite The {@link Composite} to create the buttons on
+	 * @param list The {@link IObservableList} of the current {@link MultiAttributeSWTRenderer}
 	 * @since 1.17
 	 */
 	protected void createUpDownButtons(Composite composite, IObservableList list) {
