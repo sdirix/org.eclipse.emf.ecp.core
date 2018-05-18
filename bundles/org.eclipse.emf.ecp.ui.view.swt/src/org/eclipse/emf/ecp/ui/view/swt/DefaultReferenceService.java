@@ -103,6 +103,9 @@ public class DefaultReferenceService implements ReferenceService {
 		addNewModelElements(eObject, eReference, true);
 	}
 
+	/**
+	 * @since 1.17
+	 */
 	@Override
 	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 		if (eReference.isContainer()) {
