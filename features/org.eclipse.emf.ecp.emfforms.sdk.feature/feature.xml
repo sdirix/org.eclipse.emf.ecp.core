@@ -62,11 +62,11 @@
    <includes
          id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
-   
+
    <includes
          id="org.eclipse.emf.ecp.emf2web.feature"
          version="0.0.0"/>
-         
+
    <includes
          id="org.eclipse.emf.ecp.emf2web.feature.source"
          version="0.0.0"/>
@@ -125,6 +125,10 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.viewproxy.feature.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emfforms.swt.control.multiattribute.feature.source"
          version="0.0.0"/>
 
    <plugin
