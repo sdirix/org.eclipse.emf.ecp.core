@@ -64,7 +64,6 @@
       <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature"/>
       <feature id="org.eclipse.e4.rcp"/>
       <feature id="org.eclipse.rcp"/>
-      <feature id="org.eclipse.emfforms.swt.control.multiattribute.feature"/>
    </features>
 
    <configurations>
