@@ -128,6 +128,9 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 		return new DiagnosticTreeNode(value);
 	}
 
+	/**
+	 * @since 1.17
+	 */
 	@Override
 	protected void updateParentNode(Object parent, Object object, Diagnostic value) {
 		// In the initial walk over the contents, we will already have processed
