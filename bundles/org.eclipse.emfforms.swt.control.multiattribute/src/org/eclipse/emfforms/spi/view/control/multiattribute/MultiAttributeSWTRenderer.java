@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
@@ -261,6 +262,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (attribute.getUpperBound() != -1 && list.size() >= attribute.getUpperBound()) {
 			addButton.setEnabled(false);
 		}
+		addButton.setToolTipText(Messages.MultiAttributeSWTRenderer_AddButtonTooltip);
 		return addButton;
 	}
 
@@ -925,9 +927,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final TableViewerRow viewerRow = (TableViewerRow) cell.getViewerRow();
 			final TableItem item = (TableItem) viewerRow.getItem();
 			final int index = item.getParent().indexOf(item);
+			final EAttribute fakeAttribute = EcoreUtil.copy(EAttribute.class.cast(valueProperty.getElementType()));
+			fakeAttribute.setUpperBound(1);
+			fakeAttribute.setLowerBound(0);
 			final IObservableValue model = new org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue(
 				valueProperty, index,
-				EAttribute.class.cast(valueProperty.getElementType()).getEAttributeType().getInstanceClass());
+				fakeAttribute);
 
 			final Binding binding = createBinding(target, model);
 
