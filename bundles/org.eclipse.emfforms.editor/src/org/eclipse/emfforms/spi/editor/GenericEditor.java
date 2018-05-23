@@ -195,11 +195,18 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 						return;
 					}
 					reloading = true;
-					resourceSet.getResources().removeAll(removedResources);
+					removeResources(removedResources);
 					for (final Resource changed : changedResources) {
-						changed.unload();
+						// We need to get the resource by its URI from the resource set because otherwise proxies will
+						// not be able to resolve after the reload. This is the case because the given resources are not
+						// part of this editor's resource set.
+						final Resource toReload = resourceSet.getResource(changed.getURI(), false);
+						if (toReload == null) {
+							continue;
+						}
+						toReload.unload();
 						try {
-							changed.load(null);
+							toReload.load(null);
 						} catch (final IOException ex) {
 						}
 					}
@@ -718,6 +725,22 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		marker.setAttribute(RESOURCE_URI, uri);
 		marker.setAttribute(FRAGMENT_URI, uriFragment);
 		return true;
+	}
+
+	/**
+	 * Removes the given {@linkplain Resource Resources} from this editor's {@linkplain ResourceSet}. Thereby the
+	 * resources are matched by URI.
+	 * 
+	 * @param resources The {@linkplain Resource Resources} to remove from this editor's {@linkplain ResourceSet}.
+	 * @since 1.17
+	 */
+	protected void removeResources(final Collection<Resource> resources) {
+		for (final Resource removed : resources) {
+			final Resource toRemove = resourceSet.getResource(removed.getURI(), false);
+			if (toRemove != null) {
+				resourceSet.getResources().remove(toRemove);
+			}
+		}
 	}
 
 	/**
