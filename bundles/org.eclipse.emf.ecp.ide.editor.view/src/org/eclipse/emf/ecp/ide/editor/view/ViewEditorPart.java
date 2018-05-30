@@ -306,11 +306,18 @@ public class ViewEditorPart extends EditorPart implements
 				final List<URI> toMigrate = new ArrayList<URI>();
 				if (migrateWorkspace) {
 					for (final URI uri : getWorkspaceURIsToMigrate(resourceURI)) {
-						final Resource workspaceResource = editingDomain.getResourceSet().getResource(uri, true);
 						try {
+							final Resource workspaceResource = editingDomain.getResourceSet().getResource(uri, true);
 							registerEcore(workspaceResource);
 							toMigrate.add(uri);
-						} catch (final IOException ex) {
+						}
+						// BEGIN SUPRESS CATCH EXCEPTION
+						catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
+							/*
+							 * catch any exception because loading the workspace resource may also lead to exception
+							 * like NoClassDefFound, IAE, etc. We want to continue in any case, in order to migrate as
+							 * much as possible
+							 */
 							Activator.getDefault().getLog()
 								.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, MessageFormat.format(
 									Messages.ViewEditorPart_WorkspaceMigrationError,
