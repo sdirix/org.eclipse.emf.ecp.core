@@ -60,12 +60,10 @@ public class MergeWithViewHandler extends AbstractHandler {
 		final IFile selectedFile = (IFile) TreeSelection.class.cast(currentSelection).getFirstElement();
 		final WorkspaceModifyOperation operation = mergeRuleRepoWithView(activeShell, selectedFile);
 		try {
-			HandlerUtil.getActiveWorkbenchWindow(event).run(false, false, operation);
-		} catch (final InvocationTargetException ex) {
-			ErrorDialog.openError(activeShell, "Error", //$NON-NLS-1$
-				ex.getMessage(),
-				new Status(IStatus.ERROR, ORG_ECLIPSE_EMFFORMS_RULEREPOSITORY_TOOLING, ex.getMessage(), ex));
-		} catch (final InterruptedException ex) {
+			if (operation != null) {
+				HandlerUtil.getActiveWorkbenchWindow(event).run(false, false, operation);
+			}
+		} catch (final InvocationTargetException | InterruptedException ex) {
 			ErrorDialog.openError(activeShell, "Error", //$NON-NLS-1$
 				ex.getMessage(),
 				new Status(IStatus.ERROR, ORG_ECLIPSE_EMFFORMS_RULEREPOSITORY_TOOLING, ex.getMessage(), ex));
@@ -74,9 +72,17 @@ public class MergeWithViewHandler extends AbstractHandler {
 	}
 
 	private WorkspaceModifyOperation mergeRuleRepoWithView(final Shell activeShell, final IFile selectedFile) {
-		final ResourceSet resourceSet = ResourceSetHelpers.loadResourceSetWithProxies(
-			URI.createPlatformResourceURI(selectedFile.getFullPath().toOSString(), false),
-			new BasicCommandStack());
+		ResourceSet resourceSet;
+		try {
+			resourceSet = ResourceSetHelpers.loadResourceSetWithProxies(
+				URI.createPlatformResourceURI(selectedFile.getFullPath().toOSString(), false),
+				new BasicCommandStack(), null);
+		} catch (final IOException ex) {
+			ErrorDialog.openError(activeShell, "Error", //$NON-NLS-1$
+				ex.getMessage(),
+				new Status(IStatus.ERROR, ORG_ECLIPSE_EMFFORMS_RULEREPOSITORY_TOOLING, ex.getMessage(), ex));
+			return null;
+		}
 
 		// FIXME Improve with Java8: Use method pointers
 		return this.mergeRuleRepoWithView(activeShell, resourceSet,

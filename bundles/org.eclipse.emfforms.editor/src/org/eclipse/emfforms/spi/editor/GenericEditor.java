@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,7 +153,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	public void doSave(IProgressMonitor monitor) {
 		// Remove the Listener, so that we won't get a changed notification for our own save operation
 		preSave();
-		if (ResourceSetHelpers.save(resourceSet)) {
+		if (ResourceSetHelpers.save(resourceSet, null)) {
 			// Tell the CommandStack, that we have saved the file successfully
 			// and inform the Workspace, that the Dirty property has changed.
 			getCommandStack().saveIsDone();
@@ -268,6 +269,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		site.getPage().addPartListener(partListener);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
+		// Load the resource from the provided input and display the editor
+		resourceSet = loadResource(getEditorInput());
 	}
 
 	/**
@@ -291,8 +294,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	@Override
 	public void createPartControl(Composite parent) {
-		// Load the resource from the provided input and display the editor
-		resourceSet = loadResource(getEditorInput());
 		parent.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 
@@ -488,10 +489,19 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 *
 	 * @param editorInput the editor input
 	 * @return the resource set
+	 * @throws PartInitException if the resource could not be loaded
 	 */
-	protected ResourceSet loadResource(IEditorInput editorInput) {
+	protected ResourceSet loadResource(IEditorInput editorInput) throws PartInitException {
 		final URI resourceURI = EditUIUtil.getURI(editorInput, null);
-		return ResourceSetHelpers.loadResourceSetWithProxies(resourceURI, getCommandStack());
+
+		final ResourceSet resourceSet = ResourceSetHelpers.createResourceSet(getCommandStack());
+		try {
+			return ResourceSetHelpers.loadResourceWithProxies(resourceURI, resourceSet, Collections.emptyMap());
+			// CHECKSTYLE.OFF: IllegalCatch
+		} catch (final Exception e) {
+			throw new PartInitException(e.getLocalizedMessage(), e);
+		}
+		// CHECKSTYLE.ON: IllegalCatch
 	}
 
 	@Override
@@ -562,40 +572,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	protected List<Action> readToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
 
-		final ISelectionProvider selectionProvider = new ISelectionProvider() {
-
-			@Override
-			public void setSelection(ISelection selection) {
-				if (rootView == null) {
-					return;
-				}
-				rootView.getSelectionProvider().setSelection(selection);
-			}
-
-			@Override
-			public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-				if (rootView == null) {
-					return;
-				}
-				rootView.getSelectionProvider().removeSelectionChangedListener(listener);
-			}
-
-			@Override
-			public ISelection getSelection() {
-				if (rootView == null) {
-					return StructuredSelection.EMPTY;
-				}
-				return rootView.getSelectionProvider().getSelection();
-			}
-
-			@Override
-			public void addSelectionChangedListener(ISelectionChangedListener listener) {
-				if (rootView == null) {
-					return;
-				}
-				rootView.getSelectionProvider().addSelectionChangedListener(listener);
-			}
-		};
+		final ISelectionProvider selectionProvider = new GenericEditorSelectionProvider();
 
 		final IExtensionRegistry registry = Platform.getExtensionRegistry();
 		if (registry == null) {
@@ -739,7 +716,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * Returns whether this editor is currently in the process of shutting down.
 	 *
 	 * @return <code>true</code> if the editor is currently closing, <code>false</code> otherwise
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	protected boolean isClosing() {
 		return closing;
@@ -750,7 +727,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * Set this flag in case you will close the editor.
 	 *
 	 * @param closing Whether the editor is currently closing (shutting down)
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	protected void setClosing(boolean closing) {
 		this.closing = closing;
@@ -761,7 +738,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * resources are matched by URI.
 	 *
 	 * @param resources The {@linkplain Resource Resources} to remove from this editor's {@linkplain ResourceSet}.
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	protected void removeResources(final Collection<Resource> resources) {
 		for (final Resource removed : resources) {
@@ -927,6 +904,42 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				return false;
 			}
 			return true;
+		}
+	}
+
+	/** Selection Provider for the GenericEditor. */
+	private class GenericEditorSelectionProvider implements ISelectionProvider {
+
+		@Override
+		public void setSelection(ISelection selection) {
+			if (rootView == null) {
+				return;
+			}
+			rootView.getSelectionProvider().setSelection(selection);
+		}
+
+		@Override
+		public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+			if (rootView == null) {
+				return;
+			}
+			rootView.getSelectionProvider().removeSelectionChangedListener(listener);
+		}
+
+		@Override
+		public ISelection getSelection() {
+			if (rootView == null) {
+				return StructuredSelection.EMPTY;
+			}
+			return rootView.getSelectionProvider().getSelection();
+		}
+
+		@Override
+		public void addSelectionChangedListener(ISelectionChangedListener listener) {
+			if (rootView == null) {
+				return;
+			}
+			rootView.getSelectionProvider().addSelectionChangedListener(listener);
 		}
 	}
 }
