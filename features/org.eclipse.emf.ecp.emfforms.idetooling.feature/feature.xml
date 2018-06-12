@@ -27,10 +27,6 @@
          id="org.eclipse.emf.ecp.view.model.controls.feature"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.emf.ecp.view.validation.initial.feature"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.ecp.ide.util"
          download-size="0"
@@ -101,6 +97,13 @@
 
    <plugin
          id="org.eclipse.emf.ecp.ide.editor.view.templatebridge"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.core.services.mappingprovider.table.panel"
          download-size="0"
          install-size="0"
          version="0.0.0"
