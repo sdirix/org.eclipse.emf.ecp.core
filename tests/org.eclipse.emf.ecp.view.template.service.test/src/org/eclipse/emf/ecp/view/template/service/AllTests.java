@@ -16,8 +16,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ViewTemplateService_Test.class, DomainModelReferenceSelector_PTest.class, AlignmentStyle_Test.class,
-	FontPropertiesStyle_Test.class, ViewModelElementSelector_Test.class })
+@SuiteClasses({ ViewTemplateService_Test.class, DomainModelReferenceSelector_PTest.class,
+	ViewModelElementSelector_Test.class })
 public class AllTests {
 
 }

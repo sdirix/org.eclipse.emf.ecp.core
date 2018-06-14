@@ -9,7 +9,7 @@
  * Contributors:
  * eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.template.service;
+package org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,10 +22,10 @@ import org.junit.Test;
  * @author Alexandra Buzila
  *
  */
-public class FontPropertiesStyle_Test {
+public class VTFontPropertiesStylePropertyImpl_Test {
 
 	@Test
-	public void testEqualitySameType() {
+	public void equalStyles_otherEqual() {
 		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = VTFontPropertiesFactory.eINSTANCE
 			.createFontPropertiesStyleProperty();
 		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty2 = VTFontPropertiesFactory.eINSTANCE
@@ -36,7 +36,7 @@ public class FontPropertiesStyle_Test {
 	}
 
 	@Test
-	public void testEqualityDifferentType() {
+	public void equalStyles_otherDifferent() {
 		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = VTFontPropertiesFactory.eINSTANCE
 			.createFontPropertiesStyleProperty();
 		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty2 = VTFontPropertiesFactory.eINSTANCE
@@ -62,6 +62,14 @@ public class FontPropertiesStyle_Test {
 		fontPropertiesStyleProperty.setHeight(fontPropertiesStyleProperty2.getHeight() + 1);
 		assertFalse(fontPropertiesStyleProperty.equalStyles(fontPropertiesStyleProperty2));
 
+	}
+
+	@Test
+	public void equalStyles_OtherNull() {
+		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = VTFontPropertiesFactory.eINSTANCE
+			.createFontPropertiesStyleProperty();
+
+		assertFalse(fontPropertiesStyleProperty.equalStyles(null));
 	}
 
 	private void setEqualFields(VTFontPropertiesStyleProperty prop1, VTFontPropertiesStyleProperty prop2) {
