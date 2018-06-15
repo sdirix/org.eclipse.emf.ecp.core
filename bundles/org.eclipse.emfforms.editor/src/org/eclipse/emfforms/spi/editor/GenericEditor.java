@@ -440,6 +440,12 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final TreeMasterDetailComposite treeMasterDetail = createTreeMasterDetail(composite, editorInput,
 			createElementCallback);
 		treeMasterDetail.setLayoutData(treeMasterDetailLayoutData);
+
+		for (final Action action : toolbarActions) {
+			if (action instanceof IEditingDomainAware) {
+				((IEditingDomainAware) action).setEditingDomain(getEditingDomain());
+			}
+		}
 		return treeMasterDetail;
 	}
 
