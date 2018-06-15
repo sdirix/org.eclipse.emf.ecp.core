@@ -91,7 +91,6 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 		}
 		for (final MasterDetailAction action : rightClickActions) {
 			action.setTreeViewer(treeViewer);
-			action.setEditingDomain(editingDomain);
 		}
 	}
 

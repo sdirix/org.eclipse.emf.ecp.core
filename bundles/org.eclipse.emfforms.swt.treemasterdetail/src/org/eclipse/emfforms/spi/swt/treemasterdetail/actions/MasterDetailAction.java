@@ -15,8 +15,6 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail.actions;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfforms.common.Optional;
 import org.eclipse.jface.viewers.TreeViewer;
 
 /**
@@ -31,7 +29,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 public abstract class MasterDetailAction extends AbstractHandler {
 	private String label, imagePath;
 	private TreeViewer treeviewer;
-	private EditingDomain editingDomain;
 
 	/**
 	 * @param objects the list of objects on which to test if the action can be executed
@@ -90,23 +87,5 @@ public abstract class MasterDetailAction extends AbstractHandler {
 	 */
 	protected TreeViewer getTreeViewer() {
 		return treeviewer;
-	}
-
-	/**
-	 * Return the {@link EditingDomain} as an Optional as it might not have been set.
-	 * 
-	 * @return the editingDomain
-	 */
-	public Optional<EditingDomain> getEditingDomain() {
-		return Optional.ofNullable(editingDomain);
-	}
-
-	/**
-	 * Set the {@link EditingDomain} to use by this action.
-	 * 
-	 * @param editingDomain the editingDomain to set
-	 */
-	public void setEditingDomain(EditingDomain editingDomain) {
-		this.editingDomain = editingDomain;
 	}
 }
