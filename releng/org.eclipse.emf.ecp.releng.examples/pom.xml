@@ -15,7 +15,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		
+		<!-- Common -->
+		<module>../../examples/org.eclipse.emfforms.example.common.wizards</module>
+
 		<!-- MakeItHappen Demo -->
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.feature</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model</module>
@@ -33,6 +35,7 @@
 		<module>../../examples/org.eclipse.emfforms.coffee.model</module>
 		<module>../../examples/org.eclipse.emfforms.coffee.model.edit</module>		
 		<module>../../examples/org.eclipse.emfforms.coffee.model.viewmodel</module>
+		<module>../../examples/org.eclipse.emfforms.coffee.wizards</module>
 	</modules>
 
 	<build>

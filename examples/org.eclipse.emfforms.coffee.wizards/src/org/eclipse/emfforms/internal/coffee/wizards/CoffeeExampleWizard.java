@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,27 +7,27 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * IBM - Initial API and implementation
- * Lucas Koehler- Initial API and implementation
- * Lucas Koehler - [1.18] Refactored to use a common EMF Forms installer wizard
+ * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.makeithappen.internal.wizards;
+package org.eclipse.emfforms.internal.coffee.wizards;
 
 import org.eclipse.emfforms.spi.example.wizards.EMFFormsExampleInstallerWizard;
 
 /**
+ * Wizard to install coffee model projects into the workspace.
+ *
  * @author Lucas Koehler
  *
  */
-public class MakeItHappenWizard extends EMFFormsExampleInstallerWizard {
+public class CoffeeExampleWizard extends EMFFormsExampleInstallerWizard {
 
 	@Override
 	protected String getProjectPageTitle() {
-		return MakeItHappenWizardsPlugin.INSTANCE.getString("_UI_ProjectPage_title"); //$NON-NLS-1$
+		return CoffeeWizardsPlugin.INSTANCE.getString("_UI_ProjectPage_title"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected String getProjectPageDescription() {
-		return MakeItHappenWizardsPlugin.INSTANCE.getString("_UI_ProjectPage_description"); //$NON-NLS-1$
+		return CoffeeWizardsPlugin.INSTANCE.getString("_UI_ProjectPage_description"); //$NON-NLS-1$
 	}
 }
