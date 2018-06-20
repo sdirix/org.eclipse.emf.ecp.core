@@ -639,12 +639,14 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		final Composite gridComposite = Composite.class.cast(tableViewerComposite.getChildren()[0]);
 		final Composite buttonComposite = (Composite) Composite.class.cast(gridComposite.getChildren()[0])
 			.getChildren()[2];
-		assertEquals(4, buttonComposite.getChildren().length);
+		assertEquals(5, buttonComposite.getChildren().length);
 
 		final Button addButton = (Button) buttonComposite.getChildren()[2];
 		final Button removeButton = (Button) buttonComposite.getChildren()[3];
+		final Button duplicateButton = (Button) buttonComposite.getChildren()[4];
 		assertFalse(addButton.isVisible());
 		assertFalse(removeButton.isVisible());
+		assertFalse(duplicateButton.isVisible());
 
 		// final Grid grid = getGrid(tableViewerComposite);
 		// GridItem item = grid.getItem(new Point(0,0));

@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -214,6 +215,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
 	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
 	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
+	private static final String ICON_DUPLICATE = "icons/duplicate.png"; //$NON-NLS-1$
 
 	private final Map<Integer, ECPCellEditorComparator> columnIndexToComparatorMap = new LinkedHashMap<Integer, ECPCellEditorComparator>();
 
@@ -231,6 +233,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button removeButton;
 	private Button moveUpButton;
 	private Button moveDownButton;
+	private Button duplicateButton;
 
 	private Optional<Integer> minimumHeight;
 	private Optional<Integer> maximumHeight;
@@ -1245,6 +1248,25 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return moveDownButton;
 	}
 
+	private Button createDuplicateButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+		duplicateButton = new Button(buttonComposite, SWT.None);
+		final Image image = getImage(ICON_DUPLICATE);
+		duplicateButton.setImage(image);
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		duplicateButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_Duplicate),
+			instanceName));
+
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (structuralFeature.getUpperBound() != -1 && containments.size() >= structuralFeature.getUpperBound()) {
+			duplicateButton.setEnabled(false);
+		}
+		SWTDataElementIdHelper.setElementIdDataWithSubId(duplicateButton, getVElement(), "table_duplicate", //$NON-NLS-1$
+			getViewModelContext());
+		return duplicateButton;
+	}
+
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
 	 *
@@ -1372,6 +1394,31 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewer.setSelection(new StructuredSelection(eObjectToAdd.get()), true);
 	}
 
+	private void duplicateRow(EObject eObject, EStructuralFeature structuralFeature) {
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		final List<?> toDuplicate = new ArrayList(
+			IStructuredSelection.class.cast(getTableViewer().getSelection()).toList());
+		final Collection<Object> copies = copyElements(eObject, structuralFeature, editingDomain, toDuplicate);
+		getTableViewer()
+			.setSelection(new StructuredSelection(copies.iterator().next()), true);
+
+	}
+
+	private Collection<Object> copyElements(EObject eObject, EStructuralFeature structuralFeature,
+		EditingDomain editingDomain, Collection<?> elementsToCopy) {
+		final Collection<Object> copies = EcoreUtil.copyAll(elementsToCopy);
+		final Command createCommand = AddCommand.create(editingDomain, eObject, structuralFeature, copies);
+		if (createCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				createCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(createCommand);
+			}
+		}
+		return copies;
+	}
+
 	@Override
 	protected void applyValidation() {
 		runnableManager.executeAsync(new ApplyValidationRunnable());
@@ -1385,6 +1432,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected Button getAddButton() {
 		return addButton;
+	}
+
+	/**
+	 * Returns the duplicate button created by the framework.
+	 *
+	 * @return the duplicateButton
+	 * @since 1.18
+	 */
+	protected Button getDuplicateButton() {
+		return duplicateButton;
 	}
 
 	/**
@@ -1444,6 +1501,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (getAddButton() != null) {
 			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
+		if (getDuplicateButton() != null) {
+			getDuplicateButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
+		}
 		if (getRemoveButton() != null) {
 			getRemoveButton()
 				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
@@ -1459,6 +1520,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected void applyReadOnly() {
 		if (getAddButton() != null) {
 			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
+		}
+		if (getDuplicateButton() != null) {
+			getDuplicateButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getRemoveButton() != null) {
 			getRemoveButton()
@@ -2075,6 +2140,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 				initAddRemoveButtons(addButton, removeButton, viewer);
 			}
+
+			if (!getVElement().isDuplicateDisabled()) {
+				duplicateButton = createDuplicateButton(
+					clazz, buttonComposite, eObject, structuralFeature);
+
+				numButtons = numButtons + 1;
+
+				initDuplicateButton(duplicateButton, viewer);
+			}
+
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false)
 				.applyTo(buttonComposite);
 		}
@@ -2168,6 +2243,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
 									currentIndex + 1));
 					}
+				}
+			});
+		}
+
+		private void initDuplicateButton(Button duplicateButton, final AbstractTableViewer viewer) {
+			duplicateButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+
+					if (selection == null || selection.getFirstElement() == null) {
+						return;
+					}
+
+					duplicateRow(eObject, structuralFeature);
 				}
 			});
 		}
