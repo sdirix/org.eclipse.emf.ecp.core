@@ -489,10 +489,13 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 				gridTableViewer.applyEditorValue();
 			}
 			if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
-				for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT, SWT.SHIFT)) {
+				for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT)) {
 					if ((event.keyCode & keyCode) != 0 || (event.stateMask & keyCode) != 0) {
 						return false;
 					}
+				}
+				if ((event.keyCode & SWT.SHIFT) != 0) {
+					return false;
 				}
 				return !isDoNotEnterEditorCode(event.keyCode);
 			}
