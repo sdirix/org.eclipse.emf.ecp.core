@@ -74,6 +74,9 @@ import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.AddRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.DuplicateRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.RemoveRowAction;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
 import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
@@ -81,6 +84,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper.RendererResult;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -120,7 +124,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "deprecation" })
 @RunWith(DatabindingClassRunner.class)
 public class SWTTable_PTest {
 	private static String log;
@@ -250,7 +254,7 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableSWTData() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+	public void testTableActionControlOrderAndSWTData() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		// setup model
 		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
@@ -585,19 +589,18 @@ public class SWTTable_PTest {
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 		handle.getTableControl().setReadonly(true);
 		shell.open();
-		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
-		assertTrue(render instanceof Composite);
+		final RendererResult result = SWTViewTestHelper.renderControl(handle.getTableControl(), domainElement, shell);
+		assertTrue(result.getControl().isPresent() && result.getControl().get() instanceof Composite);
 
-		Composite buttonComposite = (Composite) render;
-		buttonComposite = (Composite) buttonComposite.getChildren()[0];
-		buttonComposite = (Composite) buttonComposite.getChildren()[0];
-		buttonComposite = (Composite) buttonComposite.getChildren()[2];
+		final TableControlSWTRenderer swtRenderer = TableControlSWTRenderer.class.cast(result.getRenderer());
 
-		final Button addButton = (Button) buttonComposite.getChildren()[0];
-		final Button removeButton = (Button) buttonComposite.getChildren()[1];
+		final Optional<Control> addRowButton = swtRenderer.getControlForAction(AddRowAction.ACTION_ID);
+		final Optional<Control> removeRowButton = swtRenderer.getControlForAction(RemoveRowAction.ACTION_ID);
+		final Optional<Control> duplicateRowButton = swtRenderer.getControlForAction(DuplicateRowAction.ACTION_ID);
 
-		assertFalse(addButton.getVisible());
-		assertFalse(removeButton.getVisible());
+		assertFalse(addRowButton.isPresent());
+		assertFalse(removeRowButton.isPresent());
+		assertFalse(duplicateRowButton.isPresent());
 
 	}
 

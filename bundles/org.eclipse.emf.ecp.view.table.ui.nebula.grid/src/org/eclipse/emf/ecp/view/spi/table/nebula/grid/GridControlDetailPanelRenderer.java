@@ -354,14 +354,8 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#deleteRows(java.util.List,
-	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
-	 * @since 1.6
-	 */
 	@Override
+	@Deprecated
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 		super.deleteRows(deletionList, eObject, structuralFeature);
