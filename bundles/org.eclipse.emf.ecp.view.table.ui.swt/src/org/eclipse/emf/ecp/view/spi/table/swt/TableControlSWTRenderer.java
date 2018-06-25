@@ -1167,6 +1167,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button createRemoveRowButton(EClass clazz, final Composite buttonComposite, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 		removeButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(removeButton, getVElement(), "remove", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_DELETE);
 		removeButton.setImage(image);
 		removeButton.setEnabled(false);
@@ -1187,6 +1188,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button createAddRowButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 		addButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(addButton, getVElement(), "add", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_ADD);
 		addButton.setImage(image);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
@@ -1205,6 +1207,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button createMoveUpButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 		moveUpButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(moveUpButton, getVElement(), "up", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_MOVE_UP);
 		moveUpButton.setImage(image);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
@@ -1225,6 +1228,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button createMoveDownButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 		moveDownButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(moveDownButton, getVElement(), "down", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_MOVE_DOWN);
 		moveDownButton.setImage(image);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
