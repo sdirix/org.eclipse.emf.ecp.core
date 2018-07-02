@@ -325,7 +325,7 @@ public class ViewEditorPart extends EditorPart implements
 							Activator.getDefault().getLog()
 								.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, MessageFormat.format(
 									Messages.ViewEditorPart_WorkspaceMigrationError,
-									resourceURI.toString()), ex));
+									uri.toString()), ex));
 						}
 					}
 				}
