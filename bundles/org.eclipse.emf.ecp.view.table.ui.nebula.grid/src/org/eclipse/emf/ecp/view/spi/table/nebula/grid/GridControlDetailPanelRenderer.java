@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,6 +49,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
@@ -109,21 +110,81 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	protected Composite createControlComposite(Composite composite) {
 
 		/* border */
-		border = new Composite(composite, SWT.BORDER);
-		final GridLayout gridLayout = GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).create();
-		border.setLayout(gridLayout);
-		final int totalHeight = getTableHeightHint() + getDetailPanelHeightHint() + gridLayout.verticalSpacing;
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, totalHeight).applyTo(border);
+		border = createBorderComposite(composite);
 
-		/* table composite */
-		final Composite tableComposite = new Composite(border, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-			.applyTo(tableComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(border);
+		final SashForm sashForm = createSash(border);
+
+		/*
+		 * Wrap the table composite in another composite because setting weights on the sash form overrides the layout
+		 * data of its direct children. This must not happen on the table composite because the Table Control SWT
+		 * Renderer needs the table composite's layout data to be GridData.
+		 */
+		final Composite tableCompositeWrapper = new Composite(sashForm, SWT.NONE);
+		GridLayoutFactory.fillDefaults().applyTo(tableCompositeWrapper);
+		final Composite tableComposite = createTableComposite(tableCompositeWrapper);
 
 		/* scrolled composite */
-		scrolledComposite = new ScrolledComposite(border, SWT.V_SCROLL);
-		scrolledComposite.setBackground(composite.getBackground());
+		scrolledComposite = createScrolledDetail(sashForm);
+
+		// As a default the table gets 1/3 of the space and the detail panel 2/3.
+		sashForm.setWeights(new int[] { 1, 2 });
+
+		return tableComposite;
+	}
+
+	/**
+	 * Creates a composite with a border to surround the grid and detail panel.
+	 *
+	 * @param parent The parent Composite
+	 * @return The border Composite
+	 */
+	protected Composite createBorderComposite(Composite parent) {
+		final Composite composite = new Composite(parent, SWT.BORDER);
+		final GridLayout gridLayout = GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).create();
+		composite.setLayout(gridLayout);
+		final int totalHeight = getTableHeightHint() + getDetailPanelHeightHint() + gridLayout.verticalSpacing;
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, totalHeight)
+			.applyTo(composite);
+		return composite;
+	}
+
+	/**
+	 * Creates the SashForm for the grid and the detail panel.
+	 *
+	 * @param parent the parent
+	 * @return the SashForm
+	 */
+	protected SashForm createSash(Composite parent) {
+		final SashForm sash = new SashForm(parent, SWT.VERTICAL);
+		sash.setBackground(parent.getBackground());
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sash);
+		sash.setSashWidth(5);
+		return sash;
+	}
+
+	/**
+	 * Creates the Composite that will contain the grid.
+	 *
+	 * @param parent The parent Composite to create the grid composite on
+	 * @return The grid Composite
+	 */
+	protected Composite createTableComposite(Composite parent) {
+		final Composite tableComposite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
+			.applyTo(tableComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tableComposite);
+		return tableComposite;
+	}
+
+	/**
+	 * Creates a scrolled Composite that contains the detail panel.
+	 *
+	 * @param parent The parent Composite to create the scrolled composite on
+	 * @return The ScrolledComposite containing the detail panel
+	 */
+	protected ScrolledComposite createScrolledDetail(Composite parent) {
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.BORDER);
+		scrolledComposite.setBackground(parent.getBackground());
 		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(scrolledComposite);
 		scrolledComposite.setExpandVertical(true);
@@ -137,12 +198,11 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		detailPanel.layout();
 		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		scrolledComposite.setMinHeight(point.y);
-
-		return tableComposite;
+		return scrolledComposite;
 	}
 
 	/**
-	 * Returns the prefereed height for the detail panel. This will be passed to the layoutdata.
+	 * Returns the preferred height for the detail panel. This will be passed to the layout data.
 	 *
 	 * @return the height in px
 	 */
@@ -157,8 +217,8 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @return the detail panel
 	 */
 	protected Composite createDetailPanel(ScrolledComposite composite) {
-		final Composite detail = new Composite(scrolledComposite, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(detail);
+		final Composite detail = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).margins(5, 5).applyTo(detail);
 		return detail;
 	}
 
