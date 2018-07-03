@@ -18,6 +18,7 @@ import java.util.Locale;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier;
@@ -46,7 +47,13 @@ public class DateCellStringTooltipModifier implements ECPStringModifier {
 	public String modifyString(String text, Setting setting) {
 		if (setting != null) {
 			final EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+			if (eStructuralFeature instanceof EReference) {
+				return text;
+			}
 			final EClassifier eType = eStructuralFeature.getEType();
+			if (eType == null) {
+				return text;
+			}
 			if (XMLGregorianCalendar.class.isAssignableFrom(eType.getInstanceClass())) {
 				final XMLGregorianCalendar calendar = (XMLGregorianCalendar) setting.get(true);
 				return dateInstance.format(calendar.toGregorianCalendar().getTime());

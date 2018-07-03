@@ -56,6 +56,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPViewerAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
@@ -1997,6 +1998,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private void init(AbstractTableViewer tableViewer) {
 			cellEditor = createCellEditor(tempInstance, eStructuralFeature,
 				(Composite) tableViewer.getControl());
+			if (cellEditor instanceof ECPViewerAwareCellEditor) {
+				((ECPViewerAwareCellEditor) cellEditor).setTableViewer(tableViewer);
+				((ECPViewerAwareCellEditor) cellEditor).setTableFeature((EReference) list.getElementType());
+			}
 			tableViewer.getControl().addDisposeListener(new DisposeListener() {
 
 				@Override

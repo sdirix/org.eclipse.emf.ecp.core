@@ -12,6 +12,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
+import org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceCellEditor_PTest;
+import org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceTooltipModifier_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableDatabindingLabel_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTable_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer_PTest;
@@ -21,7 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ SWTTable_PTest.class, SWTTableDatabindingLabel_PTest.class, RunnableManagerTest.class,
-	TableControlDetailPanelRenderer_PTest.class })
+	TableControlDetailPanelRenderer_PTest.class, MultiReferenceTooltipModifier_PTest.class, MultiReferenceCellEditor_PTest.class })
 public class AllTests {
 
 }
