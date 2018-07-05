@@ -9,15 +9,18 @@
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.template.service;
+package org.eclipse.emf.ecp.view.template.service.test;
 
+import org.eclipse.emf.ecp.view.template.service.ViewModelElementSelector_Test;
+import org.eclipse.emf.ecp.view.template.service.ViewTemplateProviderImpl_Test;
+import org.eclipse.emf.ecp.view.template.service.ViewTemplateSupplierImpl_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ViewTemplateService_Test.class, DomainModelReferenceSelector_PTest.class,
-	ViewModelElementSelector_Test.class })
+@SuiteClasses({ ViewTemplateProviderImpl_Test.class, ViewModelElementSelector_Test.class,
+	ViewTemplateSupplierImpl_Test.class })
 public class AllTests {
 
 }
