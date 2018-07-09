@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.template.style.background.model.impl.VTBackgroun
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl_Test;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.impl.VTLabelWidthStylePropertyImpl_Test;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.impl.VTMandatoryStylePropertyImpl_Test;
+import org.eclipse.emf.ecp.view.template.style.reference.model.impl.VTReferenceStylePropertyImpl_Test;
 import org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabStylePropertyImpl_Test;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl_Test;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.impl.VTTextControlEnablementStylePropertyImpl_Test;
@@ -41,7 +42,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	VTFontPropertiesStylePropertyImpl_Test.class, VTLabelWidthStylePropertyImpl_Test.class,
 	VTMandatoryStylePropertyImpl_Test.class, VTTabStylePropertyImpl_Test.class, VTTableStylePropertyImpl_Test.class,
 	VTTextControlEnablementStylePropertyImpl_Test.class, VTUnsettableStylePropertyImpl_Test.class,
-	VTValidationStylePropertyImpl_Test.class, VTLabelWrapStylePropertyImpl_Test.class })
+	VTValidationStylePropertyImpl_Test.class, VTLabelWrapStylePropertyImpl_Test.class,
+	VTReferenceStylePropertyImpl_Test.class })
 public class AllTests {
 
 }

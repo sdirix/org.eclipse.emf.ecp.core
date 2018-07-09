@@ -46,6 +46,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceFactory;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
@@ -58,6 +60,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -220,7 +223,36 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @return true if the 'AddNew' button is shown, false otherwise
 	 */
 	protected boolean showAddNewButton() {
-		return true;
+		EReference eReference = null;
+		try {
+			eReference = (EReference) getModelValue().getValueType();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex));
+		}
+
+		if (eReference != null) {
+			if (eReference.isContainment()) {
+				return true;
+			}
+
+			VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
+				getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
+			if (referenceStyle == null) {
+				referenceStyle = getDefaultReferenceStyle();
+			}
+			return referenceStyle.isShowCreateAndLinkButtonForCrossReferences();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Creates and returns a default version of a {@link VTReferenceStyleProperty}.
+	 *
+	 * @return The default {@link VTReferenceStyleProperty}
+	 */
+	protected VTReferenceStyleProperty getDefaultReferenceStyle() {
+		return VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
 	}
 
 	/**

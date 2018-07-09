@@ -25,11 +25,14 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceFactory;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -230,8 +233,39 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		}
 
 		createAddReferenceButton(parent, elementDisplayName);
-		createNewReferenceButton(parent, elementDisplayName);
+
+		EReference eReference = null;
+		try {
+			eReference = (EReference) getModelValue().getValueType();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex));
+		}
+		// Only allow to create new elements in the reference if it is a containment reference or if it was configured
+		// in a reference style property.
+		if (eReference != null) {
+			if (eReference.isContainment()) {
+				createNewReferenceButton(parent, elementDisplayName);
+			} else {
+				VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
+					getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
+				if (referenceStyle == null) {
+					referenceStyle = getDefaultReferenceStyle();
+				}
+				if (referenceStyle.isShowCreateAndLinkButtonForCrossReferences()) {
+					createNewReferenceButton(parent, elementDisplayName);
+				}
+			}
+		}
 		createDeleteReferenceButton(parent, elementDisplayName);
+	}
+
+	/**
+	 * Creates and returns a default version of a {@link VTReferenceStyleProperty}.
+	 *
+	 * @return The default {@link VTReferenceStyleProperty}
+	 */
+	protected VTReferenceStyleProperty getDefaultReferenceStyle() {
+		return VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
 	}
 
 	/**
@@ -311,7 +345,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	/**
 	 * Whether a new reference should be opened in a new context. True to open in new context, false otherwise.
-	 * 
+	 *
 	 * @return true to open in new context, false otherwise
 	 */
 	protected boolean openNewReferenceInContext() {
@@ -352,7 +386,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @return the image to be displayed.
 	 */
 	protected Image getImage(Bundle bundle, String iconPath) {
-		return imageRegistryService!=null ? imageRegistryService.getImage(bundle, iconPath) : null;
+		return imageRegistryService != null ? imageRegistryService.getImage(bundle, iconPath) : null;
 	}
 
 	/**
