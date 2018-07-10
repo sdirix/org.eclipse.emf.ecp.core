@@ -58,7 +58,7 @@ location "http://download.eclipse.org/edapt/releases/13x" {
 	org.eclipse.emf.edapt.runtime.feature.source.feature.group lazy
 }
 
-location "http://download.eclipse.org/nebula/releases/1.0.0" {
+location "http://download.eclipse.org/nebula/releases/latest" {
 	org.eclipse.nebula.widgets.grid.feature.feature.group lazy
 }
 
