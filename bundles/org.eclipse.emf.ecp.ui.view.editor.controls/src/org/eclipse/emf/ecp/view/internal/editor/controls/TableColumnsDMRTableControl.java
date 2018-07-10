@@ -70,6 +70,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -127,6 +129,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	private EStructuralFeature structuralFeature;
 	private EObject eObject;
 	private TableViewer viewer;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
@@ -148,6 +151,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(titleComposite);
@@ -494,6 +498,16 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			editingDomain.getCommandStack().execute(
 				SetCommand.create(editingDomain, eObject, structuralFeature, list));
 		}
+	}
+
+	@Override
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, this);
+			rendererGridDescription.getGrid().get(0).setHorizontalGrab(false);
+			rendererGridDescription.getGrid().get(1).setHorizontalGrab(false);
+		}
+		return rendererGridDescription;
 	}
 
 	/**
