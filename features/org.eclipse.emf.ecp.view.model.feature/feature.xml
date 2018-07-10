@@ -242,13 +242,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.workspace.migrator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emfforms.core.services.legacy"
          download-size="0"
          install-size="0"
