@@ -14,12 +14,14 @@ package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableDatabindingLabel_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTable_PTest;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ SWTTable_PTest.class, SWTTableDatabindingLabel_PTest.class, RunnableManagerTest.class })
+@SuiteClasses({ SWTTable_PTest.class, SWTTableDatabindingLabel_PTest.class, RunnableManagerTest.class,
+	TableControlDetailPanelRenderer_PTest.class })
 public class AllTests {
 
 }

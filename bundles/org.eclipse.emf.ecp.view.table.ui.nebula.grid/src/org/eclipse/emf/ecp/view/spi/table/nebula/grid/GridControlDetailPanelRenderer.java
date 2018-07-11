@@ -17,17 +17,14 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -96,7 +93,6 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	}
 
 	private ECPSWTView ecpView;
-	private VView view;
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
@@ -229,29 +225,14 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @return the view
 	 */
 	protected VView getView(EObject selectedEObject) {
-		if (view == null) {
-			VView detailView = getVElement().getDetailView();
-			if (detailView == null) {
-				final VElement viewModel = getViewModelContext().getViewModel();
-				final VViewModelProperties properties = ViewModelPropertiesHelper
-					.getInhertitedPropertiesOrEmpty(viewModel);
-				detailView = ViewProviderHelper.getView(selectedEObject, properties);
-			}
-			view = detailView;
+		VView detailView = getVElement().getDetailView();
+		if (detailView == null) {
+			final VElement viewModel = getViewModelContext().getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper
+				.getInhertitedPropertiesOrEmpty(viewModel);
+			detailView = ViewProviderHelper.getView(selectedEObject, properties);
 		}
-		final VView copy = EcoreUtil.copy(view);
-		for (final Adapter adapter : view.eAdapters()) {
-			if (LocalizationAdapter.class.isInstance(adapter)) {
-				copy.eAdapters().add(new LocalizationAdapter() {
-					@Override
-					public String localize(String key) {
-						return LocalizationAdapter.class.cast(adapter).localize(key);
-					}
-				});
-				break;
-			}
-		}
-		return copy;
+		return detailView;
 	}
 
 	/**
