@@ -147,6 +147,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.core.rap.concurrent.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.workspace.ui.rap.test</module>
 		
+		<module>../../tests/org.eclipse.emf.ecp.view.section.ui.swt.test</module>
+		
 		<!-- Key Attribute DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	
 		
