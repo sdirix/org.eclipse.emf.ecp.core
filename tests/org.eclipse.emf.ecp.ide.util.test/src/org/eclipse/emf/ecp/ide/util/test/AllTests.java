@@ -24,7 +24,9 @@ import org.junit.runners.Suite.SuiteClasses;
 	EcoreHelperTwoDependencies_PTest.class,
 	EcoreHelperCyclicDependencies_PTest.class,
 	EcoreHelperSubpackages_PTest.class,
-	EcoreHelperLoadEcoreExceptions_PTest.class })
+	EcoreHelperLoadEcoreExceptions_PTest.class,
+	EcoreHelperRegistryDependencies_PTest.class
+})
 public class AllTests {
 
 }

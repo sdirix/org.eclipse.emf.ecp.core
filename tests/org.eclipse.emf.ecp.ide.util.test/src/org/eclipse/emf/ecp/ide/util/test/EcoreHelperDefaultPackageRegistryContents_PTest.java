@@ -33,6 +33,7 @@ public class EcoreHelperDefaultPackageRegistryContents_PTest {
 	private static final String VIEW_NS_URI = "http://org/eclipse/emf/ecp/view/model/1170";
 	private static final String VIEW_ECORE_PATH = "/TestEcoreHelperProjectResources/view.ecore";
 
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
@@ -57,6 +58,7 @@ public class EcoreHelperDefaultPackageRegistryContents_PTest {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
+	// END SUPRESS CATCH EXCEPTION
 
 	@Test
 	public void testGetDefaultPackageRegistryContentsWithIDEEcore() {

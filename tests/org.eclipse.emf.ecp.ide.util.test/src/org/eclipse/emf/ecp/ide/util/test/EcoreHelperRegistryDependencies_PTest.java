@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
@@ -34,9 +35,10 @@ import org.junit.Test;
  * @author Alexandra Buzila
  *
  */
-public class EcoreHelperNoDependencies_PTest {
+public class EcoreHelperRegistryDependencies_PTest {
 	private final Registry packageRegistry = EPackage.Registry.INSTANCE;
-	private static String aEcorePath = "/TestEcoreHelperProjectResources/A.ecore";
+	private static String gEcorePath = "/TestEcoreHelperProjectResources/G.ecore";
+	private static String hEcorePath = "/TestEcoreHelperProjectResources/H.ecore";
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
@@ -58,8 +60,8 @@ public class EcoreHelperNoDependencies_PTest {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
-	// END SUPRESS CATCH EXCEPTION
 
+	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -73,7 +75,8 @@ public class EcoreHelperNoDependencies_PTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(gEcorePath);
+		EcoreHelper.unregisterEcore(hEcorePath);
 	}
 
 	/**
@@ -82,21 +85,26 @@ public class EcoreHelperNoDependencies_PTest {
 	 * @throws IOException
 	 */
 	@Test
-	public void testRegisterUnregisterIndependentEcore() throws IOException {
+	public void testRegisterPluginEcore() throws IOException {
 
 		// check initial setup
 		assertFalse("Package is already in the registry!",
-			packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("g.nsuri"));
 
 		// register
-		EcoreHelper.registerEcore(aEcorePath);
+		EcoreHelper.registerEcore(gEcorePath);
 		assertTrue("Package not in the registry!",
-			packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("g.nsuri"));
+
+		final EPackage gPackage = packageRegistry.getEPackage("g.nsuri");
+		final EClass eClass = (EClass) gPackage.getEClassifiers().get(0);
+		final EClass umlPlayer = eClass.getESuperTypes().get(0);
+		assertFalse("Proxy unresolved!", umlPlayer.eIsProxy());
 
 		// unregister
-		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(gEcorePath);
 		assertFalse("Package is still in the registry!",
-			packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("g.nsuri"));
 
 	}
 
@@ -106,15 +114,27 @@ public class EcoreHelperNoDependencies_PTest {
 	 * @throws IOException
 	 */
 	@Test
-	public void testUnregisterPackageNotInRegitry() throws IOException {
+	public void testRegisterResourceEcore() throws IOException {
+
 		// check initial setup
 		assertFalse("Package is already in the registry!",
-			packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("h.nsuri"));
+
+		// register
+		EcoreHelper.registerEcore(hEcorePath);
+		assertTrue("Package not in the registry!",
+			packageRegistry.containsKey("h.nsuri"));
+
+		final EPackage hPackage = packageRegistry.getEPackage("h.nsuri");
+		final EClass eClass = (EClass) hPackage.getEClassifiers().get(0);
+		final EClass umlPlayer = eClass.getESuperTypes().get(0);
+		assertFalse("Proxy unresolved!", umlPlayer.eIsProxy());
+
 		// unregister
-		EcoreHelper.unregisterEcore(aEcorePath);
-		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(hEcorePath);
 		assertFalse("Package is still in the registry!",
-			packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("h.nsuri"));
+
 	}
 
 }

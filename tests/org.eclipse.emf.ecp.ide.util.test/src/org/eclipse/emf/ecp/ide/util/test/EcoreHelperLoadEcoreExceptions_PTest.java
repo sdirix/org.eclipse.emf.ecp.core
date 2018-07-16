@@ -38,18 +38,14 @@ public class EcoreHelperLoadEcoreExceptions_PTest {
 	private static String doesNotExistEcorePath = "/TestEcoreHelperProjectResources/DoesNotExist.ecore";
 	private static String syntaxErrorEcorePath = "/TestEcoreHelperProjectResources/A_syntaxError.ecore";
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUp() throws Exception {
-		// BEGIN SUPRESS CATCH EXCEPTION
 		try {
 			JFaceResources.getImageRegistry();
 		} catch (final RuntimeException e) {
 			// expected fail, some strange initialization error is happing
 		}
-		// END SUPRESS CATCH EXCEPTION
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
@@ -62,6 +58,7 @@ public class EcoreHelperLoadEcoreExceptions_PTest {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
+	// END SUPRESS CATCH EXCEPTION
 
 	@Test
 	public void testEcoreDoesNotExistException() {
