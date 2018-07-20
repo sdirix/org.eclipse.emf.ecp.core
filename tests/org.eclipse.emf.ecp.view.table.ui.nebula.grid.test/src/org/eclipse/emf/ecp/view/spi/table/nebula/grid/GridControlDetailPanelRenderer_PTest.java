@@ -15,7 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -30,7 +32,9 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
@@ -98,6 +102,7 @@ public class GridControlDetailPanelRenderer_PTest {
 	@After
 	public void after() {
 		realm.dispose();
+		shell.dispose();
 		if (!log.isEmpty()) {
 			fail("Unexpected log to System.err: " + log);
 		}
@@ -145,6 +150,186 @@ public class GridControlDetailPanelRenderer_PTest {
 		assertFalse(EcoreUtil.equals(viewAttribute1, viewReference));
 		final VView viewAttribute2 = renderer.getView(eAttribute);
 		assertTrue(EcoreUtil.equals(viewAttribute1, viewAttribute2));
+	}
+
+	/**
+	 * If the detail view is not configured as readonly, the table sets it to read only when the table is disabled.
+	 * Furthermore, the detail's readonly state is resetted when the table is enabled again.
+	 */
+	@Test
+	public void testEnabledChangeAppliedToDetailView_OriginalReadonlyFalse() {
+		final VTableControl control = mock(VTableControl.class);
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		detailView.setReadonly(false);
+		when(control.getDetailView()).thenReturn(detailView);
+		when(control.isEffectivelyEnabled()).thenReturn(true);
+		when(control.isEffectivelyReadonly()).thenReturn(false);
+
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		final ViewModelContext context = mockViewModelContext(detailView, eAttribute);
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(control, context,
+			mock(ReportService.class), mock(EMFFormsDatabindingEMF.class), mock(EMFFormsLabelProvider.class),
+			mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class), mock(EMFFormsEditSupport.class),
+			mock(EStructuralFeatureValueConverterService.class), mock(EMFFormsLocalizationService.class));
+
+		renderer.renderSelectedObject(shell, eAttribute);
+
+		assertFalse(detailView.isReadonly());
+		when(control.isEffectivelyEnabled()).thenReturn(false);
+		renderer.applyEnable();
+		assertTrue(detailView.isReadonly());
+		when(control.isEffectivelyEnabled()).thenReturn(true);
+		renderer.applyEnable();
+		assertFalse(detailView.isReadonly());
+	}
+
+	/** If the detail view is configured as readonly, it must always stay readonly. */
+	@Test
+	public void testEnabledChangeAppliedToDetailView_OriginalReadonlyTrue() {
+		final VTableControl control = mock(VTableControl.class);
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		detailView.setReadonly(true);
+		when(control.getDetailView()).thenReturn(detailView);
+		when(control.isEffectivelyEnabled()).thenReturn(false);
+		when(control.isEffectivelyReadonly()).thenReturn(false);
+
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		final ViewModelContext context = mockViewModelContext(detailView, eAttribute);
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(control, context,
+			mock(ReportService.class), mock(EMFFormsDatabindingEMF.class), mock(EMFFormsLabelProvider.class),
+			mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class), mock(EMFFormsEditSupport.class),
+			mock(EStructuralFeatureValueConverterService.class), mock(EMFFormsLocalizationService.class));
+
+		renderer.renderSelectedObject(shell, eAttribute);
+
+		assertTrue(detailView.isReadonly());
+		when(control.isEffectivelyEnabled()).thenReturn(true);
+		renderer.applyEnable();
+		assertTrue(detailView.isReadonly());
+	}
+
+	/**
+	 * If the table is read only, enabling it must not set the detail's readonly flag to false.
+	 */
+	@Test
+	public void testEnabledChangeAppliedToDetailView_DoesNotOverrideReadonlyTrue() {
+		final VTableControl control = mock(VTableControl.class);
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		detailView.setReadonly(false);
+		when(control.getDetailView()).thenReturn(detailView);
+		when(control.isEffectivelyEnabled()).thenReturn(false);
+		when(control.isEffectivelyReadonly()).thenReturn(true);
+
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		final ViewModelContext context = mockViewModelContext(detailView, eAttribute);
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(control, context,
+			mock(ReportService.class), mock(EMFFormsDatabindingEMF.class), mock(EMFFormsLabelProvider.class),
+			mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class), mock(EMFFormsEditSupport.class),
+			mock(EStructuralFeatureValueConverterService.class), mock(EMFFormsLocalizationService.class));
+
+		renderer.renderSelectedObject(shell, eAttribute);
+
+		assertTrue(detailView.isReadonly());
+		when(control.isEffectivelyEnabled()).thenReturn(true);
+		renderer.applyEnable();
+		assertTrue(detailView.isReadonly());
+	}
+
+	/**
+	 * If the detail view is not configured as readonly, the table sets it to read only when the table is set to
+	 * readonly.
+	 */
+	@Test
+	public void testReadonlyChangeAppliedToDetailView_OriginalReadonlyFalse() {
+		final VTableControl control = mock(VTableControl.class);
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		detailView.setReadonly(false);
+		when(control.getDetailView()).thenReturn(detailView);
+		when(control.isEffectivelyEnabled()).thenReturn(true);
+		when(control.isEffectivelyReadonly()).thenReturn(false);
+
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		final ViewModelContext context = mockViewModelContext(detailView, eAttribute);
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(control, context,
+			mock(ReportService.class), mock(EMFFormsDatabindingEMF.class), mock(EMFFormsLabelProvider.class),
+			mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class), mock(EMFFormsEditSupport.class),
+			mock(EStructuralFeatureValueConverterService.class), mock(EMFFormsLocalizationService.class));
+
+		renderer.renderSelectedObject(shell, eAttribute);
+
+		assertFalse(detailView.isReadonly());
+		when(control.isEffectivelyReadonly()).thenReturn(true);
+		renderer.applyReadOnly();
+		assertTrue(detailView.isReadonly());
+	}
+
+	/** If the detail view is configured as readonly, it must always stay readonly. */
+	@Test
+	public void testReadonlyChangeAppliedToDetailView_OriginalReadonlyTrue() {
+		final VTableControl control = mock(VTableControl.class);
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		detailView.setReadonly(true);
+		when(control.getDetailView()).thenReturn(detailView);
+		when(control.isEffectivelyEnabled()).thenReturn(true);
+		when(control.isEffectivelyReadonly()).thenReturn(true);
+
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		final ViewModelContext context = mockViewModelContext(detailView, eAttribute);
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(control, context,
+			mock(ReportService.class), mock(EMFFormsDatabindingEMF.class), mock(EMFFormsLabelProvider.class),
+			mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class), mock(EMFFormsEditSupport.class),
+			mock(EStructuralFeatureValueConverterService.class), mock(EMFFormsLocalizationService.class));
+
+		renderer.renderSelectedObject(shell, eAttribute);
+
+		assertTrue(detailView.isReadonly());
+		when(control.isEffectivelyReadonly()).thenReturn(false);
+		renderer.applyEnable();
+		assertTrue(detailView.isReadonly());
+	}
+
+	/**
+	 * If the table is disabled, setting its read only flag to false, must not set the detail's readonly flag to false.
+	 */
+	@Test
+	public void testReadonlyChangeAppliedToDetailView_DoesNotOverrideEnabledFalse() {
+		final VTableControl control = mock(VTableControl.class);
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		detailView.setReadonly(false);
+		when(control.getDetailView()).thenReturn(detailView);
+		when(control.isEffectivelyEnabled()).thenReturn(false);
+		when(control.isEffectivelyReadonly()).thenReturn(true);
+
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		final ViewModelContext context = mockViewModelContext(detailView, eAttribute);
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(control, context,
+			mock(ReportService.class), mock(EMFFormsDatabindingEMF.class), mock(EMFFormsLabelProvider.class),
+			mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class), mock(EMFFormsEditSupport.class),
+			mock(EStructuralFeatureValueConverterService.class), mock(EMFFormsLocalizationService.class));
+
+		renderer.renderSelectedObject(shell, eAttribute);
+
+		assertTrue(detailView.isReadonly());
+		when(control.isEffectivelyReadonly()).thenReturn(false);
+		renderer.applyEnable();
+		assertTrue(detailView.isReadonly());
+	}
+
+	private ViewModelContext mockViewModelContext(final VView detailView, final EObject domainObject) {
+		final ViewModelContext context = mock(ViewModelContext.class);
+		final ViewModelContext childContext = mock(ViewModelContext.class);
+		when(childContext.getDomainModel()).thenReturn(domainObject);
+		when(childContext.getViewModel()).thenReturn(detailView);
+
+		when(context.getChildContext(any(EObject.class), any(VElement.class), any(VView.class)))
+			.thenReturn(childContext);
+		return context;
 	}
 
 	private <T> T getChild(Control parent, Class<T> type, int index) {

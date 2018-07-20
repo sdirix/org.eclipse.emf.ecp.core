@@ -105,6 +105,8 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
+	private VView currentDetailView;
+	private boolean currentDetailViewOriginalReadonly;
 
 	/**
 	 * {@inheritDoc}
@@ -202,7 +204,31 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 				.getInhertitedPropertiesOrEmpty(viewModel);
 			detailView = ViewProviderHelper.getView(selectedEObject, properties);
 		}
+
+		currentDetailViewOriginalReadonly = detailView.isReadonly();
 		return detailView;
+	}
+
+	@Override
+	protected void applyEnable() {
+		super.applyEnable();
+		if (currentDetailView != null) {
+			// Set the detail view to read only if this table is disabled or read only. Use the detail view's original
+			// read only state if this table is enabled and not read only.
+			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+				|| currentDetailViewOriginalReadonly);
+		}
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		if (currentDetailView != null) {
+			// Set the detail view to read only if this table is disabled or read only. Use the detail view's original
+			// read only state if this table is enabled and not read only.
+			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+				|| currentDetailViewOriginalReadonly);
+		}
 	}
 
 	/**
@@ -248,8 +274,8 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @since 1.9
 	 */
 	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
-		final VView detailView = getView(eObject);
-		if (detailView == null) {
+		currentDetailView = getView(eObject);
+		if (currentDetailView == null) {
 
 			final Label label = new Label(composite, SWT.NONE);
 			label.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_RED));
@@ -257,8 +283,12 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 		} else {
 			final ViewModelContext childContext = getViewModelContext().getChildContext(eObject, getVElement(),
-				detailView);
-
+				currentDetailView);
+			currentDetailView = (VView) childContext.getViewModel();
+			// Set the detail view to read only if this table is read only or disabled
+			currentDetailView.setReadonly(
+				!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+					|| currentDetailViewOriginalReadonly);
 			try {
 				ecpView = ECPSWTViewRenderer.INSTANCE.render(composite, childContext);
 			} catch (final ECPRendererException ex) {

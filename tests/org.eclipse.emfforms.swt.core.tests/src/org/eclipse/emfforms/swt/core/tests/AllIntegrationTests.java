@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.swt.core.tests;
 
 import org.eclipse.emfforms.internal.swt.core.EMFFormsRendererFactory_ITest;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer_PTest;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -25,6 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+	AbstractSWTRenderer_PTest.class,
 	EMFFormsRendererFactory_ITest.class,
 	SWTDataElementIdHelper_ITest.class
 })

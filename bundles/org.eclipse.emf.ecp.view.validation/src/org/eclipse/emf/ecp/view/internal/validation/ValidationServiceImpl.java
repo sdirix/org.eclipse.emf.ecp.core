@@ -637,7 +637,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				}
 				final VElement childElement = (VElement) eObject;
 				// check that the child is visible and enabled
-				if (childElement.getDiagnostic() != null && childElement.isEnabled() && childElement.isVisible()) {
+				if (childElement.getDiagnostic() != null && childElement.isEffectivelyEnabled()
+					&& childElement.isVisible()) {
 					vDiagnostic.getDiagnostics().addAll(childElement.getDiagnostic().getDiagnostics());
 				}
 			}

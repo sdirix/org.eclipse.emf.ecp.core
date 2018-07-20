@@ -303,7 +303,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	@Override
 	protected void applyEnable() {
-		getExpandableComposite().setEnabled(getVElement().isEnabled());
+		getExpandableComposite().setEnabled(getVElement().isEffectivelyEnabled());
 	}
 
 	@Override

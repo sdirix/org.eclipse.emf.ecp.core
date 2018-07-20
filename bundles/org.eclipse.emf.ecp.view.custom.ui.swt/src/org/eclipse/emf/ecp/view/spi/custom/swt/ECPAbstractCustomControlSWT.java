@@ -761,9 +761,9 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * @since 1.3
 	 */
 	public final void applyReadOnly(Map<SWTGridCell, Control> controls) {
-		if (setEditable(!getCustomControl().isReadonly())) {
+		if (setEditable(!getCustomControl().isEffectivelyReadonly())) {
 			for (final SWTGridCell gridCell : controls.keySet()) {
-				setControlEnabled(gridCell, controls.get(gridCell), !getCustomControl().isReadonly());
+				setControlEnabled(gridCell, controls.get(gridCell), !getCustomControl().isEffectivelyReadonly());
 			}
 		}
 	}
@@ -791,9 +791,9 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * @since 1.3
 	 */
 	public final void applyEnable(Map<SWTGridCell, Control> controls) {
-		if (setEditable(getCustomControl().isEnabled())) {
+		if (setEditable(getCustomControl().isEffectivelyEnabled())) {
 			for (final SWTGridCell gridCell : controls.keySet()) {
-				setControlEnabled(gridCell, controls.get(gridCell), getCustomControl().isEnabled());
+				setControlEnabled(gridCell, controls.get(gridCell), getCustomControl().isEffectivelyEnabled());
 			}
 		}
 	}

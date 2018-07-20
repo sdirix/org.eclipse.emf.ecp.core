@@ -248,7 +248,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		SWTDataElementIdHelper.setElementIdDataWithSubId(removeButton, getVElement(), "remove", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_DELETE);
 		removeButton.setImage(image);
-		removeButton.setEnabled(!getVElement().isReadonly());
+		removeButton.setEnabled(!getVElement().isEffectivelyReadonly());
 		if (list.size() <= attribute.getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
@@ -428,10 +428,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void selectionChanged(SelectionChangedEvent event) {
 				removeButton.setEnabled(!event.getSelection().isEmpty());
 				if (upButton != null) {
-					upButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isReadonly());
+					upButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isEffectivelyReadonly());
 				}
 				if (downButton != null) {
-					downButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isReadonly());
+					downButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isEffectivelyReadonly());
 				}
 			}
 		});
@@ -494,12 +494,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		upButton = new Button(composite, SWT.PUSH);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(upButton, getVElement(), "up", getViewModelContext()); //$NON-NLS-1$
 		upButton.setImage(up);
-		upButton.setEnabled(!getVElement().isReadonly());
+		upButton.setEnabled(!getVElement().isEffectivelyReadonly());
 
 		downButton = new Button(composite, SWT.PUSH);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(downButton, getVElement(), "down", getViewModelContext()); //$NON-NLS-1$
 		downButton.setImage(down);
-		downButton.setEnabled(!getVElement().isReadonly());
+		downButton.setEnabled(!getVElement().isEffectivelyReadonly());
 	}
 
 	private InternalEObject getInstanceOf(EClass clazz) {
@@ -639,16 +639,19 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	@Override
 	protected void applyEnable() {
 		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getRemoveButton() != null) {
-			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getRemoveButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getMoveUpButton() != null) {
-			getMoveUpButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getMoveUpButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getMoveDownButton() != null) {
-			getMoveDownButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getMoveDownButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 	}
 
@@ -886,7 +889,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		@Override
 		protected boolean canEdit(Object element) {
 
-			final boolean editable = control.isEnabled() && !control.isReadonly();
+			final boolean editable = control.isEffectivelyEnabled() && !control.isEffectivelyReadonly();
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);

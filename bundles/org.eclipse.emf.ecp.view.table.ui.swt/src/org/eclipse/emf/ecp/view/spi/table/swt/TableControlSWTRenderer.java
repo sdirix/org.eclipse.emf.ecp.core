@@ -1661,7 +1661,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (!isObjectEditable) {
 			return false;
 		}
-		final boolean editable = getVElement().isEnabled()
+		final boolean editable = getVElement().isEffectivelyEnabled()
 			&& !getVElement().isEffectivelyReadonly();
 		return editable;
 	}

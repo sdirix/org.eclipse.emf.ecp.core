@@ -855,6 +855,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
 		private Composite childComposite;
+		private boolean currentDetailViewOriginalReadonly;
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
@@ -890,6 +891,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					if (view == null || view.getChildren().isEmpty()) {
 						view = ViewProviderHelper.getView((EObject) selected, properties);
 					}
+					currentDetailViewOriginalReadonly = view.isReadonly();
 
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
@@ -901,10 +903,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						childContext = getViewModelContext().getChildContext((EObject) selected,
 							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
 					}
-					childContext.getViewModel().setReadonly(
-						childContext.getViewModel().isEffectivelyReadonly() || getVElement().isEffectivelyReadonly());
-					childContext.getViewModel().setEnabled(
-						childContext.getViewModel().isEffectivelyEnabled() && getVElement().isEffectivelyEnabled());
+					childContext.getViewModel()
+						.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+							|| currentDetailViewOriginalReadonly);
 					// visible does not make any sense
 
 					manipulateViewContext(childContext);
@@ -1083,6 +1084,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	@Override
 	protected void applyEnable() {
+		// Re-select the current selection to enforce re-rendering the detail.
 		treeViewer.setSelection(new StructuredSelection(treeViewer.getStructuredSelection().getFirstElement()));
 	}
 

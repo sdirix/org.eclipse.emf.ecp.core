@@ -656,7 +656,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * Updates the 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the bound input.
 	 */
 	protected void updateButtonEnabling() {
-		final boolean isReadOnly = getVElement().isReadonly();
+		final boolean isReadOnly = getVElement().isEffectivelyReadonly();
 		final int listSize = tableViewerInputList != null ? tableViewerInputList.size() : 0;
 
 		if (showMoveUpButton()) {
