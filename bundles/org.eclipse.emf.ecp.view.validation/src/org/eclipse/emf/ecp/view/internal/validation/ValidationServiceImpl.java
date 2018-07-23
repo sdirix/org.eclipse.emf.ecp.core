@@ -850,6 +850,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 *         {@code null} otherwise
 	 */
 	protected ViewSubstitutionLabelProviderFactory getSubstitutionLabelProviderFactory() {
-		return context.getService(ViewSubstitutionLabelProviderFactory.class);
+		if (context.hasService(ViewSubstitutionLabelProviderFactory.class)) {
+			return context.getService(ViewSubstitutionLabelProviderFactory.class);
+		}
+		return null;
 	}
 }
