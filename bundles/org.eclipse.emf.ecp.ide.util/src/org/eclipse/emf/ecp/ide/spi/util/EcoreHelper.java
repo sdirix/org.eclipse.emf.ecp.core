@@ -133,6 +133,9 @@ public final class EcoreHelper {
 				final Resource delegatedGetResource = delegatedGetResource(
 					URI.createURI(((EPackage) resource.getContents().get(0)).getNsURI()), loadOnDemand);
 				final Resource resultResource = delegatedGetResource != null ? delegatedGetResource : resource;
+				if (delegatedGetResource != null) {
+					getResources().remove(resource);
+				}
 				if (map != null) {
 					map.put(uri, resultResource);
 				}
