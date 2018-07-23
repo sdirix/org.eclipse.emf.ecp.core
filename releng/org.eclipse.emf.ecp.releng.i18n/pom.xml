@@ -45,6 +45,8 @@
 		<module>../../i18n/org.eclipse.emf.ecp.view.rule.model.edit.nl_de</module>
 		<module>../../i18n/org.eclipse.emf.ecp.view.table.model.edit.nl_de</module>
 		<module>../../i18n/org.eclipse.emf.ecp.view.table.model.nl_de</module>
+		<module>../../i18n/org.eclipse.emf.ecp.view.table.ui.nebula.grid.nl_de</module>
+		<module>../../i18n/org.eclipse.emf.ecp.view.table.ui.swt.nl_de</module>
 		<module>../../i18n/org.eclipse.emf.ecp.view.template.model.edit.nl_de</module>
 		<module>../../i18n/org.eclipse.emf.ecp.view.treemasterdetail.model.edit.nl_de</module>
 		<module>../../i18n/org.eclipse.emf.ecp.view.vertical.model.edit.nl_de</module>
