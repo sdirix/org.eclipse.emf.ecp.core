@@ -104,7 +104,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/selector/hierarchy/model"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/selector/bool/model"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/reference/model"); //$NON-NLS-1$
-
+		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/keybinding/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/treemasterview/model"); //$NON-NLS-1$
 
 		packages.add("http://org/eclipse/emf/ecp/view/stack/model"); //$NON-NLS-1$
