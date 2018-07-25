@@ -55,13 +55,13 @@ public class Activator extends Plugin {
 	 */
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		plugin = null;
 		if (reportServiceReference != null) {
 			plugin.getBundle().getBundleContext().ungetService(reportServiceReference);
 		}
 		if (emfformsDatabindingServiceReference != null) {
 			plugin.getBundle().getBundleContext().ungetService(emfformsDatabindingServiceReference);
 		}
+		plugin = null;
 		super.stop(bundleContext);
 	}
 
