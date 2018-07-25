@@ -74,6 +74,7 @@ public class DefaultFilter implements ECPFilterProvider {
 	private void addViewModels(Set<String> packages) {
 		packages.add("http://org/eclipse/emf/ecp/view/model/170"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/model/1170"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/model/1180"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/group/model"); //$NON-NLS-1$

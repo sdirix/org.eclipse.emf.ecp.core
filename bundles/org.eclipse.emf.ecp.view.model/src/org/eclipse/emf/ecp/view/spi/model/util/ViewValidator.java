@@ -35,7 +35,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -160,6 +162,11 @@ public class ViewValidator extends EObjectValidator {
 			return validateDateTimeDisplayAttachment((VDateTimeDisplayAttachment) value, diagnostics, context);
 		case VViewPackage.HAS_TOOLTIP:
 			return validateHasTooltip((VHasTooltip) value, diagnostics, context);
+		case VViewPackage.DOMAIN_MODEL_REFERENCE_SEGMENT:
+			return validateDomainModelReferenceSegment((VDomainModelReferenceSegment) value, diagnostics, context);
+		case VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT:
+			return validateFeatureDomainModelReferenceSegment((VFeatureDomainModelReferenceSegment) value, diagnostics,
+				context);
 		case VViewPackage.LABEL_ALIGNMENT:
 			return validateLabelAlignment((LabelAlignment) value, diagnostics, context);
 		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
@@ -569,15 +576,41 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateHasTooltip(VHasTooltip hasTooltip, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(hasTooltip, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateDomainModelReferenceSegment(VDomainModelReferenceSegment domainModelReferenceSegment,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(domainModelReferenceSegment, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateFeatureDomainModelReferenceSegment(
+		VFeatureDomainModelReferenceSegment featureDomainModelReferenceSegment, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(featureDomainModelReferenceSegment, diagnostics, context);
 	}
 
 	/**
