@@ -58,10 +58,18 @@ public final class Activator extends Plugin {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		repositorManagerTracker.dispose();
-		projectManagerTracker.dispose();
-		providerRegistryTracker.dispose();
-		observerBusTracker.dispose();
+		if (repositorManagerTracker != null) {
+			repositorManagerTracker.dispose();
+		}
+		if (projectManagerTracker != null) {
+			projectManagerTracker.dispose();
+		}
+		if (providerRegistryTracker != null) {
+			providerRegistryTracker.dispose();
+		}
+		if (observerBusTracker != null) {
+			observerBusTracker.dispose();
+		}
 		super.stop(bundleContext);
 	}
 
