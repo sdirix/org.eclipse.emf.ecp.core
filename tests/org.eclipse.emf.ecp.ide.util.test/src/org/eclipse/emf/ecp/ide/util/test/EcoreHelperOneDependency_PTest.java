@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.jface.resource.JFaceResources;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -59,6 +60,13 @@ public class EcoreHelperOneDependency_PTest {
 		wiz.installExample(new NullProgressMonitor());
 	}
 	// END SUPRESS CATCH EXCEPTION
+
+	@After
+	public void tearDown() throws Exception {
+		EcoreHelper.unregisterEcore(bEcorePath);
+		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(xEcorePath);
+	}
 
 	@Test
 	public void testBulkRegisterUnregister() throws IOException {

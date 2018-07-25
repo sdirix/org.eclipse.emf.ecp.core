@@ -70,15 +70,7 @@ public final class EcoreHelper {
 				if (!WORKSPACEURI_REFERENCEDBY.containsKey(uri.toString())) {
 					WORKSPACEURI_REFERENCEDBY.put(uri.toString(), new LinkedHashSet<String>());
 				}
-				WORKSPACEURI_REFERENCEDBY.get(uri.toString()).add(ecorePath);
-
-				if (!ECOREPATH_TO_WORKSPACEURIS.containsKey(ecorePath)) {
-					ECOREPATH_TO_WORKSPACEURIS.put(ecorePath, new HashSet<String>());
-				}
-				ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(uri.toString());
-				for (final String ecores : WORKSPACEURI_REFERENCEDBY.get(uri.toString())) {
-					ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).addAll(ECOREPATH_TO_WORKSPACEURIS.get(ecores));
-				}
+				WORKSPACEURI_REFERENCEDBY.get(uri.toString()).add(ECOREPATH_TO_WORKSPACEURI.get(ecorePath));
 			}
 			// END CHANGES
 			if (resourceLocator != null) {
@@ -149,15 +141,18 @@ public final class EcoreHelper {
 	}
 
 	/**
-	 * Contains mapping between an ecore path and the platform resource URIs of all the EPackages that ecore requires.
+	 * Contains mapping between an ecore path and the corresponding platform resource URI.
 	 */
-	private static final Map<String, Set<String>> ECOREPATH_TO_WORKSPACEURIS = new HashMap<String, Set<String>>();
+	private static final Map<String, String> ECOREPATH_TO_WORKSPACEURI = new HashMap<String, String>();
 
 	/**
-	 * Contains mapping between an platform resource URI and the ecore which uses it.
+	 * Contains mapping between an platform resource URI and the URIs which reference it.
 	 */
 	private static final Map<String, Set<String>> WORKSPACEURI_REFERENCEDBY = new HashMap<String, Set<String>>();
-
+	/**
+	 * URIs which are still in use although it was requested to be removed.
+	 */
+	private static final Set<String> URIS_HOLD = new LinkedHashSet<String>();
 	/**
 	 * A set of all namespace uris that were registerd by the tooling.
 	 */
@@ -186,12 +181,16 @@ public final class EcoreHelper {
 		final ResourceSet physicalResourceSet = new EMFFormsResourceSetImpl(ecorePath);
 		initResourceSet(physicalResourceSet, true);
 		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
+		ECOREPATH_TO_WORKSPACEURI.put(ecorePath, uri.toString());
 		final Resource r = physicalResourceSet.createResource(uri);
 
 		loadResource(ecorePath, r);
 		// resolve the proxies
 		EcoreUtil.resolveAll(physicalResourceSet);
-
+		// remove self reference
+		if (WORKSPACEURI_REFERENCEDBY.containsKey(uri.toString())) {
+			WORKSPACEURI_REFERENCEDBY.get(uri.toString()).remove(uri.toString());
+		}
 		convertRsToVirtual(ecorePath, physicalResourceSet);
 
 	}
@@ -199,17 +198,6 @@ public final class EcoreHelper {
 	private static void convertRsToVirtual(String ecorePath, final ResourceSet physicalResourceSet) {
 		final ResourceSetImpl virtualResourceSet = new ResourceSetImpl();
 		for (final Resource physicalResource : physicalResourceSet.getResources()) {
-			final String uri = physicalResource.getURI().toString();
-
-			if (!WORKSPACEURI_REFERENCEDBY.containsKey(uri)) {
-				WORKSPACEURI_REFERENCEDBY.put(uri, new LinkedHashSet<String>());
-			}
-			WORKSPACEURI_REFERENCEDBY.get(uri).add(ecorePath);
-
-			if (!ECOREPATH_TO_WORKSPACEURIS.containsKey(ecorePath)) {
-				ECOREPATH_TO_WORKSPACEURIS.put(ecorePath, new HashSet<String>());
-			}
-			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(uri);
 
 			final EPackage ePackage = getEPackage(physicalResource);
 			if (ePackage == null) {
@@ -367,26 +355,62 @@ public final class EcoreHelper {
 	 *
 	 */
 	public static void unregisterEcore(String ecorePath) {
-		if (ecorePath == null || !ECOREPATH_TO_WORKSPACEURIS.containsKey(ecorePath)) {
+		if (ecorePath == null || !ECOREPATH_TO_WORKSPACEURI.containsKey(ecorePath)) {
 			return;
 		}
-		final Set<String> workspaceURIsNeededForEcorePath = ECOREPATH_TO_WORKSPACEURIS.remove(ecorePath);
+		final String uriToUnregister = ECOREPATH_TO_WORKSPACEURI.remove(ecorePath);
+
+		final Set<String> referencedBy = WORKSPACEURI_REFERENCEDBY.get(uriToUnregister);
+		URIS_HOLD.add(uriToUnregister);
+		if (ECOREPATH_TO_WORKSPACEURI.size() == 0) {
+			URIS_HOLD.addAll(WORKSPACEURI_REFERENCEDBY.keySet());
+		}
 
 		final Set<String> workspaceURIsToRemove = new LinkedHashSet<String>();
-		for (final String workspaceURI : workspaceURIsNeededForEcorePath) {
-			boolean okToRemove = true;
-			for (final Set<String> otherNeededWSURIs : ECOREPATH_TO_WORKSPACEURIS.values()) {
-				if (otherNeededWSURIs.contains(workspaceURI)) {
-					okToRemove = false;
-					break;
+		boolean addedToDelete = false;
+		if (referencedBy == null || referencedBy.size() == 0) {
+			workspaceURIsToRemove.add(uriToUnregister);
+			addedToDelete = true;
+		} else if (URIS_HOLD.containsAll(referencedBy)) {
+			for (final String refed : referencedBy) {
+				final Set<String> toDeleteRefedBy = WORKSPACEURI_REFERENCEDBY.get(refed);
+				if (URIS_HOLD.containsAll(toDeleteRefedBy)) {
+					workspaceURIsToRemove.add(refed);
+					addedToDelete = true;
 				}
 			}
-			if (okToRemove) {
-				workspaceURIsToRemove.add(workspaceURI);
+			if (workspaceURIsToRemove.containsAll(referencedBy)) {
+				workspaceURIsToRemove.add(uriToUnregister);
+				addedToDelete = true;
 			}
+		}
+		if (addedToDelete) {
+			cleanAndRecheckRemovedURIs(workspaceURIsToRemove);
 		}
 
 		unregisterEcore(workspaceURIsToRemove);
+	}
+
+	private static void cleanAndRecheckRemovedURIs(final Set<String> workspaceURIsToRemove) {
+		boolean addedToDelete = true;
+		while (addedToDelete) {
+			addedToDelete = false;
+			for (final String toDelete : workspaceURIsToRemove) {
+				URIS_HOLD.remove(toDelete);
+				WORKSPACEURI_REFERENCEDBY.remove(toDelete);
+				for (final String key : WORKSPACEURI_REFERENCEDBY.keySet()) {
+					WORKSPACEURI_REFERENCEDBY.get(key).remove(toDelete);
+				}
+			}
+			// recheck URIs_HOLD
+			for (final String uri : URIS_HOLD) {
+				final Set<String> toDeleteRefedBy = WORKSPACEURI_REFERENCEDBY.get(uri);
+				if (toDeleteRefedBy == null || toDeleteRefedBy.size() == 0) {
+					workspaceURIsToRemove.add(uri);
+					addedToDelete = true;
+				}
+			}
+		}
 	}
 
 	/**
@@ -397,7 +421,6 @@ public final class EcoreHelper {
 	private static void unregisterEcore(Set<String> workspaceURIsToRemove) {
 		// unregister no longer needed workspace URIs
 		for (final String toRemove : workspaceURIsToRemove) {
-			WORKSPACEURI_REFERENCEDBY.remove(toRemove);
 			final EPackage pkgToRemove = WORKSPACEURI_TO_REGISTEREDPACKAGE.remove(toRemove);
 			if (pkgToRemove == null) {
 				continue;

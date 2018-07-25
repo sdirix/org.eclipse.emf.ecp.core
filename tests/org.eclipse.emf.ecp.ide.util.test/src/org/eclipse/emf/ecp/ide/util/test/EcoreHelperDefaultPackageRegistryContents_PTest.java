@@ -52,6 +52,7 @@ public class EcoreHelperDefaultPackageRegistryContents_PTest {
 	@After
 	public void tearDown() throws Exception {
 		EcoreHelper.unregisterEcore(A_ECORE_PATH);
+		EcoreHelper.unregisterEcore(VIEW_ECORE_PATH);
 	}
 
 	private static void installResourcesProject() throws Exception {

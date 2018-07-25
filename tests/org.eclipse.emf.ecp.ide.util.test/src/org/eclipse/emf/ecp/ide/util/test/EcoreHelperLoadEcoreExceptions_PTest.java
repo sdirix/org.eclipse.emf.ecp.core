@@ -23,6 +23,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.jface.resource.JFaceResources;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -59,6 +60,12 @@ public class EcoreHelperLoadEcoreExceptions_PTest {
 		wiz.installExample(new NullProgressMonitor());
 	}
 	// END SUPRESS CATCH EXCEPTION
+
+	@After
+	public void tearDown() throws Exception {
+		EcoreHelper.unregisterEcore(doesNotExistEcorePath);
+		EcoreHelper.unregisterEcore(syntaxErrorEcorePath);
+	}
 
 	@Test
 	public void testEcoreDoesNotExistException() {
