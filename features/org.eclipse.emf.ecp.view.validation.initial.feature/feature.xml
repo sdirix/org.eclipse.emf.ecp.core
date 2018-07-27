@@ -22,10 +22,11 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.table.validation"
+         id="org.eclipse.emfforms.core.services.mappingprovider.table.panel"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.ecp.view.treemasterdetail.validation"

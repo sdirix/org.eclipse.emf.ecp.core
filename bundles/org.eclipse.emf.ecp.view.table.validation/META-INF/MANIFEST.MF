@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Services
+Bundle-Name: EMF Forms Table Detail Validation (Legacy)
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.validation;singleton:=true
 Bundle-Version: 1.18.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
