@@ -1099,6 +1099,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		void add(T listener) {
 			listeners.add(listener);
+			// need to add group as soon as listener added to correctly calculate order
+			getGroup(listener);
 		}
 
 		void remove(T listener) {
