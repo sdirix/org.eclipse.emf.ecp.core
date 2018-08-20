@@ -206,6 +206,8 @@
 		
         <module>../../tests/org.eclipse.emfforms.swt.controlgrid.test</module>
 
+		<module>../../tests/org.eclipse.emfforms.swt.table.test</module>
+
         <module>../../tests/org.eclipse.emfforms.swt.treemasterdetail.test</module>
         
         <module>../../tests/org.eclipse.emfforms.swt.control.multiattribute.tests</module>
