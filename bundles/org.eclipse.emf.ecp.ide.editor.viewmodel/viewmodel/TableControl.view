@@ -31,6 +31,11 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/moveUpDownDisabled"/>
     </domainModelReference>
   </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_sADU8ND8EeXlrbphwT5uew" name="Control duplicateDisabled">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_sADU8dD8EeXlrbphwT5uew">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/duplicateDisabled"/>
+    </domainModelReference>
+  </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_twMc4tD8EeelrbphwT5uew" name="Control detailEditing">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_twMc49D8EeelrbphwT5uew">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailEditing"/>
