@@ -321,8 +321,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected Control createLabel(final Composite parent) {
 		final VDomainModelReference dmrToCheck = getDMRToMultiReference();
-		final IObservableValue labelText = getLabelText(dmrToCheck, false);
-		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+		final IObservableValue labelText = getLabelText(dmrToCheck);
+		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 		final Label titleLabel = new Label(parent, AbstractControlSWTRendererUtil
 			.getLabelStyleBits(getVTViewTemplateProvider(), getVElement(), getViewModelContext()));
@@ -370,8 +370,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				actionConfiguration);
 
 			/* get the label text/tooltip */
-			final IObservableValue labelText = getLabelText(dmrToCheck, false);
-			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+			final IObservableValue labelText = getLabelText(dmrToCheck);
+			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
@@ -804,8 +804,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					continue;
 				}
 
-				final IObservableValue text = getLabelText(dmr, true);
-				final IObservableValue tooltip = getLabelTooltipText(dmr, true);
+				final IObservableValue text = getLabelTextForColumn(dmr, clazz);
+				final IObservableValue tooltip = getLabelTooltipTextForColumn(dmr, clazz);
 
 				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr,
 					getViewModelContext().getDomainModel());
@@ -891,23 +891,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite.setComparator(comparator, sortableColumns);
 	}
 
-	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, boolean forColumn) {
-		final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
-		if (forColumn) {
-			try {
-				return labelProvider.getDisplayName(dmrToCheck);
-			} catch (final NoLabelFoundException e) {
-				// FIXME Expectation?
-				getReportService().report(new RenderingFailedReport(e));
-				return Observables.constantObservableValue(e.getMessage(), String.class);
-			}
-		}
+	private IObservableValue getLabelText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
 		default:
 			try {
-				return labelProvider.getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
+				return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -916,28 +906,38 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck, boolean forColumn) {
-		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+	private IObservableValue getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
-			if (forColumn) {
-				return labelService.getDescription(dmrToCheck);
-			}
+			return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectation?
 			getReportService().report(new RenderingFailedReport(e));
-			return Observables.constantObservableValue(e.toString(), String.class);
+			return Observables.constantObservableValue(e.getMessage(), String.class);
 		}
+	}
+
+	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
 		default:
 			try {
-				return labelService.getDescription(dmrToCheck, getViewModelContext().getDomainModel());
+				return getEMFFormsLabelProvider().getDescription(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
 				return Observables.constantObservableValue(e.toString(), String.class);
 			}
+		}
+	}
+
+	private IObservableValue getLabelTooltipTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
+		try {
+			return getEMFFormsLabelProvider().getDescription(dmrToCheck, dmrRootEClass);
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().report(new RenderingFailedReport(e));
+			return Observables.constantObservableValue(e.toString(), String.class);
 		}
 	}
 

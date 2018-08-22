@@ -202,11 +202,11 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 
 			when(getLabelProvider().getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 				testDescription);
-			when(getLabelProvider().getDescription(any(VDomainModelReference.class))).thenReturn(
+			when(getLabelProvider().getDescription(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
 				testDescription);
 			when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 				testDisplayName);
-			when(getLabelProvider().getDisplayName(any(VDomainModelReference.class))).thenReturn(
+			when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
 				testDisplayName);
 		} catch (final NoLabelFoundException ex) {
 			Assert.fail(ex.getMessage());

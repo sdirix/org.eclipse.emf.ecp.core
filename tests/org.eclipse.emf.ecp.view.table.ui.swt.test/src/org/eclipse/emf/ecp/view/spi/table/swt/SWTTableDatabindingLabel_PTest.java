@@ -115,12 +115,14 @@ public class SWTTableDatabindingLabel_PTest {
 		databindingService = mock(EMFFormsDatabindingEMF.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 
-		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DESCRIPTION);
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class))).thenReturn(DISPLAYNAME_COLUMNS);
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(DESCRIPTION_COLUMNS);
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DISPLAYNAME);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(DISPLAYNAME_COLUMNS);
 
 		shell = new Shell();
 
@@ -171,7 +173,7 @@ public class SWTTableDatabindingLabel_PTest {
 			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(columnDMR, (EObject) domainModel)).thenReturn(columnValueProperty);
 
 		final EReference eReference = mock(EReference.class);
 		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
@@ -351,7 +353,7 @@ public class SWTTableDatabindingLabel_PTest {
 			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(columnDMR, (EObject) domainModel)).thenReturn(columnValueProperty);
 
 		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
 			InternalEObject.class.cast(domainModel).eSetting(EcorePackage.eINSTANCE.getEClass_ESuperTypes()));

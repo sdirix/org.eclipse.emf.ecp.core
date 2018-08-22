@@ -9,6 +9,7 @@ Fragment-Host: org.eclipse.emf.ecp.view.table.ui.nebula.grid;bundle-version="[1.
 Bundle-Localization: plugin
 Export-Package: org.eclipse.emf.ecp.view.internal.table.nebula.grid;version="1.19.0";x-internal:=true,
   org.eclipse.emf.ecp.view.spi.table.nebula.grid;version="1.19.0",
+  org.eclipse.emf.ecp.view.table.ui.nebula.grid.test;version="1.19.0";x-internal:=true,
   org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit;version="1.19.0";x-internal:=true,
   org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.impl;version="1.19.0";x-internal:=true,
   org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.util;version="1.19.0";x-internal:=true

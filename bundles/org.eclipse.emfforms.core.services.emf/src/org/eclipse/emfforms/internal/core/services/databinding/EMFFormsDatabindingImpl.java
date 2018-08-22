@@ -125,12 +125,45 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 
 		Assert.create(object).notNull();
 		final EditingDomain editingDomain = getEditingDomain(object);
+		return internalGetValueProperty(domainModelReference, object.eClass(), editingDomain);
+	}
+
+	@Override
+	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws DatabindingFailedException {
+		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
+
+		final EList<VDomainModelReferenceSegment> segments = domainModelReference.getSegments();
+		if (segments.isEmpty()) {
+			// No segments => Fall back to legacy dmr resolving
+			final DomainModelReferenceConverterEMF bestConverter = getBestDomainModelReferenceConverter(
+				domainModelReference);
+			return bestConverter.convertToValueProperty(domainModelReference, null);
+		}
+
+		return internalGetValueProperty(domainModelReference, rootEClass, null);
+	}
+
+	/**
+	 * Actual calculation of a value property.
+	 *
+	 * @param domainModelReference The domain model reference pointing to the desired value
+	 * @param rootEClass The root EClass of the rendered form
+	 * @param editingDomain The {@link EditingDomain} of the resulting value property, may be null
+	 * @return The resulting {@link IEMFValueProperty}
+	 * @throws DatabindingFailedException
+	 */
+	private IEMFValueProperty internalGetValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException {
+
+		final EList<VDomainModelReferenceSegment> segments = domainModelReference.getSegments();
 
 		// Get value property for the (always present) first segment
 		final DomainModelReferenceSegmentConverterEMF firstConverter = getBestDomainModelReferenceSegmentConverter(
 			segments.get(0));
 		SegmentConverterValueResultEMF converterResult = firstConverter.convertToValueProperty(segments.get(0),
-			object.eClass(), editingDomain);
+			rootEClass, editingDomain);
 		IEMFValueProperty resultProperty = converterResult.getValueProperty();
 
 		// Iterate over all remaining segments and get the value properties for their corresponding EClasses.
