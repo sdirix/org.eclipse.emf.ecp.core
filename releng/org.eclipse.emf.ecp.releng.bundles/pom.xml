@@ -313,6 +313,10 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
 
+		<!-- Multi Segment -->
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
+
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
