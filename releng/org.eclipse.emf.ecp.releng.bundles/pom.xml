@@ -316,6 +316,7 @@
 		<!-- Multi Segment -->
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.multi</module>
 
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>

@@ -9,7 +9,8 @@ Export-Package: org.eclipse.emf.ecp.internal.view.table.ui.swt.persistedstate;ve
   org.eclipse.emf.ecp.spi.view.table.ui.swt.persistedstate;version="1.19.0"
 Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.ecp.view.table.model;bundle-version="[1.19.0,1.20.0)",
-  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)"
+  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
+  org.eclipse.emfforms.view.multisegment.model;bundle-version="[1.19.0,1.20.0)"
 Import-Package: org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Automatic-Module-Name: org.eclipse.emf.ecp.view.table.ui.swt.persistedstate
 Service-Component: OSGI-INF/PersistTableStateServiceFactory.xml

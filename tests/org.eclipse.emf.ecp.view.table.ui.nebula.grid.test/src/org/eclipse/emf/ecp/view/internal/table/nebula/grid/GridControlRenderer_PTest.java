@@ -389,24 +389,25 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 	 * @throws DatabindingFailedException
 	 */
 	private void mockColumnFeature(final VFeaturePathDomainModelReference dmr) throws DatabindingFailedException {
-		when(getDatabindingService().getValueProperty(Matchers.argThat(new BaseMatcher<VDomainModelReference>() {
+		when(EMFFormsDatabindingEMF.class.cast(getDatabindingService())
+			.getValueProperty(Matchers.argThat(new BaseMatcher<VDomainModelReference>() {
 
-			@Override
-			public boolean matches(Object item) {
-				if (item == null) {
-					return false;
+				@Override
+				public boolean matches(Object item) {
+					if (item == null) {
+						return false;
+					}
+					final VFeaturePathDomainModelReference cast = VFeaturePathDomainModelReference.class.cast(item);
+					return cast.getDomainModelEFeature() == dmr.getDomainModelEFeature();
 				}
-				final VFeaturePathDomainModelReference cast = VFeaturePathDomainModelReference.class.cast(item);
-				return cast.getDomainModelEFeature() == dmr.getDomainModelEFeature();
-			}
 
-			@Override
-			public void describeTo(Description description) {
-			}
+				@Override
+				public void describeTo(Description description) {
+				}
 
-		}), any(EObject.class)))
-			.thenReturn(new EMFValuePropertyDecorator(
-				new EMFValueProperty(dmr.getDomainModelEFeature()), dmr.getDomainModelEFeature()));
+			}), any(EClass.class)))
+				.thenReturn(new EMFValuePropertyDecorator(
+					new EMFValueProperty(dmr.getDomainModelEFeature()), dmr.getDomainModelEFeature()));
 	}
 
 	/**

@@ -195,6 +195,7 @@
 		<!-- DMR Segment Services -->
 		<module>../../tests/org.eclipse.emfforms.core.services.segments.test</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.segments.featurepath.test</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.segments.multi.test</module>
 
 		<!-- Bazaar -->
 		<module>../../tests/org.eclipse.emfforms.core.bazaar.tests</module>

@@ -173,6 +173,7 @@ public class SWTTableDatabindingLabel_PTest {
 			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
+		when(databindingService.getValueProperty(columnDMR, domainModel.eClass())).thenReturn(columnValueProperty);
 		when(databindingService.getValueProperty(columnDMR, (EObject) domainModel)).thenReturn(columnValueProperty);
 
 		final EReference eReference = mock(EReference.class);
@@ -353,6 +354,7 @@ public class SWTTableDatabindingLabel_PTest {
 			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
+		when(databindingService.getValueProperty(columnDMR, domainModel.eClass())).thenReturn(columnValueProperty);
 		when(databindingService.getValueProperty(columnDMR, (EObject) domainModel)).thenReturn(columnValueProperty);
 
 		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
