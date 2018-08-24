@@ -806,7 +806,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final IObservableValue text = getLabelTextForColumn(dmr, clazz);
 				final IObservableValue tooltip = getLabelTooltipTextForColumn(dmr, clazz);
 
-				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz);
+				// Use the same editing domain for the columns as for the view's domain object
+				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
+				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz,
+					editingDomain);
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 				final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
@@ -1918,16 +1921,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return;
 			}
 
-			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
-				.getDomainModelReference();
-			Optional<Setting> setting;
-
-			if (tableDMR.getDomainModelReference() != null) {
-				setting = getSettingFromObservable(tableDMR.getDomainModelReference(),
-					getViewModelContext().getDomainModel());
-			} else {
-				setting = getSettingFromObservable(tableDMR, getViewModelContext().getDomainModel());
-			}
+			final VDomainModelReference dmr = getDMRToMultiReference();
+			final Optional<Setting> setting = getSettingFromObservable(dmr, getViewModelContext().getDomainModel());
 
 			if (!setting.isPresent()) {
 				return;

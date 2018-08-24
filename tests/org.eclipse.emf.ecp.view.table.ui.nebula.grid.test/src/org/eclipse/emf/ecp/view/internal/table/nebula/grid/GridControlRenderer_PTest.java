@@ -66,6 +66,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBinding;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBindings;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingFactory;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -405,7 +406,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 				public void describeTo(Description description) {
 				}
 
-			}), any(EClass.class)))
+			}), any(EClass.class), any(EditingDomain.class)))
 				.thenReturn(new EMFValuePropertyDecorator(
 					new EMFValueProperty(dmr.getDomainModelEFeature()), dmr.getDomainModelEFeature()));
 	}

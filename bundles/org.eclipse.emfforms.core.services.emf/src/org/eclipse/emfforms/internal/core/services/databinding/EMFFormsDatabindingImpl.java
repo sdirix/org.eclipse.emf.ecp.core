@@ -131,6 +131,12 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 	@Override
 	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws DatabindingFailedException {
+		return getValueProperty(domainModelReference, rootEClass, null);
+	}
+
+	@Override
+	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootEClass).notNull();
 
@@ -139,10 +145,10 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 			// No segments => Fall back to legacy dmr resolving
 			final DomainModelReferenceConverterEMF bestConverter = getBestDomainModelReferenceConverter(
 				domainModelReference);
-			return bestConverter.convertToValueProperty(domainModelReference, null);
+			return bestConverter.convertToValueProperty(domainModelReference, rootEClass, editingDomain);
 		}
 
-		return internalGetValueProperty(domainModelReference, rootEClass, null);
+		return internalGetValueProperty(domainModelReference, rootEClass, editingDomain);
 	}
 
 	/**
@@ -303,11 +309,6 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 		return bestConverter;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF#extractFeature(org.eclipse.core.databinding.observable.value.IObservableValue)
-	 */
 	@Override
 	public EStructuralFeature extractFeature(IObservableValue observableValue) throws DatabindingFailedException {
 		if (IEMFObservable.class.isInstance(observableValue)) {
@@ -317,11 +318,6 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 			String.format("The IObservableValue class %1$s is not supported!", observableValue.getClass().getName())); //$NON-NLS-1$
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF#extractFeature(org.eclipse.core.databinding.observable.list.IObservableList)
-	 */
 	@Override
 	public EStructuralFeature extractFeature(IObservableList observableList) throws DatabindingFailedException {
 		if (IEMFObservable.class.isInstance(observableList)) {
@@ -331,11 +327,6 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 			String.format("The IObservableList class %1$s is not supported!", observableList.getClass().getName())); //$NON-NLS-1$
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF#extractObserved(org.eclipse.core.databinding.observable.value.IObservableValue)
-	 */
 	@Override
 	public EObject extractObserved(IObservableValue observableValue) throws DatabindingFailedException {
 		if (IEMFObservable.class.isInstance(observableValue)) {
@@ -345,11 +336,6 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 			String.format("The IObservableValue class %1$s is not supported!", observableValue.getClass().getName())); //$NON-NLS-1$
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF#extractObserved(org.eclipse.core.databinding.observable.list.IObservableList)
-	 */
 	@Override
 	public EObject extractObserved(IObservableList observableList) throws DatabindingFailedException {
 		if (IEMFObservable.class.isInstance(observableList)) {
