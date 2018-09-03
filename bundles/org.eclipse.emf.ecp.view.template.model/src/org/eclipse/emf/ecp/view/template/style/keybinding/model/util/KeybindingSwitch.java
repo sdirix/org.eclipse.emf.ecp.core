@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingPack
  *
  * @see org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingPackage
  * @generated
+ * @since 1.18
  */
 public class KeybindingSwitch<T> extends Switch<T> {
 	/**

@@ -46,6 +46,7 @@ public final class AbstractControlSWTRendererUtil {
 	 * @param control the {@link VElement}
 	 * @param viewModelContext the {@link ViewModelContext}
 	 * @return the style bits
+	 * @since 1.18
 	 */
 	public static int getLabelStyleBits(VTViewTemplateProvider viewTemplateProvider, VElement control,
 		ViewModelContext viewModelContext) {
