@@ -12,8 +12,8 @@
   <packaging>rcpttTest</packaging>
 
   <properties>
-    <eclipse-name>photon</eclipse-name>
-	<eclipse-sr>r</eclipse-sr>
+    <eclipse-name>oxygen</eclipse-name>
+	<eclipse-sr>3</eclipse-sr>
   </properties>
   <build>
   	<plugins>
