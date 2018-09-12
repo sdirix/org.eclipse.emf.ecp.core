@@ -9,12 +9,13 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.template.style.tableValidation.model;
+package org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl;
+import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
+import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.junit.Test;
 
 /**
