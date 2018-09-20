@@ -309,6 +309,9 @@
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.richtext</module>
 		
+		<!-- DMR Segment Services -->
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
+
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
