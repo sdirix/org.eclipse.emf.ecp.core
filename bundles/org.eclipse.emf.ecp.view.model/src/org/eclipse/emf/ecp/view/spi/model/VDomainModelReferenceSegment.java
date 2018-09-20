@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Domain Model Reference Segment</b></em>'.
- * 
- * @since 1.18
+ *
+ * @since 1.19
  *        <!-- end-user-doc -->
  *
  *

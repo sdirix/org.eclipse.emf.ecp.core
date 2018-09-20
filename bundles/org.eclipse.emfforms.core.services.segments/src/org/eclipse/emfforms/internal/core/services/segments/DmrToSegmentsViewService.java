@@ -27,8 +27,8 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
  * A view service that converts all {@link VDomainModelReference domain model references} of a view context to
  * {@link VDomainModelReferenceSegment segments}. The generated segments are added to their respective DMRs.
  * <p>
- * <strong>Note:</strong> This behavior can be deactivated by setting the program argument
- * {@link DmrToSegmentsViewServiceFactory#LEGACY_DMR_RESOLVEMENT -enableLegacyDmrResolution}.
+ * <strong>Note:</strong> This behavior can be activated by setting the program argument
+ * {@link DmrToSegmentsViewServiceFactory#SEGMENT_GENERATION enableSegmentGeneration}.
  *
  *
  * @author Lucas Koehler

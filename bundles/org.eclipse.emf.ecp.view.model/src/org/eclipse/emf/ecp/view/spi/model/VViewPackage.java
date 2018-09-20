@@ -199,7 +199,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -243,8 +243,8 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -1152,7 +1152,7 @@ public interface VViewPackage extends EPackage {
 	 * Model Reference Segment</em>}' class.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
@@ -1165,7 +1165,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Domain Model Reference Segment</em>' class.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -1179,7 +1179,7 @@ public interface VViewPackage extends EPackage {
 	 * Reference Segment</em>}' class.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
@@ -1192,7 +1192,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model Feature</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -1204,7 +1204,7 @@ public interface VViewPackage extends EPackage {
 	 * The number of structural features of the '<em>Feature Domain Model Reference Segment</em>' class.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -1605,7 +1605,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Domain Model Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for class '<em>Domain Model Reference Segment</em>'.
@@ -1619,7 +1619,7 @@ public interface VViewPackage extends EPackage {
 	 * <em>Feature Domain Model Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for class '<em>Feature Domain Model Reference Segment</em>'.
@@ -1634,7 +1634,7 @@ public interface VViewPackage extends EPackage {
 	 * Model Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the attribute '<em>Domain Model Feature</em>'.
@@ -1805,7 +1805,7 @@ public interface VViewPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments <em>Segments</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the containment reference list '<em>Segments</em>'.
@@ -2183,7 +2183,7 @@ public interface VViewPackage extends EPackage {
 		 * <em>Domain Model Reference Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 *
-		 * @since 1.18
+		 * @since 1.19
 		 *        <!-- end-user-doc -->
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
@@ -2198,7 +2198,7 @@ public interface VViewPackage extends EPackage {
 		 * Model Reference Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 *
-		 * @since 1.18
+		 * @since 1.19
 		 *        <!-- end-user-doc -->
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
@@ -2211,7 +2211,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model Feature</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 *
-		 * @since 1.18
+		 * @since 1.19
 		 *        <!-- end-user-doc -->
 		 *
 		 * @generated
@@ -2358,7 +2358,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Segments</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 *
-		 * @since 1.18
+		 * @since 1.19
 		 *        <!-- end-user-doc -->
 		 *
 		 * @generated

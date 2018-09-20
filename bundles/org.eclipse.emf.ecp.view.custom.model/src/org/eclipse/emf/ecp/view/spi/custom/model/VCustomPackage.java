@@ -249,8 +249,8 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated

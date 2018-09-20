@@ -474,8 +474,8 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @param object the target of the switch.
@@ -493,8 +493,8 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @param object the target of the switch.

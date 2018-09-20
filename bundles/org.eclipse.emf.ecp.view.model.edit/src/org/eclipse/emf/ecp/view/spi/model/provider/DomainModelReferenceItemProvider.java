@@ -34,8 +34,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference} object.
  * <!-- begin-user-doc -->
- * 
- * @since 1.18
+ *
+ * @since 1.19
  *        <!-- end-user-doc -->
  *
  * @generated

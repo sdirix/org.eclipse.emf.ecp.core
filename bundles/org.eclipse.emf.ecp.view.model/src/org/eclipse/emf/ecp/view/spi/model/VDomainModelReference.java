@@ -67,7 +67,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener {
 	 * there really should be more of a description here...
 	 * </p>
 	 *
-	 * @since 1.18
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 * @return the value of the '<em>Segments</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_Segments()

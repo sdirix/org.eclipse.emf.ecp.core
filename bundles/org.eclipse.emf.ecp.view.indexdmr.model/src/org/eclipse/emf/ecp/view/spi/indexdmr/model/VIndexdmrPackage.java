@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VIndexdmrPackage extends EPackage
-{
+public interface VIndexdmrPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -97,8 +96,8 @@ public interface VIndexdmrPackage extends EPackage
 	/**
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -184,7 +183,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * Returns the meta object for the containment reference '
 	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix DMR</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
 	 *
@@ -244,8 +243,7 @@ public interface VIndexdmrPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '
 		 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl
@@ -262,7 +260,7 @@ public interface VIndexdmrPackage extends EPackage
 		/**
 		 * The meta object literal for the '<em><b>Prefix DMR</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.6
 		 *        <!-- end-user-doc -->
 		 *

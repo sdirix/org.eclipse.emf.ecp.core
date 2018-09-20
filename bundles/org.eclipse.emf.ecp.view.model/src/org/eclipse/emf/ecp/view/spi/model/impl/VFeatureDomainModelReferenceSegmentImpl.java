@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Feature Domain Model Reference Segment</b></em>'.
- * 
- * @since 1.18
+ *
+ * @since 1.19
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:

@@ -89,8 +89,8 @@ public interface VViewFactory extends EFactory {
 	/**
 	 * Returns a new object of class '<em>Feature Domain Model Reference Segment</em>'.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @return a new object of class '<em>Feature Domain Model Reference Segment</em>'.

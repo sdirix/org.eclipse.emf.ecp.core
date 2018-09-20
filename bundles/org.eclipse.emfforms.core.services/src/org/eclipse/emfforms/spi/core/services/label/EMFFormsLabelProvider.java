@@ -48,7 +48,7 @@ public interface EMFFormsLabelProvider {
 	 * @param rootEClass The root {@link EClass} which is used to resolve the given {@link VDomainModelReference}
 	 * @return The display name as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the display name cannot be retrieved
-	 * @since 1.18
+	 * @since 1.19
 	 */
 	IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException;
@@ -83,7 +83,7 @@ public interface EMFFormsLabelProvider {
 	 * @param rootEClass The root {@link EClass} which is used to resolve the given {@link VDomainModelReference}
 	 * @return The description as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the description cannot be retrieved
-	 * @since 1.18
+	 * @since 1.19
 	 */
 	IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException;
