@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.segments.featurepath.test;
 
+import org.eclipse.emfforms.internal.core.services.segments.featurepath.FeaturePathDmrSegmentGenerator_Test;
 import org.eclipse.emfforms.internal.core.services.segments.featurepath.FeatureSegmentConverter_Test;
 import org.eclipse.emfforms.internal.core.services.segments.featurepath.FeatureSegmentExpander_Test;
 import org.eclipse.emfforms.internal.core.services.segments.featurepath.FeatureSegmentStructuralChangeTester_Test;
@@ -25,7 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ FeatureSegmentConverter_Test.class,
+@SuiteClasses({ FeaturePathDmrSegmentGenerator_Test.class, FeatureSegmentConverter_Test.class,
 	FeatureSegmentExpander_Test.class, FeatureSegmentStructuralChangeTester_Test.class })
 public class AllTests {
 

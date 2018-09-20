@@ -193,6 +193,7 @@
 		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
 	
 		<!-- DMR Segment Services -->
+		<module>../../tests/org.eclipse.emfforms.core.services.segments.test</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.segments.featurepath.test</module>
 
 		<!-- Bazaar -->

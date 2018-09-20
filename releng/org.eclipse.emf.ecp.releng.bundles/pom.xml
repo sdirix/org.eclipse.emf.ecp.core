@@ -310,6 +310,7 @@
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.richtext</module>
 		
 		<!-- DMR Segment Services -->
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
 
 		<!-- Annotation attachement -->
