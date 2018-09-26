@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - moved, adjusted comments
  ******************************************************************************/
-package org.eclipse.emfforms.internal.core.services.databinding.index;
+package org.eclipse.emfforms.internal.core.services.segments.index;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;

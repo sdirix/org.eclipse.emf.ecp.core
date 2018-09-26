@@ -312,6 +312,7 @@
 		<!-- DMR Segment Services -->
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.mapping</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.multi</module>
 
