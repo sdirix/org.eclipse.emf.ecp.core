@@ -313,13 +313,15 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.multi</module>
 
-		<!-- Multi Segment -->
+		<!-- Segment Models -->
+		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model.edit</module>
 		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model.edit</module>
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
-		<module>../../bundles/org.eclipse.emfforms.core.services.segments.multi</module>
 
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
