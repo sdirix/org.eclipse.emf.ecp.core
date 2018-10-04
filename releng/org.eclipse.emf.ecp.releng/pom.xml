@@ -56,19 +56,6 @@
 					<name>build-server</name>
 				</property>
 			</activation>
-			<build>
-				<plugins>
-					<!-- Configure build to use the jdk specified in manifest -->
-					<plugin>
-						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>tycho-compiler-plugin</artifactId>
-						<version>${tycho-version}</version>
-						<configuration>
-							<useJDK>BREE</useJDK>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
 		</profile>
 	</profiles>
 
@@ -285,6 +272,7 @@
 				</executions>
 			</plugin>
 
+			<!-- Configure build to use the jdk specified in manifest -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-compiler-plugin</artifactId>
@@ -294,6 +282,7 @@
 					<logEnabled>true</logEnabled>
 					<logDirectory>${project.build.directory}/logfiles</logDirectory>
 					<log>xml</log>
+					<useJDK>BREE</useJDK>
 				</configuration>
 			</plugin>
 		</plugins>
