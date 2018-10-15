@@ -314,6 +314,8 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
 
 		<!-- Multi Segment -->
+		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model.edit</module>
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.segments.multi</module>
