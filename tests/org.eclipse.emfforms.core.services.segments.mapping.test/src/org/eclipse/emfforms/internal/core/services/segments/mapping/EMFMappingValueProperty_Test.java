@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.core.services.databinding.mapping;
+package org.eclipse.emfforms.internal.core.services.segments.mapping;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -31,11 +31,7 @@ import org.junit.Test;
  *
  */
 public class EMFMappingValueProperty_Test {
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.mapping.EMFMappingValueProperty#doGetValue(java.lang.Object)}
-	 * .
-	 */
+
 	@Test
 	public void testDoGetValue() {
 		final C c = TestFactory.eINSTANCE.createC();
@@ -48,11 +44,6 @@ public class EMFMappingValueProperty_Test {
 		assertEquals(a1, mappingValueProperty.doGetValue(c));
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.mapping.EMFMappingValueProperty#doGetValue(java.lang.Object)}
-	 * .
-	 */
 	@Test
 	public void testDoGetValueNoMapEntry() {
 		final C c = TestFactory.eINSTANCE.createC();
@@ -63,11 +54,6 @@ public class EMFMappingValueProperty_Test {
 		assertNull(mappingValueProperty.doGetValue(c));
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.mapping.EMFMappingValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
-	 * .
-	 */
 	@Test
 	public void testDoSetValueObjectReplaceEntry() {
 		final C c = TestFactory.eINSTANCE.createC();
@@ -89,11 +75,6 @@ public class EMFMappingValueProperty_Test {
 		assertEquals(a2, mappingValueProperty.doGetValue(c));
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.mapping.EMFMappingValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
-	 * .
-	 */
 	@Test
 	public void testDoSetValueObjectAddEntry() {
 		final C c = TestFactory.eINSTANCE.createC();

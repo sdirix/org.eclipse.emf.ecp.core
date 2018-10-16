@@ -218,7 +218,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (x: "); //$NON-NLS-1$
 		result.append(x);
 		result.append(", yList: "); //$NON-NLS-1$

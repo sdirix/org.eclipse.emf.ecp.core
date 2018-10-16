@@ -9,15 +9,13 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.core.services.databinding.mapping;
+package org.eclipse.emfforms.internal.core.services.segments.mapping;
 
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 
 /**
- * A checked {@link Exception} that is thrown when a
- * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference VMappingDomainModelReference}
- * should be converted to a property and the referenced map's values are no {@link org.eclipse.emf.ecore.EObject
- * EObjects}.
+ * A checked {@link Exception} that is thrown during data binding when a mapping segment or mapping dmr do not use a
+ * proper map feature.
  *
  * @author Lucas Koehler
  *

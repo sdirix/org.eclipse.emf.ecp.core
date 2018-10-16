@@ -239,6 +239,16 @@ public interface TestPackage extends EPackage {
 	int C__A = 3;
 
 	/**
+	 * The feature id for the '<em><b>EClass To E</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int C__ECLASS_TO_E = 4;
+
+	/**
 	 * The number of structural features of the '<em>C</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -246,7 +256,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int C_FEATURE_COUNT = 4;
+	int C_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl
@@ -472,6 +482,49 @@ public interface TestPackage extends EPackage {
 	int F_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEMapImpl <em>EClass To
+	 * EMap</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEMapImpl
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getEClassToEMap()
+	 * @generated
+	 */
+	int ECLASS_TO_EMAP = 9;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ECLASS_TO_EMAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ECLASS_TO_EMAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>EClass To EMap</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ECLASS_TO_EMAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
 	 * <em>A</em>}'.
 	 * <!-- begin-user-doc -->
@@ -625,6 +678,20 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getC_A();
+
+	/**
+	 * Returns the meta object for the map
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToE <em>EClass To
+	 * E</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the map '<em>EClass To E</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToE()
+	 * @see #getC()
+	 * @generated
+	 */
+	EReference getC_EClassToE();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D
@@ -814,6 +881,43 @@ public interface TestPackage extends EPackage {
 	EReference getF_C();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>EClass To EMap</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>EClass To EMap</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyType="org.eclipse.emf.ecore.EClass"
+	 *        valueType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E"
+	 * @generated
+	 */
+	EClass getEClassToEMap();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getEClassToEMap()
+	 * @generated
+	 */
+	EReference getEClassToEMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getEClassToEMap()
+	 * @generated
+	 */
+	EReference getEClassToEMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -953,6 +1057,15 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference C__A = eINSTANCE.getC_A();
+
+		/**
+		 * The meta object literal for the '<em><b>EClass To E</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference C__ECLASS_TO_E = eINSTANCE.getC_EClassToE();
 
 		/**
 		 * The meta object literal for the
@@ -1109,6 +1222,37 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference F__C = eINSTANCE.getF_C();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEMapImpl <em>EClass
+		 * To EMap</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEMapImpl
+		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getEClassToEMap()
+		 * @generated
+		 */
+		EClass ECLASS_TO_EMAP = eINSTANCE.getEClassToEMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference ECLASS_TO_EMAP__KEY = eINSTANCE.getEClassToEMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference ECLASS_TO_EMAP__VALUE = eINSTANCE.getEClassToEMap_Value();
 
 	}
 

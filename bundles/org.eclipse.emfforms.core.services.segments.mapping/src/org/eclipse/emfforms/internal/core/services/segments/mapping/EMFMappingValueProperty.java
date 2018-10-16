@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - moved/copied here from org.eclipse.emf.ecp.view.mappingdmr.databinding
  ******************************************************************************/
-package org.eclipse.emfforms.internal.core.services.databinding.mapping;
+package org.eclipse.emfforms.internal.core.services.segments.mapping;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;

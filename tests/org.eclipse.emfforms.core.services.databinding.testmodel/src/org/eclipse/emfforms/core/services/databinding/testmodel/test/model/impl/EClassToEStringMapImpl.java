@@ -248,7 +248,7 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
 		result.append(')');

@@ -31,6 +31,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsSegmentResolver;
 import org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeSegmentTester;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -76,6 +77,12 @@ public class FeatureSegmentStructuralChangeTester_ITest {
 		service = bundleContext.getService(serviceReference);
 	}
 
+	@After
+	public void tearDown() {
+		reportServiceRegistration.unregister();
+		segmentResolverRegistration.unregister();
+	}
+
 	@Test
 	public void testServiceType() {
 		assertTrue(FeatureSegmentStructuralChangeTester.class.isInstance(service));
@@ -99,9 +106,6 @@ public class FeatureSegmentStructuralChangeTester_ITest {
 
 		verify(reportService).report(any(AbstractReport.class));
 		verify(segmentResolver).resolveSegment(segment, domain);
-
-		reportServiceRegistration.unregister();
-		segmentResolverRegistration.unregister();
 	}
 
 }
