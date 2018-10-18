@@ -63,4 +63,25 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.emfforms.core.services.segments.index"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.view.indexsegment.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.view.indexsegment.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
