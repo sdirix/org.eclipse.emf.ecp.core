@@ -158,7 +158,7 @@ public class EMFFormsLabelProviderImpl_ITest {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		labelProvider.getDisplayName(domainModelReference);
 
-		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EClass.class));
+		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EObject.class));
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class EMFFormsLabelProviderImpl_ITest {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		labelProvider.getDescription(domainModelReference);
 
-		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EClass.class));
+		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EObject.class));
 	}
 
 	/**

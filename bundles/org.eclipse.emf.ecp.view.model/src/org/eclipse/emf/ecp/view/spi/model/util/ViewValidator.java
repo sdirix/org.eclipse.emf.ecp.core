@@ -281,9 +281,10 @@ public class ViewValidator extends EObjectValidator {
 			return false;
 		}
 
-		// Do not validate feature dmrs witch are contained in another dmr,
+		// Do not validate feature dmrs witch are contained in another dmr or segment,
 		// as normally a specific logic is applied for them
-		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
+		if ((VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
+			|| VDomainModelReferenceSegment.class.isInstance(featurePathDomainModelReference.eContainer()))
 			&& !context.containsKey(ECLASS_KEY)) {
 			return true;
 		}

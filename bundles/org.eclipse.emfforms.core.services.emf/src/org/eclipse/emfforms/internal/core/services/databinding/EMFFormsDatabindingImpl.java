@@ -138,7 +138,6 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		Assert.create(domainModelReference).notNull();
-		Assert.create(rootEClass).notNull();
 
 		final EList<VDomainModelReferenceSegment> segments = domainModelReference.getSegments();
 		if (segments.isEmpty()) {
@@ -148,11 +147,12 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 			return bestConverter.convertToValueProperty(domainModelReference, rootEClass, editingDomain);
 		}
 
+		Assert.create(rootEClass).notNull();
 		return internalGetValueProperty(domainModelReference, rootEClass, editingDomain);
 	}
 
 	/**
-	 * Actual calculation of a value property.
+	 * Actual calculation of a value property using {@link VDomainModelReferenceSegment segments}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired value
 	 * @param rootEClass The root EClass of the rendered form

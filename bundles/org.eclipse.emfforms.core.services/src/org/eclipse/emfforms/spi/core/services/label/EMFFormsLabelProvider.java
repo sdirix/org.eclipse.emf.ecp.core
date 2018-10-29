@@ -30,7 +30,12 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 public interface EMFFormsLabelProvider {
 
 	/**
+	 * <p>
 	 * Returns the display name of the referenced domain object.
+	 * </p>
+	 * <p>
+	 * <strong>Important:</strong> Does not work with DMRs which use segments
+	 * </p>
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the domain object
 	 * @return The display name as an {@link IObservableValue}
@@ -65,8 +70,13 @@ public interface EMFFormsLabelProvider {
 		throws NoLabelFoundException;
 
 	/**
+	 * <p>
 	 * Returns the description of the referenced domain object.
-	 *
+	 * </p>
+	 * <p>
+	 * <strong>Important:</strong> Does not work with DMRs which use segments
+	 * </p>
+	 * 
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the model object
 	 * @return The description as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the description cannot be retrieved

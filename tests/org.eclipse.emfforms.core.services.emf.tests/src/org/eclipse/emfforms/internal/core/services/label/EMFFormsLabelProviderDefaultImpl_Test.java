@@ -13,6 +13,8 @@ package org.eclipse.emfforms.internal.core.services.label;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -146,11 +148,12 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
 		when(itemPropertyDescriptor.getDisplayName(any(Object.class))).thenReturn(expectedResult);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(same(domainModelReference), isNull(EObject.class)))
+			.thenReturn(valueProperty);
 
 		final IObservableValue result = labelProvider.getDisplayName(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference, null);
+		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EObject.class));
 		verify(itemPropertyDescriptor).getDisplayName(any(D.class));
 		assertEquals(expectedResult, result.getValue());
 	}
@@ -297,11 +300,12 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 		when(structuralFeature.getEContainingClass()).thenReturn(eClass);
 		when(structuralFeature.getName()).thenReturn(expectedResult.toLowerCase());
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(same(domainModelReference), isNull(EObject.class)))
+			.thenReturn(valueProperty);
 
 		final IObservableValue result = labelProvider.getDescription(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference, null);
+		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EObject.class));
 		assertEquals(expectedResult, result.getValue());
 	}
 
@@ -322,11 +326,12 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
 		when(itemPropertyDescriptor.getDescription(any(Object.class))).thenReturn(expectedResult);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(same(domainModelReference), isNull(EObject.class)))
+			.thenReturn(valueProperty);
 
 		final IObservableValue result = labelProvider.getDescription(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference, null);
+		verify(databindingService).getValueProperty(same(domainModelReference), isNull(EObject.class));
 		verify(itemPropertyDescriptor).getDescription(any(D.class));
 		assertEquals(expectedResult, result.getValue());
 	}
