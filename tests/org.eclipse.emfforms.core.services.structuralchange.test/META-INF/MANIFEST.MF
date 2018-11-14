@@ -13,3 +13,4 @@ Require-Bundle: org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.
 Import-Package: org.osgi.framework;version="0.0.0"
 Export-Package: org.eclipse.emfforms.core.services.structuralchange.test;version="1.19.0";x-internal:=true,
  org.eclipse.emfforms.internal.core.services.structuralchange;version="1.19.0";x-internal:=true
+Automatic-Module-Name: org.eclipse.emfforms.core.services.structuralchange.test

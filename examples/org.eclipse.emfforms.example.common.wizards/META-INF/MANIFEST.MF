@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.emf.common;bundle-version="[2.13.0,3.0.0)",
  org.eclipse.swt;bundle-version="[3.106.3,4.0.0)"
 Export-Package: org.eclipse.emfforms.internal.example.wizards;version="1.19.0";x-internal:=true,
  org.eclipse.emfforms.spi.example.wizards;version="1.19.0"
+Automatic-Module-Name: org.eclipse.emfforms.example.common.wizards
