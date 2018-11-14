@@ -262,8 +262,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment} instances.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.18
+	 *
+	 * @since 1.19
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
