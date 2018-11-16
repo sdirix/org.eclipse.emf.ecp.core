@@ -208,10 +208,8 @@ public class EMFFormsLabelProviderImpl_ITest {
 	public void testServiceUsageDescriptionTwoParam() throws DatabindingFailedException, NoLabelFoundException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final EObject eObject = mock(EObject.class);
-		final EClass eClass = mock(EClass.class);
-		when(eObject.eClass()).thenReturn(eClass);
 		labelProvider.getDescription(domainModelReference, eObject);
 
-		verify(databindingService).getValueProperty(domainModelReference, eClass);
+		verify(databindingService).getValueProperty(domainModelReference, eObject);
 	}
 }

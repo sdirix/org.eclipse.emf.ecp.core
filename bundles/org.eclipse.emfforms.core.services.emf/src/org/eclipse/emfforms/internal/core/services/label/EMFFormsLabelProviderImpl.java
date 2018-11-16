@@ -328,12 +328,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		} catch (final NoBundleFoundException ex) {
 			return labelProviderDefault.getDescription(domainModelReference, rootEClass);
 		}
-		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
-			.getName(), structuralFeature.getName(), bundle));
-		descriptionKeyObservableMap.put(writableValue,
-			new DescriptionKey(structuralFeature.getEContainingClass().getName(),
-				structuralFeature.getName(), bundle));
-		return writableValue;
+		return createDescriptionObservableValue(structuralFeature, bundle);
 	}
 
 	@Override
@@ -342,7 +337,31 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
-		return getDescription(domainModelReference, rootObject.eClass());
+		IValueProperty valueProperty;
+		try {
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootObject);
+		} catch (final DatabindingFailedException ex) {
+			reportService.report(new DatabindingFailedReport(ex));
+			throw new NoLabelFoundException(ex);
+		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+		Bundle bundle;
+		try {
+			bundle = bundleResolver.getEditBundle(structuralFeature.getEContainingClass());
+		} catch (final NoBundleFoundException ex) {
+			return labelProviderDefault.getDescription(domainModelReference, rootObject);
+		}
+		return createDescriptionObservableValue(structuralFeature, bundle);
+	}
+
+	private IObservableValue createDescriptionObservableValue(final EStructuralFeature structuralFeature,
+		Bundle bundle) {
+		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
+			.getName(), structuralFeature.getName(), bundle));
+		descriptionKeyObservableMap.put(writableValue,
+			new DescriptionKey(structuralFeature.getEContainingClass().getName(),
+				structuralFeature.getName(), bundle));
+		return writableValue;
 	}
 
 	private WritableValue getObservableValue(String value) {

@@ -276,7 +276,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final EObject eObject = mock(EObject.class);
 		final EClass eClass = mock(EClass.class);
 		when(eObject.eClass()).thenReturn(eClass);
-		when(databinding.getValueProperty(domainModelReference, eObject.eClass()))
+		when(databinding.getValueProperty(domainModelReference, eObject))
 			.thenThrow(DatabindingFailedException.class);
 
 		final ReportService reportService = mock(ReportService.class);
@@ -299,7 +299,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(valueProperty.getValueType()).thenReturn(eStructuralFeature);
 
-		when(databinding.getValueProperty(domainModelReference, eObject.eClass())).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, eObject)).thenReturn(valueProperty);
 
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		labelProvider.setEMFFormsLocalizationService(localizationService);
@@ -338,6 +338,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(valueProperty.getValueType()).thenReturn(eStructuralFeature);
 
+		when(databinding.getValueProperty(domainModelReference, eObject)).thenReturn(valueProperty);
 		when(databinding.getValueProperty(domainModelReference, eObject.eClass())).thenReturn(valueProperty);
 
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
