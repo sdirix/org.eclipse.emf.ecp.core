@@ -6,12 +6,13 @@ Bundle-Version: 1.19.0.qualifier
 Bundle-Activator: org.eclipse.emfforms.internal.editor.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.editor;version="1.19.0";x-internal:=true,
-  org.eclipse.emfforms.internal.editor.handlers;version="1.19.0";;x-internal:=true;x-friends:="org.eclipse.emfforms.editor.ecore",
-  org.eclipse.emfforms.internal.editor.toolbaractions;version="1.19.0";;x-internal:=true;x-internal:=true,
-  org.eclipse.emfforms.internal.editor.ui;version="1.19.0";x-friends:="org.eclipse.emfforms.editor.ecore",
-  org.eclipse.emfforms.spi.editor;version="1.19.0",
-  org.eclipse.emfforms.spi.editor.handler;version="1.19.0",
-  org.eclipse.emfforms.spi.editor.helpers;version="1.19.0";;x-friends:="org.eclipse.emfforms.editor.ecore,org.eclipse.emfforms.editor.genmodel"
+ org.eclipse.emfforms.internal.editor.handlers;version="1.19.0";;x-internal:=true;x-friends:="org.eclipse.emfforms.editor.ecore",
+ org.eclipse.emfforms.internal.editor.toolbaractions;version="1.19.0";;x-internal:=true;x-internal:=true,
+ org.eclipse.emfforms.internal.editor.ui;version="1.19.0";x-friends:="org.eclipse.emfforms.editor.ecore",
+ org.eclipse.emfforms.spi.editor;version="1.19.0",
+ org.eclipse.emfforms.spi.editor.handler;version="1.19.0",
+ org.eclipse.emfforms.spi.editor.helpers;version="1.19.0";;x-friends:="org.eclipse.emfforms.editor.ecore,org.eclipse.emfforms.editor.genmodel",
+ org.eclipse.emfforms.spi.editor.messages;version="1.19.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.1.0,4.0.0)",
   org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.edit.ui;bundle-version="[2.10.0,3.0.0)",

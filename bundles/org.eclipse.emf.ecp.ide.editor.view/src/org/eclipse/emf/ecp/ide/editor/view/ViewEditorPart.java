@@ -607,15 +607,15 @@ public class ViewEditorPart extends EditorPart implements
 			MessageDialog
 				.openWarning(
 					parent.getShell(),
-					Messages.ViewEditorPart_LoadedPartyTitle,
-					Messages.ViewEditorPart_LoadedPartyDescription);
+					Messages.ViewEditorPart_LoadedPartlyTitle,
+					Messages.ViewEditorPart_LoadedPartlyDescription);
 		}
 
 		try {
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE
 				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService(),
 					new EMFDeleteServiceImpl());
-			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE);
+			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE); //$NON-NLS-1$
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, viewModelContext);
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(
