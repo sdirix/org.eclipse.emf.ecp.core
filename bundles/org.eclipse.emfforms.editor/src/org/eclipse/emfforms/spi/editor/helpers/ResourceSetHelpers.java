@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.editor.helpers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public final class ResourceSetHelpers {
 	 */
 	@Deprecated
 	public static boolean save(ResourceSet resourceSet) {
-		return save(resourceSet, null);
+		return save(resourceSet, Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 	}
 
 	/**
