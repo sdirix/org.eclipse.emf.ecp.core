@@ -316,6 +316,10 @@
 							<token>\n\t+&lt;buildCommand&gt;\s*&lt;name&gt;net.sf.eclipsecs.core.CheckstyleBuilder&lt;/name&gt;\s*&lt;arguments&gt;\s*&lt;/arguments&gt;\s*&lt;/buildCommand&gt;</token>
 							<value/>
 						</replacement>
+						<replacement>
+							<token>\n\t+&lt;nature&gt;net.sf.eclipsecs.core.CheckstyleNature&lt;/nature&gt;</token>
+							<value />
+						</replacement>
 					</replacements>
 				</configuration>
 			</plugin>
