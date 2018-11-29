@@ -9,5 +9,5 @@ Export-Package: org.eclipse.emf.ecp.emf2web.json.generator.xtend;version="1.19.0
 Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
   com.google.gson;bundle-version="[2.2.0,3.0.0)",
   org.eclipse.emf.ecp.emf2web.json;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.emf2web.json.test

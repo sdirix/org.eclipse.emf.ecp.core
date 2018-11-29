@@ -39,4 +39,4 @@ Service-Component: OSGI-INF/EMFFormsSpreadsheetFormatDescriptionProviderImpl.xml
  OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsIdProviderImpl.xml,
  OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetRendererFactoryImpl.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

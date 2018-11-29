@@ -22,7 +22,7 @@ Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
   org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.ecore.edit;bundle-version="[2.9.0,3.0.0)",
   org.eclipse.emf.edit.ui;bundle-version="[2.10.0,3.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.emfforms.core.services.datatemplate.test
 Import-Package: org.eclipse.swt;version="0.0.0",

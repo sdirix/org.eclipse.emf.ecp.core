@@ -26,4 +26,4 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
   org.eclipse.emf.ecp.view.template.model;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.ecp.view.template.annotation.model.edit;bundle-version="[1.19.0,1.20.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.view.model.integrationtest
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

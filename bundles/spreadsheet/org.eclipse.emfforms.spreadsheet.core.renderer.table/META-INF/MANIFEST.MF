@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.19.0,1.20.0)
   org.eclipse.emfforms.spreadsheet.core.renderer;bundle-version="[1.0.0,1.1.0)",
   org.eclipse.emf.ecp.ui.view;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.ecp.view.template.model;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.table.EMFFormsSpreadsheetTableControlRendererService.xml
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.databinding;version="0.0.0",

@@ -15,4 +15,4 @@ Import-Package: org.osgi.service.component.annotations;version="1.2.0";resolutio
 Automatic-Module-Name: org.eclipse.emf.ecp.view.table.ui.swt.persistedstate
 Service-Component: OSGI-INF/PersistTableStateServiceFactory.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

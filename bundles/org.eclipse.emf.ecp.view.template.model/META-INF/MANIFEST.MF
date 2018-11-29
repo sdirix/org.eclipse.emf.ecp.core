@@ -71,7 +71,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
   org.eclipse.emf.ecp.view.context;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emfforms.core.services;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.ecp.common;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.emf.ecp.view.template.model
 Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.19.0,1.20.0)"

@@ -26,4 +26,4 @@ Import-Package: org.eclipse.core.databinding.observable;version="0.0.0",
 Automatic-Module-Name: org.eclipse.emfforms.spreadsheet.core.renderer
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetContainerRendererService.xml,OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetControlRendererService.xml,OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetElementRendererService.xml,OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetViewRendererService.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

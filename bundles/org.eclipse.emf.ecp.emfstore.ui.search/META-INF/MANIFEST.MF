@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
   org.eclipse.emf.ecp.ui.e3;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.emfstore.client;bundle-version="[1.0.0,2.0.0)",
   org.eclipse.emf.ecp.ui;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.emfstore.ui.search
 Import-Package: org.eclipse.core.commands;version="0.0.0",
   org.eclipse.emf.edit.ui.provider;version="0.0.0",
