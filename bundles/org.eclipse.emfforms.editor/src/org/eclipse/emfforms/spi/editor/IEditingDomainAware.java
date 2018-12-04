@@ -15,9 +15,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * The GenericEditor sets the current EditingDomain.
- * 
+ *
  * @author Eugen Neufeld
- * @since 1.18
+ * @since 1.19
  *
  */
 public interface IEditingDomainAware {

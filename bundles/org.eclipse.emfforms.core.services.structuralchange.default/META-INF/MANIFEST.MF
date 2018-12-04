@@ -7,7 +7,7 @@ Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.core.services.structuralchange.defaultheuristic;version="1.7.0";x-friends:="org.eclipse.emfforms.core.services.structuralchange.table"
 Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emf.ecp.common;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/StructuralChangeTesterDefault.xml
 Bundle-ActivationPolicy: lazy
 Import-Package: org.osgi.service.component.annotations;version="0.0.0"

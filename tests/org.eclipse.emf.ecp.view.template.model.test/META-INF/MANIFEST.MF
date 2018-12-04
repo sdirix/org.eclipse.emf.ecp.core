@@ -24,6 +24,6 @@ Export-Package: org.eclipse.emf.ecp.view.template.model.test;version="1.19.0";x-
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
   org.eclipse.emf.ecp.view.template.annotation.model;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emfforms.view.annotation.model;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.view.template.model.test
 Import-Package: org.eclipse.emf.emfforms.spi.view.controlgrid.model;version="[1.19.0,1.20.0)"

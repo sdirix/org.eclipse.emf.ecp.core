@@ -8,12 +8,12 @@
 <repository location="http://download.eclipse.org/ecp/releases/releases_target_119"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.e4.rcp.feature.group" version="1.6.200.v20180906-1121"/>
-<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.15.0.v20180823-0905"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.15.0.v20180905-1732"/>
-<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="3.6.0.20180912-0820"/>
-<unit id="org.eclipse.rap.feature.feature.group" version="3.6.0.20180905-0859"/>
-<repository location="http://download.eclipse.org/releases/2018-09"/>
+<unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.rap.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rap.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/2018-12"/>
 </location>
 </locations>
 </target>

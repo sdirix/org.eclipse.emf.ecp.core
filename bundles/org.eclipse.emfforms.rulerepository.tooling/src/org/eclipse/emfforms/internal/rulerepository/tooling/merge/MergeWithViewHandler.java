@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.rulerepository.tooling.merge;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository;
@@ -260,10 +262,8 @@ public class MergeWithViewHandler extends AbstractHandler {
 				resource.getContents().add(mergedView);
 
 				// Save the contents of the resource to the file system.
-				// final Map<Object, Object> options = new HashMap<Object, Object>();
-				// options.put(XMLResource.OPTION_ENCODING, "UTF-8");
 				try {
-					resource.save(null);
+					resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 				} catch (final IOException ex) {
 					ErrorDialog.openError(activeShell, "Error", //$NON-NLS-1$
 						ex.getMessage(),

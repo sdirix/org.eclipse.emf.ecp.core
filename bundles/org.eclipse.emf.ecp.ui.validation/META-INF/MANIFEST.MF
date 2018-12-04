@@ -19,4 +19,4 @@ Import-Package: org.eclipse.emf.edit.ui.provider;version="0.0.0",
 Automatic-Module-Name: org.eclipse.emf.ecp.ui.validation
 Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

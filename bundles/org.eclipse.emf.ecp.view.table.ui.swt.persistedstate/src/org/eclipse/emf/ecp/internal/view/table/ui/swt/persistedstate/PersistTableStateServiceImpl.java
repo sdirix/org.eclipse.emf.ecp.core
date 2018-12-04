@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.internal.view.table.ui.swt.persistedstate;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.spi.view.table.ui.swt.persistedstate.PersistTableStateService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
@@ -208,7 +210,7 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 			}
 		}
 		try {
-			resource.save(null);
+			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 		} catch (final IOException ex) {
 			reportService.report(new AbstractReport(ex));
 		}

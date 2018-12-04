@@ -13,7 +13,7 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
   org.eclipse.emf.emfstore.client;bundle-version="[1.9.0,1.10.0)",
   org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.equinox.ds
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.core.rap.concurrent.test
 Import-Package: org.eclipse.core.runtime;version="0.0.0",
   org.eclipse.emf.ecp.core;version="[1.19.0,1.20.0)",

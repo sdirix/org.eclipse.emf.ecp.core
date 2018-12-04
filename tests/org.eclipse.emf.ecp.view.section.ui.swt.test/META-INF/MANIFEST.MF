@@ -6,7 +6,7 @@ Bundle-Version: 1.19.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emf.ecp.view.section.ui.swt;bundle-version="[1.19.0,1.20.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.view.section.ui.swt.test
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.0,2.0.0)",
  org.objenesis;bundle-version="[1.0.0,2.0.0)",

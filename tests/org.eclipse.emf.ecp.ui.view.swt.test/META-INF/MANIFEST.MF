@@ -17,5 +17,5 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
   org.eclipse.emfforms.core.services.structuralchange.default;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.19.0,1.20.0)",
   org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.ui.view.swt.test

@@ -47,4 +47,4 @@ Import-Package: javax.inject;version="1.0.0",
 Automatic-Module-Name: org.eclipse.emf.ecp.view.core.swt
 Service-Component: OSGI-INF/booleanControlService.xml,OSGI-INF/dateTimeControlService.xml,OSGI-INF/enumControlService.xml,OSGI-INF/numberControlService.xml,OSGI-INF/textControlService.xml,OSGI-INF/xmlDateControlService.xml,OSGI-INF/viewRendererService.xml,OSGI-INF/linkControlService.xml,OSGI-INF/enumLiteralFilteredControlService.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

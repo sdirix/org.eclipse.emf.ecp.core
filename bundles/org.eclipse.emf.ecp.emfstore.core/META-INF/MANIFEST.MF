@@ -20,4 +20,4 @@ Import-Package: org.eclipse.emfforms.common;version="[1.19.0,1.20.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.emfstore.core
 Service-Component: OSGI-INF/esWorkspaceProviderProvider.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

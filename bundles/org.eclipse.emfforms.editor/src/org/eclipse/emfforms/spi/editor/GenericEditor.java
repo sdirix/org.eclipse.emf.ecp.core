@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -559,7 +558,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @since 1.19
 	 */
 	protected Map<Object, Object> getResourceSaveOptions() {
-		return Collections.emptyMap();
+		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
+		return saveOptions;
 	}
 
 	@Override

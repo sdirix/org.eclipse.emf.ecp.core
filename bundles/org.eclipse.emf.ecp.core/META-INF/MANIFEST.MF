@@ -29,4 +29,4 @@ Import-Package: org.eclipse.emfforms.common;version="[1.19.0,1.20.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.core
 Service-Component: OSGI-INF/ecpProviderRegistry.xml,OSGI-INF/ecpRepositoryManager.xml,OSGI-INF/ecpProjectManager.xml,OSGI-INF/ecpObserverBus.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

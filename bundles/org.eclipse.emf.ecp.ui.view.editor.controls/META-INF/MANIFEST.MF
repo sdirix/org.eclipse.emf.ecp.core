@@ -60,4 +60,4 @@ Service-Component: OSGI-INF/ControlRootEClassControl2SWTRendererService.xml,
  OSGI-INF/ColumnEnablementConfigurationDMRRendererService.xml,
  OSGI-INF/org.eclipse.emf.ecp.view.internal.editor.controls.EcorePathsRendererService.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

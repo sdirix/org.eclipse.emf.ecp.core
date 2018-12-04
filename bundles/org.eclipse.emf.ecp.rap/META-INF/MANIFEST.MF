@@ -9,6 +9,6 @@ Export-Package: org.eclipse.emf.ecp.rap;version="1.19.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.ui;bundle-version="[1.19.0,1.20.0)",
   org.eclipse.core.runtime;bundle-version="3.8.0",
   org.eclipse.rap.ui;bundle-version="2.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.rap
 Bundle-ActivationPolicy: lazy

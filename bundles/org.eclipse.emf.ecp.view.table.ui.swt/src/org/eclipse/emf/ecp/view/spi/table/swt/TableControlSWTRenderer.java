@@ -12,7 +12,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -1107,7 +1106,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		Image image = null;
 		if (imagePath != null && !imagePath.isEmpty()) {
 			try {
-				image = getImage(new File(imagePath).toURI().toURL());
+				image = getImage(new URL(imagePath));
 			} catch (final MalformedURLException ex) {
 				getReportService().report(new AbstractReport(ex));
 			}
