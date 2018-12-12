@@ -1592,7 +1592,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param right the second object of the comparison
 	 * @param propertyIndex index of the selection column. the index is aligned with the index of the associated column
 	 *            domain model reference
-	 * @param direction {@link SWT#NONE}, {@link SWT#UP} or {@link SWT#DOWN} according to the indication displayed at
+	 * @param direction 0 (no sorting = insertion order := {@link SWT#NONE}), 1 (ascending := {@link SWT#DOWN}) or 2
+	 *            (descending := {@link SWT#UP}) according to the indication displayed at
 	 *            the table column.
 	 * @return a negative number if the first element is less than the
 	 *         second element; the value <code>0</code> if the first element is
@@ -2181,9 +2182,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			case 0:
 				return SWT.NONE;
 			case 1:
-				return SWT.UP;
+				return SWT.DOWN; // ascending
 			case 2:
-				return SWT.DOWN;
+				return SWT.UP; // descending
 			default:
 				return SWT.NONE;
 			}
