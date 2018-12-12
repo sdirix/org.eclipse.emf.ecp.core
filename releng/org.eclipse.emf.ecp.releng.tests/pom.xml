@@ -110,6 +110,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.generator.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.preview.common.test</module>		
 		
