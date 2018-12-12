@@ -1600,6 +1600,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *         element is greater than the second element
 	 * @since 1.8
 	 */
+	@SuppressWarnings("unchecked")
 	protected int compare(Viewer viewer, Object left, Object right, int direction, int propertyIndex) {
 		if (direction == 0) {
 			return 0;
@@ -1626,7 +1627,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		} else if (rightValue == null) {
 			rc = -1;
 		} else {
-			rc = leftValue.toString().compareTo(rightValue.toString());
+			if (leftValue instanceof Comparable && leftValue.getClass().isInstance(rightValue)) {
+				rc = Comparable.class.cast(leftValue).compareTo(rightValue);
+			} else {
+				rc = leftValue.toString().compareTo(rightValue.toString());
+			}
 		}
 		// If descending order, flip the direction
 		if (direction == 2) {
