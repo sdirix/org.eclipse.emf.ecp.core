@@ -43,6 +43,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -111,6 +112,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -471,21 +473,21 @@ public class SWTTable_PTest {
 	public void testTableSorting() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		// domain
-		((EClass) domainElement).getESuperTypes().clear();
-		final EClass class1 = createEClass("a", "b");
-		final EClass class2 = createEClass("b", "c");
-		final EClass class3 = createEClass("c", "a");
-		((EClass) domainElement).getESuperTypes().add(class1);
-		((EClass) domainElement).getESuperTypes().add(class2);
-		((EClass) domainElement).getESuperTypes().add(class3);
+		((EClass) domainElement).getEStructuralFeatures().clear();
+		final EAttribute attribute1 = createEAttribute("a", EcorePackage.Literals.ESTRING, 0, 2);
+		final EAttribute attribute2 = createEAttribute("b", EcorePackage.Literals.ESTRING, 0, 11);
+		final EAttribute attribute3 = createEAttribute("c", EcorePackage.Literals.ESTRING, 0, 1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute2);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute3);
 
 		// table control
 		final VTableControl tableControl = TableTestUtil.createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
-		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_EAttributes());
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
 		tableDMR.getColumnDomainModelReferences().add(
-			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+			createDMR(EcorePackage.eINSTANCE.getETypedElement_UpperBound()));
 
 		// render
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(tableControl,
@@ -496,58 +498,64 @@ public class SWTTable_PTest {
 			fail("No control was rendered");
 		}
 		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
 
 		// column 0 is validation column
 
 		// select column 1
-		// up
+		// ascending
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
-		// down
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.DOWN, table.getSortDirection()); // SWT.DOWN := ascending sorting
+		// descending
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class2, class1);
+		assertTableItemOrder(table, attribute3, attribute2, attribute1);
+		assertEquals(SWT.UP, table.getSortDirection()); // SWT.UP := descending sorting
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.NONE, table.getSortDirection());
 
 		// select column 2
-		// up
+		// ascending
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class1, class2);
-		// down
+		assertTableItemOrder(table, attribute3, attribute1, attribute2);
+		assertEquals(SWT.DOWN, table.getSortDirection()); // SWT.DOWN := ascending sorting
+		// descending
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class2, class1, class3);
+		assertTableItemOrder(table, attribute2, attribute1, attribute3);
+		assertEquals(SWT.UP, table.getSortDirection()); // SWT.UP := descending sorting
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.NONE, table.getSortDirection());
 	}
 
 	@Test
 	public void testTableSortingWithCellEditor() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		// domain
-		((EClass) domainElement).getESuperTypes().clear();
-		final EClass class1 = createEClass("a", "b");
-		final EClass class2 = createEClass("b", "c");
-		final EClass class3 = createEClass("c", "a");
-		((EClass) domainElement).getESuperTypes().add(class1);
-		((EClass) domainElement).getESuperTypes().add(class2);
-		((EClass) domainElement).getESuperTypes().add(class3);
+		((EClass) domainElement).getEStructuralFeatures().clear();
+		final EAttribute attribute1 = createEAttribute("a", EcorePackage.Literals.ESTRING, 0, 2);
+		final EAttribute attribute2 = createEAttribute("b", EcorePackage.Literals.ESTRING, 0, 11);
+		final EAttribute attribute3 = createEAttribute("c", EcorePackage.Literals.ESTRING, 0, 1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute2);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute3);
 
 		// table control
 		final VTableControl tableControl = TableTestUtil.createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
-		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_EAttributes());
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
 		tableDMR.getColumnDomainModelReferences().add(
-			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+			createDMR(EcorePackage.eINSTANCE.getETypedElement_UpperBound()));
 
 		// render
 		final TableControlSWTRenderer tableRenderer = createRendererInstanceWithCustomCellEditor(tableControl);
@@ -557,37 +565,43 @@ public class SWTTable_PTest {
 			fail("No control was rendered");
 		}
 		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
 
 		// column 0 is validation column
 
-		// select column 1
-		// up
+		// select column 1; for this the sort orders are inverted due to the custom cell editor
+		// ascending configured -> results in descending sorting
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class2, class1);
-		// down
+		assertTableItemOrder(table, attribute3, attribute2, attribute1);
+		assertEquals(SWT.DOWN, table.getSortDirection()); // SWT.DOWN := ascending sorting
+		// descending configured -> results in ascending sorting
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.UP, table.getSortDirection()); // SWT.UP := descending sorting
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.NONE, table.getSortDirection());
 
-		// select column 2
-		// up
+		// select column 2; no custom cell editor registered => should sort normally
+		// ascending
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class1, class2);
-		// down
+		assertTableItemOrder(table, attribute3, attribute1, attribute2);
+		assertEquals(SWT.DOWN, table.getSortDirection()); // SWT.DOWN := ascending sorting
+		// descending
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class2, class1, class3);
+		assertTableItemOrder(table, attribute2, attribute1, attribute3);
+		assertEquals(SWT.UP, table.getSortDirection()); // SWT.UP := descending sorting
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.NONE, table.getSortDirection());
 	}
 
 	@Test
@@ -998,6 +1012,15 @@ public class SWTTable_PTest {
 		clazz.setName(name);
 		clazz.setInstanceClassName(instanceClassName);
 		return clazz;
+	}
+
+	private static EAttribute createEAttribute(String name, EClassifier classifier, int lowerBound, int upperBound) {
+		final EAttribute attribute = EcoreFactory.eINSTANCE.createEAttribute();
+		attribute.setName(name);
+		attribute.setEType(classifier);
+		attribute.setLowerBound(lowerBound);
+		attribute.setUpperBound(upperBound);
+		return attribute;
 	}
 
 	private static VFeaturePathDomainModelReference createDMR(EAttribute attribute, EReference... refs) {
