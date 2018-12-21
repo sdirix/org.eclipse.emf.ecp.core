@@ -76,6 +76,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -88,6 +89,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.action.AddRowAction;
 import org.eclipse.emf.ecp.view.spi.table.swt.action.DuplicateRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.MoveRowDownAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.MoveRowUpAction;
 import org.eclipse.emf.ecp.view.spi.table.swt.action.RemoveRowAction;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
@@ -117,6 +120,8 @@ import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentFactory;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -634,6 +639,50 @@ public class SWTTable_PTest {
 		assertFalse(removeRowButton.isPresent());
 		assertFalse(duplicateRowButton.isPresent());
 
+	}
+
+	@Test
+	public void testTable_unchangeableFeature_doNotRenderButtons()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model, we need a feature that is unchangeable
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference tableDmr = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		final VMultiDomainModelReferenceSegment segment = VMultisegmentFactory.eINSTANCE
+			.createMultiDomainModelReferenceSegment();
+		segment.setDomainModelFeature("eReferences");
+		dmr.getSegments().add(segment);
+		tableDmr.setDomainModelReference(dmr);
+		final VFeaturePathDomainModelReference columnDmr = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		final VFeatureDomainModelReferenceSegment columnSegment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		columnDmr.getSegments().add(columnSegment);
+		segment.getChildDomainModelReferences().add(columnDmr);
+		tableControl.setDomainModelReference(tableDmr);
+		tableControl.setDuplicateDisabled(false);
+		tableControl.setMoveUpDownDisabled(false);
+		tableControl.setAddRemoveDisabled(false);
+
+		shell.open();
+		final RendererResult result = SWTViewTestHelper.renderControl(tableControl, domainElement, shell);
+		assertTrue(result.getControl().isPresent() && result.getControl().get() instanceof Composite);
+
+		final TableControlSWTRenderer swtRenderer = TableControlSWTRenderer.class.cast(result.getRenderer());
+
+		final Optional<Control> addRowButton = swtRenderer.getControlForAction(AddRowAction.ACTION_ID);
+		final Optional<Control> removeRowButton = swtRenderer.getControlForAction(RemoveRowAction.ACTION_ID);
+		final Optional<Control> duplicateRowButton = swtRenderer.getControlForAction(DuplicateRowAction.ACTION_ID);
+		final Optional<Control> moveRowUpButton = swtRenderer.getControlForAction(MoveRowUpAction.ACTION_ID);
+		final Optional<Control> moveRowDownButton = swtRenderer.getControlForAction(MoveRowDownAction.ACTION_ID);
+
+		// If the feature is unchangeable, the buttons that allow to change the feature must not be rendered
+		assertFalse(addRowButton.isPresent());
+		assertFalse(removeRowButton.isPresent());
+		assertFalse(duplicateRowButton.isPresent());
+		assertFalse(moveRowUpButton.isPresent());
+		assertFalse(moveRowDownButton.isPresent());
 	}
 
 	@Test

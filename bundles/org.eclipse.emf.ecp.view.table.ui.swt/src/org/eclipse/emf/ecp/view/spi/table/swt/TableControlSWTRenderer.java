@@ -1573,13 +1573,28 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyEnable() {
-		if (tableViewerComposite != null && tableViewerComposite.getActionBar().isPresent()) {
-			tableViewerComposite.getActionBar().get().updateActionBar();
-		}
+		updateActionBar();
 	}
 
 	@Override
 	protected void applyReadOnly() {
+		updateActionBar();
+	}
+
+	@Override
+	protected void applyUnchangeableFeature() {
+		getVElement().setAddRemoveDisabled(true);
+		getVElement().setDuplicateDisabled(true);
+		getVElement().setMoveUpDownDisabled(true);
+		updateActionBar();
+	}
+
+	/**
+	 * Update this table control's action bar if it is present.
+	 *
+	 * @since 1.20
+	 */
+	protected void updateActionBar() {
 		if (tableViewerComposite != null && tableViewerComposite.getActionBar().isPresent()) {
 			tableViewerComposite.getActionBar().get().updateActionBar();
 		}

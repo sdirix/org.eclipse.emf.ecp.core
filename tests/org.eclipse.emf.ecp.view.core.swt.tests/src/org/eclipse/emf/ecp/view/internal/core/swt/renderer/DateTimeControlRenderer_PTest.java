@@ -340,7 +340,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 	@SuppressWarnings({ "rawtypes" })
 	private DateTime[] setUpDatabindingTest(final IObservableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		mockDatabindingIsUnsettable();
+		mockDatabindingIsSettableAndChangeable();
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				mockedObservable);

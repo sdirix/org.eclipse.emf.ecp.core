@@ -39,6 +39,7 @@ import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.EMFProperties;
@@ -191,6 +192,15 @@ public class MultiReferenceRenderer_PTest {
 			}
 		});
 		when(viewContext.getService(EMFFormsLocalizationService.class)).thenReturn(l10n);
+
+		// mock databinding to return a value property with changeable structural feature.
+		// Necessary due to the implementation of Bug 536250
+		final EStructuralFeature changeableFeature = mock(EStructuralFeature.class);
+		when(changeableFeature.isChangeable()).thenReturn(true);
+		final IValueProperty<?, ?> valueProperty = mock(IValueProperty.class);
+		when(valueProperty.getValueType()).thenReturn(changeableFeature);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(valueProperty);
 
 		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
 			labelProvider, templateProvider, imageRegistryService, l10n) {

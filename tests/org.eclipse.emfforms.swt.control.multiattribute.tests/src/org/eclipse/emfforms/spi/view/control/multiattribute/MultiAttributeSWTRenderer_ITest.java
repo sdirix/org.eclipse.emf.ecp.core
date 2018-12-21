@@ -21,6 +21,8 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.Serializable;
@@ -30,6 +32,7 @@ import java.util.Set;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
@@ -38,6 +41,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -101,7 +105,7 @@ public class MultiAttributeSWTRenderer_ITest {
 	private ImageRegistryService imageRegistryService;
 
 	@Before
-	public void before() throws NoLabelFoundException {
+	public void before() throws NoLabelFoundException, DatabindingFailedException {
 		realm = new DefaultRealm();
 		shell = new Shell();
 		GridLayoutFactory.fillDefaults().applyTo(shell);
@@ -114,6 +118,15 @@ public class MultiAttributeSWTRenderer_ITest {
 		vtViewTemplateProvider = Mockito.mock(VTViewTemplateProvider.class);
 
 		imageRegistryService = Mockito.mock(ImageRegistryService.class);
+
+		// mock databinding to return a value property with changeable structural feature.
+		// Necessary due to the implementation of Bug 536250
+		final EStructuralFeature changeableFeature = mock(EStructuralFeature.class);
+		when(changeableFeature.isChangeable()).thenReturn(true);
+		final IValueProperty<?, ?> valueProperty = mock(IValueProperty.class);
+		when(valueProperty.getValueType()).thenReturn(changeableFeature);
+		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(valueProperty);
 
 		final IObservableValue<Serializable> displayName = Observables.constantObservableValue(
 			"Display Name", //$NON-NLS-1$
