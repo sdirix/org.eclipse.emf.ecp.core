@@ -214,7 +214,28 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @return true if the 'AddExisting' button is shown, false otherwise
 	 */
 	protected boolean showAddExistingButton() {
-		return true;
+		EReference eReference = null;
+		try {
+			eReference = (EReference) getModelValue().getValueType();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex));
+		}
+
+		if (eReference != null) {
+			// Always show the add existing button for cross references
+			if (!eReference.isContainment()) {
+				return true;
+			}
+
+			VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
+				getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
+			if (referenceStyle == null) {
+				referenceStyle = getDefaultReferenceStyle();
+			}
+			return referenceStyle.isShowLinkButtonForContainmentReferences();
+		}
+
+		return false;
 	}
 
 	/**

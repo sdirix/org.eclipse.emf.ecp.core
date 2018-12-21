@@ -782,6 +782,79 @@ public class MultiReferenceRenderer_PTest {
 		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
 	}
 
+	/**
+	 * For a cross ref the 'link' button must still be shown even if the reference style property is set to false.
+	 */
+	@Test
+	public void linkButton_crossRefReferenceStyleFalse() {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Composite rendered = createFanVisitedTournaments();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Tournament")); //$NON-NLS-1$
+		final Button createButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Tournament")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+	}
+
+	/**
+	 * By default, the 'link new' button must be shown for containment references (legacy behavior).
+	 */
+	@Test
+	public void linkButton_containmentRefNoReferenceStyle() {
+		final Composite rendered = createLeaguePlayersTable().getParent().getParent();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Player")); //$NON-NLS-1$
+		final Button createButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+	}
+
+	@Test
+	public void linkButton_containmentRefReferenceStyleTrue() {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(true);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Composite rendered = createLeaguePlayersTable().getParent().getParent();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Player")); //$NON-NLS-1$
+		final Button createButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+	}
+
+	@Test
+	public void linkButton_containmentRefReferenceStyleFalse() {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Composite rendered = createLeaguePlayersTable().getParent().getParent();
+		final Button createButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$ NON-NLS-1$
+
+		try {
+			SWTTestUtil.findControl(rendered, 2, Button.class);
+			fail(
+				"There must not be a third button for a containment reference with disabled 'link' button."); //$NON-NLS-1$
+		} catch (final NoSuchElementException ex) {
+			// This is what we expect => Test is successful
+			// Cannot use expected in @Test annotation because the test must not succeed if the 'create and link' or the
+			// delete button are not found.
+		}
+	}
+
 	public void compare() {
 		// final MultiReferenceSWTRenderer multi = new MultiReferenceSWTRenderer(mock(VControl.class),
 		// mock(ViewModelContext.class), mock(ReportService.class), mock(EMFFormsDatabinding.class),

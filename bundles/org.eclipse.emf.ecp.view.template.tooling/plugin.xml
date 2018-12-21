@@ -82,4 +82,7 @@
       </renderer>
    </extension>
 
+   <extension point="org.eclipse.emf.ecp.view.template">
+      <viewTemplate xmi="viewmodel/templateEditor.template"/>
+    </extension>
 </plugin>
