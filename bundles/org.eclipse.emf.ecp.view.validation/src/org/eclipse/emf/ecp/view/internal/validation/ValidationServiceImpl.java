@@ -64,6 +64,7 @@ import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
+import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -305,7 +306,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (notifier == context.getDomainModel()) {
-				validate(getAllEObjectsToValidate());
+				validate(getAllEObjectsToValidate(context));
 			}
 		}
 
@@ -461,12 +462,32 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return result;
 	}
 
-	private Collection<EObject> getAllEObjectsToValidate() {
-		return getAllEObjectsToValidate(controlMapper);
+	private Collection<EObject> getAllEObjectsToValidate(ViewModelContext context) {
+		return getAllEObjectsToValidate(context, controlMapper);
 	}
 
-	private static Collection<EObject> getAllEObjectsToValidate(EMFFormsSettingToControlMapper controlMapper) {
-		return controlMapper.getEObjectsWithSettings();
+	private static Collection<EObject> getAllEObjectsToValidate(ViewModelContext context,
+		EMFFormsSettingToControlMapper controlMapper) {
+
+		if (context.getParentContext() == null || !(controlMapper instanceof SubControlMapper)) {
+			// Easy: validate the whole model
+			return controlMapper.getEObjectsWithSettings();
+		}
+
+		final SubControlMapper subMapper = (SubControlMapper) controlMapper;
+		final Collection<EObject> result = subMapper.getEObjectsWithSettings(context.getViewModel());
+
+		// And all container objects that have settings
+		for (ViewModelContext parent = context.getParentContext(); parent != null; parent = parent
+			.getParentContext()) {
+
+			final EObject parentObject = parent.getDomainModel();
+			if (controlMapper.hasControlsFor(parentObject)) {
+				result.add(parentObject);
+			}
+		}
+
+		return result;
 	}
 
 	@Override
@@ -692,8 +713,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.addValidator(validationProvider);
-		if (revalidate) {
-			validate(getAllEObjectsToValidate());
+		if (revalidate && context != null) {
+			validate(getAllEObjectsToValidate(context));
 		}
 	}
 
@@ -705,8 +726,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.removeValidator(validationProvider);
-		if (revalidate) {
-			validate(getAllEObjectsToValidate());
+		if (revalidate && context != null) {
+			validate(getAllEObjectsToValidate(context));
 		}
 	}
 
@@ -745,7 +766,12 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
-		validate(getAllEObjectsToValidate());
+		// We are getting this from a parent content that is a view-model context, so the
+		// child really ought to be one, also
+		if (childContext instanceof ViewModelContext) {
+			validate(getAllEObjectsToValidate((ViewModelContext) childContext));
+		}
+
 		childContext.registerViewChangeListener(viewChangeListener);
 	}
 
@@ -758,7 +784,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void contextInitialised() {
 		initialized = true;
-		validate(getAllEObjectsToValidate());
+		validate(getAllEObjectsToValidate(context));
 	}
 
 	@Override
