@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * David Soto Setzke - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 543348
  ******************************************************************************/
 package org.eclipse.emfforms.spi.view.control.multiattribute;
 
@@ -595,7 +596,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Object getValueForNewRow(final EAttribute attribute) {
 		try {
-			Object defaultValue = attribute.getEType().getDefaultValue();
+			Object defaultValue = attribute.getDefaultValue();
+			if (defaultValue == null || !attribute.getEType().isInstance(defaultValue)) {
+				// Use a singular default value, but not a multiple value if that's
+				// what is specified in the model, because we shouldn't add more than
+				// one value
+				defaultValue = attribute.getEType().getDefaultValue();
+			}
 			if (defaultValue == null) {
 				defaultValue = attribute.getEType().getInstanceClass().getConstructor().newInstance();
 			}
