@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,27 +8,45 @@
  *
  * Contributors:
  * lucas - initial API and implementation
+ * Christian W. Damus - bug 543376
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.editor.view;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.Iterator;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.test.common.swt.SWTTestUtil;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.internal.ErrorEditorPart;
+import org.eclipse.ui.part.EditorActionBarContributor;
 import org.junit.After;
 import org.junit.Test;
 
@@ -40,6 +58,8 @@ import org.junit.Test;
  */
 @SuppressWarnings("restriction")
 public class ViewEditorPart_PTest {
+
+	private static final String USER_VIEW_MODEL = "View-WellFormed.view";
 
 	@Test
 	public void openView_NoRootEClass() {
@@ -67,6 +87,68 @@ public class ViewEditorPart_PTest {
 
 		final ErrorEditorPart error = openError("View-RootEClassNotExisting.view");
 		assertErrorMessage(error, expectedErrorMessage);
+	}
+
+	@Test
+	public void getEditingDomain() {
+		final IEditorPart editor = open(USER_VIEW_MODEL, IEditorPart.class);
+		assertThat("Editor does not provide an editing domain", editor, instanceOf(IEditingDomainProvider.class));
+		final IEditingDomainProvider provider = (IEditingDomainProvider) editor;
+		assertThat("No editing domain provided", provider.getEditingDomain(), notNullValue());
+	}
+
+	@Test
+	public void selectionTrackingAndUndo() {
+		final IEditorPart editor = open(USER_VIEW_MODEL, IEditorPart.class);
+		assumeThat("Editor does not provide an editing domain", editor, instanceOf(IEditingDomainProvider.class));
+		final IEditingDomainProvider provider = (IEditingDomainProvider) editor;
+		assumeThat("No editing domain provided", provider.getEditingDomain(), notNullValue());
+
+		final ISelectionProvider selectionProvider = editor.getSite().getSelectionProvider();
+		assertThat("No selection provider for the editor site", selectionProvider, notNullValue());
+
+		final EditorActionBarContributor contributor = (EditorActionBarContributor) editor.getEditorSite()
+			.getActionBarContributor();
+		final IAction delete = contributor.getActionBars().getGlobalActionHandler(ActionFactory.DELETE.getId());
+		final IAction undo = contributor.getActionBars().getGlobalActionHandler(ActionFactory.UNDO.getId());
+
+		// Find a control to select
+		VControl control = null;
+		for (final Iterator<?> iter = provider.getEditingDomain().getResourceSet().getAllContents(); control == null
+			&& iter.hasNext();) {
+			final Object next = iter.next();
+			if (next instanceof VControl) {
+				control = (VControl) next;
+			}
+		}
+
+		assumeThat("Could not find a control in the view model", control, notNullValue());
+
+		selectionProvider.setSelection(new StructuredSelection(control));
+
+		final ISelection selection = selectionProvider.getSelection();
+		assertThat(selection, instanceOf(IStructuredSelection.class));
+		assertThat("Control not selected", ((IStructuredSelection) selection).getFirstElement(), is(control));
+
+		// Action enablement updates are deferred
+		SWTTestUtil.waitForUIThread();
+
+		// Delete the selected control
+		assertThat("Delete command not enabled", delete.isEnabled(), is(true));
+		delete.run();
+
+		assertThat("Control not deleted", control.eContainer(), nullValue());
+		assertThat("Editor not dirty", editor.isDirty(), is(true));
+
+		// Action enablement updates are deferred
+		SWTTestUtil.waitForUIThread();
+
+		// Undo the delete
+		assertThat("Undo command not enabled", undo.isEnabled(), is(true));
+		undo.run();
+
+		assertThat("Deletion not undone", control.eContainer(), notNullValue());
+		assertThat("Editor still dirty", editor.isDirty(), is(false));
 	}
 
 	@After
