@@ -16,6 +16,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,6 +25,7 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.EObjectObservableValue;
@@ -42,6 +45,8 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPTableEditingSupport;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPTableEditingSupport.EditingState;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -57,6 +62,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.viewers.TableViewer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -233,6 +239,74 @@ public class TableControlSWTRenderer_ITest {
 
 		assertValidationCell(gridDescription.getGrid().get(0));
 		assertMainCell(gridDescription.getGrid().get(1));
+	}
+
+	@Test
+	public void isUpdateNeeded_BothNull_ReturnFalse() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		final IObservableValue<?> target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn(null);
+		final IObservableValue<?> model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn(null);
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertFalse(updateNeeded);
+	}
+
+	@Test
+	public void isUpdateNeeded_OnlyModelNull_ReturnTrue() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		final IObservableValue target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn(new Object());
+		final IObservableValue<?> model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn(null);
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertTrue(updateNeeded);
+	}
+
+	@Test
+	public void isUpdateNeeded_TargetModelNull_ReturnTrue() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		final IObservableValue target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn(null);
+		final IObservableValue model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn(new Object());
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertTrue(updateNeeded);
+	}
+
+	@Test
+	public void isUpdateNeeded_Same_ReturnFalse() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		final IObservableValue target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn("VALUE");
+		final IObservableValue model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn("VALUE");
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertFalse(updateNeeded);
 	}
 
 	private void assertLabelCell(SWTGridCell labelCell) {

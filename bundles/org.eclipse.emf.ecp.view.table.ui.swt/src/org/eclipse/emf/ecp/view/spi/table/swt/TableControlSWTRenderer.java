@@ -2352,7 +2352,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @author Eugen Neufeld
 	 *
 	 */
-	private class ECPTableEditingSupport extends EditingSupport {
+	class ECPTableEditingSupport extends EditingSupport {
 
 		private final CellEditor cellEditor;
 
@@ -2487,7 +2487,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		@Override
 		protected final void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
-			editingState.binding.updateTargetToModel();
+			if (editingState.isUpdateNeeded()) {
+				editingState.binding.updateTargetToModel();
+			}
 		}
 
 		/**
@@ -2552,6 +2554,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				binding.dispose();
 				target.dispose();
 				model.dispose();
+			}
+
+			/**
+			 * Checks if an update is really needed.
+			 *
+			 * @return <code>true</code> if update is really needed, <code>false</code> otherwise.
+			 */
+			boolean isUpdateNeeded() {
+				final Object targetValue = target.getValue();
+				final Object modelValue = model.getValue();
+
+				if (targetValue == null) {
+					return modelValue != null;
+				}
+				return !targetValue.equals(modelValue);
 			}
 		}
 	}
