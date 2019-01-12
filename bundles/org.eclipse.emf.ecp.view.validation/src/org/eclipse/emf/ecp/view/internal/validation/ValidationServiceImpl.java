@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
@@ -320,7 +319,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private ValidationDomainModelChangeListener domainChangeListener;
 	private ViewModelChangeListener viewChangeListener;
 	private ViewModelContext context;
-	private final Queue<EObject> validationQueue = new ConcurrentLinkedQueue<EObject>();
+	private final Queue<EObject> validationQueue = new ConcurrentLinkedSetQueue<EObject>();
 	private final Set<EObject> validated = Collections.newSetFromMap(new ConcurrentHashMap<EObject, Boolean>());
 	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
 
@@ -804,4 +803,5 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 		return null;
 	}
+
 }
