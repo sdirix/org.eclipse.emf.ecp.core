@@ -35,7 +35,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.emfforms.swt.core.di;bundle-version="[1.20.0,1.21.0)",
  org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.20.0,1.21.0)",
  org.eclipse.emfforms.swt.control.multiattribute;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emf.ecp.ide.util;bundle-version="[1.20.0,1.21.0)"
+ org.eclipse.emf.ecp.ide.util;bundle-version="[1.20.0,1.21.0)",
+ org.eclipse.emfforms.common.validation;bundle-version="[1.20.0,1.21.0)"
 Import-Package: org.eclipse.core.resources;version="0.0.0",
  org.eclipse.emfforms.spi.common.report;version="[1.20.0,1.21.0)",
  org.eclipse.emfforms.spi.core.services.databinding.emf;version="[1.20.0,1.21.0)",
@@ -58,6 +59,7 @@ Service-Component: OSGI-INF/ControlRootEClassControl2SWTRendererService.xml,
  OSGI-INF/TableDetailViewControlSWTRendererService.xml,
  OSGI-INF/TableWidthConfigurationDMRRendererService.xml,
  OSGI-INF/ColumnEnablementConfigurationDMRRendererService.xml,
- OSGI-INF/org.eclipse.emf.ecp.view.internal.editor.controls.EcorePathsRendererService.xml
+ OSGI-INF/org.eclipse.emf.ecp.view.internal.editor.controls.EcorePathsRendererService.xml,
+ OSGI-INF/FeatureSegmentIdeDescriptor.xml
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

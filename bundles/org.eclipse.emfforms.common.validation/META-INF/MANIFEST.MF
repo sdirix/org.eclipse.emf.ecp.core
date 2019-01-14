@@ -4,7 +4,7 @@ Bundle-Name: Common Validation
 Bundle-SymbolicName: org.eclipse.emfforms.common.validation;singleton:=true
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.common.internal.validation;version="1.20.0";x-friends:="org.eclipse.emf.ecp.view.validation,org.eclipse.emf.ecp.ide.migration",
+Export-Package: org.eclipse.emfforms.common.internal.validation;version="1.20.0";x-friends:="org.eclipse.emf.ecp.ide.migration,org.eclipse.emf.ecp.view.validation,org.eclipse.emf.ecp.ui.view.editor.controls",
  org.eclipse.emfforms.common.spi.validation;version="1.20.0",
  org.eclipse.emfforms.common.spi.validation.exception;version="1.20.0",
  org.eclipse.emfforms.common.spi.validation.filter;version="1.20.0"

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
+ * Lucas Koehler - Also support DMR segments (Bug 542669)
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
@@ -22,9 +23,11 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -40,13 +43,20 @@ import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
+import org.eclipse.emf.ecp.view.internal.editor.handler.CreateSegmentDmrWizard;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
+import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SegmentGenerator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -68,6 +78,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -126,12 +137,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private Label imageLabel;
 	private Composite contentSetComposite;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
-	 */
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
@@ -198,7 +203,12 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	// TODO this whole method is ugly as it has to many dependencies, the generating of the text should be delegated to
 	// some service
+	// BEGIN COMPLEX CODE
 	private Object getText(Object object) {
+		if (ToolingModeUtil.isSegmentToolingEnabled()) {
+			return getTextForSegments((VDomainModelReference) object);
+		}
+
 		VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) object;
 		if (VTableDomainModelReference.class.isInstance(modelReference)) {
 			VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
@@ -234,6 +244,46 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		}
 		return linkText;
 	}
+	// END COMPLEX CODE
+
+	/**
+	 * Provides a label text for a segment based DMR.
+	 */
+	private String getTextForSegments(VDomainModelReference dmr) {
+		final EList<VDomainModelReferenceSegment> segments = dmr.getSegments();
+		if (segments.isEmpty()) {
+			return adapterFactoryItemDelegator.getText(dmr);
+		}
+
+		String attributeType = null;
+		final EClass rootEClass = Helper.getRootEClass(dmr);
+		try {
+			final IValueProperty<?, ?> valueProperty = getEMFFormsDatabinding().getValueProperty(
+				dmr, rootEClass);
+			final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+			attributeType = feature.getEType().getName();
+		} catch (final DatabindingFailedException ex) {
+			// TODO handle?
+		}
+
+		final String className = rootEClass.getName();
+		String attributeName = " -> " + adapterFactoryItemDelegator.getText(segments.get(segments.size() - 1)); //$NON-NLS-1$
+		if (attributeType != null && !attributeType.isEmpty()) {
+			attributeName += " : " + attributeType; //$NON-NLS-1$
+		}
+		String referencePath = ""; //$NON-NLS-1$
+
+		for (int i = 0; i < segments.size() - 1; i++) {
+			referencePath = referencePath + " -> " //$NON-NLS-1$
+				+ adapterFactoryItemDelegator.getText(segments.get(i));
+		}
+
+		final String linkText = className + referencePath + attributeName;
+		if (linkText.equals(" -> ")) { //$NON-NLS-1$
+			return null;
+		}
+		return linkText;
+	}
 
 	private void updateChangeListener(final EObject value) {
 		if (modelElementChangeListener != null) {
@@ -260,23 +310,12 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 				@Override
 				public void onChange(Notification notification) {
-					Display.getDefault().syncExec(new Runnable() {
-
-						@Override
-						public void run() {
-							getDataBindingContext().updateTargets();
-						}
-					});
+					Display.getDefault().syncExec(() -> getDataBindingContext().updateTargets());
 				}
 			};
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
 		final IObservableValue observableValue = getEMFFormsDatabinding()
@@ -385,10 +424,68 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns the {@link SegmentGenerator} that is used by the {@link CreateSegmentDmrWizard} to
+	 * generate segments from a selected {@link EStructuralFeatureSelectionValidator}.
+	 * <p>
+	 * Can be overwritten by subclasses to change which segments are generated.
+	 * <p>
+	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 * @return The {@link SegmentGenerator} to use
 	 */
+	protected SegmentGenerator getSegmentGenerator() {
+		return new FeatureSegmentGenerator();
+	}
+
+	/**
+	 * Returns the {@link EStructuralFeatureSelectionValidator} that is used by the
+	 * {@link CreateSegmentDmrWizard} to validate whether a selected {@link EStructuralFeature} is a
+	 * valid selection.
+	 * <p>
+	 * Can be overwritten by subclasses to change structural features are considered a valid selection.
+	 * <p>
+	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
+	 *
+	 * @return The {@link EStructuralFeatureSelectionValidator} to use
+	 */
+	protected EStructuralFeatureSelectionValidator getSelectionValidator() {
+		// null means the selection is valid
+		return structuralFeature -> null;
+	}
+
+	/**
+	 * Returns whether the display restrictions defined by {@link SegmentIdeDescriptor SegmentIdeDescriptors} are
+	 * ignored by the dmr creation wizard.
+	 * <p>
+	 * Can be overwritten by subclasses to select the desired behavior.
+	 * <p>
+	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
+	 *
+	 * @return <code>true</code> if the restrictions are ignored, <code>false</code> otherwise
+	 */
+	protected boolean isIgnoreSegmentIdeRestriction() {
+		return false;
+	}
+
+	/**
+	 * This method can be used to restrict the type of the last segment in the advanced dmr creation mode of the dmr
+	 * creation wizard. <br/>
+	 * If this method returns a type, the wizard will not finish as along as the last segment's type
+	 * does not match the returned type.<br/>
+	 * If this method returns <strong>null</strong>, the last segment's type is not restricted.
+	 * <p>
+	 * Can be overwritten by subclasses to set a mandatory type for the last segment.<br>
+	 * <strong>Important: </strong> This does not influence the last segment's type in simple editing mode. This can be
+	 * done by providing an appropriate {@link SegmentGenerator} by overwriting {@link #getSegmentGenerator()}.
+	 * <p>
+	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
+	 *
+	 * @return the last segment's type or <strong>null</strong> if there is no restriction.
+	 */
+	protected EClass getLastSegmentType() {
+		return null;
+	}
+
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper.getString(getClass(), "LinkControl_NoLinkSetClickToSetLink"); //$NON-NLS-1$
@@ -419,19 +516,29 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				reference = VLabel.class.cast(eObject).getDomainModelReference();
 			}
 
-			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
-				eObject, structuralFeature, getEditingDomain(eObject), eclass,
-				reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
-				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);
+			final WizardDialog wd;
+			if (ToolingModeUtil.isSegmentToolingEnabled()) {
+				final Wizard wizard = new CreateSegmentDmrWizard(eObject,
+					eStructuralFeature, getEditingDomain(eObject), eclass,
+					reference == null ? "New Domain Model Reference" : "Configure Domain Model Reference", //$NON-NLS-1$ //$NON-NLS-2$
+					reference, getSelectionValidator(), getSegmentGenerator(), getLastSegmentType(),
+					isIgnoreSegmentIdeRestriction());
+				wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
+			} else {
+				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
+					eObject, structuralFeature, getEditingDomain(eObject), eclass,
+					reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
+					Messages.NewModelElementWizard_WizardTitle_AddModelElement,
+					Messages.NewModelElementWizard_PageTitle_AddModelElement,
+					Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);
 
-			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-				new HashSet<EPackage>(),
-				new HashSet<EPackage>(), classes);
-			wizard.setCompositeProvider(helper);
+				final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+					new HashSet<EPackage>(),
+					new HashSet<EPackage>(), classes);
+				wizard.setCompositeProvider(helper);
+				wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
+			}
 
-			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
 			wd.open();
 		}
 	}
