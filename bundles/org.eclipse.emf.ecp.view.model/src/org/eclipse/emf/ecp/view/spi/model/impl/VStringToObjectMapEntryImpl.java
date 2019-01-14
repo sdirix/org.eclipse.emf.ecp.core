@@ -237,7 +237,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (key: "); //$NON-NLS-1$
 		result.append(key);
 		result.append(", value: "); //$NON-NLS-1$

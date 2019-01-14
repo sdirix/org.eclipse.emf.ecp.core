@@ -182,7 +182,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (domainModelFeature: "); //$NON-NLS-1$
 		result.append(domainModelFeature);
 		result.append(')');

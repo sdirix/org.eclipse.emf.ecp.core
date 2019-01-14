@@ -45,6 +45,18 @@ public interface VViewFactory extends EFactory {
 	VDiagnostic createDiagnostic();
 
 	/**
+	 * Returns a new object of class '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.20
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Domain Model Reference</em>'.
+	 * @generated
+	 */
+	VDomainModelReference createDomainModelReference();
+
+	/**
 	 * Returns a new object of class '<em>View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,7 +104,6 @@ public interface VViewFactory extends EFactory {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return a new object of class '<em>Feature Domain Model Reference Segment</em>'.
 	 * @generated
 	 */

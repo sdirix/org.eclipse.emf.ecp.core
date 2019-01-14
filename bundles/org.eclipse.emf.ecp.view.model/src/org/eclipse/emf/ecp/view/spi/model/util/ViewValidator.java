@@ -592,7 +592,6 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateDomainModelReferenceSegment(VDomainModelReferenceSegment domainModelReferenceSegment,
@@ -605,7 +604,6 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateFeatureDomainModelReferenceSegment(

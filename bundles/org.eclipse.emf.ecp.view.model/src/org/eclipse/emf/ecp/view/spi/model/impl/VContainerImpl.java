@@ -80,7 +80,7 @@ public abstract class VContainerImpl extends VElementImpl implements VContainer 
 	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null) {
-			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
+			children = new EObjectContainmentEList<>(VContainedElement.class, this,
 				VViewPackage.CONTAINER__CHILDREN);
 		}
 		return children;

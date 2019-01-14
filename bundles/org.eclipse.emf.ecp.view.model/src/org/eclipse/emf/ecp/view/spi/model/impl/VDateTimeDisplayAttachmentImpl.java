@@ -179,7 +179,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (displayType: "); //$NON-NLS-1$
 		result.append(displayType);
 		result.append(')');

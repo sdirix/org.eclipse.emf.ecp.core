@@ -355,7 +355,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 	 * @generated
@@ -374,7 +373,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
 	 * @generated

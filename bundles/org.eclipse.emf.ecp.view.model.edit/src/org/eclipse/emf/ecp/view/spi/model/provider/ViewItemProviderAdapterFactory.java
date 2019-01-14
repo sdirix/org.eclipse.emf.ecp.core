@@ -85,7 +85,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 *
 	 * @generated
 	 */
-	protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	protected Collection<Object> supportedTypes = new ArrayList<>();
 
 	/**
 	 * This constructs an instance.
@@ -126,6 +126,34 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		}
 
 		return diagnosticItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.20
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected DomainModelReferenceItemProvider domainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createDomainModelReferenceAdapter() {
+		if (domainModelReferenceItemProvider == null) {
+			domainModelReferenceItemProvider = new DomainModelReferenceItemProvider(this);
+		}
+
+		return domainModelReferenceItemProvider;
 	}
 
 	/**
@@ -265,7 +293,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected FeatureDomainModelReferenceSegmentItemProvider featureDomainModelReferenceSegmentItemProvider;
@@ -460,6 +487,9 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public void dispose() {
 		if (diagnosticItemProvider != null) {
 			diagnosticItemProvider.dispose();
+		}
+		if (domainModelReferenceItemProvider != null) {
+			domainModelReferenceItemProvider.dispose();
 		}
 		if (featurePathDomainModelReferenceItemProvider != null) {
 			featurePathDomainModelReferenceItemProvider.dispose();

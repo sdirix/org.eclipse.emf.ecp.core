@@ -36,7 +36,7 @@ public class ChildrenDescriptor_PTest {
 
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
 
-	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
+	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 2;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
 		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());

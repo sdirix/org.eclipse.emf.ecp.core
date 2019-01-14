@@ -37,7 +37,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  *
  * @since 1.19
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class DomainModelReferenceItemProvider
@@ -105,6 +104,18 @@ public class DomainModelReferenceItemProvider
 		// adding (see {@link AddCommand}) it as a child.
 
 		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns DomainModelReference.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DomainModelReference")); //$NON-NLS-1$
 	}
 
 	/**

@@ -64,7 +64,7 @@ public final class DiagnosticMessageExtractor {
 	 * @return The compound message for all {@link Diagnostic Diagnostics}
 	 */
 	public static String getMessage(Collection<Diagnostic> diagnostics) {
-		final List<Diagnostic> diagnosticList = new ArrayList<Diagnostic>(diagnostics);
+		final List<Diagnostic> diagnosticList = new ArrayList<>(diagnostics);
 		Collections.sort(diagnosticList, new Comparator<Diagnostic>() {
 
 			@Override

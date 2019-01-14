@@ -38,7 +38,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  *
  * @since 1.19
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class FeatureDomainModelReferenceSegmentItemProvider

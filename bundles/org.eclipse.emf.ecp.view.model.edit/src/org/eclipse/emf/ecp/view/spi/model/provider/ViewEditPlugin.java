@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 
 /**
  * This is the central singleton for the View edit plugin.
@@ -50,6 +51,7 @@ public final class ViewEditPlugin extends EMFPlugin {
 	 */
 	public ViewEditPlugin() {
 		super(new ResourceLocator[] {
+			EcoreEditPlugin.INSTANCE,
 		});
 	}
 

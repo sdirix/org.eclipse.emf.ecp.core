@@ -56,7 +56,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 		EStructuralFeature domainModelFeature) {
 		this.domainModelFeature = domainModelFeature;
 		this.lastResolvedEObject = lastResolvedEObject;
-		final List<ReferenceCounter> referenceCounters = new ArrayList<ReferenceCounter>(
+		final List<ReferenceCounter> referenceCounters = new ArrayList<>(
 			leftReferences.size());
 		for (final EReference eReference : leftReferences) {
 			final ReferenceCounter rc = new ReferenceCounter();

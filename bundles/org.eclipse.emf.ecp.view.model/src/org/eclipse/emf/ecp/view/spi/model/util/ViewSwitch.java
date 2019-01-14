@@ -477,7 +477,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -496,7 +495,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
 	 *         Segment</em>'.

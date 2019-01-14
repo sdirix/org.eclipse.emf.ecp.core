@@ -81,7 +81,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null) {
-			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
+			children = new EObjectContainmentEList<>(VContainedElement.class, this,
 				VViewPackage.CONTAINED_CONTAINER__CHILDREN);
 		}
 		return children;

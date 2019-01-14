@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -81,6 +82,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		switch (eClass.getClassifierID()) {
 		case VViewPackage.DIAGNOSTIC:
 			return createDiagnostic();
+		case VViewPackage.DOMAIN_MODEL_REFERENCE:
+			return createDomainModelReference();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
 			return createFeaturePathDomainModelReference();
 		case VViewPackage.VIEW:
@@ -150,6 +153,18 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public VDiagnostic createDiagnostic() {
 		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
 		return diagnostic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VDomainModelReference createDomainModelReference() {
+		final VDomainModelReferenceImpl domainModelReference = new VDomainModelReferenceImpl();
+		return domainModelReference;
 	}
 
 	/**

@@ -23,8 +23,7 @@ package org.eclipse.emf.ecp.view.spi.model;
  *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature
- *        <em>Domain
- *        Model Feature</em>}</li>
+ *        <em>Domain Model Feature</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeatureDomainModelReferenceSegment()

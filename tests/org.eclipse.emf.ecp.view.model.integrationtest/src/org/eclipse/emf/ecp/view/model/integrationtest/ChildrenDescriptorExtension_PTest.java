@@ -67,7 +67,7 @@ public class ChildrenDescriptorExtension_PTest {
 	// stack,viewproxy, compoundcontrol, treemasterdetail
 	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 13;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR,KEYDMR, MAPPINGDMR,IndexDMR
-	private static final int DOMAINMODELREFERENCE_COUNT = 6;
+	private static final int DOMAINMODELREFERENCE_COUNT = 7;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
 	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
@@ -235,8 +235,8 @@ public class ChildrenDescriptorExtension_PTest {
 	@Test
 	public void testLabelDescriptors() {
 		final int size = getChildrenSize(VLabelPackage.eINSTANCE.getLabel());
-		// -5 because only the VFeaturePath is found
-		assertEquals(ATTACHMENT_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT - 5, size);
+		// -6 because only the VFeaturePath is found
+		assertEquals(ATTACHMENT_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT - 6, size);
 	}
 
 	@Test

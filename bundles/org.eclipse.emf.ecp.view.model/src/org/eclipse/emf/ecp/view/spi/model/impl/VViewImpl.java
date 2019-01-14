@@ -78,11 +78,9 @@ public class VViewImpl extends VElementImpl implements VView {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getEcorePaths()
 	 * @generated
 	 * @ordered
-	 *
 	 */
 	protected EList<String> ecorePaths;
 
@@ -175,7 +173,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null) {
-			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
+			children = new EObjectContainmentEList<>(VContainedElement.class, this,
 				VViewPackage.VIEW__CHILDREN);
 		}
 		return children;
@@ -190,7 +188,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	@Override
 	public EList<String> getEcorePaths() {
 		if (ecorePaths == null) {
-			ecorePaths = new EDataTypeUniqueEList<String>(String.class, this, VViewPackage.VIEW__ECORE_PATHS);
+			ecorePaths = new EDataTypeUniqueEList<>(String.class, this, VViewPackage.VIEW__ECORE_PATHS);
 		}
 		return ecorePaths;
 	}
@@ -386,7 +384,7 @@ public class VViewImpl extends VElementImpl implements VView {
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (ecorePaths: "); //$NON-NLS-1$
 		result.append(ecorePaths);
 		result.append(')');

@@ -175,6 +175,9 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+			VViewFactory.eINSTANCE.createDomainModelReference()));
+
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 

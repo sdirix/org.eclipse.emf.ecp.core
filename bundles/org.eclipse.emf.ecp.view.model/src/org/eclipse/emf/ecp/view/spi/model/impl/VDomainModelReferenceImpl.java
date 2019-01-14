@@ -12,16 +12,23 @@
 package org.eclipse.emf.ecp.view.spi.model.impl;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -44,7 +51,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public abstract class VDomainModelReferenceImpl extends EObjectImpl implements VDomainModelReference {
+public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -98,7 +105,7 @@ public abstract class VDomainModelReferenceImpl extends EObjectImpl implements V
 	@Override
 	public EList<DomainModelReferenceChangeListener> getChangeListener() {
 		if (changeListener == null) {
-			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
+			changeListener = new EDataTypeUniqueEList<>(
 				DomainModelReferenceChangeListener.class, this, VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
 		}
 		return changeListener;
@@ -113,7 +120,7 @@ public abstract class VDomainModelReferenceImpl extends EObjectImpl implements V
 	@Override
 	public EList<VDomainModelReferenceSegment> getSegments() {
 		if (segments == null) {
-			segments = new EObjectContainmentEList<VDomainModelReferenceSegment>(VDomainModelReferenceSegment.class,
+			segments = new EObjectContainmentEList<>(VDomainModelReferenceSegment.class,
 				this, VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS);
 		}
 		return segments;
@@ -221,11 +228,41 @@ public abstract class VDomainModelReferenceImpl extends EObjectImpl implements V
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (changeListener: "); //$NON-NLS-1$
 		result.append(changeListener);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	public void notifyChange(ModelChangeNotification notification) {
+		// TODO is there anything that needs to be updated or notified?
+	}
+
+	@Deprecated
+	@Override
+	public boolean init(EObject object) {
+		// nothing to do
+		return true;
+	}
+
+	@Deprecated
+	@Override
+	public Iterator<Setting> getIterator() {
+		return Collections.emptyIterator();
+	}
+
+	@Deprecated
+	@Override
+	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
+		return Collections.emptyIterator();
+	}
+
+	@Deprecated
+	@Override
+	public Iterator<SettingPath> getFullPathIterator() {
+		return Collections.emptyIterator();
 	}
 
 } // VDomainModelReferenceImpl

@@ -282,7 +282,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 	// return true;
 	// }
 
-	private final List<Setting> resolvedSetting = new ArrayList<Setting>();
+	private final List<Setting> resolvedSetting = new ArrayList<>();
 
 	/**
 	 * @since 1.3
@@ -294,7 +294,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 		}
 
 		EObject currentResolvedEObject = domainModel;
-		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
+		final ArrayList<EReference> currentLeftReferences = new ArrayList<>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
 			if (!currentResolvedEObject.eClass().getEAllReferences().contains(eReference)) {
 				return false;
@@ -525,7 +525,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			cleanDiagnostic(getDomainModelEFeature().equals(notification.getStructuralFeature()), notification);
 
 			resolve(rootEObject, false);
-			final List<DomainModelReferenceChangeListener> copyOfChangeListeners = new ArrayList<DomainModelReferenceChangeListener>(
+			final List<DomainModelReferenceChangeListener> copyOfChangeListeners = new ArrayList<>(
 				getChangeListener());
 			for (final DomainModelReferenceChangeListener listener : copyOfChangeListeners) {
 				listener.notifyChange();
@@ -551,7 +551,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			vControl.setDiagnostic(null);
 		} else if (Notification.REMOVE == notification.getRawNotification().getEventType()) {
 			final EObject oldValue = (EObject) notification.getRawNotification().getOldValue();
-			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+			final Set<Diagnostic> toDelete = new LinkedHashSet<>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
 				EObject diagnosticDataObject = (EObject) diagnostic.getData().get(0);
@@ -567,7 +567,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			}
 		} else if (Notification.REMOVE_MANY == notification.getRawNotification().getEventType()) {
 			final Collection<?> oldValue = (Collection<?>) notification.getRawNotification().getOldValue();
-			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+			final Set<Diagnostic> toDelete = new LinkedHashSet<>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
 				EObject diagnosticDataObject = (EObject) diagnostic.getData().get(0);

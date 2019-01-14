@@ -64,7 +64,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 * @ordered
 	 */
 	protected EList<Object> diagnostics;
-	private final Map<EObject, Set<Diagnostic>> diagnosticMap = new LinkedHashMap<EObject, Set<Diagnostic>>();
+	private final Map<EObject, Set<Diagnostic>> diagnosticMap = new LinkedHashMap<>();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -102,7 +102,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 		while (parent != null) {
 			Set<Diagnostic> diagnostics = diagnosticMap.get(parent);
 			if (diagnostics == null) {
-				diagnostics = new LinkedHashSet<Diagnostic>();
+				diagnostics = new LinkedHashSet<>();
 				diagnosticMap.put(parent, diagnostics);
 			}
 			diagnostics.add(diagnostic);
@@ -172,7 +172,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 		@Override
 		protected Collection<Object> getNonDuplicates(Collection<? extends Object> collection) {
 			// Our implementation of 'contains' is constant-time
-			final Collection<Object> result = new HashSet<Object>(collection.size() * 2, 0.5f);
+			final Collection<Object> result = new HashSet<>(collection.size() * 2, 0.5f);
 			for (final Object next : collection) {
 				if (!contains(next)) {
 					result.add(next);
@@ -293,7 +293,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (diagnostics: "); //$NON-NLS-1$
 		result.append(diagnostics);
 		result.append(')');
@@ -326,7 +326,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 */
 	@Override
 	public String getMessage() {
-		final List<Diagnostic> diagnostics = new ArrayList<Diagnostic>(getDiagnostics().size());
+		final List<Diagnostic> diagnostics = new ArrayList<>(getDiagnostics().size());
 		for (final Object o : getDiagnostics()) {
 			final Diagnostic diagnostic = (Diagnostic) o;
 			diagnostics.add(diagnostic);
@@ -356,7 +356,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 */
 	@Override
 	public List<Diagnostic> getDiagnostics(EObject eObject) {
-		final List<Diagnostic> result = new ArrayList<Diagnostic>();
+		final List<Diagnostic> result = new ArrayList<>();
 		final Set<Diagnostic> set = diagnosticMap.get(eObject);
 		if (set != null) {
 			for (final Object objectDiagnostic : set) { // getDiagnostics()
@@ -372,7 +372,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	}
 
 	private List<Diagnostic> getDiagnostics(Diagnostic diagnostic, EObject eObject) {
-		final List<Diagnostic> result = new ArrayList<Diagnostic>();
+		final List<Diagnostic> result = new ArrayList<>();
 		if (diagnostic.getData() != null && diagnostic.getData().size() != 0
 			&& EcoreUtil.isAncestor(eObject, (EObject) diagnostic.getData().get(0))) {
 			result.add(diagnostic);
@@ -389,7 +389,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 */
 	@Override
 	public List<Diagnostic> getDiagnostic(EObject eObject, EStructuralFeature eStructuralFeature) {
-		final EList<Diagnostic> result = new BasicEList<Diagnostic>();
+		final EList<Diagnostic> result = new BasicEList<>();
 		final Set<Diagnostic> set = diagnosticMap.get(eObject);
 		if (set != null) {
 			for (final Object objectDiagnostic : set) { // getDiagnostics()
@@ -406,7 +406,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 
 	private List<Diagnostic> getDiagnostics(Diagnostic diagnostic, EObject eObject,
 		EStructuralFeature eStructuralFeature) {
-		final List<Diagnostic> result = new ArrayList<Diagnostic>();
+		final List<Diagnostic> result = new ArrayList<>();
 		if (diagnostic.getData() != null && diagnostic.getData().size() > 1
 			&& EcoreUtil.isAncestor(eObject, (EObject) diagnostic.getData().get(0))
 			&& eStructuralFeature.equals(diagnostic.getData().get(1))) {

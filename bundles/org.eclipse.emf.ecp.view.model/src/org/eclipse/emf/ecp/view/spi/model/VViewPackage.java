@@ -55,7 +55,7 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1180"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1200"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI of releases [1.7.0,1.17.0[.
@@ -201,7 +201,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -246,7 +245,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1154,7 +1152,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceSegment()
 	 * @generated
@@ -1167,7 +1164,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1181,7 +1177,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeatureDomainModelReferenceSegment()
 	 * @generated
@@ -1194,7 +1189,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1206,7 +1200,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1607,7 +1600,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Domain Model Reference Segment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 	 * @generated
@@ -1621,7 +1613,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Feature Domain Model Reference Segment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
 	 * @generated
@@ -1636,7 +1627,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Domain Model Feature</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature()
 	 * @see #getFeatureDomainModelReferenceSegment()
@@ -1807,7 +1797,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the containment reference list '<em>Segments</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments()
 	 * @see #getDomainModelReference()
@@ -2185,7 +2174,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.19
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceSegment()
 		 * @generated
@@ -2200,7 +2188,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.19
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeatureDomainModelReferenceSegment()
 		 * @generated
@@ -2213,7 +2200,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.19
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = eINSTANCE
@@ -2360,7 +2346,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.19
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference DOMAIN_MODEL_REFERENCE__SEGMENTS = eINSTANCE.getDomainModelReference_Segments();

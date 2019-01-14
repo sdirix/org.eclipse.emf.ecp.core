@@ -97,7 +97,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	@Override
 	public EMap<String, Object> getInheritableProperties() {
 		if (inheritableProperties == null) {
-			inheritableProperties = new EcoreEMap<String, Object>(VViewPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+			inheritableProperties = new EcoreEMap<>(VViewPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
 				VStringToObjectMapEntryImpl.class, this,
 				VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES);
 		}
@@ -113,7 +113,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	@Override
 	public EMap<String, Object> getNonInheritableProperties() {
 		if (nonInheritableProperties == null) {
-			nonInheritableProperties = new EcoreEMap<String, Object>(VViewPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
+			nonInheritableProperties = new EcoreEMap<>(VViewPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY,
 				VStringToObjectMapEntryImpl.class, this,
 				VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES);
 		}
@@ -151,7 +151,6 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 				return getInheritableProperties();
 			}
 			return getInheritableProperties().map();
-
 		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES:
 			if (coreType) {
 				return getNonInheritableProperties();

@@ -287,7 +287,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (labelAlignment: "); //$NON-NLS-1$
 		result.append(labelAlignment);
 		result.append(')');

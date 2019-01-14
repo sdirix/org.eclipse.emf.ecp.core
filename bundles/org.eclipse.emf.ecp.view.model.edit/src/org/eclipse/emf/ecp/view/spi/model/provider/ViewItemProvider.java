@@ -95,7 +95,6 @@ public class ViewItemProvider
 	 * @since 1.17
 	 *
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addEcorePathsPropertyDescriptor(Object object) {
