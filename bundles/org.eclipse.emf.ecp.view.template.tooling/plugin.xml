@@ -40,6 +40,9 @@
       <file
             filePath="viewmodel/template.view">
       </file>
+      <file
+            filePath="viewmodel/Style.view">
+      </file>
    </extension>
    <extension
          name=""
