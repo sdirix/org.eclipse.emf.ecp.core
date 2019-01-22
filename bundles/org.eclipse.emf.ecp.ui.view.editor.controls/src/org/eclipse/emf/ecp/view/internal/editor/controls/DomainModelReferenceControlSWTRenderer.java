@@ -37,21 +37,17 @@ import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
-import org.eclipse.emf.ecp.view.internal.editor.handler.CreateSegmentDmrWizard;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
-import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
-import org.eclipse.emf.ecp.view.internal.editor.handler.SegmentGenerator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
 import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -78,7 +74,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -423,69 +418,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return selectButton;
 	}
 
-	/**
-	 * Returns the {@link SegmentGenerator} that is used by the {@link CreateSegmentDmrWizard} to
-	 * generate segments from a selected {@link EStructuralFeatureSelectionValidator}.
-	 * <p>
-	 * Can be overwritten by subclasses to change which segments are generated.
-	 * <p>
-	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
-	 *
-	 * @return The {@link SegmentGenerator} to use
-	 */
-	protected SegmentGenerator getSegmentGenerator() {
-		return new FeatureSegmentGenerator();
-	}
-
-	/**
-	 * Returns the {@link EStructuralFeatureSelectionValidator} that is used by the
-	 * {@link CreateSegmentDmrWizard} to validate whether a selected {@link EStructuralFeature} is a
-	 * valid selection.
-	 * <p>
-	 * Can be overwritten by subclasses to change structural features are considered a valid selection.
-	 * <p>
-	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
-	 *
-	 * @return The {@link EStructuralFeatureSelectionValidator} to use
-	 */
-	protected EStructuralFeatureSelectionValidator getSelectionValidator() {
-		// null means the selection is valid
-		return structuralFeature -> null;
-	}
-
-	/**
-	 * Returns whether the display restrictions defined by {@link SegmentIdeDescriptor SegmentIdeDescriptors} are
-	 * ignored by the dmr creation wizard.
-	 * <p>
-	 * Can be overwritten by subclasses to select the desired behavior.
-	 * <p>
-	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
-	 *
-	 * @return <code>true</code> if the restrictions are ignored, <code>false</code> otherwise
-	 */
-	protected boolean isIgnoreSegmentIdeRestriction() {
-		return false;
-	}
-
-	/**
-	 * This method can be used to restrict the type of the last segment in the advanced dmr creation mode of the dmr
-	 * creation wizard. <br/>
-	 * If this method returns a type, the wizard will not finish as along as the last segment's type
-	 * does not match the returned type.<br/>
-	 * If this method returns <strong>null</strong>, the last segment's type is not restricted.
-	 * <p>
-	 * Can be overwritten by subclasses to set a mandatory type for the last segment.<br>
-	 * <strong>Important: </strong> This does not influence the last segment's type in simple editing mode. This can be
-	 * done by providing an appropriate {@link SegmentGenerator} by overwriting {@link #getSegmentGenerator()}.
-	 * <p>
-	 * <strong>Note:</strong> This method is only used if the tooling is used in segment mode.
-	 *
-	 * @return the last segment's type or <strong>null</strong> if there is no restriction.
-	 */
-	protected EClass getLastSegmentType() {
-		return null;
-	}
-
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper.getString(getClass(), "LinkControl_NoLinkSetClickToSetLink"); //$NON-NLS-1$
@@ -516,14 +448,13 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				reference = VLabel.class.cast(eObject).getDomainModelReference();
 			}
 
-			final WizardDialog wd;
 			if (ToolingModeUtil.isSegmentToolingEnabled()) {
-				final Wizard wizard = new CreateSegmentDmrWizard(eObject,
-					eStructuralFeature, getEditingDomain(eObject), eclass,
-					reference == null ? "New Domain Model Reference" : "Configure Domain Model Reference", //$NON-NLS-1$ //$NON-NLS-2$
-					reference, getSelectionValidator(), getSegmentGenerator(), getLastSegmentType(),
-					isIgnoreSegmentIdeRestriction());
-				wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
+				final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+				if (reference == null) {
+					referenceService.addNewModelElements(eObject, (EReference) structuralFeature, false);
+				} else {
+					referenceService.openInNewContext(reference);
+				}
 			} else {
 				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 					eObject, structuralFeature, getEditingDomain(eObject), eclass,
@@ -536,10 +467,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 					new HashSet<EPackage>(),
 					new HashSet<EPackage>(), classes);
 				wizard.setCompositeProvider(helper);
-				wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
+				new WizardDialog(Display.getDefault().getActiveShell(), wizard).open();
 			}
 
-			wd.open();
 		}
 	}
 }

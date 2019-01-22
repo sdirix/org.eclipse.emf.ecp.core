@@ -110,13 +110,13 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		final String label = ((VMultiDomainModelReferenceSegment) object).getDomainModelFeature();
 		return label == null || label.length() == 0 ? getString("_UI_MultiDomainModelReferenceSegment_type") : //$NON-NLS-1$
-			getString("_UI_MultiDomainModelReferenceSegment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			label + "[]"; //$NON-NLS-1$
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -79,7 +79,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
-import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -164,8 +164,8 @@ public class MultiReferenceRenderer_PTest {
 
 		shell = new Shell();
 
-		final D eObject = TestFactory.eINSTANCE.createD();
-		final EStructuralFeature eStructuralFeature = TestPackage.eINSTANCE.getD_YList();
+		final B eObject = TestFactory.eINSTANCE.createB();
+		final EStructuralFeature eStructuralFeature = TestPackage.Literals.B__CLIST;
 
 		final ReportService reportService = mock(ReportService.class);
 		final ViewModelContext viewContext = mock(ViewModelContext.class);
@@ -207,6 +207,10 @@ public class MultiReferenceRenderer_PTest {
 		when(valueProperty.getValueType()).thenReturn(changeableFeature);
 		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(valueProperty);
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(observableValue.getObserved()).thenReturn(eObject);
+		when(observableValue.getValueType()).thenReturn(eStructuralFeature);
+		when(databindingService.getObservableValue(domainModelReference, eObject)).thenReturn(observableValue);
 
 		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
 			labelProvider, templateProvider, imageRegistryService, l10n) {
@@ -220,7 +224,6 @@ public class MultiReferenceRenderer_PTest {
 				return showMoveButtons;
 			}
 		};
-		renderer.init();
 		renderer.getGridDescription(new SWTGridDescription());
 
 		final VTViewTemplateProvider compactTemplateProvider = mock(VTViewTemplateProvider.class);
@@ -275,18 +278,18 @@ public class MultiReferenceRenderer_PTest {
 	@Test
 	public void testDatabindingServiceUsageAddToModel() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		final List<Integer> initialList = new LinkedList<Integer>();
-		initialList.add(2);
-		initialList.add(4);
-		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+		final List<EObject> initialList = new LinkedList<>();
+		initialList.add(TestFactory.eINSTANCE.createC());
+		initialList.add(TestFactory.eINSTANCE.createC());
+		final WritableList<EObject> mockedObservableList = new WritableList<EObject>(realm, initialList, EObject.class);
 
 		final Table table = setUpDatabindingTests(mockedObservableList);
 
-		mockedObservableList.add(new Integer(6));
+		mockedObservableList.add(TestFactory.eINSTANCE.createC());
 
 		assertEquals(mockedObservableList.size(), table.getItemCount());
 		for (int i = 0; i < mockedObservableList.size(); i++) {
-			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+			assertSame(mockedObservableList.get(i), table.getItems()[i].getData());
 		}
 	}
 
@@ -300,10 +303,10 @@ public class MultiReferenceRenderer_PTest {
 	@Test
 	public void testDatabindingServiceUsageRemoveFromModel() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		final List<Integer> initialList = new LinkedList<Integer>();
-		initialList.add(2);
-		initialList.add(4);
-		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+		final List<EObject> initialList = new LinkedList<>();
+		initialList.add(TestFactory.eINSTANCE.createC());
+		initialList.add(TestFactory.eINSTANCE.createC());
+		final WritableList<EObject> mockedObservableList = new WritableList<EObject>(realm, initialList, EObject.class);
 
 		final Table table = setUpDatabindingTests(mockedObservableList);
 
@@ -311,7 +314,7 @@ public class MultiReferenceRenderer_PTest {
 
 		assertEquals(mockedObservableList.size(), table.getItemCount());
 		for (int i = 0; i < mockedObservableList.size(); i++) {
-			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+			assertSame(mockedObservableList.get(i), table.getItems()[i].getData());
 		}
 	}
 
@@ -325,22 +328,22 @@ public class MultiReferenceRenderer_PTest {
 	@Test
 	public void testDatabindingServiceUsageChangeModel() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		final List<Integer> initialList = new LinkedList<Integer>();
-		initialList.add(2);
-		initialList.add(4);
-		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+		final List<EObject> initialList = new LinkedList<>();
+		initialList.add(TestFactory.eINSTANCE.createC());
+		initialList.add(TestFactory.eINSTANCE.createC());
+		final WritableList<EObject> mockedObservableList = new WritableList<EObject>(realm, initialList, EObject.class);
 
 		final Table table = setUpDatabindingTests(mockedObservableList);
 
-		mockedObservableList.set(1, 7);
+		mockedObservableList.set(1, TestFactory.eINSTANCE.createC());
 
 		assertEquals(mockedObservableList.size(), table.getItemCount());
 		for (int i = 0; i < mockedObservableList.size(); i++) {
-			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+			assertSame(mockedObservableList.get(i), table.getItems()[i].getData());
 		}
 	}
 
-	private Table setUpDatabindingTests(IObservableList mockedObservableList) throws NoRendererFoundException,
+	private Table setUpDatabindingTests(IObservableList<?> mockedObservableList) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableList);
@@ -348,6 +351,7 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		final Table table = (Table) controlComposite.getChildren()[0];
@@ -371,6 +375,7 @@ public class MultiReferenceRenderer_PTest {
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
 
+		renderer.init();
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		final Table table = (Table) controlComposite.getChildren()[0];
@@ -516,6 +521,7 @@ public class MultiReferenceRenderer_PTest {
 				.thenReturn(observableValue);
 			when(observableValue.getObserved()).thenReturn(league);
 			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.LEAGUE__PLAYERS);
+			renderer.init();
 			final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 			final Composite controlComposite = (Composite) composite.getChildren()[1];
 			table = (Table) controlComposite.getChildren()[0];
@@ -599,6 +605,7 @@ public class MultiReferenceRenderer_PTest {
 				.thenReturn(observableValue);
 			when(observableValue.getObserved()).thenReturn(league);
 			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.LEAGUE__PLAYERS);
+			renderer.init();
 			final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 			final Composite controlComposite = (Composite) composite.getChildren()[1];
 			table = (Table) controlComposite.getChildren()[0];
@@ -632,6 +639,7 @@ public class MultiReferenceRenderer_PTest {
 		try {
 			// Re-stub the domain model as our league
 			when(renderer.getViewModelContext().getDomainModel()).thenReturn(league);
+			// reset(databindingService);
 			when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 				observableList);
 			final TestObservableValue observableValue = mock(TestObservableValue.class);
@@ -639,6 +647,7 @@ public class MultiReferenceRenderer_PTest {
 				.thenReturn(observableValue);
 			when(observableValue.getObserved()).thenReturn(league);
 			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.LEAGUE__PLAYERS);
+			renderer.init();
 			final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 			final Composite controlComposite = (Composite) composite.getChildren()[1];
 			result = (Table) controlComposite.getChildren()[0];
@@ -673,6 +682,7 @@ public class MultiReferenceRenderer_PTest {
 				.thenReturn(observableValue);
 			when(observableValue.getObserved()).thenReturn(fan);
 			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.FAN__VISITED_TOURNAMENTS);
+			renderer.init();
 			return (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 			// BEGIN COMPLEX CODE
 		} catch (final Exception e) {
@@ -700,6 +710,7 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
 		// only buttons shall be not visible
@@ -724,6 +735,7 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
 
@@ -758,6 +770,7 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
 		// read only does not disable control, but hides button
@@ -792,6 +805,7 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
 		assertFalse(composite.isEnabled());

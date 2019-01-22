@@ -17,8 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -26,7 +26,6 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -46,9 +45,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -89,9 +85,6 @@ import org.osgi.framework.ServiceReference;
  */
 public class CreateSegmentDmrWizard extends Wizard {
 
-	private final EditingDomain editingDomain;
-	private final EStructuralFeature structuralFeature;
-	private final EObject eObject;
 	private final EClass rootEClass;
 	private final VDomainModelReference existingDMR;
 	private final EStructuralFeatureSelectionValidator selectionValidator;
@@ -107,13 +100,11 @@ public class CreateSegmentDmrWizard extends Wizard {
 	private AdvancedDMRWizardFirstPage firstPage;
 	private VDomainModelReference advancedDmr;
 	private final EClass lastSegmentType;
+	private VDomainModelReference resultDmr;
 
 	/**
 	 * A wizard used for creating and configuring a DomainModelReference.
 	 *
-	 * @param eObject The {@link EObject} containing a domain model reference
-	 * @param structuralFeature The corresponding {@link EStructuralFeature}
-	 * @param editingDomain The setting's editing domain
 	 * @param rootEClass The root {@link EClass} of the VView the eObject belongs to
 	 * @param windowTitle The title for the wizard window
 	 * @param existingDMR The domain model reference to configure. May be null, then a new DMR is created
@@ -126,15 +117,11 @@ public class CreateSegmentDmrWizard extends Wizard {
 	 *            configuration in their {@link SegmentIdeDescriptor}.
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
-	public CreateSegmentDmrWizard(final EObject eObject, final EStructuralFeature structuralFeature,
-		final EditingDomain editingDomain, final EClass rootEClass, final String windowTitle,
+	public CreateSegmentDmrWizard(final EClass rootEClass, final String windowTitle,
 		VDomainModelReference existingDMR, EStructuralFeatureSelectionValidator selectionValidator,
 		SegmentGenerator segmentGenerator, EClass lastSegmentType, boolean ignoreSegmentIdeRestriction) {
 		// CHECKSTYLE.ON: ParameterNumber
 		setWindowTitle(windowTitle);
-		this.eObject = eObject;
-		this.structuralFeature = structuralFeature;
-		this.editingDomain = editingDomain;
 		this.rootEClass = rootEClass;
 		this.existingDMR = existingDMR;
 		this.selectionValidator = selectionValidator;
@@ -168,6 +155,16 @@ public class CreateSegmentDmrWizard extends Wizard {
 
 	}
 
+	/**
+	 * Returns the configured {@link VDomainModelReference}. This is either a new DMR or the edited input DMR.
+	 * The return value is empty if the dialog was cancelled or the dialog is still open.
+	 *
+	 * @return The configured {@link VDomainModelReference} or an empty value if the dialog was cancelled
+	 */
+	public Optional<VDomainModelReference> getDomainModelReference() {
+		return Optional.ofNullable(resultDmr);
+	}
+
 	@Override
 	public void dispose() {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(CreateSegmentDmrWizard.class)
@@ -182,7 +179,7 @@ public class CreateSegmentDmrWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		firstPage = new AdvancedDMRWizardFirstPage("New Domain Model Reference", //$NON-NLS-1$
+		firstPage = new AdvancedDMRWizardFirstPage("Configure Domain Model Reference", //$NON-NLS-1$
 			"Select an EStructuralFeature", //$NON-NLS-1$
 			"Select a structural feature for the domain model reference or switch to the advanced creation mode\n to create the reference path one feature at a time.", //$NON-NLS-1$
 			rootEClass, getInitialSelection());
@@ -212,8 +209,8 @@ public class CreateSegmentDmrWizard extends Wizard {
 			return false;
 		}
 
-		final VDomainModelReference resultDmr;
 		if (firstPage.equals(getContainer().getCurrentPage())) {
+			// simple mode was used
 			resultDmr = firstPage.getDomainModelReference();
 		} else {
 			final SegmentCreationPage finalSegmentCreationPage = (SegmentCreationPage) getContainer().getCurrentPage();
@@ -237,19 +234,9 @@ public class CreateSegmentDmrWizard extends Wizard {
 					}
 				}
 			}
-
 			resultDmr = advancedDmr;
 		}
 
-		final Command command;
-		if (structuralFeature.isMany()) {
-			command = AddCommand.create(editingDomain, eObject,
-				structuralFeature, resultDmr);
-		} else {
-			command = SetCommand.create(editingDomain, eObject,
-				structuralFeature, resultDmr);
-		}
-		editingDomain.getCommandStack().execute(command);
 		return true;
 	}
 

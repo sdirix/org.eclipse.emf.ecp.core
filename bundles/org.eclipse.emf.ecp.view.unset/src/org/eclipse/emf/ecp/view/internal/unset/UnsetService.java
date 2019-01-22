@@ -186,7 +186,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 		final Set<VControl> visibleControls = settingToControlMap
 			.get(wrapper);
 		visibleControls.remove(control);
-		if (visibleControls.isEmpty()) {
+		if (visibleControls.isEmpty() && eObject != null) {
 			eObject.eUnset(structuralFeature);
 		}
 	}

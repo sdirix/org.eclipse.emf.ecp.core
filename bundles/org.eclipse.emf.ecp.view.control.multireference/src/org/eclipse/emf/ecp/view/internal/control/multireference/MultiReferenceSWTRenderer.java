@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,6 +17,7 @@ package org.eclipse.emf.ecp.view.internal.control.multireference;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -64,6 +65,7 @@ import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
@@ -130,7 +132,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	/**
 	 * The {@link EObject} that contains the elements rendered in this multi reference.
 	 */
-	private EObject container;
+	private Optional<EObject> cachedContainer;
 
 	/**
 	 * A user-presentable display name for the reference, used in tool-tips.
@@ -188,7 +190,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private AdapterFactory adapterFactory;
 	private TableViewer tableViewer;
 	private final EMFDataBindingContext viewModelDBC;
-	private IObservableList tableViewerInputList;
+	private IObservableList<?> tableViewerInputList;
 	private Button btnAddExisting;
 	private Button btnAddNew;
 	private Button btnDelete;
@@ -218,7 +220,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected boolean showAddExistingButton() {
 		EReference eReference = null;
 		try {
-			eReference = (EReference) getModelValue().getValueType();
+			eReference = (EReference) getEStructuralFeature();
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new AbstractReport(ex));
 		}
@@ -314,11 +316,26 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @throws DatabindingFailedException when databinding fails.
 	 */
 	protected EStructuralFeature getEStructuralFeature() throws DatabindingFailedException {
-		final IObservableValue observableValue = getEMFFormsDatabinding()
-			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		observableValue.dispose();
-		return structuralFeature;
+		return (EStructuralFeature) getModelValue().getValueType();
+	}
+
+	/**
+	 * Returns the {@link EObject} that contains the elements rendered in this multi reference.
+	 *
+	 * @return The {@link EObject} containing the elements rendered in this multi reference or nothing if the container
+	 *         couldn't be computed.
+	 */
+	protected Optional<EObject> getContainer() {
+		if (cachedContainer == null || !cachedContainer.isPresent()) {
+			EObject eObject = null;
+			try {
+				eObject = (EObject) IObserving.class.cast(getModelValue()).getObserved();
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
+			}
+			cachedContainer = Optional.ofNullable(eObject);
+		}
+		return cachedContainer;
 	}
 
 	/**
@@ -502,6 +519,17 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
+	 * Returns the {@link AdapterFactory} used by this renderer. To customize the used {@link AdapterFactory} override
+	 * {@link #createAdapterFactory()}.
+	 *
+	 * @return The {@link AdapterFactory} used by this renderer
+	 * @see #createAdapterFactory()
+	 */
+	protected final AdapterFactory getAdapterFactory() {
+		return adapterFactory;
+	}
+
+	/**
 	 * Creates a new {@link ILabelProvider} for the table viewer.
 	 *
 	 * @return the newly created {@link ILabelProvider}.
@@ -543,16 +571,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			MessageKeys.MultiReferenceSWTRenderer_moveUpTooltip));
 		btnMoveUp.addSelectionListener(new SelectionAdapter() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleMoveUp(tableViewer, container, structuralFeature);
-				updateButtons();
+				final Optional<? extends EObject> container = getContainer();
+				if (container.isPresent()) {
+					handleMoveUp(tableViewer, container.get(), structuralFeature);
+					updateButtons();
+				}
 			}
 
 		});
@@ -575,16 +601,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			MessageKeys.MultiReferenceSWTRenderer_moveDownTooltip));
 		btnMoveDown.addSelectionListener(new SelectionAdapter() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleMoveDown(tableViewer, container, structuralFeature);
-				updateButtons();
+				final Optional<EObject> container = getContainer();
+				if (container.isPresent()) {
+					handleMoveDown(tableViewer, container.get(), structuralFeature);
+					updateButtons();
+				}
 			}
 
 		});
@@ -607,16 +631,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip), getReferenceDisplayName()));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddExisting(tableViewer, container, structuralFeature);
-				updateButtons();
+				final Optional<EObject> container = getContainer();
+				if (container.isPresent()) {
+					handleAddExisting(tableViewer, container.get(), structuralFeature);
+					updateButtons();
+				}
 			}
 
 		});
@@ -639,16 +661,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip), getReferenceDisplayName()));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddNew(tableViewer, container, structuralFeature);
-				updateButtons();
+				final Optional<EObject> container = getContainer();
+				if (container.isPresent()) {
+					handleAddNew(tableViewer, container.get(), structuralFeature);
+					updateButtons();
+				}
 			}
 
 		});
@@ -670,16 +690,15 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		btnDelete.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_deleteTooltip));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleDelete(tableViewer, container, structuralFeature);
-				updateButtons();
+				final Optional<EObject> container = getContainer();
+				if (container.isPresent()) {
+					handleDelete(tableViewer, container.get(), structuralFeature);
+					updateButtons();
+				}
 			}
 		});
 		return btnDelete;
@@ -698,7 +717,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * bound input.
 	 */
 	protected void updateButtonEnabling() {
-		final boolean isEnable = getVElement().isEffectivelyEnabled();
+		final boolean isEnable = getContainer().isPresent() && getVElement().isEffectivelyEnabled();
 		final int listSize = tableViewerInputList != null ? tableViewerInputList.size() : 0;
 		final int selectionIndex = tableViewer != null ? tableViewer.getTable().getSelectionIndex() : -1;
 
@@ -776,11 +795,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected Composite createButtonComposite(Composite parent) throws DatabindingFailedException {
 		final Composite buttonComposite = new Composite(parent, SWT.NONE);
 
-		final IObservableValue observableValue = getEMFFormsDatabinding()
-			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		container = (EObject) ((IObserving) observableValue).getObserved();
-		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		observableValue.dispose();
+		final EStructuralFeature structuralFeature = getEStructuralFeature();
 
 		int nrButtons = 0;
 
@@ -953,8 +968,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		tableViewer.setLabelProvider(labelProvider);
 		tableViewer.setContentProvider(cp);
-		tableViewerInputList = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
+		tableViewerInputList = getReferencedElementsList();
 		tableViewer.setInput(tableViewerInputList);
 
 		final TableColumnLayout layout = new TableColumnLayout();
@@ -1134,17 +1148,24 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (tableViewerInputList != null) {
 			tableViewerInputList.dispose();
 		}
-		tableViewerInputList = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
+		tableViewerInputList = getReferencedElementsList();
 		tableViewer.setInput(tableViewerInputList);
 
-		// Update container to allow addition and removal of elements to/from the multi reference.
-		final IObservableValue observableValue = getEMFFormsDatabinding()
-			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		container = (EObject) ((IObserving) observableValue).getObserved();
-		observableValue.dispose();
+		// Update cachedContainer to allow addition and removal of elements to/from the multi reference.
+		cachedContainer = Optional.ofNullable((EObject) IObserving.class.cast(getModelValue()).getObserved());
 		applyEnable();
 		applyReadOnly();
+	}
+
+	/**
+	 * Computes and returns the observable list of the referenced elements shown by this renderer.
+	 *
+	 * @return The {@link IObservableList} of the referenced elements
+	 * @throws DatabindingFailedException If computing the list failed due to failed databinding
+	 */
+	protected IObservableList<?> getReferencedElementsList() throws DatabindingFailedException {
+		return getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
 	}
 
 	@Override
@@ -1228,5 +1249,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			rc = -rc;
 		}
 		return rc;
+	}
+
+	/**
+	 * Returns the {@link ILabelProvider} used by this renderer.
+	 *
+	 * @return the {@link ILabelProvider}
+	 */
+	protected ILabelProvider getLabelProvider() {
+		return labelProvider;
 	}
 }

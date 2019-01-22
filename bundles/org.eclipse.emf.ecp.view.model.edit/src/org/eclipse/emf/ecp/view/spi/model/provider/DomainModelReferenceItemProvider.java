@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.model.provider;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -21,6 +22,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,6 +32,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -47,6 +51,8 @@ public class DomainModelReferenceItemProvider
 	ITreeItemContentProvider,
 	IItemLabelProvider,
 	IItemPropertySource {
+	private final AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -56,6 +62,10 @@ public class DomainModelReferenceItemProvider
 	 */
 	public DomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 	}
 
 	/**
@@ -123,11 +133,14 @@ public class DomainModelReferenceItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_DomainModelReference_type"); //$NON-NLS-1$
+		final VDomainModelReference dmr = (VDomainModelReference) object;
+		final String label = dmr.getSegments().stream().map(adapterFactoryItemDelegator::getText)
+			.collect(Collectors.joining(" -> ")); //$NON-NLS-1$
+		return label == null ? getString("_UI_DomainModelReference_type") : label; //$NON-NLS-1$
 	}
 
 	/**
