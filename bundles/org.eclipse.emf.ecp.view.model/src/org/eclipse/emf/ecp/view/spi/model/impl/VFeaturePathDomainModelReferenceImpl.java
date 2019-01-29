@@ -308,13 +308,18 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			}
 			EObject child = (EObject) currentResolvedEObject.eGet(eReference);
 			if (createMissingChildren && child == null) {
-				if (!eReference.getEReferenceType().isAbstract() && !eReference.getEReferenceType().isInterface()) {
-					child = EcoreUtil.create(eReference.getEReferenceType());
-				} else if (currentLeftReferences.size() == 1
+				if (eReference.getEReferenceType() == VViewPackage.Literals.DOMAIN_MODEL_REFERENCE
 					&& !domainModelEFeatureValue.getEContainingClass().isAbstract()
 					&& !domainModelEFeatureValue.getEContainingClass().isInterface()) {
+					// This case should only be relevant for the table tooling:
+					// If a feature is defined by a subclass of VDomainModelReference,
+					// instantiate the sub class instead of a general DMR
 					child = EcoreUtil.create(domainModelEFeatureValue.getEContainingClass());
+				} else if (!eReference.getEReferenceType().isAbstract()
+					&& !eReference.getEReferenceType().isInterface()) {
+					child = EcoreUtil.create(eReference.getEReferenceType());
 				}
+
 				if (child != null) {
 					/*
 					 * only set the reference if we could create a child. otherwise we could end up in a infinite loop,
