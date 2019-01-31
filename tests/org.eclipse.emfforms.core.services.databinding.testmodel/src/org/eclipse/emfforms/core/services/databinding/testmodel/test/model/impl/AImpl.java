@@ -11,11 +11,15 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -29,6 +33,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl#getB <em>B</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl#getBList
+ * <em>BList</em>}</li>
  * </ul>
  *
  * @generated
@@ -44,6 +50,17 @@ public class AImpl extends EImpl implements A {
 	 * @ordered
 	 */
 	protected B b;
+
+	/**
+	 * The cached value of the '{@link #getBList() <em>BList</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getBList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<B> bList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,6 +149,20 @@ public class AImpl extends EImpl implements A {
 	 * @generated
 	 */
 	@Override
+	public EList<B> getBList() {
+		if (bList == null) {
+			bList = new EObjectResolvingEList<>(B.class, this, TestPackage.A__BLIST);
+		}
+		return bList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case TestPackage.A__B:
@@ -151,6 +182,8 @@ public class AImpl extends EImpl implements A {
 		switch (featureID) {
 		case TestPackage.A__B:
 			return getB();
+		case TestPackage.A__BLIST:
+			return getBList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -161,11 +194,16 @@ public class AImpl extends EImpl implements A {
 	 *
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case TestPackage.A__B:
 			setB((B) newValue);
+			return;
+		case TestPackage.A__BLIST:
+			getBList().clear();
+			getBList().addAll((Collection<? extends B>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -183,6 +221,9 @@ public class AImpl extends EImpl implements A {
 		case TestPackage.A__B:
 			setB((B) null);
 			return;
+		case TestPackage.A__BLIST:
+			getBList().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -198,6 +239,8 @@ public class AImpl extends EImpl implements A {
 		switch (featureID) {
 		case TestPackage.A__B:
 			return b != null;
+		case TestPackage.A__BLIST:
+			return bList != null && !bList.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

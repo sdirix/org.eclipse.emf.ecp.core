@@ -192,7 +192,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	@Override
 	public EMap<EClass, String> getEClassToString() {
 		if (eClassToString == null) {
-			eClassToString = new EcoreEMap<EClass, String>(TestPackage.Literals.ECLASS_TO_ESTRING_MAP,
+			eClassToString = new EcoreEMap<>(TestPackage.Literals.ECLASS_TO_ESTRING_MAP,
 				EClassToEStringMapImpl.class, this, TestPackage.C__ECLASS_TO_STRING);
 		}
 		return eClassToString;
@@ -207,7 +207,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	@Override
 	public EMap<EClass, A> getEClassToA() {
 		if (eClassToA == null) {
-			eClassToA = new EcoreEMap<EClass, A>(TestPackage.Literals.ECLASS_TO_AMAP, EClassToAMapImpl.class, this,
+			eClassToA = new EcoreEMap<>(TestPackage.Literals.ECLASS_TO_AMAP, EClassToAMapImpl.class, this,
 				TestPackage.C__ECLASS_TO_A);
 		}
 		return eClassToA;
@@ -267,7 +267,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	@Override
 	public EMap<EClass, E> getEClassToE() {
 		if (eClassToE == null) {
-			eClassToE = new EcoreEMap<EClass, E>(TestPackage.Literals.ECLASS_TO_EMAP, EClassToEMapImpl.class, this,
+			eClassToE = new EcoreEMap<>(TestPackage.Literals.ECLASS_TO_EMAP, EClassToEMapImpl.class, this,
 				TestPackage.C__ECLASS_TO_E);
 		}
 		return eClassToE;

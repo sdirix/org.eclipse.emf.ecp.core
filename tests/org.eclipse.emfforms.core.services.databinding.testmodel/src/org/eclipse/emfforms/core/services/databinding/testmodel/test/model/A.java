@@ -11,6 +11,8 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model;
 
+import org.eclipse.emf.common.util.EList;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>A</b></em>'.
@@ -21,6 +23,7 @@ package org.eclipse.emfforms.core.services.databinding.testmodel.test.model;
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getB <em>B</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getBList <em>BList</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getA()
@@ -56,5 +59,22 @@ public interface A extends E {
 	 * @generated
 	 */
 	void setB(B value);
+
+	/**
+	 * Returns the value of the '<em><b>BList</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>BList</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>BList</em>' reference list.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getA_BList()
+	 * @model
+	 * @generated
+	 */
+	EList<B> getBList();
 
 } // A

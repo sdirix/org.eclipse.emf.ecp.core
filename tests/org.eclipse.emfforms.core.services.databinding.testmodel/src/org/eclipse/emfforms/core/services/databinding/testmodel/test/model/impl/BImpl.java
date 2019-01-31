@@ -180,7 +180,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	@Override
 	public EList<C> getCList() {
 		if (cList == null) {
-			cList = new EObjectResolvingEList<C>(C.class, this, TestPackage.B__CLIST);
+			cList = new EObjectResolvingEList<>(C.class, this, TestPackage.B__CLIST);
 		}
 		return cList;
 	}
@@ -194,7 +194,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	@Override
 	public EList<E> getEList() {
 		if (eList == null) {
-			eList = new EObjectContainmentEList<E>(E.class, this, TestPackage.B__ELIST);
+			eList = new EObjectContainmentEList<>(E.class, this, TestPackage.B__ELIST);
 		}
 		return eList;
 	}

@@ -127,7 +127,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	@Override
 	public EList<Integer> getYList() {
 		if (yList == null) {
-			yList = new EDataTypeUniqueEList<Integer>(Integer.class, this, TestPackage.D__YLIST);
+			yList = new EDataTypeUniqueEList<>(Integer.class, this, TestPackage.D__YLIST);
 		}
 		return yList;
 	}
