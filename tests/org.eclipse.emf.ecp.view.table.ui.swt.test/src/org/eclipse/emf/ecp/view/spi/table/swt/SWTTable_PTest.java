@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,11 +8,13 @@
  *
  * Contributors:
  * Johannes Faltermeier
- * Christian W. Damus - bug 527740
+ * Christian W. Damus - bugs 527740, 544116
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -28,17 +30,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -66,6 +73,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -110,6 +118,7 @@ import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -902,6 +911,99 @@ public class SWTTable_PTest {
 		SWTTestUtil.waitForUIThread();
 
 		assertEquals("The tool tip text should be empty.", "", validationIcon.getToolTipText());
+	}
+
+	/**
+	 * Test that on validation status changes the table renderer does not update the entire
+	 * table but only the rows that have validation changes.
+	 *
+	 * @see <a href="http://eclip.se/544116">bug 544116</a>
+	 */
+	@Test
+	public void testValidationUpdates() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+
+		// domain
+		((EClass) domainElement).getEStructuralFeatures().clear();
+		final EAttribute attribute1 = createEAttribute("a", EcorePackage.Literals.ESTRING, 0, 2);
+		final EAttribute attribute2 = createEAttribute("b", EcorePackage.Literals.ESTRING, 0, 11);
+		final EAttribute attribute3 = createEAttribute("c", EcorePackage.Literals.ESTRING, 0, 1);
+		final EAttribute attribute4 = createEAttribute("d", EcorePackage.Literals.ESTRING, 0, 1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute2);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute3);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute4);
+
+		// table control
+		final VTableControl tableControl = TableTestUtil.createTableControl();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		tableDMR.getColumnDomainModelReferences().add(
+			createDMR(EcorePackage.eINSTANCE.getETypedElement_UpperBound()));
+
+		// render
+		final ViewModelContext context = new ViewModelContextImpl(tableControl, domainElement);
+		final List<String> requestedCells = new ArrayList<>();
+		final TableControlSWTRenderer tableRenderer = new TableControlSWTRenderer(tableControl, context,
+			context.getService(ReportService.class),
+			context.getService(EMFFormsDatabindingEMF.class),
+			context.getService(EMFFormsLabelProvider.class),
+			context.getService(VTViewTemplateProvider.class),
+			context.getService(ImageRegistryService.class),
+			context.getService(EMFFormsEditSupport.class)) {
+
+			@Override
+			protected CellLabelProvider createCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor,
+				@SuppressWarnings("rawtypes") IObservableMap attributeMap, VTableControl vTableControl,
+				VDomainModelReference dmr,
+				Control table) {
+
+				if (feature == EcorePackage.Literals.ENAMED_ELEMENT__NAME) {
+					final StringCellEditor editor = new StringCellEditor() {
+						@Override
+						public String getFormatedString(Object value) {
+							requestedCells.add((String) value);
+							return super.getFormatedString(value);
+						}
+					};
+					cellEditor = editor;
+				}
+				return super.createCellLabelProvider(feature, cellEditor, attributeMap, vTableControl, dmr, table);
+			}
+		};
+		tableRenderer.init();
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		tableRenderer.finalizeRendering(shell);
+
+		// Initialize the validation status
+		VDiagnostic vdiag = VViewFactory.eINSTANCE.createDiagnostic();
+		Diagnostic diag = new BasicDiagnostic(Diagnostic.ERROR, "source", 0, "error",
+			new Object[] { attribute2, EcorePackage.Literals.ETYPED_ELEMENT__ETYPE });
+		vdiag.getDiagnostics().add(diag);
+		tableControl.setDiagnostic(vdiag);
+
+		SWTTestUtil.waitForUIThread();
+
+		// Reset our tracking of accessed cells
+		requestedCells.clear();
+
+		// Update the validation results
+		vdiag = VViewFactory.eINSTANCE.createDiagnostic();
+		diag = new BasicDiagnostic(Diagnostic.ERROR, "source", 0, "error",
+			// A different object than the initial validation status
+			new Object[] { attribute3, EcorePackage.Literals.ETYPED_ELEMENT__ETYPE });
+		vdiag.getDiagnostics().add(diag);
+		tableControl.setDiagnostic(vdiag);
+
+		SWTTestUtil.waitForUIThread();
+
+		// Notably, we updated these two rows in order and *neither* "a" nor "d"
+		assertThat(requestedCells, equalTo(Arrays.asList("b", "c")));
 	}
 
 	@Test

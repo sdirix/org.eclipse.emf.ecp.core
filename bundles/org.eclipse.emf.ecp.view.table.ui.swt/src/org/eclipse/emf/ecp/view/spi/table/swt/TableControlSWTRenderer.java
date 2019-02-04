@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,8 +9,11 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
+ * Christian W. Damus - bug 544116
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
+
+import static java.util.stream.Collectors.toCollection;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,7 +24,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -242,7 +247,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private AbstractTableViewerComposite<? extends AbstractTableViewer> tableViewerComposite;
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
-	private IObservableList list;
+	private IObservableList<?> list;
 	private final RunnableManager runnableManager = new RunnableManager(Display.getDefault());
 
 	private TableViewerSWTCustomization<?> customization;
@@ -320,11 +325,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return renderTableControl(gridCell, parent);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Control createLabel(final Composite parent) {
 		final VDomainModelReference dmrToCheck = getDMRToMultiReference();
-		final IObservableValue labelText = getLabelText(dmrToCheck);
-		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck);
+		final IObservableValue<?> labelText = getLabelText(dmrToCheck);
+		final IObservableValue<?> labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 		final Label titleLabel = new Label(parent, AbstractControlSWTRendererUtil
 			.getLabelStyleBits(getVTViewTemplateProvider(), getVElement(), getViewModelContext()));
@@ -372,8 +378,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				actionConfiguration);
 
 			/* get the label text/tooltip */
-			final IObservableValue labelText = getLabelText(dmrToCheck);
-			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck);
+			final IObservableValue<?> labelText = getLabelText(dmrToCheck);
+			final IObservableValue<?> labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
@@ -644,8 +650,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
-	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
-		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
+	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent,
+		@SuppressWarnings("rawtypes") IObservableList list,
+		@SuppressWarnings("rawtypes") IObservableValue labelText,
+		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
@@ -756,7 +764,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			: Optional.<Integer> empty();
 	}
 
-	private void addRelayoutListenerIfNeeded(IObservableList list, final Composite composite) {
+	private <T> void addRelayoutListenerIfNeeded(IObservableList<T> list, final Composite composite) {
 		if (list == null) {
 			return;
 		}
@@ -770,9 +778,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		final GridData gridData = GridData.class.cast(composite.getLayoutData());
-		list.addListChangeListener(new IListChangeListener() {
+		list.addListChangeListener(new IListChangeListener<T>() {
 			@Override
-			public void handleListChange(ListChangeEvent event) {
+			public void handleListChange(ListChangeEvent<? extends T> event) {
 				gridData.heightHint = getTableHeightHint();
 				EMFFormsSWTLayoutUtil.adjustParentSize(composite);
 			}
@@ -802,16 +810,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					continue;
 				}
 
-				final IObservableValue text = getLabelTextForColumn(dmr, clazz);
-				final IObservableValue tooltip = getLabelTooltipTextForColumn(dmr, clazz);
+				final IObservableValue<?> text = getLabelTextForColumn(dmr, clazz);
+				final IObservableValue<?> tooltip = getLabelTooltipTextForColumn(dmr, clazz);
 
 				// Use the same editing domain for the columns as for the view's domain object
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
-				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz,
+				final IValueProperty<?, ?> valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz,
 					editingDomain);
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
-				final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
+				@SuppressWarnings("unchecked")
+				final IObservableMap<?, ?> observableMap = valueProperty.observeDetail(cp.getKnownElements());
 
 				final TableControlEditingSupportAndLabelProvider labelProvider = new TableControlEditingSupportAndLabelProvider(
 					tempInstance, eStructuralFeature, dmr, valueProperty, observableMap,
@@ -891,7 +900,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite.setComparator(comparator, sortableColumns);
 	}
 
-	private IObservableValue getLabelText(VDomainModelReference dmrToCheck) {
+	private IObservableValue<?> getLabelText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
@@ -906,7 +915,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
+	private IObservableValue<?> getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
 			return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {
@@ -916,7 +925,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck) {
+	private IObservableValue<?> getLabelTooltipText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
@@ -931,7 +940,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue getLabelTooltipTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
+	private IObservableValue<?> getLabelTooltipTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
 			return getEMFFormsLabelProvider().getDescription(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {
@@ -1071,6 +1080,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @return the table viewer composite
 	 * @since 1.13
 	 */
+	@SuppressWarnings("rawtypes")
 	protected AbstractTableViewerComposite getTableViewerComposite() {
 		return tableViewerComposite;
 	}
@@ -1451,8 +1461,30 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	@Override
+	protected void applyValidation(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
+		final Set<Object> updates = Stream
+			.concat(oldDiagnostic.getDiagnostics().stream(), newDiagnostic.getDiagnostics().stream())
+			.map(this::getSubject).filter(Objects::nonNull).collect(toCollection(LinkedHashSet::new));
+
+		runnableManager.executeAsync(new ApplyValidationRunnable(updates));
+	}
+
+	private Object getSubject(Object diagnostic) {
+		Object result = null;
+
+		if (diagnostic instanceof Diagnostic) {
+			final List<?> data = ((Diagnostic) diagnostic).getData();
+			result = data.isEmpty() ? null : data.get(0);
+		}
+
+		return result;
+	}
+
+	@Override
 	protected void applyValidation() {
-		runnableManager.executeAsync(new ApplyValidationRunnable());
+		if (!runnableManager.isRunning()) {
+			runnableManager.executeAsync(new ApplyValidationRunnable());
+		}
 	}
 
 	/**
@@ -1644,11 +1676,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 
-		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
+		final IObservableList<?> oldList = (IObservableList<?>) getTableViewer().getInput();
 		oldList.dispose();
 
 		final EObject domainModel = getViewModelContext().getDomainModel();
-		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
+		final IObservableList<?> list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
 			domainModel);
 		getTableViewer().setInput(list);
 
@@ -1713,7 +1745,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected CellLabelProvider createCellLabelProvider(
 		EStructuralFeature feature,
 		CellEditor cellEditor,
-		IObservableMap attributeMap,
+		@SuppressWarnings("rawtypes") IObservableMap attributeMap,
 		VTableControl vTableControl,
 		VDomainModelReference dmr,
 		Control table) {
@@ -1910,6 +1942,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 */
 	private final class ApplyValidationRunnable implements Runnable {
+		private Collection<?> updates;
+
+		ApplyValidationRunnable() {
+			super();
+		}
+
+		ApplyValidationRunnable(Collection<?> updates) {
+			super();
+
+			this.updates = updates;
+		}
+
 		@Override
 		public void run() {
 			if (isDisposing) {
@@ -1936,11 +1980,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 			showValidationSummaryTooltip(setting.get(), showValidationSummaryTooltip);
 
-			final Collection<?> collection = (Collection<?>) setting.get().get(true);
-			if (!collection.isEmpty()) {
-				for (final Object object : collection) {
-					getTableViewer().update(object, null);
-				}
+			if (updates != null) {
+				// Update these specific objects
+				getTableViewer().update(updates.toArray(), null);
+			} else {
+				// Just refresh everything
+				getTableViewer().refresh();
 			}
 		}
 
@@ -1979,8 +2024,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private final InternalEObject tempInstance;
 		private final EStructuralFeature eStructuralFeature;
 		private final VDomainModelReference dmr;
-		private final IValueProperty valueProperty;
-		private final IObservableMap observableMap;
+		private final IValueProperty<?, ?> valueProperty;
+		private final IObservableMap<?, ?> observableMap;
 
 		private CellEditor cellEditor;
 		private ECPTableEditingSupport observableSupport;
@@ -1990,7 +2035,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private TableControlEditingSupportAndLabelProvider(InternalEObject tempInstance,
 			EStructuralFeature eStructuralFeature, VDomainModelReference dmr,
-			IValueProperty valueProperty, IObservableMap observableMap, int indexOfColumn) {
+			IValueProperty<?, ?> valueProperty, IObservableMap<?, ?> observableMap, int indexOfColumn) {
 			this.tempInstance = tempInstance;
 			this.eStructuralFeature = eStructuralFeature;
 			this.dmr = dmr;
@@ -2238,7 +2283,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 * @param table the swt table
 		 * @since 1.10
 		 */
-		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
+		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor,
+			@SuppressWarnings("rawtypes") IObservableMap attributeMap,
 			VTableControl vTableControl, VDomainModelReference dmr, Control table) {
 			super(attributeMap);
 			this.vTableControl = vTableControl;
@@ -2356,15 +2402,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final CellEditor cellEditor;
 
+		@SuppressWarnings("rawtypes")
 		private final IValueProperty valueProperty;
 
 		private final VDomainModelReference domainModelReference;
 
 		/**
-		 * @param viewer
+		 * Initializes me.
+		 *
+		 * @param viewer the viewer to edit
+		 * @param cellEditor the cell editor used to edit the {@code viewer}
+		 * @param domainModelReference the model reference that populates the {@code viewer}
+		 * @param valueProperty the value property that supplies the {@code viewer}
 		 */
 		ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor, VDomainModelReference domainModelReference,
-			IValueProperty valueProperty) {
+			IValueProperty<?, ?> valueProperty) {
 			super(viewer);
 			this.cellEditor = cellEditor;
 			this.valueProperty = valueProperty;
@@ -2387,7 +2439,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 
 			// TODO: use getSettingFromObservable(dmr, eObject) instead?
-			final IObservableValue observableValue = valueProperty.observe(element);
+			@SuppressWarnings("unchecked")
+			final IObservableValue<?> observableValue = valueProperty.observe(element);
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -2449,10 +2502,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				ECPElementAwareCellEditor.class.cast(cellEditor).updateRowElement(cell.getElement());
 			}
 
-			final IObservableValue target = doCreateCellEditorObservable(cellEditor);
+			final IObservableValue<?> target = doCreateCellEditorObservable(cellEditor);
 			Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
 
-			final IObservableValue model = valueProperty.observe(cell.getElement());
+			@SuppressWarnings("unchecked")
+			final IObservableValue<?> model = valueProperty.observe(cell.getElement());
 			Assert.isNotNull(model, "The databinding service did not return an observable"); //$NON-NLS-1$
 
 			final Binding binding = createBinding(target, model);
@@ -2469,6 +2523,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return cellEditor;
 		}
 
+		/**
+		 * Bind a {@code model} value to a {@code target} value.
+		 *
+		 * @param target the binding target
+		 * @param model the binding source
+		 * @return the binding
+		 */
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		protected Binding createBinding(IObservableValue target, IObservableValue model) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return getDataBindingContext().bindValue(target, model,
@@ -2478,6 +2540,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return getDataBindingContext().bindValue(target, model);
 		}
 
+		/**
+		 * Create an observable value to supply the cells edited by a cell editor.
+		 *
+		 * @param cellEditor a cell editor
+		 * @return the observable value to supply it with data to edit
+		 */
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
@@ -2540,16 +2609,26 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		class EditingState {
 
-			private final IObservableValue target;
-			private final IObservableValue model;
+			private final IObservableValue<?> target;
+			private final IObservableValue<?> model;
 			private final Binding binding;
 
-			EditingState(Binding binding, IObservableValue target, IObservableValue model) {
+			/**
+			 * Initializes me with the data binding details involved in editing.
+			 *
+			 * @param binding the data binding
+			 * @param target the bound target value
+			 * @param model the bound model value
+			 */
+			EditingState(Binding binding, IObservableValue<?> target, IObservableValue<?> model) {
 				this.binding = binding;
 				this.target = target;
 				this.model = model;
 			}
 
+			/**
+			 * Dispose the data binding that I maintain.
+			 */
 			void dispose() {
 				binding.dispose();
 				target.dispose();
