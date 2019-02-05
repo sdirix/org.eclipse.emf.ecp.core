@@ -521,6 +521,10 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		columnConfiguration.matchFilter().setValue("foo");
 		assertEquals(0, filterVisible(grid.getItems()).length);
 
+		// double check, that extending a filter which lead to an empty result still created an empty result
+		columnConfiguration.matchFilter().setValue("foo2");
+		assertEquals(0, filterVisible(grid.getItems()).length);
+
 		columnConfiguration.matchFilter().resetToDefault();
 		assertEquals(expectedRows, filterVisible(grid.getItems()).length);
 
