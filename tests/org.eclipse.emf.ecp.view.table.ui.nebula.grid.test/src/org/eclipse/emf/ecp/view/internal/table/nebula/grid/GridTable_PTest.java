@@ -19,8 +19,6 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -382,7 +380,7 @@ public class GridTable_PTest {
 		final ScrolledComposite scrolledComposite = (ScrolledComposite) sash.getChildren()[1];
 		final Composite parentForECPView = (Composite) scrolledComposite.getChildren()[0];
 		assertEquals(2, table.getItemCount());
-		final GridTableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);
+		final GridTableViewer tableViewer = GridTestsUtil.getTableViewerFromRenderer(tableRenderer);
 
 		// no initial selection
 		assertEquals(0, parentForECPView.getChildren().length);
@@ -619,25 +617,6 @@ public class GridTable_PTest {
 			.createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 		return tableControlHandle;
-	}
-
-	private GridTableViewer getTableViewerFromRenderer(AbstractSWTRenderer<VElement> renderer) {
-		try {
-			final Method method = TableControlSWTRenderer.class.getDeclaredMethod("getTableViewer");
-			method.setAccessible(true);
-			return (GridTableViewer) method.invoke(renderer);
-		} catch (final NoSuchMethodException ex) {
-			fail(ex.getMessage());
-		} catch (final SecurityException ex) {
-			fail(ex.getMessage());
-		} catch (final IllegalAccessException ex) {
-			fail(ex.getMessage());
-		} catch (final IllegalArgumentException ex) {
-			fail(ex.getMessage());
-		} catch (final InvocationTargetException ex) {
-			fail(ex.getMessage());
-		}
-		return null;
 	}
 
 	/**
