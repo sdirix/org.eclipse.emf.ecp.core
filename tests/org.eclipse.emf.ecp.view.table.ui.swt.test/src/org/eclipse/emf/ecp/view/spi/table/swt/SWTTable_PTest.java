@@ -483,9 +483,9 @@ public class SWTTable_PTest {
 		EMFFormsNoRendererException {
 		// domain
 		((EClass) domainElement).getEStructuralFeatures().clear();
-		final EAttribute attribute1 = createEAttribute("a", EcorePackage.Literals.ESTRING, 0, 2);
-		final EAttribute attribute2 = createEAttribute("b", EcorePackage.Literals.ESTRING, 0, 11);
-		final EAttribute attribute3 = createEAttribute("c", EcorePackage.Literals.ESTRING, 0, 1);
+		final EAttribute attribute1 = createEAttribute("a2", EcorePackage.Literals.ESTRING, 0, 2);
+		final EAttribute attribute2 = createEAttribute("a10", EcorePackage.Literals.ESTRING, 0, 11);
+		final EAttribute attribute3 = createEAttribute("a10b", EcorePackage.Literals.ESTRING, 0, 1);
 		((EClass) domainElement).getEStructuralFeatures().add(attribute1);
 		((EClass) domainElement).getEStructuralFeatures().add(attribute2);
 		((EClass) domainElement).getEStructuralFeatures().add(attribute3);

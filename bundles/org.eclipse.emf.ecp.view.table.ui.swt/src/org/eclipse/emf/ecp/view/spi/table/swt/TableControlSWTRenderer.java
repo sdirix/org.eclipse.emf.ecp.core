@@ -113,6 +113,7 @@ import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -1656,14 +1657,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		if (leftValue == null) {
-			rc = 1;
+			if (rightValue == null) {
+				rc = 0;
+			} else {
+				rc = 1;
+			}
 		} else if (rightValue == null) {
 			rc = -1;
 		} else {
-			if (leftValue instanceof Comparable && leftValue.getClass().isInstance(rightValue)) {
+			if (!(leftValue instanceof String) && leftValue instanceof Comparable
+				&& leftValue.getClass().isInstance(rightValue)) {
 				rc = Comparable.class.cast(leftValue).compareTo(rightValue);
 			} else {
-				rc = leftValue.toString().compareTo(rightValue.toString());
+				rc = NumberAwareStringComparator.getInstance().compare(leftValue.toString(), rightValue.toString());
 			}
 		}
 		// If descending order, flip the direction

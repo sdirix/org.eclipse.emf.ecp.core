@@ -62,6 +62,7 @@ import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundle
 import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -72,6 +73,7 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.ui.ObjectViewerComparator;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -89,8 +91,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -842,7 +842,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			| ColumnViewerEditor.KEYBOARD_ACTIVATION);
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
-		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
+		final ObjectViewerComparator comparator = new ObjectViewerComparator(this::compare);
 		final boolean isMoveDisabled = !showMoveUpButton() && !showMoveDownButton();
 		if (isMoveDisabled) {
 			tableViewer.setComparator(comparator);
@@ -903,7 +903,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
-		final ECPTableViewerComparator comparator, final TableColumn column) {
+		final ObjectViewerComparator comparator, final TableColumn column) {
 		final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1043,47 +1043,6 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 	}
 
-	/**
-	 * The {@link ViewerComparator} for the multi reference renderer's table which allows 3 states for sort order:
-	 * none, up and down. This comparator does not use column specific values but only the objects' labels because the
-	 * multi reference renderer always only has one column that shows the label.
-	 *
-	 * @author Eugen Neufeld
-	 *
-	 */
-	private class ECPTableViewerComparator extends ViewerComparator {
-		private static final int NONE = 0;
-		private int direction = NONE;
-
-		ECPTableViewerComparator() {
-			direction = NONE;
-		}
-
-		/** Toggles through the sorting directions: NONE -&gt; UP -&gt; DOWN -&gt; NONE. */
-		public void toggleDirection() {
-			direction = (direction + 1) % 3;
-		}
-
-		public int getDirection() {
-			switch (direction) {
-			case 0:
-				return SWT.NONE;
-			case 1:
-				return SWT.UP;
-			case 2:
-				return SWT.DOWN;
-			default:
-				return SWT.NONE;
-			}
-
-		}
-
-		@Override
-		public int compare(Viewer viewer, Object e1, Object e2) {
-			return MultiReferenceSWTRenderer.this.compare(direction, e1, e2);
-		}
-	}
-
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		// TODO rebinding of text and tooltip needed? If yes, complete!
@@ -1155,11 +1114,15 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final String label1 = labelProvider.getText(object1);
 		final String label2 = labelProvider.getText(object2);
 		if (label1 == null) {
-			rc = 1;
+			if (label2 == null) {
+				rc = 0;
+			} else {
+				rc = 1;
+			}
 		} else if (label2 == null) {
 			rc = -1;
 		} else {
-			rc = label1.toString().compareTo(label2.toString());
+			rc = NumberAwareStringComparator.getInstance().compare(label1.toString(), label2.toString());
 		}
 		// If descending order, flip the direction
 		if (direction == 2) {

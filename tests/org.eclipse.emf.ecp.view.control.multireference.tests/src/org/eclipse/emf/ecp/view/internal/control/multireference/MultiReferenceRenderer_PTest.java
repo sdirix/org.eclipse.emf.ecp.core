@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
@@ -89,6 +90,7 @@ import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -96,6 +98,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -595,10 +598,14 @@ public class MultiReferenceRenderer_PTest {
 	}
 
 	protected Table createLeaguePlayersTable() {
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		return createLeaguePlayersTable(league);
+	}
+
+	protected Table createLeaguePlayersTable(final League league) {
 		final EditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
 		final Resource bowling = domain.getResourceSet().createResource(URI.createURI("foo.ecore")); //$NON-NLS-1$
-		final League league = BowlingFactory.eINSTANCE.createLeague();
 		bowling.getContents().add(league);
 
 		final IObservableList<?> observableList = EMFEditProperties
@@ -855,38 +862,62 @@ public class MultiReferenceRenderer_PTest {
 		}
 	}
 
-	public void compare() {
-		// final MultiReferenceSWTRenderer multi = new MultiReferenceSWTRenderer(mock(VControl.class),
-		// mock(ViewModelContext.class), mock(ReportService.class), mock(EMFFormsDatabinding.class),
-		// mock(EMFFormsLabelProvider.class), mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class));
+	@Test
+	public void compare()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		showMoveButtons = false;
 
-		// Label: Player A
-		final Player pA = BowlingFactory.eINSTANCE.createPlayer();
-		pA.setName("A"); //$NON-NLS-1$
+		// Label: Player a2
+		final Player p1 = BowlingFactory.eINSTANCE.createPlayer();
+		p1.setName("a2"); //$NON-NLS-1$
 
-		// Label: Player C
-		final Player pC = BowlingFactory.eINSTANCE.createPlayer();
-		pA.setName("C"); //$NON-NLS-1$
+		// Label: Player a10
+		final Player p2 = BowlingFactory.eINSTANCE.createPlayer();
+		p2.setName("a10a"); //$NON-NLS-1$
 
-		// Label: Player B
-		final Player pB = BowlingFactory.eINSTANCE.createPlayer();
-		pA.setName("B"); //$NON-NLS-1$
+		// Label: Player a10a
+		final Player p3 = BowlingFactory.eINSTANCE.createPlayer();
+		p3.setName("a10"); //$NON-NLS-1$
 
-		assertEquals(0, renderer.compare(0, pA, pB));
-		assertEquals(0, renderer.compare(0, pA, pC));
-		assertEquals(0, renderer.compare(0, pB, pC));
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(p1);
+		league.getPlayers().add(p2);
+		league.getPlayers().add(p3);
 
-		// direction UP
-		assertEquals(0, renderer.compare(1, pA, pA));
-		assertEquals(-1, renderer.compare(1, pA, pB));
-		assertEquals(-1, renderer.compare(1, pA, pC));
-		assertEquals(-1, renderer.compare(1, pB, pC));
+		final Table playersTable = createLeaguePlayersTable(league);
 
-		// direction DOWN
-		assertEquals(0, renderer.compare(2, pA, pA));
-		assertEquals(1, renderer.compare(2, pA, pB));
-		assertEquals(1, renderer.compare(2, pA, pC));
-		assertEquals(1, renderer.compare(2, pB, pC));
+		// Initially, items should be sorted by insertion order
+		assertEquals(SWT.NONE, playersTable.getSortDirection());
+		assertItemOrder(playersTable, p1, p2, p3);
+
+		SWTTestUtil.selectWidget(playersTable.getColumn(0));
+		SWTTestUtil.waitForUIThread();
+
+		// ascending
+		assertEquals(SWT.UP, playersTable.getSortDirection());
+		assertItemOrder(playersTable, p1, p3, p2);
+
+		SWTTestUtil.selectWidget(playersTable.getColumn(0));
+		SWTTestUtil.waitForUIThread();
+
+		// descending
+		assertEquals(SWT.DOWN, playersTable.getSortDirection());
+		assertItemOrder(playersTable, p2, p3, p1);
+
+		SWTTestUtil.selectWidget(playersTable.getColumn(0));
+		SWTTestUtil.waitForUIThread();
+
+		// insertion order again
+		assertEquals(SWT.NONE, playersTable.getSortDirection());
+		assertItemOrder(playersTable, p1, p2, p3);
+	}
+
+	private static void assertItemOrder(Table table, Object... objects) {
+		assertEquals(objects.length, table.getItemCount());
+		final TableItem[] items = table.getItems();
+		for (int i = 0; i < items.length; i++) {
+			assertSame(objects[i], items[i].getData());
+		}
 	}
 
 	/**

@@ -11,6 +11,7 @@ Export-Package: org.eclipse.emfforms.common;version="1.20.0",
  org.eclipse.emfforms.spi.common.converter;version="1.20.0",
  org.eclipse.emfforms.spi.common.locale;version="1.20.0",
  org.eclipse.emfforms.spi.common.report;version="1.20.0",
+ org.eclipse.emfforms.spi.common.sort;version="1.20.0",
  org.eclipse.emfforms.spi.common.validation;version="1.20.0"
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
