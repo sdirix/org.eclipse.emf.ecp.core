@@ -91,6 +91,7 @@ import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -118,6 +119,11 @@ import org.osgi.framework.Bundle;
  */
 @RunWith(DatabindingClassRunner.class)
 public class MultiReferenceRenderer_PTest {
+	private static final String UUID_LINK = "UUID#link"; //$NON-NLS-1$
+	private static final String UUID_ADD = "UUID#add"; //$NON-NLS-1$
+	private static final String UUID_DELETE = "UUID#delete"; //$NON-NLS-1$
+	private static final String UUID_DOWN = "UUID#down"; //$NON-NLS-1$
+	private static final String UUID_UP = "UUID#up"; //$NON-NLS-1$
 	private static final String TEST_DESCRIPTION = "test-description"; //$NON-NLS-1$
 	private static final String TEST_DISPLAYNAME = "test-displayName"; //$NON-NLS-1$
 	private static Realm realm;
@@ -540,15 +546,15 @@ public class MultiReferenceRenderer_PTest {
 	public void testButtonData() {
 		showMoveButtons = true;
 		final Table table = createLeaguePlayersTable();
-		assertEquals("UUID#up", SWTTestUtil.findControl(table.getParent().getParent(), 0, Button.class) //$NON-NLS-1$
+		assertEquals(UUID_UP, SWTTestUtil.findControl(table.getParent().getParent(), 0, Button.class)
 			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals("UUID#down", SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class) //$NON-NLS-1$
+		assertEquals(UUID_DOWN, SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class)
 			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals("UUID#link", SWTTestUtil.findControl(table.getParent().getParent(), 2, Button.class) //$NON-NLS-1$
+		assertEquals(UUID_LINK, SWTTestUtil.findControl(table.getParent().getParent(), 2, Button.class)
 			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals("UUID#add", SWTTestUtil.findControl(table.getParent().getParent(), 3, Button.class) //$NON-NLS-1$
+		assertEquals(UUID_ADD, SWTTestUtil.findControl(table.getParent().getParent(), 3, Button.class)
 			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals("UUID#delete", SWTTestUtil.findControl(table.getParent().getParent(), 4, Button.class) //$NON-NLS-1$
+		assertEquals(UUID_DELETE, SWTTestUtil.findControl(table.getParent().getParent(), 4, Button.class)
 			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
@@ -678,28 +684,59 @@ public class MultiReferenceRenderer_PTest {
 	}
 
 	/**
-	 * Test that the control is disabled when it's set to read only
+	 * Test that the control is disabled when it's set to read only.
 	 *
 	 * @throws DatabindingFailedException
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
 	 */
 	@Test
-	public void testReadOnlyDisablesControl()
+	public void testReadOnlyNotDisablesControl()
 		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		when(renderer.getVElement().isReadonly()).thenReturn(true);
+		showMoveButtons = true;
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(true);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
 		final TestObservableValue observableValue = mock(TestObservableValue.class);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
-		System.out.println(renderer.getVElement().isReadonly());
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
-		assertFalse(composite.isEnabled());
+		// only buttons shall be not visible
+		// main composite shall still be enabled
+		assertTrue(composite.isEnabled());
+	}
+
+	/**
+	 * Test that the control and buttons are visible when it's not read only.
+	 *
+	 * @throws DatabindingFailedException
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testNotReadOnlyButtonsVisibility()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		showMoveButtons = true;
+		when(renderer.getVElement().isReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(false);
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		renderer.finalizeRendering(shell);
+
+		checkButton(composite, UUID_UP, true, false);
+		checkButton(composite, UUID_DOWN, true, false);
+		checkButton(composite, UUID_DELETE, true, false);
+		checkNoButton(composite, UUID_LINK);
+		checkNoButton(composite, UUID_ADD);
 	}
 
 	/**
 	 * Test that the control is disabled when it's effectively set to read only because a parent is read only.
+	 * Test also buttons visibility
 	 *
 	 * @throws DatabindingFailedException
 	 * @throws NoRendererFoundException
@@ -708,7 +745,43 @@ public class MultiReferenceRenderer_PTest {
 	@Test
 	public void testEffectivelyReadOnlyDisablesControl()
 		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		showMoveButtons = true;
 		when(renderer.getVElement().isReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(true);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
+		// Simulate control's parent that is set to readOnly
+		final VView parent = mock(VView.class);
+		when(parent.isReadonly()).thenReturn(true);
+		when(renderer.getVElement().eContainer()).thenReturn(parent);
+
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		renderer.finalizeRendering(shell);
+		// read only does not disable control, but hides button
+		assertTrue(composite.isEnabled());
+		checkButton(composite, UUID_UP, false, false);
+		checkButton(composite, UUID_DOWN, false, false);
+		checkButton(composite, UUID_DELETE, false, false);
+		checkNoButton(composite, UUID_LINK);
+		checkNoButton(composite, UUID_ADD);
+	}
+
+	/**
+	 * Test that the control is disabled when VElement enablement is set to false
+	 *
+	 * @throws DatabindingFailedException
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testControlDisabled()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		showMoveButtons = true;
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEnabled()).thenReturn(false);
 
 		// Simulate control's parent that is set to readOnly
 		final VView parent = mock(VView.class);
@@ -719,10 +792,84 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
-		System.out.println(renderer.getVElement().isReadonly());
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
 		assertFalse(composite.isEnabled());
+
+		checkButton(composite, UUID_UP, true, false);
+		checkButton(composite, UUID_DOWN, true, false);
+		checkNoButton(composite, UUID_LINK);
+		checkButton(composite, UUID_DELETE, true, false);
+	}
+
+	/**
+	 * Test that the control is enabled when VElement enablement is set to true
+	 *
+	 * @throws DatabindingFailedException
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testControlEnabled()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		showMoveButtons = true;
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
+		when(renderer.getVElement().isEnabled()).thenReturn(true);
+		when(renderer.getVElement().isVisible()).thenReturn(true);
+
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(true);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		createPlayers(league, "player1", "player2", "player3"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		final Table table = createLeaguePlayersTable(league);
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
+
+		/* setup rendering */
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+		final SWTGridCell lastGridCell = gridDescription.getGrid().get(gridDescription.getGrid().size() - 1);
+
+		/* render */
+		final Control control = renderer.render(lastGridCell, shell);
+		renderer.finalizeRendering(shell);
+		SWTTestUtil.findControl(control, 0, Table.class);
+
+		// check table itself
+		assertTrue(table.getVisible());
+		assertTrue(table.isEnabled());
+
+		final Button upButton = SWTTestUtil.findControlById(control, UUID_UP, Button.class);
+		checkControl(upButton, true, false);
+
+		final Button deleteButton = SWTTestUtil.findControlById(control, UUID_DELETE, Button.class);
+		checkControl(deleteButton, true, false);
+
+		final IObservableList<?> list = databindingService.getObservableList(null, league);
+		renderer.getTableViewer().setSelection(new StructuredSelection(list.get(0)), true);
+		SWTTestUtil.waitForUIThread();
+
+		// up may be false, as first element is selected (not yet implemented)
+		checkControl(upButton, true, false);
+		checkControl(deleteButton, true, true);
+
+		renderer.getTableViewer().setSelection(new StructuredSelection(list.get(1)), true);
+		SWTTestUtil.waitForUIThread();
+
+		// up may be false, as first element is selected (not yet implemented)
+		checkControl(upButton, true, true);
+		checkControl(deleteButton, true, true);
+	}
+
+	private void createPlayers(League league, String... names) {
+		for (final String name : names) {
+			final Player p = BowlingFactory.eINSTANCE.createPlayer();
+			p.setName(name);
+			league.getPlayers().add(p);
+		}
 	}
 
 	/**
@@ -930,6 +1077,90 @@ public class MultiReferenceRenderer_PTest {
 		}
 	}
 
+	@Test
+	public void testVisibleOnWritable()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(true);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		createLeaguePlayersTable();
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
+
+		/* setup rendering */
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+		final SWTGridCell lastGridCell = gridDescription.getGrid().get(gridDescription.getGrid().size() - 1);
+
+		/* render */
+		final Control control = renderer.render(lastGridCell, shell);
+		renderer.finalizeRendering(shell);
+		final Button upButton = SWTTestUtil.findControl(control, 0, Button.class);
+		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
+
+		// check table itself
+		assertTrue(table.getVisible());
+		assertTrue(table.isEnabled());
+		assertTrue(upButton.getEnabled());
+	}
+
+	@Test
+	public void testActivateOnEnable()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(true);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		createLeaguePlayersTable();
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(false);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
+
+		/* setup rendering */
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+		final SWTGridCell lastGridCell = gridDescription.getGrid().get(gridDescription.getGrid().size() - 1);
+
+		/* render */
+		final Control control = renderer.render(lastGridCell, shell);
+		renderer.finalizeRendering(shell);
+		final Button upButton = SWTTestUtil.findControl(control, 0, Button.class);
+		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
+
+		// check table itself
+		assertTrue(table.isEnabled());
+
+		checkControl(upButton, true, true);
+		assertTrue(upButton.getParent().getVisible());
+
+	}
+
+	@Test
+	public void testButtonsNotVisibleOnReadOnly()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(true);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		createLeaguePlayersTable();
+		when(renderer.getVElement().isEffectivelyReadonly()).thenReturn(true);
+		when(renderer.getVElement().isEffectivelyEnabled()).thenReturn(true);
+
+		/* setup rendering */
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+		final SWTGridCell lastGridCell = gridDescription.getGrid().get(gridDescription.getGrid().size() - 1);
+
+		/* render */
+		final Control control = renderer.render(lastGridCell, shell);
+		renderer.finalizeRendering(shell);
+		final Button upButton = SWTTestUtil.findControl(control, 0, Button.class);
+
+		/* by default, up is disabled (no selection) */
+		assertFalse(upButton.getVisible());
+	}
+
 	/**
 	 * Helper Interface for mocking.
 	 *
@@ -937,5 +1168,22 @@ public class MultiReferenceRenderer_PTest {
 	 *
 	 */
 	public interface TestObservableValue extends IObservableValue, IObserving {
+	}
+
+	private void checkButton(Composite root, String elementId, boolean visible, boolean enabled) {
+		final Button button = SWTTestUtil.findControlById(root, elementId, Button.class);
+		checkControl(button, visible, enabled);
+	}
+
+	private void checkNoButton(Composite root, String elementId) {
+		final Button button = SWTTestUtil.findControlById(root, elementId, Button.class);
+		assertThat(button, nullValue());
+	}
+
+	private void checkControl(Control control, boolean visible, boolean enabled) {
+		assertThat(control, notNullValue());
+		assertThat(control.getVisible(), is(visible));
+		// no selection
+		assertThat(control.getEnabled(), is(enabled));
 	}
 }

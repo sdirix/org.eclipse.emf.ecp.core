@@ -186,12 +186,18 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			getViewModelContext().registerDomainChangeListener(modelChangeListener);
 		}
 		applyEnable();
+		applyReadOnly();
 		if (isUnchangeableFeature()) {
 			applyUnchangeableFeature();
 		}
 	}
 
-	private boolean isUnchangeableFeature() {
+	/**
+	 * Checks if the value referenced by the DMR can be changed or not by the user.
+	 *
+	 * @return <code>true</code> if the value cannot be changed.
+	 */
+	protected boolean isUnchangeableFeature() {
 		final VDomainModelReference ref = getVElement().getDomainModelReference();
 		if (ref == null) {
 			getReportService()
@@ -229,7 +235,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * This method is applied if the control's feature is configured as unchangeable.
-	 * By default, the control is set to read only.
+	 * The renderer is usually disabled when feature is not changeable.
 	 *
 	 * @since 1.20
 	 */

@@ -272,7 +272,85 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	@Override
 	protected void applyReadOnly() {
-		applyEnable();
+		// do not let the super method disable the control, so the table is still enabled for sorting for example
+		// when applying read only, all buttons shall be hidden
+		updateButtonVisibility();
+	}
+
+	@Override
+	protected boolean ignoreEnableOnReadOnly() {
+		// always take the enable state into account (read only but enable let the user sort the table content for
+		// example)
+		return false;
+	}
+
+	/**
+	 * Updates button visibility and enablement.
+	 */
+	protected void updateButtons() {
+		updateButtonVisibility();
+		updateButtonEnabling();
+	}
+
+	/**
+	 * Updates the visibility of 'Add', 'Remove', 'Up', 'Down' buttons according to the bound input.
+	 */
+	protected void updateButtonVisibility() {
+		final boolean isVisible = !getVElement().isEffectivelyReadonly();
+
+		if (addButton != null) {
+			addButton.setVisible(isVisible);
+		}
+		if (removeButton != null) {
+			removeButton.setVisible(isVisible);
+		}
+		if (upButton != null) {
+			upButton.setVisible(isVisible);
+		}
+		if (downButton != null) {
+			downButton.setVisible(isVisible);
+		}
+	}
+
+	/**
+	 * Updates the enablement of 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the
+	 * bound input.
+	 */
+	protected void updateButtonEnabling() {
+		final boolean isEnable = getVElement().isEffectivelyEnabled();
+		final int listSize = tableViewer != null ? tableViewer.getTable().getItemCount() : 0;
+		final int selectionIndex = tableViewer != null ? tableViewer.getTable().getSelectionIndex() : -1;
+
+		enableUpButton(isEnable, listSize, selectionIndex);
+		enableDownButton(isEnable, listSize, selectionIndex);
+		enableAddButton(isEnable, listSize, selectionIndex);
+		enableDeleteButton(isEnable, listSize, selectionIndex);
+	}
+
+	private void enableUpButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (upButton != null) {
+			final boolean enabled = baseEnable && listSize > 1 && selectionIndex > 0;
+			upButton.setEnabled(enabled);
+		}
+	}
+
+	private void enableDownButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (downButton != null) {
+			final boolean enabled = baseEnable && listSize > 1 && selectionIndex != -1 && selectionIndex < listSize - 1;
+			downButton.setEnabled(enabled);
+		}
+	}
+
+	private void enableAddButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (addButton != null) {
+			addButton.setEnabled(baseEnable);
+		}
+	}
+
+	private void enableDeleteButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (removeButton != null) {
+			removeButton.setEnabled(baseEnable && listSize > 0 && selectionIndex != -1);
+		}
 	}
 
 	@Override
@@ -303,6 +381,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final Composite buttonComposite = createButtonComposite(composite, list);
 			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
 			initButtons(list);
+
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return createErrorLabel(composite, ex);
@@ -428,15 +507,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		getTableViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				removeButton.setEnabled(!event.getSelection().isEmpty());
-				if (upButton != null) {
-					upButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isEffectivelyReadonly());
-				}
-				if (downButton != null) {
-					downButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isEffectivelyReadonly());
-				}
+				updateButtonEnabling();
 			}
 		});
+		updateButtons();
 	}
 
 	private void createLabelProvider() {
@@ -524,6 +598,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
 			@Override
 			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+				if (getVElement().isEffectivelyReadonly()) {
+					return false;
+				}
 				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
 					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
 					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
@@ -652,21 +729,8 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	@Override
 	protected void applyEnable() {
-		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
-		}
-		if (getRemoveButton() != null) {
-			getRemoveButton()
-				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
-		}
-		if (getMoveUpButton() != null) {
-			getMoveUpButton()
-				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
-		}
-		if (getMoveDownButton() != null) {
-			getMoveDownButton()
-				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
-		}
+		super.applyEnable();
+		updateButtonEnabling();
 	}
 
 	/**

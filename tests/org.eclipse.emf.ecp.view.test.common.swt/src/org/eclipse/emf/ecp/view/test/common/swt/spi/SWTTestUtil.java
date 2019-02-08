@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 
 import java.util.NoSuchElementException;
 
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Button;
@@ -130,6 +131,35 @@ public final class SWTTestUtil {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Retrieves an element in the specified control by its unique Id, as defined in {@link SWTDataElementIdHelper}.
+	 *
+	 * @param control the parent control where the search control should be found.
+	 * @param id the unique ID of the element to find
+	 * @param clazz the class of control to find
+	 * @param <T> the type of Control to find
+	 * @return a optional referencing the control or an empty one if none was found.
+	 */
+	public static <T extends Control> T findControlById(Control control, final String id, final Class<T> clazz) {
+		// only get the first index, assuming id is unique
+		final Control result = find(control, 0, new Counter(), new ControlTest() {
+			@Override
+			public boolean testCondition(Control control) {
+				if (control.getClass() != clazz) {
+					return false;
+				}
+
+				final Object elementID = control.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY);
+				if (elementID != null && id.equals(elementID)) {
+					return true;
+				}
+
+				return false;
+			}
+		});
+		return clazz.cast(result);
 	}
 
 	/**
