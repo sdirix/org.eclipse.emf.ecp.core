@@ -53,7 +53,7 @@ public final class NumberAwareStringComparator implements Comparator<String> {
 		// For our pattern Matcher::find only returns false if the end of the string was reached.
 		while (matcher1.find() && matcher2.find()) {
 			// group(1) gets the results matched by \\D* (non-digits)
-			final int wordCompare = matcher1.group(1).compareTo(matcher2.group(1));
+			final int wordCompare = matcher1.group(1).compareToIgnoreCase(matcher2.group(1));
 			if (wordCompare != 0) {
 				return wordCompare;
 			}

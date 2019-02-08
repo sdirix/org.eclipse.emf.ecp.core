@@ -71,4 +71,11 @@ public class NumberAwareStringComparator_PTest {
 
 		assertThat(comparator.compare("n1a2", "n1a1a"), greaterThanOrEqualTo(-1)); //$NON-NLS-1$ //$NON-NLS-2$
 	}
+
+	/** The sorting should ignore case because otherwise z > a > Z which would be really unintuitive for users. */
+	@Test
+	public void ignoreCase() {
+		assertThat(comparator.compare("a", "z"), lessThanOrEqualTo(-1)); //$NON-NLS-1$ //$NON-NLS-2$
+		assertThat(comparator.compare("a", "Z"), lessThanOrEqualTo(-1)); //$NON-NLS-1$ //$NON-NLS-2$
+	}
 }

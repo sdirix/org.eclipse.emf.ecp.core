@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
@@ -43,6 +44,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -72,6 +74,8 @@ import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRendererUtil;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
@@ -253,6 +257,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private TableViewerSWTCustomization<?> customization;
 
+	/** The EReference describing the list shown by the table. */
+	private EReference tableEReference;
+	private EStructuralFeature[] columnFeatures;
+	/** The feature of the column which is currently used for sorting. */
+	private java.util.Optional<EStructuralFeature> sortColumnFeature = java.util.Optional.empty();
+	private ModelChangeListener autoSortModelChangeListener;
+
 	/**
 	 * Default constructor.
 	 *
@@ -373,6 +384,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
 				getViewModelContext().getDomainModel());
 
+			/* get the EReference describing the list shown by the table */
+			tableEReference = (EReference) list.getElementType();
+
 			final TableRendererViewerActionContext actionContext = createViewerActionContext();
 			final ActionConfiguration actionConfiguration = configureActions(actionContext);
 			final TableActionBar<? extends AbstractTableViewer> actionBar = createActionBar(actionContext,
@@ -444,6 +458,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			addResizeListener(tableViewerComposite.getTableViewer().getControl(), regularColumnsStartIndex);
 
 			customization = tableViewerSWTBuilder.getCustomization();
+
+			autoSortModelChangeListener = new AutoSortModelChangeListener();
+			getViewModelContext().registerDomainChangeListener(autoSortModelChangeListener);
 
 			return tableViewerComposite;
 
@@ -804,13 +821,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			tempInstance = getInstanceOf(clazz);
 		}
 
+		final List<VDomainModelReference> columns = getColumnDomainModelReferences().stream().filter(Objects::nonNull)
+			.collect(Collectors.toList());
 		/* regular columns */
-		for (final VDomainModelReference dmr : getColumnDomainModelReferences()) {
+		columnFeatures = new EStructuralFeature[columns.size()];
+		for (int i = 0; i < columns.size(); i++) {
 			try {
-				if (dmr == null) {
-					continue;
-				}
-
+				final VDomainModelReference dmr = columns.get(i);
 				final IObservableValue<?> text = getLabelTextForColumn(dmr, clazz);
 				final IObservableValue<?> tooltip = getLabelTooltipTextForColumn(dmr, clazz);
 
@@ -819,6 +836,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final IValueProperty<?, ?> valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz,
 					editingDomain);
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
+				columnFeatures[i] = eStructuralFeature;
 
 				@SuppressWarnings("unchecked")
 				final IObservableMap<?, ?> observableMap = valueProperty.observeDetail(cp.getKnownElements());
@@ -1620,10 +1638,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			columnIndexToComparatorMap.clear();
 		}
-		tableViewerComposite.dispose();
-		tableViewerComposite = null;
-		tableViewer.getControl().dispose();
-		tableViewer = null;
+		if (tableViewerComposite != null) {
+			tableViewerComposite.dispose();
+			tableViewerComposite = null;
+		}
+		if (tableViewer != null) {
+			tableViewer.getControl().dispose();
+			tableViewer = null;
+		}
 
 		if (customization != null) {
 			for (final ColumnConfiguration columnConfig : customization.getColumnConfigurations()) {
@@ -1633,6 +1655,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			customization.getTableConfiguration().dispose();
 		}
 
+		if (autoSortModelChangeListener != null) {
+			getViewModelContext().unregisterDomainChangeListener(autoSortModelChangeListener);
+			autoSortModelChangeListener = null;
+		}
 		super.dispose();
 	}
 
@@ -2271,11 +2297,46 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				propertyIndex = column;
 				direction = 1;
 			}
+			// No sorting is the same as no column being selected for sorting
+			if (direction == NONE) {
+				sortColumnFeature = java.util.Optional.empty();
+			} else {
+				// columnFeatures starts at index 0 with the first regular column
+				sortColumnFeature = java.util.Optional.of(columnFeatures[propertyIndex - regularColumnsStartIndex]);
+			}
 		}
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
 			return TableControlSWTRenderer.this.compare(viewer, e1, e2, direction, propertyIndex);
+		}
+	}
+
+	/**
+	 * Domain model change listener that re-sorts the table and reveals the added resp. changed object.
+	 *
+	 * @since 1.20
+	 */
+	protected class AutoSortModelChangeListener implements ModelChangeListener {
+
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			final int event = notification.getRawNotification().getEventType();
+			if (notification.getStructuralFeature() == tableEReference
+				&& sortColumnFeature.isPresent()
+				&& (event == Notification.ADD || event == Notification.ADD_MANY)) {
+				sortAndReveal(notification.getNewEObjects());
+			} else if (sortColumnFeature.isPresent()
+				&& notification.getStructuralFeature() == sortColumnFeature.get()) {
+				sortAndReveal(notification.getNotifier());
+			}
+		}
+
+		private void sortAndReveal(Object toReveal) {
+			Display.getDefault().asyncExec(() -> {
+				getTableViewer().refresh();
+				getTableViewer().reveal(toReveal);
+			});
 		}
 	}
 
