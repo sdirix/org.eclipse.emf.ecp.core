@@ -202,6 +202,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.segments.multi.test</module>
 
 		<!-- DMR Segment Tooling -->
+		<module>../../tests/org.eclipse.emfforms.ide.view.mappingsegment.test</module>
 		<module>../../tests/org.eclipse.emfforms.ide.view.multisegment.test</module>
 		<module>../../tests/org.eclipse.emfforms.ide.view.multisegment.test.uithread</module>
 

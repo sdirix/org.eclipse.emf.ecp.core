@@ -88,13 +88,15 @@ public class MappingDomainModelReferenceSegmentItemProvider extends FeatureDomai
 	 * This returns the label text for the adapted class. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VMappingDomainModelReferenceSegment) object).getDomainModelFeature();
-		return label == null || label.length() == 0 ? getString("_UI_MappingDomainModelReferenceSegment_type") : //$NON-NLS-1$
-			getString("_UI_MappingDomainModelReferenceSegment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		final VMappingDomainModelReferenceSegment mappingSegment = (VMappingDomainModelReferenceSegment) object;
+		final String label = mappingSegment.getDomainModelFeature();
+		return label == null || label.length() == 0 || mappingSegment.getMappedClass() == null
+			? getString("_UI_MappingDomainModelReferenceSegment_type") //$NON-NLS-1$
+			: String.format("%s[%s]", label, mappingSegment.getMappedClass().getName()); //$NON-NLS-1$
 	}
 
 	/**
