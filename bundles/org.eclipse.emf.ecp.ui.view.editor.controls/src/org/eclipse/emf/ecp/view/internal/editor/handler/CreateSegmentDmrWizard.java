@@ -411,7 +411,7 @@ public class CreateSegmentDmrWizard extends Wizard {
 			nextPage = new SegmentCreationPage(getName(), null, index + 1);
 			addPage(nextPage);
 
-			pageComposite = new Composite(parent, SWT.FILL);
+			pageComposite = new Composite(parent, SWT.NONE);
 			GridLayoutFactory.fillDefaults().applyTo(pageComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(pageComposite);
 
@@ -429,7 +429,7 @@ public class CreateSegmentDmrWizard extends Wizard {
 				segmentClassesMap.put(segmentClass.getName(), segmentClass);
 			}
 
-			final Composite segmentTypeComposite = new Composite(pageComposite, SWT.FILL);
+			final Composite segmentTypeComposite = new Composite(pageComposite, SWT.NONE);
 			GridLayoutFactory.fillDefaults().numColumns(2).applyTo(segmentTypeComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false)
 				.applyTo(segmentTypeComposite);
@@ -482,9 +482,9 @@ public class CreateSegmentDmrWizard extends Wizard {
 			if (renderComposite != null) {
 				renderComposite.dispose();
 			}
-			renderComposite = new Composite(pageComposite, SWT.FILL);
+			renderComposite = new Composite(pageComposite, SWT.NONE);
 			GridLayoutFactory.fillDefaults().applyTo(renderComposite);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(renderComposite);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.END).grab(true, false).applyTo(renderComposite);
 			return renderComposite;
 		}
 

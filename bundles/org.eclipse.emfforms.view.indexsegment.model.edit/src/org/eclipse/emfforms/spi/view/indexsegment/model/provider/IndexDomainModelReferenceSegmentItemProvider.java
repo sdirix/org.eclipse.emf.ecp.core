@@ -98,13 +98,14 @@ public class IndexDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		final String label = ((VIndexDomainModelReferenceSegment) object).getDomainModelFeature();
+		final int index = ((VIndexDomainModelReferenceSegment) object).getIndex();
 		return label == null || label.length() == 0 ? getString("_UI_IndexDomainModelReferenceSegment_type") : //$NON-NLS-1$
-			getString("_UI_IndexDomainModelReferenceSegment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			String.format("%s[%d]", label, index); //$NON-NLS-1$
 	}
 
 	/**
