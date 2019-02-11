@@ -10,6 +10,7 @@ Bundle-Localization: plugin
 Export-Package: org.eclipse.emf.ecp.edit.internal.model.testData;version="1.20.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.model.testData.impl;version="1.20.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.model.testData.util;version="1.20.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.20.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.swt.table;version="1.20.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.swt.util;version="1.20.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.spi.swt.table;version="1.20.0"
