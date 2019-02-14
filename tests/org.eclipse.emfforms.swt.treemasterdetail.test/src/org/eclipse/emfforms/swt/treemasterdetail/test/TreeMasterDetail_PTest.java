@@ -71,6 +71,7 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.Result;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.junit.After;
 import org.junit.Before;
@@ -486,7 +487,18 @@ public class TreeMasterDetail_PTest {
 		/* detail unchanged after down, but selection changed already */
 		SWTTestUtil.waitForUIThread();
 		assertEquals(text, bot.text().getText());
-		assertEquals("Player Bob", bot.tree().selection().get(0, 0)); //$NON-NLS-1$
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				return "Player Bob".equals(bot.tree().selection().get(0, 0));
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "The selection did not update to Bob!";
+			}
+		}, 5000, 100);
 
 		/* press enter */
 		try {
@@ -497,7 +509,18 @@ public class TreeMasterDetail_PTest {
 
 		/* enter should update immediately, no delay expected */
 		SWTTestUtil.waitForUIThread();
-		assertEquals(BOB, bot.text().getText());
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				return BOB.equals(bot.text().getText());
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "The detail did not update to show Bob!";
+			}
+		}, 5000, 100);
 		/* focus change expected */
 		assertSame(bot.text().widget, bot.getFocusedWidget());
 	}
