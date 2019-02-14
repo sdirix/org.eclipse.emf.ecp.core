@@ -459,39 +459,29 @@ public class TreeMasterDetail_PTest {
 		league.getPlayers().add(bob);
 		final Object input = league;
 		final int renderDelay = 2500;
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				composite = TreeMasterDetailSWTFactory
-					.fillDefaults(shell, SWT.NONE, input)
-					.customizeInitialSelection(new InitialSelectionProvider() {
-						@Override
-						public EObject getInitialSelection(Object input) {
-							return alice;
-						}
-					})
-					.customizeUpdateDelay(renderDelay)
-					.create();
-				GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
-				shell.open();
-			}
-		});
+		composite = TreeMasterDetailSWTFactory
+			.fillDefaults(shell, SWT.NONE, input)
+			.customizeInitialSelection(new InitialSelectionProvider() {
+				@Override
+				public EObject getInitialSelection(Object input) {
+					return alice;
+				}
+			})
+			.customizeUpdateDelay(renderDelay)
+			.create();
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+		shell.open();
 		SWTTestUtil.waitForUIThread();
 		final String text = bot.text().getText();
 		assertEquals(ALICE, text);
 		assertEquals("Player Alice", bot.tree().selection().get(0, 0)); //$NON-NLS-1$
 
 		/* press down, selection expected to change */
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ARROW_DOWN_NAME));
-				} catch (final ParseException ex) {
-					throw new RuntimeException(ex);
-				}
-			}
-		});
+		try {
+			bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ARROW_DOWN_NAME));
+		} catch (final ParseException ex) {
+			throw new RuntimeException(ex);
+		}
 
 		/* detail unchanged after down, but selection changed already */
 		SWTTestUtil.waitForUIThread();
@@ -499,16 +489,11 @@ public class TreeMasterDetail_PTest {
 		assertEquals("Player Bob", bot.tree().selection().get(0, 0)); //$NON-NLS-1$
 
 		/* press enter */
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ENTER_NAME));
-				} catch (final ParseException ex) {
-					throw new RuntimeException(ex);
-				}
-			}
-		});
+		try {
+			bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ENTER_NAME));
+		} catch (final ParseException ex) {
+			throw new RuntimeException(ex);
+		}
 
 		/* enter should update immediately, no delay expected */
 		SWTTestUtil.waitForUIThread();
