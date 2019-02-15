@@ -26,11 +26,17 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Add/Remove handler for the View model projects nature.
  */
-public class AddRemoveViewModelNatureHandler extends AbstractHandler {
+public class AddRemoveProjectNatureHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getCurrentSelection(event);
+		String natureID = event.getParameter("natureID");
+		if (natureID == null) {
+			// Default to view model nature
+			natureID = ViewModelNature.NATURE_ID;
+		}
+
 		//
 		if (selection instanceof IStructuredSelection) {
 			for (final Iterator<?> it = ((IStructuredSelection) selection).iterator(); it
@@ -44,7 +50,7 @@ public class AddRemoveViewModelNatureHandler extends AbstractHandler {
 				}
 				if (project != null) {
 					try {
-						ViewModelNature.toggleNature(project);
+						ProjectNature.toggleNature(project, natureID);
 					} catch (final CoreException e) {
 						Activator.log("Failed to toggle nature", e);
 						throw new ExecutionException("Failed to toggle nature",

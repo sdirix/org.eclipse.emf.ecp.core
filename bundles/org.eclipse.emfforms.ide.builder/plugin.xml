@@ -29,14 +29,18 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            id="org.eclipse.emfforms.ide.builder.viewModelNature.category"
-            name="%viewmodel.command.category.name">
+            id="org.eclipse.emfforms.ide.builder.nature.category"
+            name="%nature.command.category.name">
       </category>
       <command
-            categoryId="org.eclipse.emfforms.ide.builder.viewModelNature.category"
-            defaultHandler="org.eclipse.emfforms.ide.internal.builder.AddRemoveViewModelNatureHandler"
-            id="org.eclipse.emfforms.ide.builder.addRemoveViewModelNature"
-            name="%addremoveviewmodelnature.command.name">
+            categoryId="org.eclipse.emfforms.ide.builder.nature.category"
+            defaultHandler="org.eclipse.emfforms.ide.internal.builder.AddRemoveProjectNatureHandler"
+            id="org.eclipse.emfforms.ide.builder.addRemoveNature"
+            name="%addremovenature.command.name">
+         <commandParameter
+               id="natureID"
+               name="%addremovenature.natureID.name">
+         </commandParameter>
       </command>
    </extension>
    <extension
@@ -45,8 +49,12 @@
             locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
          <command
                label="%removeviewmodelnature.command.label"
-               commandId="org.eclipse.emfforms.ide.builder.addRemoveViewModelNature"
+               commandId="org.eclipse.emfforms.ide.builder.addRemoveNature"
                style="push">
+            <parameter
+                  name="natureID"
+                  value="org.eclipse.emfforms.ide.builder.viewModelNature">
+            </parameter>
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -68,8 +76,12 @@
          </command>
          <command
                label="%addviewmodelnature.command.label"
-               commandId="org.eclipse.emfforms.ide.builder.addRemoveViewModelNature"
+               commandId="org.eclipse.emfforms.ide.builder.addRemoveNature"
                style="push">
+           <parameter
+                 name="natureID"
+                 value="org.eclipse.emfforms.ide.builder.viewModelNature">
+           </parameter>
            <visibleWhen
                   checkEnabled="false">
                <with
@@ -98,11 +110,109 @@
          name="%viewmodel.marker.extension.name"
          point="org.eclipse.core.resources.markers">
       <super
-            type="org.eclipse.core.resources.problemmarker">
+            type="org.eclipse.emfforms.ide.builder.ValidationProblem">
       </super>
       <persistent
             value="true">
       </persistent>
    </extension>
 
+
+   <extension
+         id="ValidationProblem"
+         name="%validation.marker.extension.name"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         id="validationBuilder"
+         name="%validationbuilder.extension.name"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.eclipse.emfforms.ide.internal.builder.ValidationBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="validationNature"
+         name="%validationnature.extension.name"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.eclipse.emfforms.ide.internal.builder.ValidationNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.eclipse.emfforms.ide.builder.validationBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+         <command
+               label="%removevalidationnature.command.label"
+               commandId="org.eclipse.emfforms.ide.builder.addRemoveNature"
+               style="push">
+            <parameter
+                  name="natureID"
+                  value="org.eclipse.emfforms.ide.builder.validationNature">
+            </parameter>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <test
+                              property="org.eclipse.core.resources.projectNature"
+                              value="org.eclipse.emfforms.ide.builder.validationNature">
+                        </test>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               label="%addvalidationnature.command.label"
+               commandId="org.eclipse.emfforms.ide.builder.addRemoveNature"
+               style="push">
+           <parameter
+                 name="natureID"
+                 value="org.eclipse.emfforms.ide.builder.validationNature">
+           </parameter>
+           <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <not>
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.eclipse.emfforms.ide.builder.validationNature">
+                           </test>
+                        </not>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 </plugin>

@@ -8,9 +8,11 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
+ * Christian W. Damus - bug 544499
  ******************************************************************************/
 package org.eclipse.emfforms.ide.builder.test;
 
+import org.eclipse.emfforms.ide.builder.ValidationBuilder_PTest;
 import org.eclipse.emfforms.ide.builder.ViewModelBuilder_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -20,7 +22,10 @@ import org.junit.runners.Suite.SuiteClasses;
  * All plugin tests for org.eclipse.emfforms.ide.builder.
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ViewModelBuilder_PTest.class })
+@SuiteClasses({
+	ViewModelBuilder_PTest.class,
+	ValidationBuilder_PTest.class,
+})
 public class AllPluginTests {
 
 }
