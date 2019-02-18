@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bug 544116
+ * Christian W. Damus - bugs 544116, 544537
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -1153,7 +1153,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.6
 	 */
 	protected Image getImage(String path) {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(TableControlSWTRenderer.class), path);
+		Image result = imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+		if (result == null && getClass() != TableControlSWTRenderer.class) {
+			result = imageRegistryService.getImage(FrameworkUtil.getBundle(TableControlSWTRenderer.class), path);
+		}
+		return result;
 	}
 
 	/**
