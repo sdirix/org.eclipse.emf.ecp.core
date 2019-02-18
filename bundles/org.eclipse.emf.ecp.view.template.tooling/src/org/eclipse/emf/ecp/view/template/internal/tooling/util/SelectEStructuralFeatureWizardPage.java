@@ -122,9 +122,9 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 	 * Constructor.
 	 */
 	public SelectEStructuralFeatureWizardPage() {
-		super("Select EClass"); //$NON-NLS-1$
-		setTitle("Select EClass"); //$NON-NLS-1$
-		setDescription("Select an EClass for the current View Model."); //$NON-NLS-1$
+		super("Select EStructuralFeature"); //$NON-NLS-1$
+		setTitle("Select EStructuralFeature"); //$NON-NLS-1$
+		setDescription("Select an EEstructuralFeature for the Domain Model Reference Selector."); //$NON-NLS-1$
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 		layout.numColumns = 1;
 
 		final Label label1 = new Label(container, SWT.NONE);
-		label1.setText("Select an EClass:"); //$NON-NLS-1$
+		label1.setText("Select an EStructuralFeature:"); //$NON-NLS-1$
 
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),

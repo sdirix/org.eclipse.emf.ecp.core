@@ -39,12 +39,13 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl#getDomainModelReference
- * <em>Domain Model Reference</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl#getDomainModelReference
+ * <em>Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl#getRootEClass
+ * <em>Root EClass</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -61,6 +62,17 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 	 * @ordered
 	 */
 	protected VDomainModelReference domainModelReference;
+
+	/**
+	 * The cached value of the '{@link #getRootEClass() <em>Root EClass</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getRootEClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected EClass rootEClass;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -128,16 +140,16 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
-				msgs = ((InternalEObject) domainModelReference)
-					.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-						- VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE, null,
-						msgs);
+				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE
+						- VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
+					null, msgs);
 			}
 			if (newDomainModelReference != null) {
-				msgs = ((InternalEObject) newDomainModelReference)
-					.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-						- VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE, null,
-						msgs);
+				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE
+						- VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
+					null, msgs);
 			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
 			if (msgs != null) {
@@ -147,6 +159,54 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getRootEClass() {
+		if (rootEClass != null && rootEClass.eIsProxy()) {
+			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			rootEClass = (EClass) eResolveProxy(oldRootEClass);
+			if (rootEClass != oldRootEClass) {
+				if (eNotificationRequired()) {
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+						VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS, oldRootEClass,
+						rootEClass));
+				}
+			}
+		}
+		return rootEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public EClass basicGetRootEClass() {
+		return rootEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setRootEClass(EClass newRootEClass) {
+		final EClass oldRootEClass = rootEClass;
+		rootEClass = newRootEClass;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS, oldRootEClass, rootEClass));
 		}
 	}
 
@@ -176,6 +236,11 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		switch (featureID) {
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE:
 			return getDomainModelReference();
+		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS:
+			if (resolve) {
+				return getRootEClass();
+			}
+			return basicGetRootEClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -191,6 +256,9 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		switch (featureID) {
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) newValue);
+			return;
+		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS:
+			setRootEClass((EClass) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -208,6 +276,9 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) null);
 			return;
+		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS:
+			setRootEClass((EClass) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -223,6 +294,8 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		switch (featureID) {
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE:
 			return domainModelReference != null;
+		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS:
+			return rootEClass != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -237,9 +310,17 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		if (controlDomainModelReference == null) {
 			return NOT_APPLICABLE;
 		}
+		if (getRootEClass() != null) {
+			if (!getRootEClass().isSuperTypeOf(viewModelContext.getDomainModel().eClass())) {
+				return NOT_APPLICABLE;
+			}
+		} else if (!getDomainModelReference().getSegments().isEmpty()) {
+			// TODO report warning or error?
+			return NOT_APPLICABLE;
+		}
 
-		IObservableValue controlObservableValue;
-		IObservableValue selectorObservableValue;
+		IObservableValue<?> controlObservableValue;
+		IObservableValue<?> selectorObservableValue;
 		try {
 			final EMFFormsDatabinding emfFormsDatabinding = viewModelContext.getService(EMFFormsDatabinding.class);
 			controlObservableValue = emfFormsDatabinding

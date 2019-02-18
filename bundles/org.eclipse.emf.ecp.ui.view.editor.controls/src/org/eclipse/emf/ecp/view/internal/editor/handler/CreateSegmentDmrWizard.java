@@ -19,15 +19,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -85,11 +91,11 @@ import org.osgi.framework.ServiceReference;
  */
 public class CreateSegmentDmrWizard extends Wizard {
 
-	private final EClass rootEClass;
 	private final VDomainModelReference existingDMR;
 	private final EStructuralFeatureSelectionValidator selectionValidator;
 	private final SegmentGenerator segmentGenerator;
 	private final String lastSegmentTypeInfo;
+	private final EClass lastSegmentType;
 	/**
 	 * Contains all types of segments that can be created in the advanced mode. The types are mapped to their
 	 * corresponding {@link SegmentIdeDescriptor}.
@@ -97,17 +103,24 @@ public class CreateSegmentDmrWizard extends Wizard {
 	private final Map<EClass, SegmentIdeDescriptor> segmentToIdeDescriptorMap = new LinkedHashMap<EClass, SegmentIdeDescriptor>();
 	private final List<ServiceReference<SegmentIdeDescriptor>> serviceReferences = new LinkedList<ServiceReference<SegmentIdeDescriptor>>();
 
-	private AdvancedDMRWizardFirstPage firstPage;
+	private SimpleModePage simpleModePage;
 	private VDomainModelReference advancedDmr;
-	private final EClass lastSegmentType;
 	private VDomainModelReference resultDmr;
+	private EClass rootEClass;
+
+	private SelectEcorePage selectEcorePage;
+	private SelectEClassWizardPage selectEClassPage;
+	private Object selectedContainer;
 
 	/**
 	 * A wizard used for creating and configuring a DomainModelReference.
 	 *
-	 * @param rootEClass The root {@link EClass} of the VView the eObject belongs to
+	 * @param rootEClass The root {@link EClass} of the DMR to create. IF this is <code>null</code>, the
+	 *            wizard offers to chose a root EClass. To make this clear, you might want to use the constructor
+	 *            {@link CreateSegmentDmrWizard#CreateSegmentDmrWizard(String, EStructuralFeatureSelectionValidator, SegmentGenerator, EClass, boolean)}.
 	 * @param windowTitle The title for the wizard window
-	 * @param existingDMR The domain model reference to configure. May be null, then a new DMR is created
+	 * @param existingDMR The domain model reference to configure. May be null. If this is given the initial selection
+	 *            of the wizard is based on this but the given DMR will not be changed. A new one is returned.
 	 * @param selectionValidator Validates whether a selected structural feature is a valid selection (e.g. the
 	 *            selection could be required to be a multi reference)
 	 * @param segmentGenerator The {@link SegmentGenerator} used in the simple dmr creation mode
@@ -156,6 +169,28 @@ public class CreateSegmentDmrWizard extends Wizard {
 	}
 
 	/**
+	 * A wizard used for creating a new DomainModelReference. Before the DMR is created, the wizard allows
+	 * to select a root EClass for the new DMR.
+	 *
+	 * @param windowTitle The title for the wizard window
+	 * @param selectionValidator Validates whether a selected structural feature is a valid selection (e.g. the
+	 *            selection could be required to be a multi reference)
+	 * @param segmentGenerator The {@link SegmentGenerator} used in the simple dmr creation mode
+	 * @param lastSegmentType The type that the last segment in advanced creation mode must have, or
+	 *            <strong>null</strong> if there is no restriction
+	 * @param ignoreSegmentIdeRestriction If <code>true</code>, all types of segments are available independently of the
+	 *            configuration in their {@link SegmentIdeDescriptor}.
+	 */
+	// CHECKSTYLE.OFF: ParameterNumber
+	public CreateSegmentDmrWizard(final String windowTitle, EStructuralFeatureSelectionValidator selectionValidator,
+		SegmentGenerator segmentGenerator, EClass lastSegmentType, boolean ignoreSegmentIdeRestriction) {
+		// CHECKSTYLE.ON: ParameterNumber
+		this(null, windowTitle, null, selectionValidator, segmentGenerator, lastSegmentType,
+			ignoreSegmentIdeRestriction);
+
+	}
+
+	/**
 	 * Returns the configured {@link VDomainModelReference}. This is either a new DMR or the edited input DMR.
 	 * The return value is empty if the dialog was cancelled or the dialog is still open.
 	 *
@@ -163,6 +198,51 @@ public class CreateSegmentDmrWizard extends Wizard {
 	 */
 	public Optional<VDomainModelReference> getDomainModelReference() {
 		return Optional.ofNullable(resultDmr);
+	}
+
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		if (page == selectEcorePage) {
+			final EPackage p = getEPackage(selectEcorePage.getSelectedContainer());
+			selectEClassPage.setSelectedEPackage(p);
+			return selectEClassPage;
+		} else if (page == selectEClassPage) {
+			rootEClass = selectEClassPage.getSelectedEClasses().get(0);
+			simpleModePage.setRootEClass(rootEClass);
+			return simpleModePage;
+		}
+		return super.getNextPage(page);
+	}
+
+	/**
+	 * @return The {@link EPackage} from the selected container
+	 */
+	private EPackage getEPackage(Object selectedContainer) {
+		EPackage ePackage = null;
+		if (EPackage.class.isInstance(selectedContainer)) {
+			ePackage = EPackage.class.cast(selectedContainer);
+		} else if (IFile.class.isInstance(selectedContainer)) {
+			final ResourceSetImpl resourceSet = new ResourceSetImpl();
+			final String path = ((IFile) selectedContainer).getFullPath().toString();
+			final URI uri = URI.createPlatformResourceURI(path, true);
+
+			final Resource resource = resourceSet.getResource(uri, true);
+			if (resource != null) {
+
+				final EList<EObject> contents = resource.getContents();
+				if (contents.size() != 1) {
+					return null;
+				}
+
+				final EObject object = contents.get(0);
+				if (!(object instanceof EPackage)) {
+					return null;
+				}
+
+				ePackage = (EPackage) object;
+			}
+		}
+		return ePackage;
 	}
 
 	@Override
@@ -179,11 +259,46 @@ public class CreateSegmentDmrWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		firstPage = new AdvancedDMRWizardFirstPage("Configure Domain Model Reference", //$NON-NLS-1$
+		if (rootEClass == null) {
+			selectEcorePage = new SelectEcorePage("org.eclipse.emf.ecp.ui.view.editor.controls"); //$NON-NLS-1$
+			addPage(selectEcorePage);
+
+			selectEClassPage = new SelectEClassWizardPage() {
+				@Override
+				protected boolean isMultiSelect() {
+					return false;
+				}
+			};
+			addPage(selectEClassPage);
+		}
+		simpleModePage = new SimpleModePage("Configure Domain Model Reference", //$NON-NLS-1$
 			"Select an EStructuralFeature", //$NON-NLS-1$
 			"Select a structural feature for the domain model reference or switch to the advanced creation mode\n to create the reference path one feature at a time.", //$NON-NLS-1$
 			rootEClass, getInitialSelection());
-		addPage(firstPage);
+		addPage(simpleModePage);
+	}
+
+	/**
+	 * @return The selected ecore file, <strong>IF</strong> a root EClass was selected and it is located in a local
+	 *         ecore file.
+	 */
+	public Optional<IFile> getSelectedEcore() {
+		if (IFile.class.isInstance(selectedContainer)) {
+			return Optional.of((IFile) selectedContainer);
+		}
+		return Optional.empty();
+	}
+
+	/**
+	 * Returns the root {@link EClass} of the domain model reference. IF a root EClass was given when this wizard was
+	 * created, it is returned. Otherwise, the EClass selected by the user is returned. If no EClass was given and the
+	 * dialog was cancelled before an EClass was selected, nothing is returned.
+	 *
+	 * @return The root {@link EClass} of the created/configured domain model reference or nothing if no EClass was
+	 *         given and selected.
+	 */
+	public Optional<EClass> getRootEClass() {
+		return Optional.ofNullable(rootEClass);
 	}
 
 	/**
@@ -209,9 +324,13 @@ public class CreateSegmentDmrWizard extends Wizard {
 			return false;
 		}
 
-		if (firstPage.equals(getContainer().getCurrentPage())) {
+		if (selectEcorePage != null) {
+			selectedContainer = selectEcorePage.getSelectedContainer();
+		}
+
+		if (simpleModePage.equals(getContainer().getCurrentPage())) {
 			// simple mode was used
-			resultDmr = firstPage.getDomainModelReference();
+			resultDmr = simpleModePage.getDomainModelReference();
 		} else {
 			final SegmentCreationPage finalSegmentCreationPage = (SegmentCreationPage) getContainer().getCurrentPage();
 			final int lastSegmentIndex = finalSegmentCreationPage.index;
@@ -243,8 +362,8 @@ public class CreateSegmentDmrWizard extends Wizard {
 	@Override
 	public boolean canFinish() {
 		// "simple" mode
-		if (firstPage.equals(getContainer().getCurrentPage())) {
-			return firstPage.isPageComplete();
+		if (simpleModePage.equals(getContainer().getCurrentPage())) {
+			return simpleModePage.isPageComplete();
 		}
 		// "advanced" mode
 		if (advancedDmr.getSegments().isEmpty() || !getContainer().getCurrentPage().isPageComplete()) {
@@ -271,9 +390,9 @@ public class CreateSegmentDmrWizard extends Wizard {
 	 * @author Lucas Koehler
 	 *
 	 */
-	private class AdvancedDMRWizardFirstPage extends SelectFeaturePathWizardPage {
+	private class SimpleModePage extends SelectFeaturePathWizardPage {
 
-		protected AdvancedDMRWizardFirstPage(String pageName, String pageTitle, String pageDescription,
+		protected SimpleModePage(String pageName, String pageTitle, String pageDescription,
 			EClass rootEClass, ISelection firstSelection) {
 			super(pageName, pageTitle, pageDescription, rootEClass, firstSelection, segmentGenerator,
 				selectionValidator, false);

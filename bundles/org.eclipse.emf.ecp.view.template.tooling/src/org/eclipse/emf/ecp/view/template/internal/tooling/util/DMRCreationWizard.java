@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.view.model.presentation.SelectEcorePage;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SelectEcorePage;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
@@ -38,7 +38,6 @@ import org.eclipse.ui.IWorkbench;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class DMRCreationWizard extends Wizard implements INewWizard {
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.tooling"; //$NON-NLS-1$

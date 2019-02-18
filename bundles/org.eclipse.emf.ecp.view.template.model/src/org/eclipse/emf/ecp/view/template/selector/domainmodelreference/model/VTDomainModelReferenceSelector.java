@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 
@@ -21,19 +22,19 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference
- * <em>Domain Model Reference</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference
+ * <em>Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getRootEClass
+ * <em>Root EClass</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage#getDomainModelReferenceSelector()
  * @model
  * @generated
  */
-public interface VTDomainModelReferenceSelector extends VTStyleSelector
-{
+public interface VTDomainModelReferenceSelector extends VTStyleSelector {
 	/**
 	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -52,8 +53,8 @@ public interface VTDomainModelReferenceSelector extends VTStyleSelector
 	VDomainModelReference getDomainModelReference();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference
 	 * <em>Domain Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -63,5 +64,40 @@ public interface VTDomainModelReferenceSelector extends VTStyleSelector
 	 * @generated
 	 */
 	void setDomainModelReference(VDomainModelReference value);
+
+	/**
+	 * Returns the value of the '<em><b>Root EClass</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
+	 *        <!-- begin-model-doc -->
+	 *        The root EClass of the selector's domain model reference. The selector's DMR is resolved against this
+	 *        EClass.
+	 *        <!-- end-model-doc -->
+	 *
+	 * @return the value of the '<em>Root EClass</em>' reference.
+	 * @see #setRootEClass(EClass)
+	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage#getDomainModelReferenceSelector_RootEClass()
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel propertyDescription='The root EClass of the
+	 *        selector\'s domain model reference. The reference is resolved against this EClass.'"
+	 * @generated
+	 */
+	EClass getRootEClass();
+
+	/**
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getRootEClass
+	 * <em>Root EClass</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Root EClass</em>' reference.
+	 * @see #getRootEClass()
+	 * @generated
+	 */
+	void setRootEClass(EClass value);
 
 } // VTDomainModelReferenceSelector

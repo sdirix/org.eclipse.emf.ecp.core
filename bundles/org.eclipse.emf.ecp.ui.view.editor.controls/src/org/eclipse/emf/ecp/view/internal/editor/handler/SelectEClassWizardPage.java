@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.model.presentation;
+package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,17 +29,15 @@ import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemP
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
@@ -49,16 +47,18 @@ import org.eclipse.swt.widgets.Label;
  */
 public class SelectEClassWizardPage extends WizardPage {
 	private Composite container;
-	private Button generateViewModelChkBox;
 	private EPackage selectedEPackage;
 	private List<EClass> selectedEClasses;
 	private TreeViewer treeViewer;
 
 	/** Creates a new EClass selection wizard page. */
 	public SelectEClassWizardPage() {
-		super(ViewEditorPlugin.INSTANCE.getString("_UI_SelectEClassWizardPage_page_name")); //$NON-NLS-1$
-		setTitle(ViewEditorPlugin.INSTANCE.getString("_UI_SelectEClassWizardPage_page_title")); //$NON-NLS-1$
-		setDescription(ViewEditorPlugin.INSTANCE.getString("_UI_SelectEClassWizardPage_page_description")); //$NON-NLS-1$
+		super(
+			LocalizationServiceHelper.getString(SelectEClassWizardPage.class, "_UI_SelectEClassWizardPage_page_name")); //$NON-NLS-1$
+		setTitle(
+			LocalizationServiceHelper.getString(SelectEClassWizardPage.class, "_UI_SelectEClassWizardPage_page_title")); //$NON-NLS-1$
+		setDescription(LocalizationServiceHelper.getString(SelectEClassWizardPage.class,
+			"_UI_SelectEClassWizardPage_page_description")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -74,52 +74,52 @@ public class SelectEClassWizardPage extends WizardPage {
 		final Label label1 = new Label(container, SWT.NONE);
 		label1.setText("Select an EClass:"); //$NON-NLS-1$
 
-		if (selectedEPackage != null) {
-			final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-				new CustomReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new CustomReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 
+		selectedEClasses = new ArrayList<EClass>();
+
+		final int selectionMode = isMultiSelect() ? SWT.MULTI : SWT.SINGLE;
+		treeViewer = new TreeViewer(container, selectionMode | SWT.H_SCROLL | SWT.V_SCROLL);
+		treeViewer.setContentProvider(getContentProvider(adapterFactory));
+		treeViewer.setLabelProvider(labelProvider);
+		treeViewer.setInput(selectedEPackage);
+		treeViewer.addSelectionChangedListener(event -> {
 			selectedEClasses = new ArrayList<EClass>();
-
-			treeViewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-			treeViewer.setContentProvider(getContentProvider(adapterFactory));
-			treeViewer.setLabelProvider(labelProvider);
-			treeViewer.setInput(selectedEPackage);
-			treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					selectedEClasses = new ArrayList<EClass>();
-					if (event.getSelection() instanceof IStructuredSelection) {
-						final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-						for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
-							final Object selectedItem = iterator.next();
-							if (EClass.class.isInstance(selectedItem)) {
-								selectedEClasses.add((EClass) selectedItem);
-								setPageComplete(getErrorMessage() == null);
-							}
-						}
-					}
-					if (selectedEClasses.isEmpty()) {
-						setPageComplete(false);
+			if (event.getSelection() instanceof IStructuredSelection) {
+				final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
+					final Object selectedItem = iterator.next();
+					if (EClass.class.isInstance(selectedItem)) {
+						selectedEClasses.add((EClass) selectedItem);
+						setPageComplete(getErrorMessage() == null);
 					}
 				}
-			});
-			treeViewer.expandToLevel(2);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(SWT.DEFAULT, 200)
-				.applyTo(treeViewer.getControl());
-			container.layout(true);
-			container.pack();
-		}
-
-		generateViewModelChkBox = new Button(container, SWT.CHECK);
-		generateViewModelChkBox.setText("Fill view model with default layout"); //$NON-NLS-1$
-		generateViewModelChkBox.setSelection(true);
+			}
+			if (selectedEClasses.isEmpty()) {
+				setPageComplete(false);
+			}
+		});
+		treeViewer.expandToLevel(2);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(SWT.DEFAULT, 200)
+			.applyTo(treeViewer.getControl());
+		container.layout(true);
+		container.pack();
 
 		setControl(container);
 
 		setPageComplete(false);
+	}
+
+	/**
+	 * Returns whether multiple EClasses can be selected in the tree.
+	 *
+	 * @return <code>true</code> if multi selection is allowed, <code>false</code> otherwise
+	 */
+	protected boolean isMultiSelect() {
+		return true;
 	}
 
 	@Override
@@ -133,15 +133,6 @@ public class SelectEClassWizardPage extends WizardPage {
 
 	private ITreeContentProvider getContentProvider(final AdapterFactory adapterFactory) {
 		return new CustomTreeContentProvider(adapterFactory);
-	}
-
-	/**
-	 * Returns whether the option to generate the controls for the created view model is selected.
-	 *
-	 * @return <code>true</code> if the option is selected
-	 */
-	public boolean isGenerateViewModelOptionSelected() {
-		return generateViewModelChkBox.getSelection();
 	}
 
 	/**
@@ -160,8 +151,12 @@ public class SelectEClassWizardPage extends WizardPage {
 	 */
 	public void setSelectedEPackage(EPackage selectedEPackage) {
 		this.selectedEPackage = selectedEPackage;
+		if (treeViewer != null) {
+			treeViewer.setInput(selectedEPackage);
+		}
 		if (selectedEPackage == null || selectedEPackage.getNsURI() == null || selectedEPackage.getNsURI().isEmpty()) {
-			setErrorMessage(ViewEditorPlugin.INSTANCE.getString("_UI_SelectEClassWizardPage_invalid_package_URI")); //$NON-NLS-1$
+			setErrorMessage(LocalizationServiceHelper.getString(SelectEClassWizardPage.class,
+				"_UI_SelectEClassWizardPage_invalid_package_URI")); //$NON-NLS-1$
 		} else {
 			setErrorMessage(null);
 		}

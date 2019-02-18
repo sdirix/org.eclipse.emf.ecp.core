@@ -23,11 +23,11 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -65,6 +65,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
@@ -97,6 +98,7 @@ import org.eclipse.swt.widgets.Label;
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private final EMFFormsEditSupport emfFormsEditSupport;
+	private final EMFFormsDatabindingEMF emfFormsDatabindingEMF;
 
 	/**
 	 * Default constructor.
@@ -104,17 +106,19 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsDatabindingEMF The {@link EMFFormsDatabinding}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
 	@Inject
 	public DomainModelReferenceControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService, EMFFormsDatabinding emfFormsDatabinding,
+		ReportService reportService, EMFFormsDatabindingEMF emfFormsDatabindingEMF,
 		EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider,
 		EMFFormsEditSupport emfFormsEditSupport) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, emfFormsDatabindingEMF, emfFormsLabelProvider,
+			vtViewTemplateProvider);
+		this.emfFormsDatabindingEMF = emfFormsDatabindingEMF;
 		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
@@ -253,10 +257,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		String attributeType = null;
 		final EClass rootEClass = Helper.getRootEClass(dmr);
 		try {
-			final IValueProperty<?, ?> valueProperty = getEMFFormsDatabinding().getValueProperty(
+			final IEMFValueProperty valueProperty = emfFormsDatabindingEMF.getValueProperty(
 				dmr, rootEClass);
-			final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
-			attributeType = feature.getEType().getName();
+			attributeType = valueProperty.getStructuralFeature().getEType().getName();
 		} catch (final DatabindingFailedException ex) {
 			// TODO handle?
 		}

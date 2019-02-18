@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SelectEcorePage;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -167,7 +168,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	protected List<String> initialObjectNames;
 
 	private SelectEcorePage selectEcorePage;
-	private SelectEClassWizardPage selectEClassPage;
+	private SelectEClassForViewWizardPage selectEClassPage;
 
 	/**
 	 * This just records the information. <!-- begin-user-doc --> <!--
@@ -229,7 +230,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			return selectEcorePage;
 		}
 
-		selectEClassPage = new SelectEClassWizardPage();
+		selectEClassPage = new SelectEClassForViewWizardPage();
 		selectEClassPage.setSelectedEPackage(getEPackage());
 		selectEClassPage.setPageComplete(true);
 		addPage(selectEClassPage);
@@ -243,7 +244,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			selectedContainer = selectEcorePage.getSelectedContainer();
 			if (selectedContainer != null) {
 				if (selectEClassPage == null) {
-					selectEClassPage = new SelectEClassWizardPage();
+					selectEClassPage = new SelectEClassForViewWizardPage();
 					selectEClassPage.setPageComplete(true);
 					addPage(selectEClassPage);
 				}

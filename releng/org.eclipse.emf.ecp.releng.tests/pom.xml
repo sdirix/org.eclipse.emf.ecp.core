@@ -214,6 +214,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.linewrapper.tests</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.template.service.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.template.tooling.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.quickfix.test</module>
 		

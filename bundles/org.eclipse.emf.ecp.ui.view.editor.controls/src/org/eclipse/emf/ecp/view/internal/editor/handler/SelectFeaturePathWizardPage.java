@@ -43,13 +43,14 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class SelectFeaturePathWizardPage extends WizardPage {
 	private final VDomainModelReference domainModelReference;
-	private final EClass rootEClass;
+	private EClass rootEClass;
 	private final ISelection firstSelection;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryLabelProvider labelProvider;
 	private final boolean allowMultiReferencesInPath;
 	private final SegmentGenerator segmentGenerator;
 	private final EStructuralFeatureSelectionValidator selectionValidator;
+	private TreeViewer treeViewer;
 
 	/**
 	 *
@@ -91,7 +92,7 @@ public class SelectFeaturePathWizardPage extends WizardPage {
 		final Composite composite = new Composite(parent, SWT.FILL);
 		GridLayoutFactory.fillDefaults().applyTo(composite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
-		final TreeViewer treeViewer = new TreeViewer(composite);
+		treeViewer = new TreeViewer(composite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(treeViewer.getControl());
 
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
@@ -108,6 +109,18 @@ public class SelectFeaturePathWizardPage extends WizardPage {
 		treeViewer.setSelection(firstSelection, true);
 
 		setControl(composite);
+	}
+
+	/**
+	 * (Re-)sets the root {@link EClass} of this wizard page. This clears the current selection.
+	 *
+	 * @param rootEClass The new root {@link EClass}
+	 */
+	public void setRootEClass(EClass rootEClass) {
+		this.rootEClass = rootEClass;
+		domainModelReference.getSegments().clear();
+		setPageComplete(false);
+		treeViewer.setInput(rootEClass);
 	}
 
 	/**

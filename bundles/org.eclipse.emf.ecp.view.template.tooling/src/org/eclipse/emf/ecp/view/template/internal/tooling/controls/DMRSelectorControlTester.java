@@ -15,6 +15,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage;
@@ -33,6 +34,9 @@ public class DMRSelectorControlTester implements ECPRendererTester {
 
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
+		if (ToolingModeUtil.isSegmentToolingEnabled()) {
+			return NOT_APPLICABLE;
+		}
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}

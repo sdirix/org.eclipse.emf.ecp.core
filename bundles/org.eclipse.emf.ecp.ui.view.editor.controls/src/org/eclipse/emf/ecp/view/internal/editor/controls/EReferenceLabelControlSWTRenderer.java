@@ -165,7 +165,13 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 		return SWTImageHelper.getImage(adapterFactoryItemDelegator.getImage(value));
 	}
 
-	private Object getText(Object value) {
+	/**
+	 * Computes the label text for the referenced object.
+	 * 
+	 * @param value The referenced object
+	 * @return the label text to display
+	 */
+	protected Object getText(Object value) {
 		final String textName = adapterFactoryItemDelegator.getText(value);
 		return textName == null ? "" : textName; //$NON-NLS-1$
 	}

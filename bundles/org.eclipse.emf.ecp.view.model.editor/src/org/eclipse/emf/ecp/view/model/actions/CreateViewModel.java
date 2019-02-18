@@ -15,7 +15,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
+import org.eclipse.emf.ecp.view.model.presentation.SelectEClassForViewWizardPage;
 import org.eclipse.emf.ecp.view.model.presentation.ViewModelWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -65,7 +65,7 @@ public class CreateViewModel extends AbstractHandler {
 
 		@Override
 		protected void backPressed() {
-			if (SelectEClassWizardPage.class.isInstance(getCurrentPage())) {
+			if (SelectEClassForViewWizardPage.class.isInstance(getCurrentPage())) {
 				wizard.clearSelectedContainer();
 			}
 			super.backPressed();

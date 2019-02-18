@@ -71,6 +71,7 @@ public class DomainModelReferenceSelectorItemProvider
 			super.getPropertyDescriptors(object);
 
 			addDomainModelReferencePropertyDescriptor(object);
+			addRootEClassPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -94,6 +95,28 @@ public class DomainModelReferenceSelectorItemProvider
 				true,
 				false,
 				false,
+				null,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Root EClass feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addRootEClassPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DomainModelReferenceSelector_rootEClass_feature"), //$NON-NLS-1$
+				getString("_UI_DomainModelReferenceSelector_rootEClass_description"), //$NON-NLS-1$
+				VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS,
+				true,
+				false,
+				true,
 				null,
 				null,
 				null));
@@ -154,6 +177,10 @@ public class DomainModelReferenceSelectorItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add(createChildParameter(
+			VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
+			VViewFactory.eINSTANCE.createDomainModelReference()));
 
 		newChildDescriptors.add(createChildParameter(
 			VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
