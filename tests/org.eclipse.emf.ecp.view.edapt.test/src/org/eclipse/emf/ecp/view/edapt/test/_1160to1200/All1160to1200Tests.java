@@ -7,22 +7,17 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * jfaltermeier - initial API and implementation
+ * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test;
+package org.eclipse.emf.ecp.view.edapt.test._1160to1200;
 
-import org.eclipse.emf.ecp.view.edapt.test._1160to1200.All1160to1200Tests;
-import org.eclipse.emf.ecp.view.edapt.test._140to1170.All140to1170Tests;
-import org.eclipse.emf.ecp.view.edapt.test._160to1170.All160to1170Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	All140to1170Tests.class,
-	All160to1170Tests.class,
-	All1160to1200Tests.class
+	CompareTypeMigration_PTest.class
 })
-public class AllTests {
+public class All1160to1200Tests {
 
 }
