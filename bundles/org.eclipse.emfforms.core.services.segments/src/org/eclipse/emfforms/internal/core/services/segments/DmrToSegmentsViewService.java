@@ -30,7 +30,7 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
  * </p>
  * <p>
  * <strong>Note:</strong> This behavior can be activated by setting the program argument
- * {@link DmrToSegmentsViewServiceFactory#SEGMENT_GENERATION enableSegmentGeneration}.
+ * {@link org.eclipse.emfforms.spi.core.services.segments.RuntimeModeUtil#SEGMENT_GENERATION -enableSegmentGeneration}.
  * </p>
  *
  * @author Lucas Koehler
