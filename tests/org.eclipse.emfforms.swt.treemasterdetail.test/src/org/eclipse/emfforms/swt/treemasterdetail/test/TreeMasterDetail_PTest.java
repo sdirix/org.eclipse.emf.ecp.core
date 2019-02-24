@@ -498,7 +498,7 @@ public class TreeMasterDetail_PTest {
 			public String getFailureMessage() {
 				return "The selection did not update to Bob!";
 			}
-		}, 5000, 100);
+		}, 10000, 100);
 
 		/* press enter */
 		try {
@@ -520,7 +520,7 @@ public class TreeMasterDetail_PTest {
 			public String getFailureMessage() {
 				return "The detail did not update to show Bob!";
 			}
-		}, 5000, 100);
+		}, 10000, 100);
 		/* focus change expected */
 		assertSame(bot.text().widget, bot.getFocusedWidget());
 	}

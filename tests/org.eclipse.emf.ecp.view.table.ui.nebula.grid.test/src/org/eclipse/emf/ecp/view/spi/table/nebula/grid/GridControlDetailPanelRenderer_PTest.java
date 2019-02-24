@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
 import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper.RendererResult;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
@@ -146,8 +147,9 @@ public class GridControlDetailPanelRenderer_PTest {
 	@Test
 	public void testScroll() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		shell.setSize(100, 200);
 		shell.open();
-		shell.setSize(100, 100);
+		SWTTestUtil.waitForUIThread();
 		// setup model
 		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
@@ -155,6 +157,7 @@ public class GridControlDetailPanelRenderer_PTest {
 		final RendererResult renderControl = SWTViewTestHelper.renderControl(handle.getTableControl(), domainElement,
 			shell);
 		shell.layout();
+		SWTTestUtil.waitForUIThread();
 		final GridTableViewer tableViewer = GridTestsUtil.getTableViewerFromRenderer(renderControl.getRenderer());
 		final Control render = renderControl.getControl().get();
 		assertTrue(render instanceof Composite);
