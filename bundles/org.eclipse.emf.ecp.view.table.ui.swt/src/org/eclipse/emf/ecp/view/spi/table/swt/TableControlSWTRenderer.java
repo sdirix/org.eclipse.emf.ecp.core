@@ -1485,8 +1485,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyValidation(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
-		final Set<Object> updates = Stream
-			.concat(oldDiagnostic.getDiagnostics().stream(), newDiagnostic.getDiagnostics().stream())
+		final Stream<Object> oldDiagnostics = oldDiagnostic == null ? Stream.empty()
+			: oldDiagnostic.getDiagnostics().stream();
+		final Stream<Object> newDiagnostics = newDiagnostic == null ? Stream.empty()
+			: newDiagnostic.getDiagnostics().stream();
+
+		final Set<Object> updates = Stream.concat(oldDiagnostics, newDiagnostics)
 			.map(this::getSubject).filter(Objects::nonNull).collect(toCollection(LinkedHashSet::new));
 
 		runnableManager.executeAsync(new ApplyValidationRunnable(updates));
