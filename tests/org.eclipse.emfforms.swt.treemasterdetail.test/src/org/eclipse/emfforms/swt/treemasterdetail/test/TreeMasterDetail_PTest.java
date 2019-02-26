@@ -57,6 +57,7 @@ import org.eclipse.jface.bindings.keys.IKeyLookup;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.SWT;
@@ -108,7 +109,7 @@ public class TreeMasterDetail_PTest {
 			@Override
 			public Shell run() {
 				final Shell shell = new Shell(display);
-				GridDataFactory.fillDefaults().applyTo(shell);
+				GridLayoutFactory.fillDefaults().applyTo(shell);
 				return shell;
 			}
 		});
@@ -460,18 +461,24 @@ public class TreeMasterDetail_PTest {
 		league.getPlayers().add(bob);
 		final Object input = league;
 		final int renderDelay = 2500;
-		composite = TreeMasterDetailSWTFactory
-			.fillDefaults(shell, SWT.NONE, input)
-			.customizeInitialSelection(new InitialSelectionProvider() {
-				@Override
-				public EObject getInitialSelection(Object input) {
-					return alice;
-				}
-			})
-			.customizeUpdateDelay(renderDelay)
-			.create();
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
-		shell.open();
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				composite = TreeMasterDetailSWTFactory
+					.fillDefaults(shell, SWT.NONE, input)
+					.customizeInitialSelection(new InitialSelectionProvider() {
+						@Override
+						public EObject getInitialSelection(Object input) {
+							return alice;
+						}
+					})
+					.customizeUpdateDelay(renderDelay)
+					.create();
+				GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+				shell.open();
+			}
+		});
+
 		SWTTestUtil.waitForUIThread();
 		final String text = bot.text().getText();
 		assertEquals(ALICE, text);
@@ -508,11 +515,11 @@ public class TreeMasterDetail_PTest {
 		}
 
 		/* enter should update immediately, no delay expected */
-		SWTTestUtil.waitForUIThread();
 		bot.waitUntil(new DefaultCondition() {
 
 			@Override
 			public boolean test() throws Exception {
+				SWTTestUtil.waitForUIThread();
 				return BOB.equals(bot.text().getText());
 			}
 
@@ -522,7 +529,19 @@ public class TreeMasterDetail_PTest {
 			}
 		}, 10000, 100);
 		/* focus change expected */
-		assertSame(bot.text().widget, bot.getFocusedWidget());
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				SWTTestUtil.waitForUIThread();
+				return bot.text().widget == bot.getFocusedWidget();
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "The focus did not switch to Text Bob!";
+			}
+		}, 10000, 100);
 	}
 
 	@Test
