@@ -24,7 +24,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -228,6 +232,54 @@ public final class SWTTestUtil {
 	public static void typeAndFocusOut(Text text, String string) {
 		text.setText(string);
 		text.notifyListeners(SWT.FocusOut, new Event());
+	}
+
+	/**
+	 * Selects the index in the given tree and notifies the tree's listeners (e.g. a corresponding tree viewer) about
+	 * the selection.
+	 *
+	 * @param tree The tree to select an element in
+	 * @param index The index of the element to select
+	 * @return the selected {@link TreeItem}
+	 */
+	public static TreeItem selectTreeItem(Tree tree, int index) {
+		final TreeItem result = tree.getItem(index);
+		selectTreeItem(result);
+		return result;
+	}
+
+	/**
+	 * Selects the given {@link TreeItem} in its parent {@link Tree} and notifies the tree's listeners.
+	 *
+	 * @param treeItem The {@link TreeItem} to select
+	 */
+	public static void selectTreeItem(TreeItem treeItem) {
+		final Tree tree = treeItem.getParent();
+		tree.setSelection(treeItem);
+		final Event event = new Event();
+		event.type = SWT.Selection;
+		event.widget = tree;
+		event.item = treeItem;
+		tree.notifyListeners(SWT.Selection, event);
+	}
+
+	/**
+	 * Selects the index in the given table and notifies the table's listeners (e.g. a corresponding table viewer) about
+	 * the selection.
+	 *
+	 * @param table The table to select an element in
+	 * @param index The index of the element to select
+	 * @return the selected {@link TableItem}
+	 */
+	public static TableItem selectTableItem(Table table, int index) {
+		table.setSelection(index);
+		final Event event = new Event();
+		event.type = SWT.Selection;
+		event.widget = table;
+		final TableItem result = table.getItem(index);
+		event.item = result;
+		table.notifyListeners(SWT.Selection, event);
+		return result;
 	}
 
 	/**

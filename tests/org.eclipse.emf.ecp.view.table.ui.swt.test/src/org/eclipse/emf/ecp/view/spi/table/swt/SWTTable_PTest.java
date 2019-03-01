@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -202,6 +204,9 @@ public class SWTTable_PTest {
 			fail("Unexpected log to System.err: " + log);
 		}
 		adapterFactory.dispose();
+		if (shell != null && !shell.isDisposed()) {
+			shell.dispose();
+		}
 	}
 
 	@Test
@@ -616,6 +621,64 @@ public class SWTTable_PTest {
 		SWTTestUtil.waitForUIThread();
 		assertTableItemOrder(table, attribute1, attribute2, attribute3);
 		assertEquals(SWT.NONE, table.getSortDirection());
+	}
+
+	@Test
+	public void tableSorting_autoSortOnEdit()
+		throws EMFFormsNoRendererException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// domain
+		((EClass) domainElement).getEStructuralFeatures().clear();
+		final EAttribute attribute1 = createEAttribute("a", EcorePackage.Literals.ESTRING, 0, 2);
+		final EAttribute attribute2 = createEAttribute("b", EcorePackage.Literals.ESTRING, 0, 11);
+		final EAttribute attribute3 = createEAttribute("c", EcorePackage.Literals.ESTRING, 0, 1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute2);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute3);
+
+		// table control
+		final VTableControl tableControl = TableTestUtil.createTableControl();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		tableDMR.getColumnDomainModelReferences().add(
+			createDMR(EcorePackage.eINSTANCE.getETypedElement_UpperBound()));
+
+		// render
+		shell.open();
+		// With this shell size, the table will be 77 pixels high and show 2 rows
+		shell.setSize(200, 150);
+		final Control control = SWTViewTestHelper.render(tableControl, domainElement, shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		shell.layout();
+		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
+
+		// column 0 is validation column
+		// select column 1 (name) and ascending sorting
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, attribute1, attribute2, attribute3);
+		assertEquals(SWT.DOWN, table.getSortDirection()); // SWT.DOWN := ascending sorting
+
+		// Change the attribute the sorting is currently applied on and assert that the table was automatically
+		// re-sorted
+		attribute1.setName("z");
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, attribute2, attribute3, attribute1);
+
+		final TableItem sortItem = table.getItem(2);
+		// Calculate the lower item bound relative to the table. We need to add the header height because the y
+		// coordinates of the table items start at the lower end of the header but the header height is included in the
+		// table height.
+		final int itemLowerEnd = sortItem.getBounds().y + sortItem.getBounds().height + table.getHeaderHeight();
+		// Assert that the edited table item was revealed after it had been moved to the end of the table.
+		assertThat(
+			"The edited table item is not fully visible after the auto sort because the table didn't scroll down.",
+			itemLowerEnd, lessThan(table.getBounds().height));
+		assertThat(
+			"The edited table item is not fully visible after the auto sort because the table is scrolled too far down.",
+			sortItem.getBounds().y, greaterThanOrEqualTo(0));
 	}
 
 	@Test

@@ -18,7 +18,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.view.template.tooling.editor.TemplateModelEditorPart"
-            default="false"
+            default="true"
             extensions="template"
             icon="icons/template.gif"
             id="org.eclipse.emf.ecp.view.template.tooling.editor"
