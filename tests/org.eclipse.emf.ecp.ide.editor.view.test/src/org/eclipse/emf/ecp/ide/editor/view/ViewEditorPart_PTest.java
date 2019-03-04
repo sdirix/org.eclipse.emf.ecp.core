@@ -50,6 +50,9 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.keyboard.Keyboard;
+import org.eclipse.swtbot.swt.finder.keyboard.KeyboardFactory;
+import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -166,6 +169,9 @@ public class ViewEditorPart_PTest {
 
 	@Test
 	public void copyPaste_Tree() throws WidgetNotFoundException, ParseException, InterruptedException {
+		SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
+		final Keyboard keyboard = KeyboardFactory.getAWTKeyboard();
+
 		final ViewEditorPart editor = open(USER_VIEW_MODEL, ViewEditorPart.class);
 		final Composite parent = getEditorParentComposite(editor);
 		final Tree tree = SWTTestUtil.findControl(parent, 0, Tree.class);
@@ -176,14 +182,16 @@ public class ViewEditorPart_PTest {
 		// Manually force focus to increase test stability because sometimes selecting a tree item programmatically
 		// doesn't set focus or at least not fast enough
 		tree.setFocus();
-		SWTTestUtil.pressAndReleaseKey(tree, SWT.MOD1, 'c');
+		SWTTestUtil.waitForUIThread();
+		keyboard.pressShortcut(SWT.CTRL, 'c');
 		SWTTestUtil.waitForUIThread();
 
 		SWTTestUtil.selectTreeItem(viewItem);
 		SWTTestUtil.waitForUIThread();
 
 		tree.setFocus();
-		SWTTestUtil.pressAndReleaseKey(tree, SWT.MOD1, 'v');
+		SWTTestUtil.waitForUIThread();
+		keyboard.pressShortcut(SWT.CTRL, 'v');
 		SWTTestUtil.waitForUIThread();
 		tree.update();
 		SWTTestUtil.waitForUIThread();
@@ -195,6 +203,9 @@ public class ViewEditorPart_PTest {
 
 	@Test
 	public void copyPaste_Detail_TextControl() {
+		SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
+		final Keyboard keyboard = KeyboardFactory.getAWTKeyboard();
+
 		final ViewEditorPart editor = open(USER_VIEW_MODEL, ViewEditorPart.class);
 		final Clipboard clipboard = new Clipboard(Display.getCurrent());
 		clipboard.clearContents();
@@ -219,9 +230,9 @@ public class ViewEditorPart_PTest {
 		botText.setFocus();
 		// Press multiple times to increase test stability
 		for (int i = 0; i < 10; i++) {
-			botText.pressShortcut(SWT.CTRL, 'c');
+			keyboard.pressShortcut(SWT.CTRL, 'c');
+			SWTTestUtil.waitForUIThread();
 		}
-		SWTTestUtil.waitForUIThread();
 		text.setSelection(0);
 
 		// Check that copy to clip board worked
@@ -232,9 +243,9 @@ public class ViewEditorPart_PTest {
 		botText.setFocus();
 		// Press multiple times to increase test stability
 		for (int i = 0; i < 10; i++) {
-			botText.pressShortcut(SWT.CTRL, 'v');
+			keyboard.pressShortcut(SWT.CTRL, 'v');
+			SWTTestUtil.waitForUIThread();
 		}
-		SWTTestUtil.waitForUIThread();
 		text.update();
 		SWTTestUtil.waitForUIThread();
 
