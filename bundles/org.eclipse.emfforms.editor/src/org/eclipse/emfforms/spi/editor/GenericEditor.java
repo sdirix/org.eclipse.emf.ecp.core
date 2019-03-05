@@ -69,13 +69,16 @@ import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.decorator.validation.ecp.ECPValidationLabelDecoratorProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache.ValidationListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -382,12 +385,26 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			IResource.DEPTH_ZERO);
 	}
 
-	private void setupDiagnosticCache(Object editorInput) {
-		if (!Notifier.class.isInstance(editorInput)) {
-			return;
+	/**
+	 * Get the Notifier from the tree input.
+	 * 
+	 * @param editorInput The editor input to transform
+	 * @return {@link Notifier}
+	 * @throws IllegalStateException if the editor input is not a Notifier
+	 */
+	protected Notifier getNotifierFromEditorInput(Object editorInput) {
+		Object input = editorInput;
+		if (input instanceof RootObject) {
+			input = ((RootObject) input).getRoot();
 		}
-		final Notifier input = (Notifier) editorInput;
-		cache = createDiangosticCache(input);
+		if (!Notifier.class.isInstance(input)) {
+			throw new IllegalStateException("The editor input is not a Notifier!"); //$NON-NLS-1$
+		}
+		return (Notifier) input;
+	}
+
+	private void setupDiagnosticCache(Object editorInput) {
+		cache = createDiangosticCache(getNotifierFromEditorInput(editorInput));
 	}
 
 	/**
@@ -474,7 +491,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final Composite composite,
 		Object editorInput,
 		final CreateElementCallback createElementCallback) {
-		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
+		final TreeMasterDetailSWTBuilder builder = TreeMasterDetailSWTFactory
 			.fillDefaults(composite, SWT.NONE, editorInput)
 			.customizeCildCreation(createElementCallback)
 			.customizeMenu(new MenuProvider() {
@@ -493,8 +510,14 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 				}
 			})
-			.customizeTree(createTreeViewerBuilder())
-			.create();
+			.customizeTree(createTreeViewerBuilder());
+
+		if (enableValidation()) {
+			builder.customizeLabelDecorator(
+				new ECPValidationLabelDecoratorProvider(getNotifierFromEditorInput(editorInput), getDiagnosticCache()));
+		}
+
+		final TreeMasterDetailComposite treeMasterDetail = builder.create();
 		return treeMasterDetail;
 	}
 
