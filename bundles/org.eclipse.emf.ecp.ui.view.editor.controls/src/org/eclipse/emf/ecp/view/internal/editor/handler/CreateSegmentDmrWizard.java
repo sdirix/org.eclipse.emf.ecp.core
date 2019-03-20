@@ -13,11 +13,14 @@ package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.notify.Adapter;
@@ -150,22 +153,37 @@ public class CreateSegmentDmrWizard extends Wizard {
 			lastSegmentTypeInfo = ""; //$NON-NLS-1$
 		}
 
+		final Collection<SegmentIdeDescriptor> descriptors = collectSegmentIdeDescriptors(ignoreSegmentIdeRestriction);
+		for (final SegmentIdeDescriptor descriptor : descriptors) {
+			segmentToIdeDescriptorMap.put(descriptor.getSegmentType(), descriptor);
+		}
+	}
+
+	/**
+	 * Collect all {@link SegmentIdeDescriptor SegmentIdeDescriptors} for the advanced mode.
+	 *
+	 * @param ignoreSegmentIdeRestriction Whether the descriptors' availability flag must be considered when collecting
+	 *            the descriptors
+	 * @return The collection of {@link SegmentIdeDescriptor SegmentIdeDescriptors}; might be empty but never
+	 *         <code>null</code>
+	 * @see SegmentIdeDescriptor#isAvailableInIde()
+	 */
+	protected Collection<SegmentIdeDescriptor> collectSegmentIdeDescriptors(boolean ignoreSegmentIdeRestriction) {
 		try {
 			final BundleContext bundleContext = FrameworkUtil.getBundle(CreateSegmentDmrWizard.class)
 				.getBundleContext();
 			final Collection<ServiceReference<SegmentIdeDescriptor>> references = bundleContext
 				.getServiceReferences(SegmentIdeDescriptor.class, null);
-			for (final ServiceReference<SegmentIdeDescriptor> serviceRef : references) {
-				final SegmentIdeDescriptor service = bundleContext.getService(serviceRef);
-				if (ignoreSegmentIdeRestriction || service.isAvailableInIde()) {
-					segmentToIdeDescriptorMap.put(service.getSegmentType(), service);
-					serviceReferences.add(serviceRef);
-				}
-			}
+			serviceReferences.addAll(references);
+			return references.stream()
+				.map(bundleContext::getService)
+				.filter(Objects::nonNull)
+				.filter(d -> ignoreSegmentIdeRestriction || d.isAvailableInIde())
+				.collect(Collectors.toSet());
 		} catch (final InvalidSyntaxException ex) {
 			// Should never happen because no filter is used
 		}
-
+		return Collections.emptySet();
 	}
 
 	/**
