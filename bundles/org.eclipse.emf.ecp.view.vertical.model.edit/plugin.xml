@@ -15,7 +15,7 @@
          name=""
          point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
-            uri="http://org/eclipse/emf/ecp/view/model/1200"
+            uri="http://org/eclipse/emf/ecp/view/model/1180"
             class="org.eclipse.emf.ecp.view.spi.vertical.model.provider.VerticalItemProviderAdapterFactory$ViewChildCreationExtender">
       </extender>
    </extension>

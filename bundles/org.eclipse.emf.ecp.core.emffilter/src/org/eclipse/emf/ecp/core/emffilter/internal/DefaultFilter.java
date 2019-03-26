@@ -75,7 +75,6 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/ecp/view/model/170"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/model/1170"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/model/1180"); //$NON-NLS-1$
-		packages.add("http://org/eclipse/emf/ecp/view/model/1200"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/group/model"); //$NON-NLS-1$

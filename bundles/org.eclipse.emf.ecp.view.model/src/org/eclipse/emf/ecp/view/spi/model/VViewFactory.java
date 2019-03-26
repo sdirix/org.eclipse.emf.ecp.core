@@ -47,10 +47,9 @@ public interface VViewFactory extends EFactory {
 	/**
 	 * Returns a new object of class '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.20
-	 *        <!-- end-user-doc -->
 	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
 	 * @return a new object of class '<em>Domain Model Reference</em>'.
 	 * @generated
 	 */

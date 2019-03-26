@@ -1226,15 +1226,10 @@
     <changes xsi:type="history:Set" xmi:id="_nO4oUJCkEeicUdmSXarX1Q" featureName="lowerBound" dataValue="0" oldDataValue="1">
       <element href="view.ecore#//DomainModelReference/segments"/>
     </changes>
-    <changes xsi:type="history:Set" xmi:id="_tzrKQJAQEeicUdmSXarX1Q" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/1180" oldDataValue="http://org/eclipse/emf/ecp/view/model/1170">
-      <element href="view.ecore#/"/>
-    </changes>
-  </releases>
-  <releases xmi:id="_1SFckJAQEeicUdmSXarX1Q" date="2019-01-14T09:53:51.816+0100" label="1200">
     <changes xsi:type="history:Set" xmi:id="_2EDToBfZEem80KOc7Ecgbw" featureName="abstract" dataValue="false" oldDataValue="true">
       <element href="view.ecore#//DomainModelReference"/>
     </changes>
-    <changes xsi:type="history:Set" xmi:id="_6lKuYBfZEem80KOc7Ecgbw" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/1200" oldDataValue="http://org/eclipse/emf/ecp/view/model/1180">
+    <changes xsi:type="history:Set" xmi:id="_tzrKQJAQEeicUdmSXarX1Q" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/1180" oldDataValue="http://org/eclipse/emf/ecp/view/model/1170">
       <element href="view.ecore#/"/>
     </changes>
   </releases>

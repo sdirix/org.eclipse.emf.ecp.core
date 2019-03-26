@@ -55,7 +55,16 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1200"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1180"; //$NON-NLS-1$
+
+	/**
+	 * The package namespace URI of releases [1.17.0,1.18.0[.
+	 *
+	 * @since 1.21
+	 *
+	 * @generated NOT
+	 */
+	String NS_URI_1170 = "http://org/eclipse/emf/ecp/view/model/1170"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI of releases [1.7.0,1.17.0[.
