@@ -15,6 +15,7 @@ package org.eclipse.emfforms.common.spi.validation.filter;
  * Base interface for all validation filters.
  *
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  * @author Mat Hansen <mhansen@eclipsesource.com>
  */
 public interface ValidationFilter {
