@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -188,6 +189,10 @@ public final class ResourceSetHelpers {
 		final ResourceSet resourceSet = domain.getResourceSet();
 		resourceSet.eAdapters().add(
 			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		// needed to be able to resolve resource paths to plugin paths and thus load referenced ecores
+		resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
+
+		resourceSet.getLoadOptions().put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
 		return resourceSet;
 	}
 

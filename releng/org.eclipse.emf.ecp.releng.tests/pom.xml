@@ -234,6 +234,8 @@
 		
 		<module>../../tests/org.eclipse.emfforms.datatemplate.tooling.tests</module>
 		
+		<module>../../tests/org.eclipse.emfforms.editor.test</module>
+		
 	</modules>
 	
 	<build>

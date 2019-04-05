@@ -615,6 +615,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final HashMap<Object, Object> options = new HashMap<Object, Object>();
 		options.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
 			Boolean.TRUE);
+		options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
 		return options;
 	}
 
