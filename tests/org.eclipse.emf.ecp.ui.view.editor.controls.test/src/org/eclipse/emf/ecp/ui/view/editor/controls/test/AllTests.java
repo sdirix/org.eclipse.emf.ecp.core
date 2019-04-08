@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ui.view.editor.controls.test;
 
 import org.eclipse.emf.ecp.view.internal.editor.controls.ExpectedValueControlRenderer_Test;
 import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionControlRenderer_Test;
+import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionSegmentControlRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.editor.controls.TableColumnsDMRTableControl_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler_Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	GenerateControlsHandler_Test.class,
 	ExpectedValueControlRenderer_Test.class,
 	LeafConditionControlRenderer_Test.class,
-	TableColumnsDMRTableControl_Test.class
+	TableColumnsDMRTableControl_Test.class,
+	LeafConditionSegmentControlRenderer_PTest.class
 })
 public class AllTests {
 

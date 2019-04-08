@@ -15,6 +15,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
@@ -59,14 +60,11 @@ public class LeafConditionControlRendererService implements EMFFormsDIRendererSe
 		this.reportService = reportService;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
+		if (ToolingModeUtil.isSegmentToolingEnabled()) {
+			return NOT_APPLICABLE;
+		}
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}

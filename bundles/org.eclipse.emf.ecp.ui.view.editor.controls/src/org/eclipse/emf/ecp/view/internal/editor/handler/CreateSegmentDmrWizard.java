@@ -209,6 +209,24 @@ public class CreateSegmentDmrWizard extends Wizard {
 	}
 
 	/**
+	 * Creates a new dmr creation with default values for segment generation (= a simple feature segment path), segment
+	 * types (all none restricted types), and the required last segment type (all are allowed) in advanced mode.
+	 * 
+	 * @param rootEClass The root {@link EClass} of the DMR to create. IF this is <code>null</code>, the
+	 *            wizard offers to chose a root EClass. To make this clear, you might want to use the constructor
+	 *            {@link CreateSegmentDmrWizard#CreateSegmentDmrWizard(String, EStructuralFeatureSelectionValidator, SegmentGenerator, EClass, boolean)}.
+	 * @param windowTitle The title for the wizard window
+	 * @param existingDMR The domain model reference to configure. May be null. If this is given the initial selection
+	 *            of the wizard is based on this but the given DMR will not be changed. A new one is returned.
+	 * @param selectionValidator Validates whether a selected structural feature is a valid selection (e.g. the
+	 *            selection could be required to be a multi reference)
+	 */
+	public CreateSegmentDmrWizard(final EClass rootEClass, final String windowTitle,
+		VDomainModelReference existingDMR, EStructuralFeatureSelectionValidator selectionValidator) {
+		this(rootEClass, windowTitle, existingDMR, selectionValidator, new FeatureSegmentGenerator(), null, false);
+	}
+
+	/**
 	 * Returns the configured {@link VDomainModelReference}. This is either a new DMR or the edited input DMR.
 	 * The return value is empty if the dialog was cancelled or the dialog is still open.
 	 *

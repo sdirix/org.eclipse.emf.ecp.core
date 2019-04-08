@@ -55,6 +55,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -449,6 +450,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				reference = VControl.class.cast(eObject).getDomainModelReference();
 			} else if (VLabel.class.isInstance(eObject)) {
 				reference = VLabel.class.cast(eObject).getDomainModelReference();
+			} else if (eObject instanceof LeafCondition) {
+				reference = LeafCondition.class.cast(eObject).getDomainModelReference();
 			}
 
 			if (ToolingModeUtil.isSegmentToolingEnabled()) {

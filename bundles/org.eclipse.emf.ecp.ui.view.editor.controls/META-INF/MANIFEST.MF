@@ -70,6 +70,9 @@ Service-Component: OSGI-INF/ControlRootEClassControl2SWTRendererService.xml,
  OSGI-INF/DmrOpenInNewContextStrategyProvider.xml,
  OSGI-INF/DmrNewReferenceElementStrategyProvider.xml,
  OSGI-INF/TableColumnsDMRTableControlService.xml,
- OSGI-INF/TableColumnsDmrViewServiceFactory.xml
+ OSGI-INF/TableColumnsDmrViewServiceFactory.xml,
+ OSGI-INF/LeafConditionSegmentControlRendererService.xml,
+ OSGI-INF/LeafConditionDmrNewModelElementStrategyProvider.xml,
+ OSGI-INF/LeafConditionDmrOpenInNewContextStrategyProvider.xml
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

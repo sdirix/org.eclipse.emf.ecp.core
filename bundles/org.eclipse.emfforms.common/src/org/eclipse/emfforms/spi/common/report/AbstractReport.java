@@ -79,10 +79,10 @@ public class AbstractReport {
 	/**
 	 * Constructor.
 	 *
-	 * Sets the severity to <code>IStatus.ERROR</code>.
+	 * Sets the severity to the given severity.
 	 *
 	 * @param message the report message
-	 * @param severity the severity of the report
+	 * @param severity the severity of the report specified as an <code>IStatus</code> severity code.
 	 */
 	public AbstractReport(String message, int severity) {
 		this.message = message;

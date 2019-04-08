@@ -55,7 +55,7 @@ public final class Helper {
 	 * @return the root {@link EClass}
 	 */
 	public static EClass getRootEClass(ECPProject project) {
-		if (VView.class.isInstance(project.getContents().get(0))) {
+		if (project != null && VView.class.isInstance(project.getContents().get(0))) {
 			return VView.class.cast(project.getContents().get(0)).getRootEClass();
 		}
 		return null;

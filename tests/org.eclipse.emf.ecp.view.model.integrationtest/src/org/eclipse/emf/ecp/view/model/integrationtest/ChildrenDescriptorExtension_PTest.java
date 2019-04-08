@@ -75,7 +75,8 @@ public class ChildrenDescriptorExtension_PTest {
 		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
-	private static final int LEAFCONDITION_CHILD_COUNT = 1;
+	// Neither the main dmr nor the value dmr should be returned as children
+	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
 
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT;
