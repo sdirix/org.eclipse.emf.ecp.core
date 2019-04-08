@@ -339,7 +339,7 @@ public class ViewEditorPart_PTest {
 
 	static URI testResourceURI(String resourcePath) {
 		return URI.createURI(
-			String.format("platform:/fragment/org.eclipse.emf.ecp.ide.editor.view.test/resources/%s", resourcePath),
+			String.format("platform:/plugin/org.eclipse.emf.ecp.ide.editor.view.test/resources/%s", resourcePath),
 			true);
 	}
 
