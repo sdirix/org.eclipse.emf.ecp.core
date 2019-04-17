@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
@@ -256,7 +255,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		}
 
 		String attributeType = null;
-		final EClass rootEClass = Helper.getRootEClass(dmr);
+		final EClass rootEClass = getDmrRootEClass();
 		try {
 			final IEMFValueProperty valueProperty = emfFormsDatabindingEMF.getValueProperty(
 				dmr, rootEClass);
@@ -403,7 +402,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				.getDomainModelReference(),
 			getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
 		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(), getViewModelContext(),
-			getDataBindingContext(), structuralFeature));
+			getDataBindingContext(), (EReference) structuralFeature));
 
 	}
 
@@ -427,23 +426,55 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return LocalizationServiceHelper.getString(getClass(), "LinkControl_NoLinkSetClickToSetLink"); //$NON-NLS-1$
 	}
 
+	/**
+	 * Create a new segment based domain model reference and set it in the <code>reference</code> of the given
+	 * <code>container</code> object.
+	 *
+	 * @param container The EObject which will contain the new domain model reference
+	 * @param reference The EReference which the new domain model reference will be set in
+	 */
+	protected void addNewSegmentDmr(EObject container, EReference reference) {
+		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		referenceService.addNewModelElements(eObject, (EReference) structuralFeature, false);
+	}
+
+	/**
+	 * Edits the existing DMR set in the <code>reference</code> of the given
+	 * <code>container</code> object.
+	 *
+	 * @param container The EObject which will contain the new domain model reference
+	 * @param reference The EReference which contains the current new domain model reference
+	 * @param dmr The domain model reference to edit
+	 */
+	protected void editSegmentDmr(EObject container, EReference reference, VDomainModelReference dmr) {
+		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		referenceService.openInNewContext(dmr);
+	}
+
+	/**
+	 * Returns the root EClass of the domain model reference.
+	 *
+	 * @return the DMR's root EClass.
+	 */
+	protected EClass getDmrRootEClass() {
+		return Helper.getRootEClass(getViewModelContext().getDomainModel());
+	}
+
 	/** SelectionAdapter for the set button. */
 	private class SelectionAdapterExtension extends SelectionAdapter {
 
-		private final EStructuralFeature eStructuralFeature;
+		private final EReference eReference;
 
-		SelectionAdapterExtension(Label label, IObservableValue modelValue, ViewModelContext viewModelContext,
-			DataBindingContext dataBindingContext,
-			EStructuralFeature eStructuralFeature) {
-			this.eStructuralFeature = eStructuralFeature;
+		SelectionAdapterExtension(Label label, IObservableValue<?> modelValue, ViewModelContext viewModelContext,
+			DataBindingContext dataBindingContext, EReference eReference) {
+			this.eReference = eReference;
 		}
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Collection<EClass> classes = EMFUtils.getSubClasses(((EReferenceImpl) eStructuralFeature)
-				.getEReferenceType());
+			final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
 
-			final EClass eclass = Helper.getRootEClass(getViewModelContext().getDomainModel());
+			final EClass eclass = getDmrRootEClass();
 
 			VDomainModelReference reference = null;
 			if (VControl.class.isInstance(eObject)) {
@@ -455,11 +486,10 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 
 			if (ToolingModeUtil.isSegmentToolingEnabled()) {
-				final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
 				if (reference == null) {
-					referenceService.addNewModelElements(eObject, (EReference) structuralFeature, false);
+					addNewSegmentDmr(eObject, eReference);
 				} else {
-					referenceService.openInNewContext(reference);
+					editSegmentDmr(eObject, eReference, reference);
 				}
 			} else {
 				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(

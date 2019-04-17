@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.test.common.MultiTry;
 import org.eclipse.emf.ecp.test.common.MultiTryTestRule;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
-import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrNewModelElementStrategyProvider_PTest.CreateLeafConditionDmrTestProvider;
+import org.eclipse.emf.ecp.view.internal.editor.handler.RuleConditionDmrNewModelElementStrategyProvider_PTest.CreateRuleConditionDmrTestProvider;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
@@ -35,19 +35,19 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * Tests for {@link LeafConditionDmrNewModelElementStrategyProvider}.
+ * Tests for {@link RuleConditionDmrNewModelElementStrategyProvider}.
  *
  * @author Lucas Koehler
  */
-public class LeafConditionDmrNewModelElementStrategyProvider_PTest
-	extends AbstractLeafConditionDmrStrategyProviderTest<CreateLeafConditionDmrTestProvider> {
+public class RuleConditionDmrNewModelElementStrategyProvider_PTest
+	extends AbstractRuleConditionDmrStrategyProviderTest<CreateRuleConditionDmrTestProvider> {
 
 	@Rule
-	public final MultiTryTestRule multiTryRule = new MultiTryTestRule(3, false);
+	public final MultiTryTestRule multiTryRule = new MultiTryTestRule(2, false);
 
 	@Override
 	protected void initStrategyProvider() {
-		setStrategyProvider(new CreateLeafConditionDmrTestProvider());
+		setStrategyProvider(new CreateRuleConditionDmrTestProvider());
 	}
 
 	@Override
@@ -70,19 +70,13 @@ public class LeafConditionDmrNewModelElementStrategyProvider_PTest
 
 		waitForShell("New Domain Model Reference"); //$NON-NLS-1$
 
-		final boolean r = UIThreadRunnable.syncExec(() -> {
+		UIThreadRunnable.syncExec(() -> {
 			final Shell wShell = Display.getDefault().getActiveShell();
 			final Tree tree = SWTTestUtil.findControl(wShell, 0, Tree.class);
-			// select EReference -> Finish button should be disabled
 			SWTTestUtil.selectTreeItem(tree, 0);
 			final Button finish = SWTTestUtil.findControl(wShell, 4, Button.class);
-			final boolean finishState = finish.isEnabled();
-
-			SWTTestUtil.selectTreeItem(tree, 1);
 			SWTTestUtil.clickButton(finish);
-			return finishState;
 		});
-		assertFalse("Dmr wizard finish button enablement after an EReference was selected in simple mode.", r);
 
 		final Optional<EObject> strategyResult = waitUntilNotNull(result);
 		assertTrue(strategyResult.isPresent());
@@ -120,7 +114,7 @@ public class LeafConditionDmrNewModelElementStrategyProvider_PTest
 	}
 
 	/** Allows to mock the segment tooling enabled flag without the need to provide a runtime parameter. */
-	class CreateLeafConditionDmrTestProvider extends LeafConditionDmrNewModelElementStrategyProvider
+	class CreateRuleConditionDmrTestProvider extends RuleConditionDmrNewModelElementStrategyProvider
 		implements TestableStrategyProvider {
 		private boolean segmentToolingEnabled;
 
@@ -133,7 +127,7 @@ public class LeafConditionDmrNewModelElementStrategyProvider_PTest
 		}
 
 		@Override
-		boolean isSegmentToolingEnabled() {
+		protected boolean isSegmentToolingEnabled() {
 			return segmentToolingEnabled;
 		}
 	}

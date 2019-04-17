@@ -47,10 +47,11 @@ import org.junit.Test;
  *
  * @author Lucas Koehler
  */
-public abstract class AbstractLeafConditionDmrStrategyProviderTest<T extends ReferenceServiceCustomizationVendor<?> & TestableStrategyProvider> {
+public abstract class AbstractRuleConditionDmrStrategyProviderTest<T extends ReferenceServiceCustomizationVendor<?> & TestableStrategyProvider> {
 
 	private T strategyProvider;
 	private EClass testEClass;
+	// Use LeafCondition as the condition instance for these tests
 	private LeafCondition leafCondition;
 
 	/** @return the tested strategy provider */
@@ -129,7 +130,7 @@ public abstract class AbstractLeafConditionDmrStrategyProviderTest<T extends Ref
 	@Test
 	public void handles_generationEnabled_incorrectReference() {
 		strategyProvider.setSegmentToolingEnabled(true);
-		assertFalse(executeHandles(leafCondition, RulePackage.Literals.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE));
+		assertFalse(executeHandles(leafCondition, RulePackage.Literals.RULE__CONDITION));
 	}
 
 	@Test

@@ -53,7 +53,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//NotCondition/condition"/>
     </genClasses>
     <genClasses ecoreClass="rule.ecore#//IsProxyCondition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//IsProxyCondition/domainModelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference rule.ecore#//IsProxyCondition/domainModelReference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

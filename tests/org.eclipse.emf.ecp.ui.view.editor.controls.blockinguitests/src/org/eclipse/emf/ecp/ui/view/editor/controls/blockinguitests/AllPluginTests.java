@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.editor.controls.blockinguitests;
 
-import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrNewModelElementStrategyProvider_PTest;
-import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrOpenInNewContextStrategyProvider_PTest;
+import org.eclipse.emf.ecp.view.internal.editor.handler.RuleConditionDmrNewModelElementStrategyProvider_PTest;
+import org.eclipse.emf.ecp.view.internal.editor.handler.RuleConditionDmrOpenInNewContextStrategyProvider_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,8 +23,8 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Lucas Koehler
  */
 @RunWith(Suite.class)
-@SuiteClasses({ LeafConditionDmrNewModelElementStrategyProvider_PTest.class,
-	LeafConditionDmrOpenInNewContextStrategyProvider_PTest.class })
+@SuiteClasses({ RuleConditionDmrNewModelElementStrategyProvider_PTest.class,
+	RuleConditionDmrOpenInNewContextStrategyProvider_PTest.class })
 public class AllPluginTests {
 
 }

@@ -16,6 +16,9 @@ import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionControlRen
 import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionSegmentControlRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.editor.controls.TableColumnsDMRTableControl_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler_Test;
+import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrNewModelElementStrategyProvider_Test;
+import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrOpenInNewContextStrategyProvider_Test;
+import org.eclipse.emf.ecp.view.spi.editor.controls.RuleConditionDmrUtil_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -33,7 +36,10 @@ import org.junit.runners.Suite.SuiteClasses;
 	ExpectedValueControlRenderer_Test.class,
 	LeafConditionControlRenderer_Test.class,
 	TableColumnsDMRTableControl_Test.class,
-	LeafConditionSegmentControlRenderer_PTest.class
+	LeafConditionSegmentControlRenderer_PTest.class,
+	RuleConditionDmrUtil_Test.class,
+	LeafConditionDmrNewModelElementStrategyProvider_Test.class,
+	LeafConditionDmrOpenInNewContextStrategyProvider_Test.class
 })
 public class AllTests {
 
