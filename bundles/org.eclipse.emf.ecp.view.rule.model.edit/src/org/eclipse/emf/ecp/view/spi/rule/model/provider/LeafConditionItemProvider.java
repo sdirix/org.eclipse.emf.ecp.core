@@ -88,10 +88,9 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	/**
 	 * This adds a property descriptor for the Domain Model Reference feature.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.21
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addDomainModelReferencePropertyDescriptor(Object object) {

@@ -64,7 +64,6 @@ public class IsProxyConditionItemProvider extends ConditionItemProvider {
 	 *
 	 * @since 1.21
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addDomainModelReferencePropertyDescriptor(Object object) {

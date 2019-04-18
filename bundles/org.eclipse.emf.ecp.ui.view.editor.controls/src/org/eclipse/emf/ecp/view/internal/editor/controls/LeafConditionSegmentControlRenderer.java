@@ -15,10 +15,11 @@ import javax.inject.Inject;
 
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.rule.RuleConditionDmrUtil;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -80,8 +81,10 @@ public class LeafConditionSegmentControlRenderer extends ExpectedValueControlRen
 
 		EStructuralFeature structuralFeature;
 		try {
+			final EClass conditionRoot = RuleConditionDmrUtil.getDmrRootEClass(getEMFFormsDatabinding(),
+				getReportService(), condition).orElse(null);
 			final IEMFValueProperty valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(condition.getDomainModelReference(), Helper.getRootEClass(condition));
+				.getValueProperty(condition.getDomainModelReference(), conditionRoot);
 			structuralFeature = valueProperty.getStructuralFeature();
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new DatabindingFailedReport(ex));
