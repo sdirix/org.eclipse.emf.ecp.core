@@ -92,7 +92,7 @@ public class SelectFeaturePathWizardPage extends WizardPage {
 		final Composite composite = new Composite(parent, SWT.FILL);
 		GridLayoutFactory.fillDefaults().applyTo(composite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
-		treeViewer = new TreeViewer(composite);
+		treeViewer = createTreeViewer(composite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(treeViewer.getControl());
 
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
@@ -109,6 +109,20 @@ public class SelectFeaturePathWizardPage extends WizardPage {
 		treeViewer.setSelection(firstSelection, true);
 
 		setControl(composite);
+	}
+
+	/**
+	 * Creates the tree viewer of this wizard page. Overwrite this if you want to use custom style flags for the
+	 * {@link TreeViewer}.
+	 * <p>
+	 * <strong>Note:</strong> This method should only create the viewer but not configure anymore stuff like the label
+	 * provider.
+	 *
+	 * @param composite The {@link Composite} which will contain the tree viewer
+	 * @return The created {@link TreeViewer}
+	 */
+	protected TreeViewer createTreeViewer(Composite composite) {
+		return new TreeViewer(composite);
 	}
 
 	/**

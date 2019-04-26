@@ -68,6 +68,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
@@ -211,7 +212,7 @@ public class CreateSegmentDmrWizard extends Wizard {
 	/**
 	 * Creates a new dmr creation with default values for segment generation (= a simple feature segment path), segment
 	 * types (all none restricted types), and the required last segment type (all are allowed) in advanced mode.
-	 * 
+	 *
 	 * @param rootEClass The root {@link EClass} of the DMR to create. IF this is <code>null</code>, the
 	 *            wizard offers to chose a root EClass. To make this clear, you might want to use the constructor
 	 *            {@link CreateSegmentDmrWizard#CreateSegmentDmrWizard(String, EStructuralFeatureSelectionValidator, SegmentGenerator, EClass, boolean)}.
@@ -460,6 +461,12 @@ public class CreateSegmentDmrWizard extends Wizard {
 			}
 		}
 
+		@Override
+		protected TreeViewer createTreeViewer(Composite composite) {
+			// only allow single selection
+			return new TreeViewer(composite, SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER | SWT.SINGLE);
+		}
+
 		/**
 		 * Override method and never allow to flip to next page: Advanced mode should only be accessed by using the
 		 * designated button.<br/>
@@ -603,8 +610,8 @@ public class CreateSegmentDmrWizard extends Wizard {
 			Arrays.sort(items);
 			segmentTypeSelector.setItems(items);
 
-			// table viewer
-			tableViewer = new TableViewer(pageComposite);
+			// table viewer with single selection
+			tableViewer = new TableViewer(pageComposite, SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER | SWT.SINGLE);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(tableViewer.getControl());
 			tableViewer.setContentProvider(contentProvider);
 			tableViewer.setLabelProvider(labelProvider);
