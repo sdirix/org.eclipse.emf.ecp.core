@@ -21,7 +21,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
@@ -92,7 +91,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 *
 	 * @generated
 	 */
-	protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	protected Collection<Object> supportedTypes = new ArrayList<>();
 
 	/**
 	 * This constructs an instance.
@@ -484,20 +483,6 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 *
 			 * @generated
 			 */
-			@Override
-			public Object caseControl(VControl object) {
-				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-					VTableFactory.eINSTANCE.createTableDomainModelReference()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
 			protected CommandParameter createChildParameter(Object feature, Object child) {
 				return new CommandParameter(null, feature, child);
 			}
@@ -512,7 +497,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		 */
 		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

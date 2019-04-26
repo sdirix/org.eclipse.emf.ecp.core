@@ -66,8 +66,9 @@ public class ChildrenDescriptorExtension_PTest {
 	// label, table, vertical, horizontal, group, groupedgrid, categorizationElement, custom control, section,
 	// stack,viewproxy, compoundcontrol, treemasterdetail
 	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 13;
-	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR,KEYDMR, MAPPINGDMR,IndexDMR
-	private static final int DOMAINMODELREFERENCE_COUNT = 7;
+	// DMRs should not be creatable via child extender. Existing Dmrs: DMR, VFeaturePathDR, VPredefinedDR,
+	// VTableDR,KEYDMR, MAPPINGDMR,IndexDMR
+	private static final int DOMAINMODELREFERENCE_COUNT = 0;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
 	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
@@ -236,8 +237,7 @@ public class ChildrenDescriptorExtension_PTest {
 	@Test
 	public void testLabelDescriptors() {
 		final int size = getChildrenSize(VLabelPackage.eINSTANCE.getLabel());
-		// -6 because only the VFeaturePath is found
-		assertEquals(ATTACHMENT_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT - 6, size);
+		assertEquals(ATTACHMENT_CHILD_COUNT, size);
 	}
 
 	@Test

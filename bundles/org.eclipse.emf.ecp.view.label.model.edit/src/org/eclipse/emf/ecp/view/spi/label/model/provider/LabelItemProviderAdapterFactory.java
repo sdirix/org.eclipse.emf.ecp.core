@@ -55,8 +55,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class LabelItemProviderAdapterFactory extends LabelAdapterFactory implements ComposeableAdapterFactory,
-	IChangeNotifier, IDisposable, IChildCreationExtender
-{
+	IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -92,7 +91,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 *
 	 * @generated
 	 */
-	protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	protected Collection<Object> supportedTypes = new ArrayList<>();
 
 	/**
 	 * This constructs an instance.
@@ -101,8 +100,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 *
 	 * @generated
 	 */
-	public LabelItemProviderAdapterFactory()
-	{
+	public LabelItemProviderAdapterFactory() {
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -128,10 +126,8 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createLabelAdapter()
-	{
-		if (labelItemProvider == null)
-		{
+	public Adapter createLabelAdapter() {
+		if (labelItemProvider == null) {
 			labelItemProvider = new LabelItemProvider(this);
 		}
 
@@ -146,8 +142,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public ComposeableAdapterFactory getRootAdapterFactory()
-	{
+	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
@@ -159,8 +154,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
-	{
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -171,8 +165,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object type)
-	{
+	public boolean isFactoryForType(Object type) {
 		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
@@ -184,8 +177,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(Notifier notifier, Object type)
-	{
+	public Adapter adapt(Notifier notifier, Object type) {
 		return super.adapt(notifier, this);
 	}
 
@@ -196,13 +188,10 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Object adapt(Object object, Object type)
-	{
-		if (isFactoryForType(type))
-		{
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -216,8 +205,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 *
 	 * @generated
 	 */
-	public List<IChildCreationExtender> getChildCreationExtenders()
-	{
+	public List<IChildCreationExtender> getChildCreationExtenders() {
 		return childCreationExtenderManager.getChildCreationExtenders();
 	}
 
@@ -228,8 +216,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
-	{
+	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
 
@@ -240,8 +227,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
 
@@ -253,8 +239,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void addListener(INotifyChangedListener notifyChangedListener)
-	{
+	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
 
@@ -266,8 +251,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void removeListener(INotifyChangedListener notifyChangedListener)
-	{
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
 
@@ -279,12 +263,10 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void fireNotifyChanged(Notification notification)
-	{
+	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -297,8 +279,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void dispose()
-	{
+	public void dispose() {
 		if (labelItemProvider != null) {
 			labelItemProvider.dispose();
 		}
@@ -311,8 +292,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 *
 	 * @generated
 	 */
-	public static class ViewChildCreationExtender implements IChildCreationExtender
-	{
+	public static class ViewChildCreationExtender implements IChildCreationExtender {
 		/**
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
@@ -320,8 +300,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 		 *
 		 * @generated
 		 */
-		protected static class CreationSwitch extends ViewSwitch<Object>
-		{
+		protected static class CreationSwitch extends ViewSwitch<Object> {
 			/**
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
@@ -347,8 +326,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 			 *
 			 * @generated
 			 */
-			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain)
-			{
+			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
 				this.newChildDescriptors = newChildDescriptors;
 				this.editingDomain = editingDomain;
 			}
@@ -360,12 +338,9 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseView(VView object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						VLabelFactory.eINSTANCE.createLabel()));
+			public Object caseView(VView object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					VLabelFactory.eINSTANCE.createLabel()));
 
 				return null;
 			}
@@ -377,12 +352,9 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseContainer(VContainer object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VLabelFactory.eINSTANCE.createLabel()));
+			public Object caseContainer(VContainer object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					VLabelFactory.eINSTANCE.createLabel()));
 
 				return null;
 			}
@@ -393,8 +365,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 			 *
 			 * @generated
 			 */
-			protected CommandParameter createChildParameter(Object feature, Object child)
-			{
+			protected CommandParameter createChildParameter(Object feature, Object child) {
 				return new CommandParameter(null, feature, child);
 			}
 
@@ -407,9 +378,8 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 		 * @generated
 		 */
 		@Override
-		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
-		{
-			final ArrayList<Object> result = new ArrayList<Object>();
+		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
+			final ArrayList<Object> result = new ArrayList<>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
@@ -421,8 +391,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 		 * @generated
 		 */
 		@Override
-		public ResourceLocator getResourceLocator()
-		{
+		public ResourceLocator getResourceLocator() {
 			return LabelEditPlugin.INSTANCE;
 		}
 	}

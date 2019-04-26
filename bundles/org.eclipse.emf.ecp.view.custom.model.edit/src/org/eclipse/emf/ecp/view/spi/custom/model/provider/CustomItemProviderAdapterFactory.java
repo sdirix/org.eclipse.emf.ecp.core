@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.model.util.CustomAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
@@ -92,7 +91,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 *
 	 * @generated
 	 */
-	protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	protected Collection<Object> supportedTypes = new ArrayList<>();
 
 	/**
 	 * This constructs an instance.
@@ -116,7 +115,6 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected CustomControlItemProvider customControlItemProvider;
@@ -129,10 +127,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * @generated
 	 */
 	@Override
-	public Adapter createCustomControlAdapter()
-	{
-		if (customControlItemProvider == null)
-		{
+	public Adapter createCustomControlAdapter() {
+		if (customControlItemProvider == null) {
 			customControlItemProvider = new CustomControlItemProvider(this);
 		}
 
@@ -146,7 +142,6 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected CustomDomainModelReferenceItemProvider customDomainModelReferenceItemProvider;
@@ -159,10 +154,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * @generated
 	 */
 	@Override
-	public Adapter createCustomDomainModelReferenceAdapter()
-	{
-		if (customDomainModelReferenceItemProvider == null)
-		{
+	public Adapter createCustomDomainModelReferenceAdapter() {
+		if (customDomainModelReferenceItemProvider == null) {
 			customDomainModelReferenceItemProvider = new CustomDomainModelReferenceItemProvider(this);
 		}
 
@@ -224,11 +217,9 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -303,8 +294,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -379,12 +369,9 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * @generated
 			 */
 			@Override
-			public Object caseView(VView object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						VCustomFactory.eINSTANCE.createCustomControl()));
+			public Object caseView(VView object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					VCustomFactory.eINSTANCE.createCustomControl()));
 
 				return null;
 			}
@@ -396,28 +383,9 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * @generated
 			 */
 			@Override
-			public Object caseContainer(VContainer object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VCustomFactory.eINSTANCE.createCustomControl()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			@Override
-			public Object caseControl(VControl object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VCustomFactory.eINSTANCE.createCustomDomainModelReference()));
+			public Object caseContainer(VContainer object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					VCustomFactory.eINSTANCE.createCustomControl()));
 
 				return null;
 			}
@@ -442,7 +410,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 */
 		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
