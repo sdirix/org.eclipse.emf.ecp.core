@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
+ * Lucas Koehler - Extend for segment tooling
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.handler;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,9 +35,13 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -55,6 +61,19 @@ public final class ControlGenerator {
 	 * @param features the list of features to create
 	 */
 	public static void addControls(EClass rootClass, VElement compositeToFill, Set<EStructuralFeature> features) {
+		addControls(rootClass, compositeToFill, features, ToolingModeUtil.isSegmentToolingEnabled());
+	}
+
+	/**
+	 * Create controls and set them to the view.
+	 *
+	 * @param rootClass the rootClass for identifying the path
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
+	 * @param features the list of features to create
+	 * @param segmentTooling <code>true</code> if segment based DMRs should be generated
+	 */
+	static void addControls(EClass rootClass, VElement compositeToFill, Set<EStructuralFeature> features,
+		boolean segmentTooling) {
 		if (!VContainer.class.isInstance(compositeToFill) && !VView.class.isInstance(compositeToFill)) {
 			return;
 		}
@@ -66,14 +85,12 @@ public final class ControlGenerator {
 			control.setName("Control " + feature.getName()); //$NON-NLS-1$
 			control.setReadonly(false);
 
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
-
-			final java.util.List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
-				feature.getEContainingClass(),
-				childParentReferenceMap);
-			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			final List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
+				feature.getEContainingClass(), childParentReferenceMap);
+			// How to create the dmr depends on the tooling mode (legacy or segments)
+			final VDomainModelReference modelReference = segmentTooling
+				? createSegmentDmr(feature, bottomUpPath)
+				: createLegacyDmr(feature, bottomUpPath);
 
 			control.setDomainModelReference(modelReference);
 
@@ -84,6 +101,32 @@ public final class ControlGenerator {
 				((VView) compositeToFill).getChildren().add(control);
 			}
 		}
+	}
+
+	private static VDomainModelReference createLegacyDmr(EStructuralFeature domainFeature,
+		List<EReference> bottomUpPath) {
+		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmr.getDomainModelEReferencePath().addAll(bottomUpPath);
+		dmr.setDomainModelEFeature(domainFeature);
+		return dmr;
+	}
+
+	private static VDomainModelReference createSegmentDmr(EStructuralFeature domainFeature,
+		List<EReference> bottomUpPath) {
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		bottomUpPath.stream()
+			.map(EReference::getName)
+			.map(ControlGenerator::createFeatureSegment)
+			.forEach(dmr.getSegments()::add);
+		dmr.getSegments().add(createFeatureSegment(domainFeature.getName()));
+		return dmr;
+	}
+
+	private static VDomainModelReferenceSegment createFeatureSegment(String featureName) {
+		final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segment.setDomainModelFeature(featureName);
+		return segment;
 	}
 
 	/**

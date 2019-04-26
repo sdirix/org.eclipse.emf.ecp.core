@@ -9,10 +9,12 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.editor.controls.test;
+package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -29,15 +31,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +67,7 @@ public class ControlGenerator_PTest {
 		// setup
 		elementToFill = VViewFactory.eINSTANCE.createControl();
 		// act
-		ControlGenerator.addControls(rootEClass, elementToFill, features);
+		ControlGenerator.addControls(rootEClass, elementToFill, features, false);
 		// assert no exceptions
 	}
 
@@ -72,7 +76,7 @@ public class ControlGenerator_PTest {
 		// setup
 		final VView view = (VView) elementToFill;
 		// act
-		ControlGenerator.addControls(rootEClass, view, features);
+		ControlGenerator.addControls(rootEClass, view, features, false);
 		// assert
 		assertEquals(features.size(), view.getChildren().size());
 		int i = 0;
@@ -88,7 +92,7 @@ public class ControlGenerator_PTest {
 		elementToFill = VGroupFactory.eINSTANCE.createGroup();
 		final VGroup group = (VGroup) elementToFill;
 		// act
-		ControlGenerator.addControls(rootEClass, group, features);
+		ControlGenerator.addControls(rootEClass, group, features, false);
 		// assert
 		assertEquals(features.size(), group.getChildren().size());
 		int i = 0;
@@ -104,13 +108,69 @@ public class ControlGenerator_PTest {
 		final VView view = (VView) elementToFill;
 		features.add(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		// act
-		ControlGenerator.addControls(rootEClass, view, features);
+		ControlGenerator.addControls(rootEClass, view, features, false);
 		// assert
 		assertEquals(features.size(), view.getChildren().size());
 		int i = 0;
 		final Iterator<EStructuralFeature> iterator = features.iterator();
 		while (iterator.hasNext()) {
 			assertControl(view.getChildren().get(i++), rootEClass, iterator.next());
+		}
+	}
+
+	@Test
+	public void addControls_segments_WithNonViewOrContainer() {
+		// setup
+		elementToFill = VViewFactory.eINSTANCE.createControl();
+		// act
+		ControlGenerator.addControls(rootEClass, elementToFill, features, true);
+		// assert no exceptions
+	}
+
+	@Test
+	public void addControls_segments_WithView() {
+		// setup
+		final VView view = (VView) elementToFill;
+		// act
+		ControlGenerator.addControls(rootEClass, view, features, true);
+		// assert
+		assertEquals(features.size(), view.getChildren().size());
+		int i = 0;
+		final Iterator<EStructuralFeature> iterator = features.iterator();
+		while (iterator.hasNext()) {
+			assertSegmentControl(view.getChildren().get(i++), rootEClass, iterator.next());
+		}
+	}
+
+	@Test
+	public void addControls_segments_WithContainer() {
+		// setup
+		elementToFill = VGroupFactory.eINSTANCE.createGroup();
+		final VGroup group = (VGroup) elementToFill;
+		// act
+		ControlGenerator.addControls(rootEClass, group, features, true);
+		// assert
+		assertEquals(features.size(), group.getChildren().size());
+		int i = 0;
+		final Iterator<EStructuralFeature> iterator = features.iterator();
+		while (iterator.hasNext()) {
+			assertSegmentControl(group.getChildren().get(i++), rootEClass, iterator.next());
+		}
+	}
+
+	@Test
+	public void addControls_segments_WithBottomUpPath() {
+		// setup
+		final VView view = (VView) elementToFill;
+		features.add(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		// act
+		ControlGenerator.addControls(rootEClass, view, features, true);
+		// assert
+		assertEquals(features.size(), view.getChildren().size());
+		int i = 0;
+		final Iterator<EStructuralFeature> iterator = features.iterator();
+		while (iterator.hasNext()) {
+			assertSegmentControl(view.getChildren().get(i++), rootEClass, iterator.next());
 		}
 	}
 
@@ -162,4 +222,33 @@ public class ControlGenerator_PTest {
 		assertTrue(currentEClass.getEStructuralFeatures().contains(feature));
 	}
 
+	private static void assertSegmentControl(VContainedElement element, EClass eClass, EStructuralFeature feature) {
+		assertNotNull(element);
+		assertTrue(element instanceof VControl);
+		final VControl control = (VControl) element;
+		assertNotNull(control.getDomainModelReference());
+		assertTrue(control.getDomainModelReference().eClass() == VViewPackage.Literals.DOMAIN_MODEL_REFERENCE);
+
+		final EList<VDomainModelReferenceSegment> segments = control.getDomainModelReference().getSegments();
+		assertFalse(segments.isEmpty());
+
+		final VDomainModelReferenceSegment lastSegment = segments.get(segments.size() - 1);
+		assertSame(VViewPackage.Literals.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT, lastSegment.eClass());
+		final String domainModelFeature = VFeatureDomainModelReferenceSegment.class.cast(lastSegment)
+			.getDomainModelFeature();
+		assertEquals(feature.getName(), domainModelFeature);
+
+		EClass currentEClass = eClass;
+		for (int i = 0; i < segments.size() - 1; i++) {
+			assertSame(VViewPackage.Literals.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT, segments.get(i).eClass());
+			final VFeatureDomainModelReferenceSegment segment = (VFeatureDomainModelReferenceSegment) segments.get(i);
+
+			final EStructuralFeature structuralFeature = currentEClass
+				.getEStructuralFeature(segment.getDomainModelFeature());
+			assertNotNull(structuralFeature);
+			assertTrue(structuralFeature instanceof EReference);
+			currentEClass = EReference.class.cast(structuralFeature).getEReferenceType();
+		}
+		assertTrue(currentEClass.getEStructuralFeatures().contains(feature));
+	}
 }

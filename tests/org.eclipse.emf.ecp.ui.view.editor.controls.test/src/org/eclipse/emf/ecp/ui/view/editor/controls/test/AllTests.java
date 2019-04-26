@@ -15,6 +15,7 @@ import org.eclipse.emf.ecp.view.internal.editor.controls.ExpectedValueControlRen
 import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionControlRenderer_Test;
 import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionSegmentControlRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.editor.controls.TableColumnsDMRTableControl_Test;
+import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator_PTest;
 import org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrNewModelElementStrategyProvider_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrOpenInNewContextStrategyProvider_Test;
