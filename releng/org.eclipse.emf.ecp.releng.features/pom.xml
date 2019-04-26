@@ -113,6 +113,7 @@
 		<module>../../features/org.eclipse.emfforms.datatemplate.ide.feature</module>
 		
 		<module>../../features/org.eclipse.emf.ecp.i18n.feature</module>
+		<module>../../features/org.eclipse.emfforms.i18n.feature</module>
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->
@@ -134,6 +135,7 @@
 				<configuration>
 					<excludes>
 						<feature id="org.eclipse.emf.ecp.i18n.feature"/>
+						<feature id="org.eclipse.emfforms.i18n.feature"/>
 						<feature id="org.eclipse.emf.ecp.license.feature"/>
 					</excludes>
 					<labelSuffix>&#xA0;incl. Sources</labelSuffix>
