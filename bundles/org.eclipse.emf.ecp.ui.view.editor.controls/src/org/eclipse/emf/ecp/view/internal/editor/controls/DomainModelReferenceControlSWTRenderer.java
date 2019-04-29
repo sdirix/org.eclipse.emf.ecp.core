@@ -40,7 +40,6 @@ import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
@@ -93,8 +92,6 @@ import org.eclipse.swt.widgets.Label;
  * @author Alexandra Buzila
  *
  */
-// needed because we use the Messages class from ecp.ui.
-@SuppressWarnings("restriction")
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private final EMFFormsEditSupport emfFormsEditSupport;
@@ -495,9 +492,13 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 					eObject, structuralFeature, getEditingDomain(eObject), eclass,
 					reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
-					Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-					Messages.NewModelElementWizard_PageTitle_AddModelElement,
-					Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);
+					LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class,
+						"NewModelElementWizard_WizardTitle_AddModelElement"), //$NON-NLS-1$
+					LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class,
+						"NewModelElementWizard_PageTitle_AddModelElement"), //$NON-NLS-1$
+					LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class,
+						"NewModelElementWizard_PageDescription_AddModelElement"), //$NON-NLS-1$
+					reference);
 
 				final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
 					new HashSet<EPackage>(),

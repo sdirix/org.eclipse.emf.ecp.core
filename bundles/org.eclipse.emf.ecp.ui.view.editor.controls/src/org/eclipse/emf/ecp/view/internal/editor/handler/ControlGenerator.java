@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
@@ -46,22 +45,6 @@ public final class ControlGenerator {
 
 	private ControlGenerator() {
 
-	}
-
-	/**
-	 * Create controls and set them to the view.
-	 *
-	 * @param project the {@link ECPProject} from which the rootClass is retrieved. It is assumed that the project
-	 *            contains only one {@link VView}.
-	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
-	 * @param datasegment the class to parse
-	 * @param features the list of features to create
-	 */
-	public static void addControls(ECPProject project, VContainer compositeToFill,
-		EClass datasegment, Set<EStructuralFeature> features) {
-
-		final EClass rootClass = Helper.getRootEClass(project);
-		addControls(rootClass, compositeToFill, features);
 	}
 
 	/**

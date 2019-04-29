@@ -89,6 +89,7 @@
 
 		<!-- Editor controls -->
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls.legacy</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
 		

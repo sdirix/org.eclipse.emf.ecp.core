@@ -26,8 +26,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -49,19 +47,6 @@ public final class Helper {
 	}
 
 	/**
-	 * Retrieves the root ECLass form a project, with the assumption that the project consists only of a {@link VView}.
-	 *
-	 * @param project the project to check
-	 * @return the root {@link EClass}
-	 */
-	public static EClass getRootEClass(ECPProject project) {
-		if (project != null && VView.class.isInstance(project.getContents().get(0))) {
-			return VView.class.cast(project.getContents().get(0)).getRootEClass();
-		}
-		return null;
-	}
-
-	/**
 	 * Retrieves the root ECLass form an EObject. The hierarchy of the provided {@link EObject} is checked for
 	 * {@link VView}.
 	 *
@@ -77,7 +62,7 @@ public final class Helper {
 		if (VView.class.isInstance(testObject)) {
 			return ((VView) testObject).getRootEClass();
 		}
-		return getRootEClass(ECPUtil.getECPProjectManager().getProject(eObject));
+		return null;
 	}
 
 	/**

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
@@ -34,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -85,9 +85,12 @@ public class FeaturePathDMRControlSWTRenderer extends
 
 		final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 			eObject, structuralFeature, getEditingDomain(eObject), eclass, "New Reference Element", //$NON-NLS-1$
-			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-			Messages.NewModelElementWizard_PageTitle_AddModelElement,
-			Messages.NewModelElementWizard_PageDescription_AddModelElement,
+			LocalizationServiceHelper.getString(EditableEReferenceLabelControlSWTRenderer.class,
+				"NewModelElementWizard_WizardTitle_AddModelElement"), //$NON-NLS-1$
+			LocalizationServiceHelper.getString(EditableEReferenceLabelControlSWTRenderer.class,
+				"NewModelElementWizard_PageTitle_AddModelElement"), //$NON-NLS-1$
+			LocalizationServiceHelper.getString(EditableEReferenceLabelControlSWTRenderer.class,
+				"NewModelElementWizard_PageDescription_AddModelElement"), //$NON-NLS-1$
 			(VDomainModelReference) eObject.eGet(structuralFeature, true));
 
 		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
