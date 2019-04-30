@@ -83,6 +83,14 @@ public class DateCellStringTooltipModifier_PTest {
 	}
 
 	@Test
+	public void testNullDateValues() {
+		final DateCellStringTooltipModifier modifier = new DateCellStringTooltipModifier();
+		dateSetting.set(null);
+		final String localizedString = modifier.modifyString("", dateSetting);
+		Assert.assertEquals("", localizedString);
+	}
+
+	@Test
 	public void testDateDE() {
 		Locale.setDefault(Locale.GERMAN);
 		final DateCellStringTooltipModifier modifier = new DateCellStringTooltipModifier();

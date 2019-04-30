@@ -46,6 +46,10 @@ public class DateCellStringTooltipModifier implements ECPStringModifier {
 	@Override
 	public String modifyString(String text, Setting setting) {
 		if (setting != null) {
+			final Object value = setting.get(true);
+			if (value == null) {
+				return text;
+			}
 			final EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				return text;
@@ -55,11 +59,11 @@ public class DateCellStringTooltipModifier implements ECPStringModifier {
 				return text;
 			}
 			if (XMLGregorianCalendar.class.isAssignableFrom(eType.getInstanceClass())) {
-				final XMLGregorianCalendar calendar = (XMLGregorianCalendar) setting.get(true);
+				final XMLGregorianCalendar calendar = (XMLGregorianCalendar) value;
 				return dateInstance.format(calendar.toGregorianCalendar().getTime());
 			}
 			if (Date.class.isAssignableFrom(eType.getInstanceClass())) {
-				final Date date = (Date) setting.get(true);
+				final Date date = (Date) value;
 				final String string = dateInstance.format(date);
 				return string;
 			}
