@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emfforms.common;
 
@@ -84,4 +85,10 @@ public final class Feature {
 	public STRATEGY getStrategy() {
 		return strategy;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Feature(%s, %s)", id, strategy); //$NON-NLS-1$
+	}
+
 }

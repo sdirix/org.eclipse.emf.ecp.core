@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages;
 
@@ -23,6 +24,7 @@ public class Messages extends NLS {
 	public static String GridTableViewerComposite_hideColumnAction;
 	public static String GridTableViewerComposite_showAllColumnsAction;
 	public static String GridTableViewerComposite_toggleFilterControlsAction;
+	public static String GridTableViewerComposite_toggleRegexFilterControlsAction;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

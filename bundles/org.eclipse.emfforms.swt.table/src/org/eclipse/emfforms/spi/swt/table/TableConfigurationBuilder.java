@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,10 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -69,7 +69,7 @@ public final class TableConfigurationBuilder extends AbstractFeatureAwareBuilder
 
 	@Override
 	public Set<Feature> getSupportedFeatures() {
-		return new LinkedHashSet<Feature>(Arrays.asList(TableConfiguration.FEATURES));
+		return new LinkedHashSet<Feature>(TableConfiguration.ALL_FEATURES);
 	}
 
 	@Override

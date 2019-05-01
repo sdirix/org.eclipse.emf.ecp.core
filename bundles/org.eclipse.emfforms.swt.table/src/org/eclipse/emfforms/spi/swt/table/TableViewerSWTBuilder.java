@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,10 +10,10 @@
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
  * Mat Hansen - builder refactoring
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -273,7 +273,7 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 
 	@Override
 	public Set<Feature> getSupportedFeatures() {
-		return new LinkedHashSet<Feature>(Arrays.asList(TableConfiguration.FEATURES));
+		return new LinkedHashSet<Feature>(TableConfiguration.ALL_FEATURES);
 	}
 
 	@Override

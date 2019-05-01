@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * jonas - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -401,7 +402,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			.customizeContentProvider(cp)
 			.customizeComparator(comparator)
 			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER);
+			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER)
+			.enableFeature(TableConfiguration.FEATURE_COLUMN_REGEX_FILTER);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,24 +9,38 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.IValueChangeListener;
+import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlSWTRenderer.CustomGridTableViewer;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.menu.GridColumnAction;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages.Messages;
-import org.eclipse.emfforms.internal.common.PropertyHelper;
+import org.eclipse.emfforms.common.Feature;
+import org.eclipse.emfforms.common.Property;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuListener2;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.AbstractColumnLayout;
@@ -44,6 +58,8 @@ import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -59,7 +75,30 @@ import org.eclipse.swt.widgets.Widget;
  */
 public class GridTableViewerComposite extends AbstractTableViewerComposite<GridTableViewer> {
 
+	private static final Map<Feature, Function<GridTableViewerComposite, ? extends IMenuListener>> FEATURE_MENU_LISTENERS = new HashMap<>();
+
+	private static final Map<Feature, Function<GridTableViewerComposite, ? extends ViewerFilter>> FEATURE_VIEWER_FILTERS = new HashMap<>();
+
 	private GridTableViewer gridTableViewer;
+	private Point lastKnownPointer;
+
+	private final IObservableValue<Feature> activeFilteringMode = new WritableValue<>();
+
+	static {
+		FEATURE_MENU_LISTENERS.put(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW,
+			comp -> comp.new ColumnHideShowMenuListener());
+		FEATURE_MENU_LISTENERS.put(TableConfiguration.FEATURE_COLUMN_FILTER,
+			comp -> comp.new ColumnFilterMenuListener(ColumnConfiguration.FEATURE_COLUMN_FILTER,
+				Messages.GridTableViewerComposite_toggleFilterControlsAction));
+		FEATURE_MENU_LISTENERS.put(TableConfiguration.FEATURE_COLUMN_REGEX_FILTER,
+			comp -> comp.new ColumnFilterMenuListener(ColumnConfiguration.FEATURE_COLUMN_REGEX_FILTER,
+				Messages.GridTableViewerComposite_toggleRegexFilterControlsAction));
+
+		FEATURE_VIEWER_FILTERS.put(TableConfiguration.FEATURE_COLUMN_FILTER,
+			comp -> comp.new GridColumnFilterViewerFilter());
+		FEATURE_VIEWER_FILTERS.put(TableConfiguration.FEATURE_COLUMN_REGEX_FILTER,
+			comp -> comp.new GridColumnRegexFilterViewerFilter());
+	}
 
 	/**
 	 * Default constructor.
@@ -74,7 +113,17 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	public GridTableViewerComposite(Composite parent, int style, Object inputObject,
 		TableViewerSWTCustomization customization,
 		IObservableValue title, IObservableValue tooltip) {
+
 		super(parent, style, inputObject, customization, title, tooltip);
+
+		activeFilteringMode.addValueChangeListener(this::handleFilteringMode);
+	}
+
+	@Override
+	public void dispose() {
+		activeFilteringMode.dispose();
+
+		super.dispose();
 	}
 
 	@Override
@@ -86,6 +135,13 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	protected GridTableViewer createTableViewer(TableViewerSWTCustomization<GridTableViewer> customization,
 		Composite viewerComposite) {
 		gridTableViewer = customization.createTableViewer(viewerComposite);
+		gridTableViewer.getControl().addMouseMoveListener(event -> lastKnownPointer = new Point(event.x, event.y));
+		gridTableViewer.getControl().addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
+			public void mouseExit(MouseEvent event) {
+				lastKnownPointer = null;
+			}
+		});
 		return gridTableViewer;
 	}
 
@@ -94,23 +150,22 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 		final MenuManager menuMgr = new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
 
-		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)) {
-			menuMgr.addMenuListener(new ColumnHideShowMenuListener());
-		}
-
-		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_FILTER)) {
-			menuMgr.addMenuListener(new ColumnFilterMenuListener());
-		}
+		mapFeatures(FEATURE_MENU_LISTENERS::get, menuMgr::addMenuListener);
 
 		final Menu menu = menuMgr.createContextMenu(tableViewer.getControl());
 		tableViewer.getControl().setMenu(menu);
 	}
 
+	private <T> void mapFeatures(Function<Feature, Function<? super GridTableViewerComposite, T>> mapper,
+		Consumer<? super T> action) {
+
+		getEnabledFeatures().stream().map(mapper).filter(Objects::nonNull)
+			.map(f -> f.apply(this)).forEach(action);
+	}
+
 	@Override
 	protected void configureViewerFilters(GridTableViewer tableViewer) {
-		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_FILTER)) {
-			tableViewer.addFilter(new GridColumnFilterViewerFilter(this, tableViewer));
-		}
+		mapFeatures(FEATURE_VIEWER_FILTERS::get, tableViewer::addFilter);
 	}
 
 	@Override
@@ -198,13 +253,82 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 	private ColumnConfiguration getCurrentColumnConfig() {
 		final Grid grid = getTableViewer().getGrid();
-		final Point cursorLocation = grid.getDisplay().getCursorLocation();
-		final GridColumn column = grid.getColumn(grid.toControl(cursorLocation));
+		final GridColumn column = lastKnownPointer == null ? null : grid.getColumn(lastKnownPointer);
 		if (column == null) {
 			return null;
 		}
 		return getColumnConfiguration(column);
 	}
+
+	/**
+	 * Query the currently active filtering mode, if filtering is engaged.
+	 *
+	 * @return one the {@linkplain ColumnConfiguration#FEATURE_COLUMN_FILTER filtering features}
+	 *         indicating the filtering mode that is active, or {@code null} if the grid is not filtered
+	 *
+	 * @since 1.21
+	 * @see #setFilteringMode(Feature)
+	 * @see ColumnConfiguration#FEATURE_COLUMN_FILTER
+	 * @see ColumnConfiguration#FEATURE_COLUMN_REGEX_FILTER
+	 */
+	public Feature getFilteringMode() {
+		return activeFilteringMode == null ? null : activeFilteringMode.getValue();
+	}
+
+	/**
+	 * Set the currently active filtering mode.
+	 *
+	 * @param filteringFeature one the {@linkplain ColumnConfiguration#FEATURE_COLUMN_FILTER filtering features}
+	 *            indicating the filtering mode that is active, or {@code null} if the grid is not to be filtered
+	 *
+	 * @throws IllegalStateException if the composite is not yet initialized
+	 * @throws IllegalArgumentException if the {@link filteringFeature} is not supported by my
+	 *             table configuration ({@code null}, excepted, of course)
+	 *
+	 * @since 1.21
+	 * @see #getFilteringMode()
+	 * @see ColumnConfiguration#FEATURE_COLUMN_FILTER
+	 * @see ColumnConfiguration#FEATURE_COLUMN_REGEX_FILTER
+	 */
+	public void setFilteringMode(Feature filteringFeature) {
+		if (activeFilteringMode == null) {
+			// This can happen while superclass constructor is running, which
+			// calls into polymorphic methods overridden in this class
+			throw new IllegalStateException();
+		}
+		if (filteringFeature != null && !getEnabledFeatures().contains(filteringFeature)) {
+			throw new IllegalArgumentException(filteringFeature.toString());
+		}
+
+		activeFilteringMode.setValue(filteringFeature);
+	}
+
+	/**
+	 * Respond to a change of filtering mode by showing/hiding filter controls
+	 * in the columns as appropriate.
+	 *
+	 * @param event the change in the filtering mode
+	 */
+	private void handleFilteringMode(ValueChangeEvent<? extends Feature> event) {
+		final Boolean showFilterControl = getFilteringMode() != null;
+
+		boolean recalculateHeader = false;
+		for (final Widget widget : getColumns()) {
+			final Property<Boolean> showProperty = getColumnConfiguration(widget).showFilterControl();
+			if (!showFilterControl.equals(showProperty.getValue())) {
+				recalculateHeader = true;
+				showProperty.setValue(showFilterControl);
+			}
+		}
+
+		if (recalculateHeader) {
+			getTableViewer().getGrid().recalculateHeader();
+		}
+	}
+
+	//
+	// Nested types
+	//
 
 	/**
 	 * Column hide/show menu listener.
@@ -265,12 +389,24 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	}
 
 	/**
-	 * Column hide/show menu listener.
+	 * Common definition of a filtering menu listener.
 	 *
 	 * @author Mat Hansen
 	 *
 	 */
-	private class ColumnFilterMenuListener implements IMenuListener {
+	private class ColumnFilterMenuListener implements IMenuListener2 {
+		private final IValueChangeListener<Feature> radioListener = this::handleRadio;
+		private final Feature feature;
+		private final String label;
+
+		private GridColumnAction action;
+
+		ColumnFilterMenuListener(Feature feature, String label) {
+			super();
+
+			this.feature = feature;
+			this.label = label;
+		}
 
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
@@ -278,15 +414,32 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 			if (columnConfiguration == null) {
 				return;
 			}
-			manager.add(new GridColumnAction(GridTableViewerComposite.this,
-				Messages.GridTableViewerComposite_toggleFilterControlsAction) {
+
+			action = createAction(feature, label, columnConfiguration);
+			action.setChecked(getFilteringMode() == feature);
+
+			manager.add(action);
+			activeFilteringMode.addValueChangeListener(radioListener);
+		}
+
+		@Override
+		public void menuAboutToHide(IMenuManager manager) {
+			activeFilteringMode.removeValueChangeListener(radioListener);
+			action = null;
+		}
+
+		GridColumnAction createAction(Feature feature, String label, ColumnConfiguration columnConfiguration) {
+			return new GridColumnAction(GridTableViewerComposite.this, label, IAction.AS_RADIO_BUTTON) {
+
 				@Override
 				public void run() {
-					for (final Widget widget : getColumns()) {
-						PropertyHelper.toggle(
-							getGridTableViewer().getColumnConfiguration(widget).showFilterControl());
+					if (getFilteringMode() == feature) {
+						// We're toggling filtering off
+						setFilteringMode(null);
+					} else {
+						// We're setting filtering to my mode
+						setFilteringMode(feature);
 					}
-					getGrid().recalculateHeader();
 				}
 
 				@Override
@@ -294,43 +447,49 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 					if (!super.isEnabled()) {
 						return false;
 					}
-					return columnConfiguration.getEnabledFeatures()
-						.contains(ColumnConfiguration.FEATURE_COLUMN_FILTER);
+					return columnConfiguration.getEnabledFeatures().contains(feature);
 				}
-			});
+			};
+		}
+
+		void handleRadio(ValueChangeEvent<? extends Feature> event) {
+			action.setChecked(event.getObservableValue().getValue() == feature);
 		}
 
 	}
 
 	/**
-	 * Viewer filter for column filter support.
+	 * Common viewer filter implementation for column filters.
 	 *
 	 * @author Mat Hansen
 	 *
 	 */
-	private class GridColumnFilterViewerFilter extends ViewerFilter {
+	private abstract class AbstractGridColumnFilterViewerFilter extends ViewerFilter {
 
-		private final GridTableViewerComposite tableViewerComposite;
+		private final Feature feature;
+
 		private final GridTableViewer tableViewer;
 		private final Grid grid;
 
 		/**
-		 * The Constructor.
+		 * Initializes me with the filtering feature that I implement.
 		 *
-		 * @param tableViewerComposite the Grid table viewer composite.
-		 * @param tableViewer the Grid table viewer.
+		 * @param feature my defining feature
 		 */
-		GridColumnFilterViewerFilter(
-			GridTableViewerComposite tableViewerComposite,
-			GridTableViewer tableViewer) {
+		AbstractGridColumnFilterViewerFilter(Feature feature) {
 			super();
-			this.tableViewerComposite = tableViewerComposite;
-			this.tableViewer = tableViewer;
+
+			this.feature = feature;
+
+			tableViewer = getTableViewer();
 			grid = tableViewer.getGrid();
 		}
 
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
+			if (!isApplicable(viewer)) {
+				return true;
+			}
 
 			grid.setRedraw(false);
 			final GridItem dummyItem = new GridItem(grid, SWT.NONE);
@@ -343,7 +502,7 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 				for (final Widget widget : getColumns()) {
 
-					final ColumnConfiguration config = tableViewerComposite.getColumnConfiguration(widget);
+					final ColumnConfiguration config = getColumnConfiguration(widget);
 
 					final Object filter = config.matchFilter().getValue();
 					if (filter == null || String.valueOf(filter).isEmpty()) {
@@ -371,6 +530,10 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 			return true;
 		}
 
+		protected boolean isApplicable(Viewer viewer) {
+			return getFilteringMode() == feature;
+		}
+
 		/**
 		 * Test whether the given value/filter combination matches.
 		 *
@@ -378,6 +541,26 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 		 * @param filterValue the filter value
 		 * @return true if the value matches the filter value
 		 */
+		protected abstract boolean matchesColumnFilter(Object value, Object filterValue);
+
+	}
+
+	/**
+	 * Viewer filter for column simple filter support.
+	 *
+	 * @author Mat Hansen
+	 *
+	 */
+	private class GridColumnFilterViewerFilter extends AbstractGridColumnFilterViewerFilter {
+
+		/**
+		 * The Constructor.
+		 */
+		GridColumnFilterViewerFilter() {
+			super(ColumnConfiguration.FEATURE_COLUMN_FILTER);
+		}
+
+		@Override
 		protected boolean matchesColumnFilter(Object value, Object filterValue) {
 
 			if (filterValue == null) {
@@ -388,6 +571,51 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 				.contains(String.valueOf(filterValue).toLowerCase());
 		}
 
+	}
+
+	/**
+	 * Viewer filter for column regular expression filter support.
+	 */
+	private class GridColumnRegexFilterViewerFilter extends AbstractGridColumnFilterViewerFilter {
+
+		private Object rawFilter;
+		private Pattern pattern;
+
+		/**
+		 * Initializes me.
+		 */
+		GridColumnRegexFilterViewerFilter() {
+			super(ColumnConfiguration.FEATURE_COLUMN_REGEX_FILTER);
+		}
+
+		@Override
+		protected boolean matchesColumnFilter(Object value, Object filterValue) {
+
+			if (!Objects.equals(filterValue, rawFilter)) {
+				// Cache a new pattern, if possible
+				pattern = parse(String.valueOf(filterValue));
+			}
+
+			if (pattern == null) {
+				// Couldn't parse it. Everything will match (user should be able to see examples
+				// in the data to formulate a pattern)
+				return true;
+			}
+
+			return pattern.matcher(String.valueOf(value)).find();
+		}
+
+		protected Pattern parse(String regex) {
+			Pattern result = null;
+
+			try {
+				result = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+			} catch (final PatternSyntaxException e) {
+				// This is normal while the user is formulating the pattern
+			}
+
+			return result;
+		}
 	}
 
 }
