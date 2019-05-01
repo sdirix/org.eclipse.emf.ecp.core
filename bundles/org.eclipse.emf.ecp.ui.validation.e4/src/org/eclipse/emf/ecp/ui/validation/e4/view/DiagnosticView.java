@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 546899
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.validation.e4.view;
 
@@ -40,6 +41,10 @@ public class DiagnosticView {
 
 	@Inject
 	private ECPValidationResultService service;
+
+	@Inject
+	private ValidationTreeViewerFactory factory;
+
 	private ECPValidationResultServiceListener listener;
 	private TreeViewer diagnosticTree;
 
@@ -53,7 +58,8 @@ public class DiagnosticView {
 	@PostConstruct
 	public void create(Composite composite, EMenuService menuService,
 		final ESelectionService selectionService) {
-		diagnosticTree = ValidationTreeViewerFactory.createValidationViewer(composite);
+
+		diagnosticTree = factory.create(composite);
 		menuService.registerContextMenu(diagnosticTree.getTree(),
 			POPUPMENU_VALIDATION_ID);
 		diagnosticTree

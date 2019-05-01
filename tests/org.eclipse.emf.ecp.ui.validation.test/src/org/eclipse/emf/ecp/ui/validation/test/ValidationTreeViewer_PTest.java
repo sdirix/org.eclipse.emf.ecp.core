@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 546899
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.validation.test;
 
@@ -71,7 +72,7 @@ public class ValidationTreeViewer_PTest {
 		final TreeItem item = tree.getItem(0);
 		assertEquals("There is something wrong with the players", item.getText(0));
 		assertEquals("League", item.getText(1));
-		assertEquals("players", item.getText(2));
+		assertEquals("Players", item.getText(2));
 		assertEquals(0, item.getItemCount());
 	}
 
@@ -85,7 +86,7 @@ public class ValidationTreeViewer_PTest {
 		final TreeItem item = tree.getItem(0);
 		assertEquals("There is something wrong with the players", item.getText(0));
 		assertEquals("League", item.getText(1));
-		assertEquals("players", item.getText(2));
+		assertEquals("Players", item.getText(2));
 		assertEquals(2, item.getItemCount());
 		final TreeItem item21 = item.getItem(0);
 		assertEquals("There is something wrong with this Player", item21.getText(0));
