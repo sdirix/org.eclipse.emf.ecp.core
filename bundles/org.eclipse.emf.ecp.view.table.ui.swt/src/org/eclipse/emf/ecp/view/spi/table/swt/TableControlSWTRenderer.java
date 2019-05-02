@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -412,8 +412,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			tableViewerSWTBuilder.customizeActionConfiguration(actionConfiguration);
 
 			tableViewerSWTBuilder
-				.configureTable(TableConfigurationBuilder.usingDefaults()
-					.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+				.configureTable(TableConfigurationBuilder.from(tableViewerSWTBuilder)
 					.dataMapEntry(TableConfiguration.DMR, dmrToCheck)
 					.build());
 
@@ -871,8 +870,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 
 				tableViewerSWTBuilder.addColumn(
-					ColumnConfigurationBuilder.usingDefaults()
-						.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+					ColumnConfigurationBuilder.from(tableViewerSWTBuilder)
 						.weight(weight)
 						.minWidth(minWidth)
 						.text(text)

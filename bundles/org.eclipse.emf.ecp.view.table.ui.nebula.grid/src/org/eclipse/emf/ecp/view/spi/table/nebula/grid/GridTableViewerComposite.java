@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bug 534829
+ * Christian W. Damus - bugs 534829, 530314
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -251,9 +251,13 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 	}
 
-	private ColumnConfiguration getCurrentColumnConfig() {
+	private GridColumn getCurrentColumn() {
 		final Grid grid = getTableViewer().getGrid();
-		final GridColumn column = lastKnownPointer == null ? null : grid.getColumn(lastKnownPointer);
+		return lastKnownPointer == null ? null : grid.getColumn(lastKnownPointer);
+	}
+
+	private ColumnConfiguration getCurrentColumnConfig() {
+		final GridColumn column = getCurrentColumn();
 		if (column == null) {
 			return null;
 		}
@@ -282,7 +286,7 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	 *            indicating the filtering mode that is active, or {@code null} if the grid is not to be filtered
 	 *
 	 * @throws IllegalStateException if the composite is not yet initialized
-	 * @throws IllegalArgumentException if the {@link filteringFeature} is not supported by my
+	 * @throws IllegalArgumentException if the {@code filteringFeature} is not supported by my
 	 *             table configuration ({@code null}, excepted, of course)
 	 *
 	 * @since 1.21
@@ -331,6 +335,41 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	//
 
 	/**
+	 * A grid column action whose enablement depends on a enablement of a
+	 * {@linkplain ColumnConfiguration#getEnabledFeatures() configuration feature}.
+	 */
+	private abstract class FeatureBasedColumnAction extends GridColumnAction {
+
+		private final Feature feature;
+
+		{
+			setCurrentColumnProvider(GridTableViewerComposite.this::getCurrentColumn);
+		}
+
+		FeatureBasedColumnAction(GridTableViewerComposite gridTableViewerComposite, String actionLabel,
+			Feature feature) {
+
+			super(gridTableViewerComposite, actionLabel);
+
+			this.feature = feature;
+		}
+
+		FeatureBasedColumnAction(GridTableViewerComposite gridTableViewerComposite, String actionLabel, int style,
+			Feature feature) {
+
+			super(gridTableViewerComposite, actionLabel, style);
+
+			this.feature = feature;
+		}
+
+		@Override
+		public boolean isEnabled() {
+			return super.isEnabled() && getEnabledFeatures().contains(feature);
+		}
+
+	}
+
+	/**
 	 * Column hide/show menu listener.
 	 *
 	 * @author Mat Hansen
@@ -344,24 +383,15 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 			if (columnConfiguration == null) {
 				return;
 			}
-			manager.add(new GridColumnAction(GridTableViewerComposite.this,
-				Messages.GridTableViewerComposite_hideColumnAction) {
+			manager.add(new FeatureBasedColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_hideColumnAction, ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW) {
 				@Override
 				public void run() {
 					columnConfiguration.visible().setValue(Boolean.FALSE);
 				}
-
-				@Override
-				public boolean isEnabled() {
-					if (!super.isEnabled()) {
-						return false;
-					}
-					return columnConfiguration.getEnabledFeatures()
-						.contains(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW);
-				}
 			});
-			manager.add(new GridColumnAction(GridTableViewerComposite.this,
-				Messages.GridTableViewerComposite_showAllColumnsAction) {
+			manager.add(new FeatureBasedColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_showAllColumnsAction, ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW) {
 				@Override
 				public void run() {
 					for (final Widget widget : getColumns()) {
@@ -371,8 +401,7 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 				@Override
 				public boolean isEnabled() {
-					return getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
-						&& hasHiddenColumns();
+					return super.isEnabled() && hasHiddenColumns();
 				}
 
 				boolean hasHiddenColumns() {
@@ -429,7 +458,8 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 		}
 
 		GridColumnAction createAction(Feature feature, String label, ColumnConfiguration columnConfiguration) {
-			return new GridColumnAction(GridTableViewerComposite.this, label, IAction.AS_RADIO_BUTTON) {
+			return new FeatureBasedColumnAction(GridTableViewerComposite.this, label, IAction.AS_RADIO_BUTTON,
+				feature) {
 
 				@Override
 				public void run() {
@@ -440,14 +470,6 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 						// We're setting filtering to my mode
 						setFilteringMode(feature);
 					}
-				}
-
-				@Override
-				public boolean isEnabled() {
-					if (!super.isEnabled()) {
-						return false;
-					}
-					return columnConfiguration.getEnabledFeatures().contains(feature);
 				}
 			};
 		}

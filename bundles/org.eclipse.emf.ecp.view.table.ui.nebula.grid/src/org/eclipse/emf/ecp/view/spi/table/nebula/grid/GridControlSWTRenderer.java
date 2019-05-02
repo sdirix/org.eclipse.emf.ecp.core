@@ -8,7 +8,7 @@
  *
  * Contributors:
  * jonas - initial API and implementation
- * Christian W. Damus - bug 534829
+ * Christian W. Damus - bugs 534829, 530314
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -401,9 +401,9 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
 			.customizeComparator(comparator)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_REGEX_FILTER);
+			.showHideColumns(true)
+			.columnSubstringFilter(true)
+			.columnRegexFilter(true);
 	}
 
 	@Override

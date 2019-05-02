@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 530314
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -281,6 +282,8 @@ public class TableControlDetailPanelRenderer_PTest {
 		// setup model
 		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+		// The setting-to-control mapper expects all controls ultimately to be in a view
+		VViewFactory.eINSTANCE.createView().getChildren().add(handle.getTableControl());
 		//
 		final RendererResult renderControl = SWTViewTestHelper.renderControl(handle.getTableControl(), domainElement,
 			shell);
