@@ -100,4 +100,11 @@
          version="0.0.0"
          fragment="true"/>
 
+   <plugin
+         id="org.eclipse.emf.ecp.view.dynamictree.model.edit.nl_de"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
 </feature>
