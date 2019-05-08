@@ -241,6 +241,13 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 			final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					// Reset other columns to avoid left over sort indicators
+					for (final int index : sortableColumns) {
+						final GridColumn column = getTableViewer().getGrid().getColumns()[index];
+						if (index != j && column.getSort() != SWT.NONE) {
+							column.setSort(SWT.NONE);
+						}
+					}
 					comparator.setColumn(j);
 					tableColumn.setSort(comparator.getDirection());
 					gridTableViewer.refresh();
