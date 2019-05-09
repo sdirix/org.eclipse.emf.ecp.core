@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -41,7 +42,7 @@ public final class TestUtil {
 	 * Creates a virtual {@link Resource} contained in a new {@link ResourceSet} with a working {@link EditingDomain}.
 	 * <p>
 	 * <strong>Note:</strong> The returned resource cannot be safed
-	 * 
+	 *
 	 * @return The created {@link Resource}
 	 */
 	public static Resource createResourceWithEditingDomain() {
@@ -52,6 +53,13 @@ public final class TestUtil {
 		final AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(
 			adapterFactory, new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(editingDomain));
-		return rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+		// Set default xmi factory to guarantee reproducible results and make resource creation work in plain unit tests
+		final Object oldFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", //$NON-NLS-1$
+			new XMIResourceFactoryImpl());
+		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+		if (oldFactory != null) {
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", oldFactory); //$NON-NLS-1$
+		}
+		return resource;
 	}
 }

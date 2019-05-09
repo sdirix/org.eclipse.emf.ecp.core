@@ -142,6 +142,18 @@
             label="Generate Columns for Subclass"
             command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnsForSubclassesHandler">
       </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnSegmentDmrsHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns"
+            location="menu">
+      </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnSegmentDmrsForSubclassesHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns for Subclass"
+            location="menu">
+      </MasterDetailAction>
    </extension>
 
 </plugin>

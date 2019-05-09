@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -60,10 +61,7 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 
 	@Override
 	public boolean shouldShow(EObject eObject) {
-		if (VTableControl.class.isInstance(eObject)) {
-			return true;
-		}
-		return false;
+		return VTableControl.class.isInstance(eObject) && !ToolingModeUtil.isSegmentToolingEnabled();
 	}
 
 	// BEGIN COMPLEX CODE

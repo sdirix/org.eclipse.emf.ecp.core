@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.internal.editor.controls.LeafConditionSegmentCon
 import org.eclipse.emf.ecp.view.internal.editor.controls.TableColumnsDMRTableControl_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator_PTest;
 import org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler_Test;
+import org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnSegmentDmrsHandler_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrNewModelElementStrategyProvider_Test;
 import org.eclipse.emf.ecp.view.internal.editor.handler.LeafConditionDmrOpenInNewContextStrategyProvider_Test;
 import org.junit.runner.RunWith;
@@ -40,7 +41,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	TableColumnsDMRTableControl_Test.class,
 	LeafConditionSegmentControlRenderer_PTest.class,
 	LeafConditionDmrNewModelElementStrategyProvider_Test.class,
-	LeafConditionDmrOpenInNewContextStrategyProvider_Test.class
+	LeafConditionDmrOpenInNewContextStrategyProvider_Test.class,
+	GenerateTableColumnSegmentDmrsHandler_Test.class
 })
 public class AllTests {
 
