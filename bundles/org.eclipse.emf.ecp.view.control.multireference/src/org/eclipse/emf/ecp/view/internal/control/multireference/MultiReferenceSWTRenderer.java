@@ -213,6 +213,25 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
+	 * Updates the table viewer's input observable list. Call this method in sub classes if you detect a change to the
+	 * domain model which requires the re-resolvement of the input list.
+	 * <p>
+	 * <strong>Note:</strong> This method only updates the input list but does not trigger button enablement etc.
+	 *
+	 * @return returns the new input list; might be empty but never <code>null</code>
+	 * @throws DatabindingFailedException if the new list cannot be resolved
+	 */
+	protected final IObservableList<?> updateTableViewerInputList() throws DatabindingFailedException {
+		// Rebind table content
+		if (tableViewerInputList != null) {
+			tableViewerInputList.dispose();
+		}
+		tableViewerInputList = getReferencedElementsList();
+		tableViewer.setInput(tableViewerInputList);
+		return tableViewerInputList;
+	}
+
+	/**
 	 * Returns true if the 'AddExisting' button is shown, false otherwise.
 	 *
 	 * @return true if the 'AddExisting' button is shown, false otherwise
@@ -968,8 +987,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		tableViewer.setLabelProvider(labelProvider);
 		tableViewer.setContentProvider(cp);
-		tableViewerInputList = getReferencedElementsList();
-		tableViewer.setInput(tableViewerInputList);
+		updateTableViewerInputList();
 
 		final TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
@@ -1145,11 +1163,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		// }
 
 		// Rebind table content to the new domain model
-		if (tableViewerInputList != null) {
-			tableViewerInputList.dispose();
-		}
-		tableViewerInputList = getReferencedElementsList();
-		tableViewer.setInput(tableViewerInputList);
+		updateTableViewerInputList();
 
 		// Update cachedContainer to allow addition and removal of elements to/from the multi reference.
 		cachedContainer = Optional.ofNullable((EObject) IObserving.class.cast(getModelValue()).getObserved());
@@ -1242,7 +1256,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		} else if (label2 == null) {
 			rc = -1;
 		} else {
-			rc = NumberAwareStringComparator.getInstance().compare(label1.toString(), label2.toString());
+			rc = NumberAwareStringComparator.getInstance().compare(label1, label2);
 		}
 		// If descending order, flip the direction
 		if (direction == 2) {

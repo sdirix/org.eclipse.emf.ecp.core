@@ -288,15 +288,13 @@ public class MultiSegmentChildDmrsSWTRenderer extends MultiReferenceSWTRenderer 
 		}
 
 		private void updateViewerInputObservableList() {
-			IObservableList<?> list;
 			try {
-				list = getReferencedElementsList();
+				updateTableViewerInputList();
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new DatabindingFailedReport(ex));
 				viewer.setInput(Observables.emptyObservableList());
 				return;
 			}
-			viewer.setInput(list);
 		}
 	}
 
