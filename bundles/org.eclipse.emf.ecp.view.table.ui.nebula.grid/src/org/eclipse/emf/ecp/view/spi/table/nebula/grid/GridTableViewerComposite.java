@@ -259,8 +259,21 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 	}
 
 	private GridColumn getCurrentColumn() {
+		GridColumn result = null;
 		final Grid grid = getTableViewer().getGrid();
-		return lastKnownPointer == null ? null : grid.getColumn(lastKnownPointer);
+
+		if (lastKnownPointer == null) {
+			// For testability, especially in RCPTT, we may not have any real
+			// tracking of the mouse pointer. So, hope there's a selection
+			final Point[] selectedCells = grid.getCellSelection();
+			if (selectedCells != null && selectedCells.length > 0) {
+				result = grid.getColumn(selectedCells[0].x);
+			}
+		} else {
+			result = grid.getColumn(lastKnownPointer);
+		}
+
+		return result;
 	}
 
 	private ColumnConfiguration getCurrentColumnConfig() {

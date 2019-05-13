@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 543160
+ * Christian W. Damus - bugs 543160, 545686
  */
 package org.eclipse.emf.ecp.view.spi.model.impl;
 
@@ -189,6 +189,10 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 			final Set<Diagnostic> diagnostics = diagnosticMap.get(subject);
 			if (diagnostics != null) {
 				return diagnostics.contains(object);
+			} else if (subject != null) {
+				// If the diagnostic has a subject, and I have the diagnostic, then
+				// it would be in the map. Ergo, I do not have this diagnostic
+				return false;
 			}
 
 			// Okay, it's not a diagnostic or it doesn't have a subject.
