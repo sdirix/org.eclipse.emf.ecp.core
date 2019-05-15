@@ -11,9 +11,11 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
+
+import static org.eclipse.emfforms.spi.swt.table.ViewerRefreshManager.getRefreshRunnable;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,7 +45,9 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Notification;
@@ -63,6 +67,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPFilterableCell;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPViewerAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
@@ -149,6 +154,7 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
+import org.eclipse.emfforms.spi.swt.table.ViewerRefreshManager;
 import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfigurationBuilder;
@@ -416,6 +422,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			tableViewerSWTBuilder
 				.configureTable(TableConfigurationBuilder.from(tableViewerSWTBuilder)
 					.dataMapEntry(TableConfiguration.DMR, dmrToCheck)
+					.dataMapEntry(ViewerRefreshManager.REFRESH_MANAGER,
+						(ViewerRefreshManager) this::postRefresh)
 					.build());
 
 			regularColumnsStartIndex = 0;
@@ -1511,6 +1519,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Post a refresh request on the asynchronous refresh manager.
+	 *
+	 * @since 1.21
+	 */
+	protected void postRefresh() {
+		final Viewer viewer = getTableViewer();
+		if (viewer != null && !viewer.getControl().isDisposed()) {
+			getRunnableManager().executeAsync(getRefreshRunnable(viewer));
+		}
+	}
+
+	/**
 	 * Returns the add button created by the framework.
 	 *
 	 * @deprecated use {@link #getControlForAction(String)} instead
@@ -1822,7 +1842,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		private final class TableControlDropAdapter extends EditingDomainViewerDropAdapter {
 
-			private final AbstractTableViewer tableViewer;
 			private EObject eObject;
 			private EStructuralFeature eStructuralFeature;
 			private List<Object> list;
@@ -1830,7 +1849,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			@SuppressWarnings("unchecked")
 			TableControlDropAdapter(EditingDomain domain, Viewer viewer, AbstractTableViewer tableViewer) {
 				super(domain, viewer);
-				this.tableViewer = tableViewer;
 				try {
 					final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
 						getViewModelContext().getDomainModel());
@@ -1907,7 +1925,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 				domain.getCommandStack().execute(command);
 
-				tableViewer.refresh();
+				postRefresh();
 			}
 		}
 
@@ -2178,7 +2196,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				// Update these specific objects
 				getTableViewer().update(updates.toArray(), null);
 			} else {
-				// Just refresh everything
+				// Just refresh everything. We are already in the RunnableManager
+				// context, so don't post but do it directly
 				getTableViewer().refresh();
 			}
 		}
@@ -2477,7 +2496,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private void sortAndReveal(Object toReveal) {
 			Display.getDefault().asyncExec(() -> {
-				getTableViewer().refresh();
+				postRefresh();
 				getTableViewer().reveal(toReveal);
 			});
 		}
@@ -2490,7 +2509,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @author emueller
 	 *
 	 */
-	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
+	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider, IAdaptable {
 
 		private final EStructuralFeature feature;
 		private final CellEditor cellEditor;
@@ -2555,21 +2574,50 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public void update(ViewerCell cell) {
 			final EObject element = (EObject) cell.getElement();
-			final Object value = attributeMaps[0].get(element);
+			final Object value = getValue(element);
 			if (ECPCustomUpdateCellEditor.class.isInstance(cellEditor)) {
 				((ECPCustomUpdateCellEditor) cellEditor).updateCell(cell, value);
-			} else if (ECPCellEditor.class.isInstance(cellEditor)) {
-				final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
-				final String text = ecpCellEditor.getFormatedString(value);
-				cell.setText(text == null ? "" : text); //$NON-NLS-1$
-				cell.setImage(ecpCellEditor.getImage(value));
 			} else {
-				cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
-				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
+				String text;
+				Image image = null;
+
+				if (ECPCellEditor.class.isInstance(cellEditor)) {
+					final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+					text = Objects.toString(ecpCellEditor.getFormatedString(value), ""); //$NON-NLS-1$
+					image = ecpCellEditor.getImage(value);
+				} else {
+					text = Objects.toString(value, ""); //$NON-NLS-1$
+					cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
+				}
+
+				if (!Objects.equals(text, cell.getText())) {
+					cell.setText(text);
+				}
+
+				// Don't try to compare images
+				if (image != null || cell.getImage() != null) {
+					cell.setImage(image);
+				}
 			}
 
-			cell.setForeground(getForeground(element));
-			cell.setBackground(getBackground(element));
+			final Color foreground = getForeground(element);
+			if (!Objects.equals(cell.getForeground(), foreground)) {
+				cell.setForeground(foreground);
+			}
+			final Color background = getBackground(element);
+			if (!Objects.equals(cell.getBackground(), background)) {
+				cell.setBackground(background);
+			}
+		}
+
+		/**
+		 * Get the value for an {@code object} from my observable map.
+		 *
+		 * @param object an object to look up the value for
+		 * @return its value
+		 */
+		Object getValue(Object object) {
+			return attributeMaps[0].get(object);
 		}
 
 		/**
@@ -2619,6 +2667,30 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		protected VDomainModelReference getDmr() {
 			return dmr;
 		}
+
+		@Override
+		public <T> T getAdapter(Class<T> adapter) {
+			T result = null;
+
+			// For custom cell update, we must ask the cell editor to render a string for filtering
+			if (adapter == ECPFilterableCell.class && !(cellEditor instanceof ECPCustomUpdateCellEditor)) {
+				ECPFilterableCell filterable = null;
+
+				if (cellEditor instanceof ECPCellEditor) {
+					final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+					filterable = object -> ecpCellEditor.getFormatedString(getValue(object));
+				} else {
+					filterable = object -> Objects.toString(object, ""); //$NON-NLS-1$
+				}
+
+				result = adapter.cast(filterable);
+			} else {
+				result = Platform.getAdapterManager().getAdapter(this, adapter);
+			}
+
+			return result;
+		}
+
 	}
 
 	/**

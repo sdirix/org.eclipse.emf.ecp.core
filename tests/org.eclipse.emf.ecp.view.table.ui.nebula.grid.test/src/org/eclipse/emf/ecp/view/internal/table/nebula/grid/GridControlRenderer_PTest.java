@@ -74,6 +74,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBinding;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBindings;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
@@ -522,7 +523,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 			columnConfiguration.getEnabledFeatures()
 				.contains(ColumnConfiguration.FEATURE_COLUMN_FILTER));
 
-		assertEquals(expectedRows, grid.getItems().length); // 3 players/rows defined in mockSampleDataSet()
+		assertEquals(expectedRows, countItems(grid)); // 3 players/rows defined in mockSampleDataSet()
 
 		/*
 		 * test filtering
@@ -537,34 +538,34 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		columnConfiguration.matchFilter().setValue("er");
 		switch (dataset) {
 		case Simple:
-			assertEquals(3, filterVisible(grid.getItems()).length);
+			assertEquals(3, countVisible(grid));
 			break;
 		default: // complex case, has only two logins (a bot doesn't have one)
-			assertEquals(2, filterVisible(grid.getItems()).length);
+			assertEquals(2, countVisible(grid));
 		}
 
 		columnConfiguration.matchFilter().setValue("foo");
-		assertEquals(0, filterVisible(grid.getItems()).length);
+		assertEquals(0, countVisible(grid));
 
 		// double check, that extending a filter which lead to an empty result still created an empty result
 		columnConfiguration.matchFilter().setValue("foo2");
-		assertEquals(0, filterVisible(grid.getItems()).length);
+		assertEquals(0, countVisible(grid));
 
 		columnConfiguration.matchFilter().resetToDefault();
-		assertEquals(expectedRows, filterVisible(grid.getItems()).length);
+		assertEquals(expectedRows, countVisible(grid));
 
 		columnConfiguration.matchFilter().setValue("Kliver");
-		assertEquals(1, filterVisible(grid.getItems()).length);
+		assertEquals(1, countVisible(grid));
 
 		columnConfiguration.matchFilter().resetToDefault();
 		columnConfiguration.matchFilter().setValue("branzfeckenbauer");
 
 		switch (dataset) {
 		case Simple:
-			assertEquals(0, filterVisible(grid.getItems()).length);
+			assertEquals(0, countVisible(grid));
 			break;
 		default: // complex case, there is exactly one matching login
-			assertEquals(1, filterVisible(grid.getItems()).length);
+			assertEquals(1, countVisible(grid));
 		}
 
 		/*
@@ -576,8 +577,8 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 			is(false));
 		assertFilterMenuChecked(tableViewerComposite, null);
 
-		assertEquals(3, grid.getItems().length);
-		assertEquals(3, filterVisible(grid.getItems()).length);
+		assertEquals(3, countItems(grid));
+		assertEquals(3, countVisible(grid));
 	}
 
 	/**
@@ -593,7 +594,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		final Event event = new Event();
 
 		// Some menu actions are not defined if the mouse is not over a grid cell
-		final Rectangle cell = composite.getTableViewer().getGrid().getItem(0).getBounds(1);
+		final Rectangle cell = allItems(composite.getTableViewer().getGrid())[0].getBounds(1);
 		event.type = SWT.MouseMove;
 		event.x = cell.x + cell.width / 2;
 		event.y = cell.y + cell.height / 2;
@@ -651,12 +652,12 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 			is(true));
 		columnConfiguration.matchFilter().setValue("foo");
 
-		assertEquals(0, filterVisible(grid.getItems()).length);
+		assertEquals(0, countVisible(grid));
 
 		tableViewerComposite.setFilteringMode(null);
 		columnConfiguration.visible().setValue(Boolean.FALSE);
 
-		assertEquals(expectedRows, filterVisible(grid.getItems()).length);
+		assertEquals(expectedRows, countVisible(grid));
 
 		/*
 		 * test for Gerrit #110529 (filter again after filters have been hidden)
@@ -668,7 +669,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 			is(true));
 		columnConfiguration.matchFilter().setValue("bar");
 
-		assertEquals(0, filterVisible(grid.getItems()).length);
+		assertEquals(0, countVisible(grid));
 
 		columnConfiguration.matchFilter().resetToDefault();
 		tableViewerComposite.setFilteringMode(null);
@@ -677,7 +678,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		// will result in a NPE without Gerrit #110529
 		columnConfiguration.visible().setValue(Boolean.FALSE);
 
-		assertEquals(expectedRows, filterVisible(grid.getItems()).length);
+		assertEquals(expectedRows, countVisible(grid));
 
 	}
 
@@ -701,8 +702,8 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		assertThat("Feature not enabled/supported. Check ColumnConfiguration.FEATURES?",
 			columnConfiguration.getEnabledFeatures(), hasItem(ColumnConfiguration.FEATURE_COLUMN_REGEX_FILTER));
 
-		assertThat("Wrong number of rrows filtered",
-			grid.getItems().length, is(expectedRows)); // 3 players/rows defined in mockSampleDataSet()
+		assertThat("Wrong number of rows filtered",
+			countItems(grid), is(expectedRows)); // 3 players/rows defined in mockSampleDataSet()
 
 		/*
 		 * test filtering
@@ -714,63 +715,63 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		columnConfiguration.matchFilter().setValue("er");
 		switch (dataset) {
 		case Simple:
-			assertThat("No rows should be filtered", filterVisible(grid.getItems()).length, is(3));
+			assertThat("No rows should be filtered", countVisible(grid), is(3));
 			break;
 		default: // complex case, has only two logins (a bot doesn't have one)
-			assertThat("One row should be filtered", filterVisible(grid.getItems()).length, is(2));
+			assertThat("One row should be filtered", countVisible(grid), is(2));
 		}
 
 		// Match only 'er' at the end of the string
 		columnConfiguration.matchFilter().setValue("er$");
 		switch (dataset) {
 		case Simple:
-			assertThat("One row should be filtered", filterVisible(grid.getItems()).length, is(2));
+			assertThat("One row should be filtered", countVisible(grid), is(2));
 			break;
 		default: // complex case, has only two logins (a bot doesn't have one)
-			assertThat("Two rows should be filtered", filterVisible(grid.getItems()).length, is(1));
+			assertThat("Two rows should be filtered", countVisible(grid), is(1));
 		}
 
 		columnConfiguration.matchFilter().setValue("foo");
-		assertThat("All rows should be filtered", filterVisible(grid.getItems()).length, is(0));
+		assertThat("All rows should be filtered", countVisible(grid), is(0));
 
 		// double check, that extending a filter which lead to an empty result still created an empty result
 		columnConfiguration.matchFilter().setValue("foo2");
-		assertThat("All rows should be filtered", filterVisible(grid.getItems()).length, is(0));
+		assertThat("All rows should be filtered", countVisible(grid), is(0));
 
 		// but an invalid regex doesn't filter anything (user should see examples in the grid to
 		// be guides in formulating the regex)
 		columnConfiguration.matchFilter().setValue("([a].*\\1");
-		assertThat("No rows should be filtered", filterVisible(grid.getItems()).length, is(expectedRows));
+		assertThat("No rows should be filtered", countVisible(grid), is(expectedRows));
 
 		columnConfiguration.matchFilter().setValue("([a]).*\\1");
 		switch (dataset) {
 		case Simple:
-			assertThat("Two rows should be filtered", filterVisible(grid.getItems()).length, is(1));
+			assertThat("Two rows should be filtered", countVisible(grid), is(1));
 			break;
 		default: // complex case, where the bot hasn't a login
-			assertThat("Two rows should be filtered", filterVisible(grid.getItems()).length, is(1));
+			assertThat("Two rows should be filtered", countVisible(grid), is(1));
 		}
 
 		columnConfiguration.matchFilter().setValue("([ae]).*\\1");
 		switch (dataset) {
 		case Simple:
-			assertThat("One row should be filtered", filterVisible(grid.getItems()).length, is(2));
+			assertThat("One row should be filtered", countVisible(grid), is(2));
 			break;
 		default: // complex case, where the bot hasn't a login
-			assertThat("Two rows should be filtered", filterVisible(grid.getItems()).length, is(1));
+			assertThat("Two rows should be filtered", countVisible(grid), is(1));
 		}
 
 		columnConfiguration.matchFilter().resetToDefault();
-		assertThat("No rows should be filtered", filterVisible(grid.getItems()).length, is(expectedRows));
+		assertThat("No rows should be filtered", countVisible(grid), is(expectedRows));
 
 		columnConfiguration.matchFilter().setValue("branzfeckenbauer");
 
 		switch (dataset) {
 		case Simple:
-			assertThat("All rows should be filtered", filterVisible(grid.getItems()).length, is(0));
+			assertThat("All rows should be filtered", countVisible(grid), is(0));
 			break;
 		default: // complex case, there is exactly one matching login
-			assertThat("Two rows should be filtered", filterVisible(grid.getItems()).length, is(1));
+			assertThat("Two rows should be filtered", countVisible(grid), is(1));
 		}
 
 		/*
@@ -782,19 +783,32 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		assertThat("Filter control still showing", columnConfiguration.showFilterControl().getValue(),
 			is(false));
 
-		assertThat("Wrong number of items in the grid", grid.getItems().length, is(3));
-		assertThat("No rows should be filtered", filterVisible(grid.getItems()).length, is(3));
+		assertThat("Wrong number of items in the grid", countItems(grid), is(3));
+		assertThat("No rows should be filtered", countVisible(grid), is(3));
 	}
 
-	private GridItem[] filterVisible(GridItem[] items) {
+	private GridItem[] filterVisible(Grid grid) {
 		final List<GridItem> visibleItems = new ArrayList<GridItem>();
-		for (final GridItem item : items) {
+		for (final GridItem item : allItems(grid)) {
 			if (!item.isVisible()) {
 				continue;
 			}
 			visibleItems.add(item);
 		}
 		return visibleItems.toArray(new GridItem[] {});
+	}
+
+	private GridItem[] allItems(Grid grid) {
+		SWTTestUtil.waitForUIThread(); // The table refresh is asynchronous
+		return grid.getItems();
+	}
+
+	private int countItems(Grid grid) {
+		return allItems(grid).length;
+	}
+
+	private int countVisible(Grid grid) {
+		return filterVisible(grid).length;
 	}
 
 	@Override
@@ -849,6 +863,7 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		assertFalse(duplicateRowButton.isPresent());
 	}
 
+	@Test
 	public void testActionKeyBindings()
 		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 

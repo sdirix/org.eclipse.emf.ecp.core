@@ -11,7 +11,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bugs 534829, 530314
+ * Christian W. Damus - bugs 534829, 530314, 547271
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -28,7 +28,9 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPFilterableCell;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlSWTRenderer.CustomGridTableViewer;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.menu.GridColumnAction;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages.Messages;
@@ -535,19 +537,14 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 				return true;
 			}
 
-			grid.setRedraw(false);
-			final GridItem dummyItem = new GridItem(grid, SWT.NONE);
+			GridItem dummyItem = null;
+			GridViewerRow viewerRow = null;
 
 			try {
-
-				dummyItem.setData(element);
-				final GridViewerRow viewerRow = (GridViewerRow) ((CustomGridTableViewer) tableViewer)
-					.getViewerRowFromItem(dummyItem);
-
 				for (final Widget widget : getColumns()) {
-
 					final ColumnConfiguration config = getColumnConfiguration(widget);
 
+					// Do we even have a filter to apply?
 					final Object filter = config.matchFilter().getValue();
 					if (filter == null || String.valueOf(filter).isEmpty()) {
 						continue;
@@ -555,20 +552,41 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 					final GridColumn column = (GridColumn) widget;
 					final int columnIndex = tableViewer.getGrid().indexOf(column);
-
-					final ViewerCell cell = viewerRow.getCell(columnIndex);
 					final CellLabelProvider labelProvider = tableViewer.getLabelProvider(columnIndex);
-					labelProvider.update(cell);
 
-					if (!matchesColumnFilter(cell.getText(), filter)) {
-						return false;
+					// Optimize for the standard case
+					final ECPFilterableCell filterable = Adapters.adapt(labelProvider, ECPFilterableCell.class);
+					if (filterable != null) {
+						// Just get the text and filter it
+						final String text = filterable.getFilterableText(element);
+						if (!matchesColumnFilter(text, filter)) {
+							return false;
+						}
+					} else {
+						// We have a filter, but we need something to filter on
+						if (dummyItem == null) {
+							grid.setRedraw(false);
+							dummyItem = new GridItem(grid, SWT.NONE);
+
+							dummyItem.setData(element);
+							viewerRow = (GridViewerRow) ((CustomGridTableViewer) tableViewer)
+								.getViewerRowFromItem(dummyItem);
+						}
+
+						// Update the cell, the slow way
+						final ViewerCell cell = viewerRow.getCell(columnIndex);
+						labelProvider.update(cell);
+
+						if (!matchesColumnFilter(cell.getText(), filter)) {
+							return false;
+						}
 					}
-
 				}
-
 			} finally {
-				dummyItem.dispose();
-				grid.setRedraw(true);
+				if (dummyItem != null) {
+					dummyItem.dispose();
+					grid.setRedraw(true);
+				}
 			}
 
 			return true;

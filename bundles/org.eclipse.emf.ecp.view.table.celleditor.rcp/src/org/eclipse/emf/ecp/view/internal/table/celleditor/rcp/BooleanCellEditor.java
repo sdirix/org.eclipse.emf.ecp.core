@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
+ * Christian W. Damus - bug 547271
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.celleditor.rcp;
 
@@ -235,8 +236,13 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 	 */
 	@Override
 	public void updateCell(ViewerCell cell, Object value) {
+		if (!"".equals(cell.getText())) { //$NON-NLS-1$
 		cell.setText(""); //$NON-NLS-1$
-		cell.setImage(getImage(value));
+		}
+		final Image image = getImage(value);
+		if (cell.getImage() != image) {
+			cell.setImage(image);
+		}
 		setCopyTextMarker(cell, value);
 	}
 

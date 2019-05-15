@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * jonas - initial API and implementation
+ * Christian W. Damus - bug 547271
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
@@ -164,6 +165,12 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		final Composite viewerComposite = customization.getViewerComposite();
 
 		final V tableViewer = createTableViewer(customization, viewerComposite);
+
+		final TableConfiguration configuration = customization.getTableConfiguration();
+		if (configuration != null) {
+			// Pump in the configuration data
+			configuration.getData().forEach(tableViewer::setData);
+		}
 
 		// If an action configuration was configured, bind key bindings to the viewer
 		final Optional<ActionConfiguration> actionConfiguration = customization.getActionConfiguration();
