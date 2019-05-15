@@ -90,13 +90,12 @@ public class FontPropertiesStylePropertyItemProvider
 	 */
 	protected void addItalicPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_FontPropertiesStyleProperty_italic_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_italic_feature", "_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_italic_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$
 				VTFontPropertiesPackage.Literals.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC,
 				true,
 				false,
@@ -115,13 +114,12 @@ public class FontPropertiesStylePropertyItemProvider
 	 */
 	protected void addBoldPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_FontPropertiesStyleProperty_bold_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_bold_feature", "_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_bold_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$
 				VTFontPropertiesPackage.Literals.FONT_PROPERTIES_STYLE_PROPERTY__BOLD,
 				true,
 				false,
@@ -140,13 +138,12 @@ public class FontPropertiesStylePropertyItemProvider
 	 */
 	protected void addColorHEXPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_FontPropertiesStyleProperty_colorHEX_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_colorHEX_feature", "_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_colorHEX_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$
 				VTFontPropertiesPackage.Literals.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX,
 				true,
 				false,
@@ -165,13 +162,12 @@ public class FontPropertiesStylePropertyItemProvider
 	 */
 	protected void addHeightPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_FontPropertiesStyleProperty_height_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_height_feature", "_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_height_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$
 				VTFontPropertiesPackage.Literals.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT,
 				true,
 				false,
@@ -190,13 +186,12 @@ public class FontPropertiesStylePropertyItemProvider
 	 */
 	protected void addFontNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_FontPropertiesStyleProperty_fontName_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_fontName_feature", "_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_FontPropertiesStyleProperty_fontName_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_FontPropertiesStyleProperty_type"), //$NON-NLS-1$
 				VTFontPropertiesPackage.Literals.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME,
 				true,
 				false,
@@ -228,8 +223,7 @@ public class FontPropertiesStylePropertyItemProvider
 	@Override
 	public String getText(Object object) {
 		final String label = ((VTFontPropertiesStyleProperty) object).getFontName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_FontPropertiesStyleProperty_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_FontPropertiesStyleProperty_type") : //$NON-NLS-1$
 			getString("_UI_FontPropertiesStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

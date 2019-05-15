@@ -49,7 +49,8 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ECPViewerFactory {
 
-	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD, ILabelDecorator labelDecorator) {
+	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD,
+		ILabelDecorator labelDecorator) {
 		final ModelContentProvider contentProvider = new ModelContentProvider();
 		final TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, getLabelProvider(contentProvider),
 			contentProvider,

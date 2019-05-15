@@ -125,7 +125,8 @@ public class EMFFormsRendererFactory_ITest {
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final AbstractAdditionalSWTRenderer<VElement> additionalSWTRenderer = new MockedAbstractAdditionalSWTRenderer(
 			vElement, viewModelContext, mock(ReportService.class));
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		Mockito.when(rendererService.getRendererInstances(vElement, viewModelContext)).thenReturn(
 			Collections.singleton(additionalSWTRenderer));
 		Mockito.when(rendererService.isApplicable(Matchers.any(VElement.class), Matchers.any(ViewModelContext.class)))
@@ -145,7 +146,8 @@ public class EMFFormsRendererFactory_ITest {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void testRemoveAdditionalRendererService() {
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		final ServiceRegistration<EMFFormsAdditionalRendererService> registerService = bundleContext.registerService(
 			EMFFormsAdditionalRendererService.class, rendererService, null);
 		registerService.unregister();

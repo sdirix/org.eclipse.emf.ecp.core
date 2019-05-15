@@ -30,14 +30,12 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers reflectively.
  */
-public class CustomReflectiveItemProviderAdapterFactory extends ReflectiveItemProviderAdapterFactory
-{
+public class CustomReflectiveItemProviderAdapterFactory extends ReflectiveItemProviderAdapterFactory {
 
 	/**
 	 * This constructs an instance.
 	 */
-	public CustomReflectiveItemProviderAdapterFactory()
-	{
+	public CustomReflectiveItemProviderAdapterFactory() {
 		reflectiveItemProviderAdapter = new CustomReflectiveItemProvider(this);
 
 		supportedTypes.add(IStructuredItemContentProvider.class);
@@ -49,16 +47,13 @@ public class CustomReflectiveItemProviderAdapterFactory extends ReflectiveItemPr
 	}
 
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return reflectiveItemProviderAdapter;
 	}
 
 	@Override
-	public void dispose()
-	{
-		if (reflectiveItemProviderAdapter != null)
-		{
+	public void dispose() {
+		if (reflectiveItemProviderAdapter != null) {
 			reflectiveItemProviderAdapter.dispose();
 		}
 	}

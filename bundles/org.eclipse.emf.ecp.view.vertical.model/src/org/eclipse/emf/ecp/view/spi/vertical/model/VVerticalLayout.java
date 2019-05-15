@@ -27,6 +27,5 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
  * @model
  * @generated
  */
-public interface VVerticalLayout extends VContainedContainer
-{
+public interface VVerticalLayout extends VContainedContainer {
 } // VVerticalLayout

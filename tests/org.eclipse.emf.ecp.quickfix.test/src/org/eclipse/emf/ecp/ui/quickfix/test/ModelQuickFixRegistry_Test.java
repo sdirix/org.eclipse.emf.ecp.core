@@ -48,7 +48,8 @@ public class ModelQuickFixRegistry_Test {
 
 		final List<ModelQuickFix> modelQuickFixes = registry.getAllModelQuickFixes();
 		assertTrue(
-			"Quick fix not found in the registry", modelQuickFixes.containsAll(Arrays.asList(dummyQuickFix1, dummyQuickFix1, dummyQuickFix1, dummyQuickFix1))); //$NON-NLS-1$
+			"Quick fix not found in the registry", //$NON-NLS-1$
+			modelQuickFixes.containsAll(Arrays.asList(dummyQuickFix1, dummyQuickFix1, dummyQuickFix1, dummyQuickFix1)));
 
 		final List<ModelQuickFix> applicableModelQuickFixes = registry.getApplicableModelQuickFixes(diagnostic);
 		assertEquals("", applicableModelQuickFixes.get(0), dummyQuickFix4);

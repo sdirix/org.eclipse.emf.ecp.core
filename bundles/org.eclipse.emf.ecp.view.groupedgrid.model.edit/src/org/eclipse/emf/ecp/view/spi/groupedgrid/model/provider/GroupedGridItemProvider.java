@@ -44,8 +44,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class GroupedGridItemProvider
 	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
-{
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -53,8 +52,7 @@ public class GroupedGridItemProvider
 	 *
 	 * @generated
 	 */
-	public GroupedGridItemProvider(AdapterFactory adapterFactory)
-	{
+	public GroupedGridItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -66,10 +64,8 @@ public class GroupedGridItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -86,10 +82,8 @@ public class GroupedGridItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VGroupedGridPackage.Literals.GROUPED_GRID__GROUPS);
 		}
@@ -103,8 +97,7 @@ public class GroupedGridItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -119,8 +112,7 @@ public class GroupedGridItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/GroupedGrid")); //$NON-NLS-1$
 	}
 
@@ -132,14 +124,12 @@ public class GroupedGridItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VGroupedGrid) object).getLabel();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_GroupedGrid_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_GroupedGrid_type") : //$NON-NLS-1$
 			getString("_UI_GroupedGrid_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -152,12 +142,10 @@ public class GroupedGridItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VGroupedGrid.class))
-		{
+		switch (notification.getFeatureID(VGroupedGrid.class)) {
 		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -174,19 +162,14 @@ public class GroupedGridItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
-				VGroupedGridFactory.eINSTANCE.createSpan()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
+			VGroupedGridFactory.eINSTANCE.createSpan()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VGroupedGridPackage.Literals.GROUPED_GRID__GROUPS,
-				VGroupedGridFactory.eINSTANCE.createGroup()));
+		newChildDescriptors.add(createChildParameter(VGroupedGridPackage.Literals.GROUPED_GRID__GROUPS,
+			VGroupedGridFactory.eINSTANCE.createGroup()));
 	}
 
 }

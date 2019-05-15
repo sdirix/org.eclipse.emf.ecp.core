@@ -30,8 +30,7 @@ public class Perspective implements IPerspectiveFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public void createInitialLayout(IPageLayout layout)
-	{
+	public void createInitialLayout(IPageLayout layout) {
 		final String editorArea = layout.getEditorArea();
 		layout.addView(ModelExplorerView.ID, IPageLayout.LEFT, 0.3f, editorArea);
 		layout.addView(ModelRepositoriesView.ID, IPageLayout.BOTTOM, 0.75f, editorArea);

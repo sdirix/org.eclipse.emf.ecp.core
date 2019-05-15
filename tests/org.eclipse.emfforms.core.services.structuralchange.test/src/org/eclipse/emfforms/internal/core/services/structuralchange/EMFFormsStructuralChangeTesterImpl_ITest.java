@@ -52,7 +52,8 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
- * JUnit integration org.eclipse.emfforms.core.services.structuralchange.test for {@link EMFFormsStructuralChangeTesterImpl}.
+ * JUnit integration org.eclipse.emfforms.core.services.structuralchange.test for
+ * {@link EMFFormsStructuralChangeTesterImpl}.
  *
  * @author Lucas Koehler
  *

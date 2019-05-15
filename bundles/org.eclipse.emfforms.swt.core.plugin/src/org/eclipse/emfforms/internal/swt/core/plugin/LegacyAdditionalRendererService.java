@@ -83,7 +83,8 @@ public class LegacyAdditionalRendererService implements EMFFormsAdditionalRender
 				.getConfigurationElements()) {
 				try {
 					final Class<AbstractAdditionalSWTRenderer<VElement>> renderer = loadClass(configurationElement
-						.getContributor().getName(), configurationElement
+						.getContributor().getName(),
+						configurationElement
 							.getAttribute("renderer")); //$NON-NLS-1$
 					final ECPAdditionalRendererTester tester = (ECPAdditionalRendererTester) configurationElement
 						.createExecutableExtension("tester"); //$NON-NLS-1$

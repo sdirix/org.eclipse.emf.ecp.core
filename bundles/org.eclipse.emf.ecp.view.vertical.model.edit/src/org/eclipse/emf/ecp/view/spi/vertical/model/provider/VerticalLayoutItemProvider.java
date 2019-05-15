@@ -46,8 +46,7 @@ public class VerticalLayoutItemProvider
 	 *
 	 * @generated
 	 */
-	public VerticalLayoutItemProvider(AdapterFactory adapterFactory)
-	{
+	public VerticalLayoutItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,10 +58,8 @@ public class VerticalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -77,8 +74,7 @@ public class VerticalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/VerticalLayout")); //$NON-NLS-1$
 	}
 
@@ -90,14 +86,12 @@ public class VerticalLayoutItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VVerticalLayout) object).getName();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_VerticalLayout_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_VerticalLayout_type") : //$NON-NLS-1$
 			getString("_UI_VerticalLayout_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -110,8 +104,7 @@ public class VerticalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -125,14 +118,11 @@ public class VerticalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CONTAINER__CHILDREN,
-				VVerticalFactory.eINSTANCE.createVerticalLayout()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+			VVerticalFactory.eINSTANCE.createVerticalLayout()));
 	}
 
 }

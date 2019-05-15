@@ -44,7 +44,8 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 
 	/** {@inheritDoc} */
 	@Override
-	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) {
+	public void repositoriesChanged(Collection<ECPRepository> oldRepositories,
+		Collection<ECPRepository> newRepositories) {
 		refreshViewer();
 	}
 

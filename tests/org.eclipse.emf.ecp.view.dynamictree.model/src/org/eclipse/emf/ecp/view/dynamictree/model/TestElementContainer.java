@@ -24,7 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements <em>Test Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements <em>Test
+ * Elements</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getId <em>Id</em>}</li>
  * </ul>
  * </p>
@@ -33,8 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface TestElementContainer extends EObject
-{
+public interface TestElementContainer extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Test Elements</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement}.

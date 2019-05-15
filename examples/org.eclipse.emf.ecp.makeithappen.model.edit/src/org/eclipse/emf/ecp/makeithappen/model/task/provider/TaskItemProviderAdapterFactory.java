@@ -44,7 +44,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class TaskItemProviderAdapterFactory extends TaskAdapterFactory implements ComposeableAdapterFactory,
-IChangeNotifier, IDisposable {
+	IChangeNotifier, IDisposable {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -106,8 +106,7 @@ IChangeNotifier, IDisposable {
 	 */
 	@Override
 	public Adapter createTaskAdapter() {
-		if (taskItemProvider == null)
-		{
+		if (taskItemProvider == null) {
 			taskItemProvider = new TaskItemProvider(this);
 		}
 
@@ -133,8 +132,7 @@ IChangeNotifier, IDisposable {
 	 */
 	@Override
 	public Adapter createUserAdapter() {
-		if (userItemProvider == null)
-		{
+		if (userItemProvider == null) {
 			userItemProvider = new UserItemProvider(this);
 		}
 
@@ -160,8 +158,7 @@ IChangeNotifier, IDisposable {
 	 */
 	@Override
 	public Adapter createUserGroupAdapter() {
-		if (userGroupItemProvider == null)
-		{
+		if (userGroupItemProvider == null) {
 			userGroupItemProvider = new UserGroupItemProvider(this);
 		}
 
@@ -223,11 +220,9 @@ IChangeNotifier, IDisposable {
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -270,8 +265,7 @@ IChangeNotifier, IDisposable {
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}

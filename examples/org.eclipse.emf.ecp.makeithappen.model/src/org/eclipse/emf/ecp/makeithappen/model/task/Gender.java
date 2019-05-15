@@ -29,8 +29,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @model
  * @generated
  */
-public enum Gender implements Enumerator
-{
+public enum Gender implements Enumerator {
 	/**
 	 * The '<em><b>Male</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -92,12 +91,10 @@ public enum Gender implements Enumerator
 	 *
 	 * @generated
 	 */
-	private static final Gender[] VALUES_ARRAY =
-		new Gender[]
-		{
-			MALE,
-			FEMALE,
-		};
+	private static final Gender[] VALUES_ARRAY = new Gender[] {
+		MALE,
+		FEMALE,
+	};
 
 	/**
 	 * A public read-only list of all the '<em><b>Gender</b></em>' enumerators.
@@ -115,13 +112,10 @@ public enum Gender implements Enumerator
 	 *
 	 * @generated
 	 */
-	public static Gender get(String literal)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static Gender get(String literal) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final Gender result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal))
-			{
+			if (result.toString().equals(literal)) {
 				return result;
 			}
 		}
@@ -135,13 +129,10 @@ public enum Gender implements Enumerator
 	 *
 	 * @generated
 	 */
-	public static Gender getByName(String name)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static Gender getByName(String name) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final Gender result = VALUES_ARRAY[i];
-			if (result.getName().equals(name))
-			{
+			if (result.getName().equals(name)) {
 				return result;
 			}
 		}
@@ -155,10 +146,8 @@ public enum Gender implements Enumerator
 	 *
 	 * @generated
 	 */
-	public static Gender get(int value)
-	{
-		switch (value)
-		{
+	public static Gender get(int value) {
+		switch (value) {
 		case MALE_VALUE:
 			return MALE;
 		case FEMALE_VALUE:
@@ -198,8 +187,7 @@ public enum Gender implements Enumerator
 	 *
 	 * @generated
 	 */
-	private Gender(int value, String name, String literal)
-	{
+	private Gender(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -212,8 +200,7 @@ public enum Gender implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public int getValue()
-	{
+	public int getValue() {
 		return value;
 	}
 
@@ -224,8 +211,7 @@ public enum Gender implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -236,8 +222,7 @@ public enum Gender implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getLiteral()
-	{
+	public String getLiteral() {
 		return literal;
 	}
 
@@ -249,8 +234,7 @@ public enum Gender implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return literal;
 	}
 

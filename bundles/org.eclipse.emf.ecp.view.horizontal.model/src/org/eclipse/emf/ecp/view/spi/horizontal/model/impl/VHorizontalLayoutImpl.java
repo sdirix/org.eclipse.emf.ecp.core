@@ -29,16 +29,14 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl;
  *
  * @generated
  */
-public class VHorizontalLayoutImpl extends VContainedContainerImpl implements VHorizontalLayout
-{
+public class VHorizontalLayoutImpl extends VContainedContainerImpl implements VHorizontalLayout {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected VHorizontalLayoutImpl()
-	{
+	protected VHorizontalLayoutImpl() {
 		super();
 	}
 
@@ -49,8 +47,7 @@ public class VHorizontalLayoutImpl extends VContainedContainerImpl implements VH
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VHorizontalPackage.Literals.HORIZONTAL_LAYOUT;
 	}
 

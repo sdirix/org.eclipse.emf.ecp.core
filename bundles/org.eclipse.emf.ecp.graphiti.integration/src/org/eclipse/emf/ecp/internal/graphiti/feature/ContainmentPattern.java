@@ -118,8 +118,7 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 					if (objects.contains(eObject)) {
 						continue;
 					}
-				}
-				else {
+				} else {
 					final Object object = source.eGet(eReference);
 					if (eObject.equals(object)) {
 						continue;

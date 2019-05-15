@@ -379,8 +379,9 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE:
 			return attribute != null;
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE_VALUE:
-			return ATTRIBUTE_VALUE_EDEFAULT == null ? attributeValue != null : !ATTRIBUTE_VALUE_EDEFAULT
-				.equals(attributeValue);
+			return ATTRIBUTE_VALUE_EDEFAULT == null ? attributeValue != null
+				: !ATTRIBUTE_VALUE_EDEFAULT
+					.equals(attributeValue);
 		}
 		return super.eIsSet(featureID);
 	}

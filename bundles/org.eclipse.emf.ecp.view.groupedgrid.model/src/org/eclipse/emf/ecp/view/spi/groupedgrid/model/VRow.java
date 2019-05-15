@@ -34,8 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @generated
  * @since 1.2
  */
-public interface VRow extends EObject
-{
+public interface VRow extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VContainedElement}.

@@ -201,7 +201,8 @@ public class UnknownFeaturesDialog extends Dialog {
 		});
 	}
 
-	private TableViewerColumn createTableViewerColumn(TableViewer viewer, String title, int bound, final int colNumber) {
+	private TableViewerColumn createTableViewerColumn(TableViewer viewer, String title, int bound,
+		final int colNumber) {
 		final TableViewerColumn viewerColumn = new TableViewerColumn(viewer,
 			SWT.NONE);
 		final TableColumn column = viewerColumn.getColumn();

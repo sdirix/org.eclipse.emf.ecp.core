@@ -43,8 +43,7 @@ import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;
  * @generated
  * @since 1.2
  */
-public class VGroupImpl extends EObjectImpl implements VGroup
-{
+public class VGroupImpl extends EObjectImpl implements VGroup {
 	/**
 	 * The cached value of the '{@link #getRows() <em>Rows</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -84,8 +83,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 *
 	 * @generated
 	 */
-	protected VGroupImpl()
-	{
+	protected VGroupImpl() {
 		super();
 	}
 
@@ -96,8 +94,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VGroupedGridPackage.Literals.GROUP;
 	}
 
@@ -108,10 +105,8 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public EList<VRow> getRows()
-	{
-		if (rows == null)
-		{
+	public EList<VRow> getRows() {
+		if (rows == null) {
 			rows = new EObjectContainmentEList<VRow>(VRow.class, this, VGroupedGridPackage.GROUP__ROWS);
 		}
 		return rows;
@@ -124,8 +119,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -136,8 +130,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public void setName(String newName)
-	{
+	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
 		if (eNotificationRequired()) {
@@ -152,10 +145,8 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUP__ROWS:
 			return ((InternalEList<?>) getRows()).basicRemove(otherEnd, msgs);
 		}
@@ -169,10 +160,8 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUP__ROWS:
 			return getRows();
 		case VGroupedGridPackage.GROUP__NAME:
@@ -189,10 +178,8 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUP__ROWS:
 			getRows().clear();
 			getRows().addAll((Collection<? extends VRow>) newValue);
@@ -211,10 +198,8 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUP__ROWS:
 			getRows().clear();
 			return;
@@ -232,10 +217,8 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUP__ROWS:
 			return rows != null && !rows.isEmpty();
 		case VGroupedGridPackage.GROUP__NAME:
@@ -251,8 +234,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

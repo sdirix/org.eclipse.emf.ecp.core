@@ -27,15 +27,15 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VSpanImpl#getHorizontalSpan <em>Horizontal Span</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VSpanImpl#getHorizontalSpan <em>Horizontal
+ * Span</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  * @since 1.2
  */
-public class VSpanImpl extends VAttachmentImpl implements VSpan
-{
+public class VSpanImpl extends VAttachmentImpl implements VSpan {
 	/**
 	 * The default value of the '{@link #getHorizontalSpan() <em>Horizontal Span</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -64,8 +64,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 *
 	 * @generated
 	 */
-	protected VSpanImpl()
-	{
+	protected VSpanImpl() {
 		super();
 	}
 
@@ -76,8 +75,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VGroupedGridPackage.Literals.SPAN;
 	}
 
@@ -88,8 +86,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public int getHorizontalSpan()
-	{
+	public int getHorizontalSpan() {
 		return horizontalSpan;
 	}
 
@@ -100,8 +97,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public void setHorizontalSpan(int newHorizontalSpan)
-	{
+	public void setHorizontalSpan(int newHorizontalSpan) {
 		final int oldHorizontalSpan = horizontalSpan;
 		horizontalSpan = newHorizontalSpan;
 		if (eNotificationRequired()) {
@@ -117,10 +113,8 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			return getHorizontalSpan();
 		}
@@ -134,10 +128,8 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			setHorizontalSpan((Integer) newValue);
 			return;
@@ -152,10 +144,8 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			setHorizontalSpan(HORIZONTAL_SPAN_EDEFAULT);
 			return;
@@ -170,10 +160,8 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			return horizontalSpan != HORIZONTAL_SPAN_EDEFAULT;
 		}
@@ -187,8 +175,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

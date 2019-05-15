@@ -74,8 +74,7 @@ public class Activator extends Plugin {
 	 */
 	public ReportService getReportService() {
 		final BundleContext bundleContext = getBundle().getBundleContext();
-		final ServiceReference<ReportService> serviceReference =
-			bundleContext.getServiceReference(ReportService.class);
+		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
 		return bundleContext.getService(serviceReference);
 	}
 

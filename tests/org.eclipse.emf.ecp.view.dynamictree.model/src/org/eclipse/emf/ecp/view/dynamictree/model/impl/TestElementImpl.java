@@ -48,8 +48,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.util.ModelValidator;
  *
  * @generated
  */
-public class TestElementImpl extends EObjectImpl implements TestElement
-{
+public class TestElementImpl extends EObjectImpl implements TestElement {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -133,8 +132,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 *
 	 * @generated
 	 */
-	protected TestElementImpl()
-	{
+	protected TestElementImpl() {
 		super();
 	}
 
@@ -145,8 +143,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return ModelPackage.Literals.TEST_ELEMENT;
 	}
 
@@ -157,8 +154,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public String getId()
-	{
+	public String getId() {
 		return id;
 	}
 
@@ -169,8 +165,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public void setId(String newId)
-	{
+	public void setId(String newId) {
 		final String oldId = id;
 		id = newId;
 		if (eNotificationRequired()) {
@@ -185,8 +180,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public EList<TestElement> getElements()
-	{
+	public EList<TestElement> getElements() {
 		if (elements == null) {
 			elements = new EObjectContainmentEList<TestElement>(TestElement.class, this,
 				ModelPackage.TEST_ELEMENT__ELEMENTS);
@@ -201,8 +195,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public String getParentId()
-	{
+	public String getParentId() {
 		return parentId;
 	}
 
@@ -213,8 +206,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public void setParentId(String newParentId)
-	{
+	public void setParentId(String newParentId) {
 		final String oldParentId = parentId;
 		parentId = newParentId;
 		if (eNotificationRequired()) {
@@ -269,14 +261,12 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	public boolean validate(DiagnosticChain diagnostic, Map<?, ?> context) {
 		if (getName() == null || getName().length() == 0) {
 			if (diagnostic != null) {
-				diagnostic.add
-					(new BasicDiagnostic
-					(Diagnostic.ERROR,
-						ModelValidator.DIAGNOSTIC_SOURCE,
-						ModelValidator.TEST_ELEMENT__VALIDATE,
-						"Invalid name (custom validation rule).",
-						new Object[] { this, ModelPackage.eINSTANCE.getTestElement_Name()
-						}));
+				diagnostic.add(new BasicDiagnostic(Diagnostic.ERROR,
+					ModelValidator.DIAGNOSTIC_SOURCE,
+					ModelValidator.TEST_ELEMENT__VALIDATE,
+					"Invalid name (custom validation rule).",
+					new Object[] { this, ModelPackage.eINSTANCE.getTestElement_Name()
+					}));
 			}
 			return false;
 		}
@@ -291,8 +281,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ELEMENTS:
 			return ((InternalEList<?>) getElements()).basicRemove(otherEnd, msgs);
@@ -307,8 +296,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			return getId();
@@ -330,8 +318,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			setId((String) newValue);
@@ -357,8 +344,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
+	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			setId(ID_EDEFAULT);
@@ -383,8 +369,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
@@ -405,8 +390,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

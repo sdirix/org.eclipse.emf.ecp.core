@@ -36,8 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VLabelPackage extends EPackage
-{
+public interface VLabelPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -266,8 +265,7 @@ public interface VLabelPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.label.model.impl.VLabelImpl
 		 * <em>Label</em>}' class.

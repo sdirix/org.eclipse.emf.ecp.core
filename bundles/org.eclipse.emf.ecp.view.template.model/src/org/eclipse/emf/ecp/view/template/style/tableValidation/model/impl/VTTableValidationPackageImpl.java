@@ -85,7 +85,7 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		// Obtain or create and register package
 		final VTTableValidationPackageImpl theTableValidationPackage = (VTTableValidationPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTTableValidationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTTableValidationPackageImpl());
+				: new VTTableValidationPackageImpl());
 
 		isInited = true;
 
@@ -234,15 +234,18 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		initEAttribute(
 			getTableValidationStyleProperty_ColumnWidth(),
 			ecorePackage.getEInt(),
-			"columnWidth", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"columnWidth", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTableValidationStyleProperty_ColumnName(),
 			ecorePackage.getEString(),
-			"columnName", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"columnName", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTableValidationStyleProperty_ImagePath(),
 			ecorePackage.getEString(),
-			"imagePath", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"imagePath", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

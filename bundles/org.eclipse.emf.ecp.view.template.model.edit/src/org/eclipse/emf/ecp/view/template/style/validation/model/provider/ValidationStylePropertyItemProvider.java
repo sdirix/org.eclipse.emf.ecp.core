@@ -48,8 +48,7 @@ public class ValidationStylePropertyItemProvider
 	IStructuredItemContentProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -57,8 +56,7 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	public ValidationStylePropertyItemProvider(AdapterFactory adapterFactory)
-	{
+	public ValidationStylePropertyItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -70,10 +68,8 @@ public class ValidationStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addOkColorHEXPropertyDescriptor(object);
@@ -107,16 +103,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addOkColorHEXPropertyDescriptor(Object object)
-	{
+	protected void addOkColorHEXPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_okColorHEX_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_okColorHEX_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_okColorHEX_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__OK_COLOR_HEX,
 				true,
 				false,
@@ -156,16 +150,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addOkImageURLPropertyDescriptor(Object object)
-	{
+	protected void addOkImageURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_okImageURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_okImageURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_okImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__OK_IMAGE_URL,
 				true,
 				false,
@@ -182,16 +174,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addOkOverlayURLPropertyDescriptor(Object object)
-	{
+	protected void addOkOverlayURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_okOverlayURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_okOverlayURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_okOverlayURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__OK_OVERLAY_URL,
 				true,
 				false,
@@ -208,16 +198,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addInfoColorHEXPropertyDescriptor(Object object)
-	{
+	protected void addInfoColorHEXPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_infoColorHEX_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_infoColorHEX_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_infoColorHEX_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__INFO_COLOR_HEX,
 				true,
 				false,
@@ -257,16 +245,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addInfoImageURLPropertyDescriptor(Object object)
-	{
+	protected void addInfoImageURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_infoImageURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_infoImageURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_infoImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__INFO_IMAGE_URL,
 				true,
 				false,
@@ -283,16 +269,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addInfoOverlayURLPropertyDescriptor(Object object)
-	{
+	protected void addInfoOverlayURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_infoOverlayURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_infoOverlayURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_infoOverlayURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__INFO_OVERLAY_URL,
 				true,
 				false,
@@ -309,16 +293,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addWarningColorHEXPropertyDescriptor(Object object)
-	{
+	protected void addWarningColorHEXPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_warningColorHEX_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_warningColorHEX_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_warningColorHEX_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__WARNING_COLOR_HEX,
 				true,
 				false,
@@ -359,16 +341,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addWarningImageURLPropertyDescriptor(Object object)
-	{
+	protected void addWarningImageURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_warningImageURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_warningImageURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_warningImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__WARNING_IMAGE_URL,
 				true,
 				false,
@@ -385,16 +365,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addWarningOverlayURLPropertyDescriptor(Object object)
-	{
+	protected void addWarningOverlayURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_warningOverlayURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_warningOverlayURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_warningOverlayURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__WARNING_OVERLAY_URL,
 				true,
 				false,
@@ -411,16 +389,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addErrorColorHEXPropertyDescriptor(Object object)
-	{
+	protected void addErrorColorHEXPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_errorColorHEX_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_errorColorHEX_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_errorColorHEX_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__ERROR_COLOR_HEX,
 				true,
 				false,
@@ -460,16 +436,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addErrorImageURLPropertyDescriptor(Object object)
-	{
+	protected void addErrorImageURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_errorImageURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_errorImageURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_errorImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__ERROR_IMAGE_URL,
 				true,
 				false,
@@ -486,16 +460,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addErrorOverlayURLPropertyDescriptor(Object object)
-	{
+	protected void addErrorOverlayURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_errorOverlayURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_errorOverlayURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_errorOverlayURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__ERROR_OVERLAY_URL,
 				true,
 				false,
@@ -512,16 +484,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addCancelColorHEXPropertyDescriptor(Object object)
-	{
+	protected void addCancelColorHEXPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_cancelColorHEX_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_cancelColorHEX_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_cancelColorHEX_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__CANCEL_COLOR_HEX,
 				true,
 				false,
@@ -561,16 +531,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addCancelImageURLPropertyDescriptor(Object object)
-	{
+	protected void addCancelImageURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_cancelImageURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_cancelImageURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_cancelImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__CANCEL_IMAGE_URL,
 				true,
 				false,
@@ -587,16 +555,14 @@ public class ValidationStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addCancelOverlayURLPropertyDescriptor(Object object)
-	{
+	protected void addCancelOverlayURLPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ValidationStyleProperty_cancelOverlayURL_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_cancelOverlayURL_feature", "_UI_ValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_ValidationStyleProperty_cancelOverlayURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ValidationStyleProperty_type"), //$NON-NLS-1$
 				VTValidationPackage.Literals.VALIDATION_STYLE_PROPERTY__CANCEL_OVERLAY_URL,
 				true,
 				false,
@@ -614,8 +580,7 @@ public class ValidationStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValidationStyleProperty")); //$NON-NLS-1$
 	}
 
@@ -627,11 +592,9 @@ public class ValidationStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((VTValidationStyleProperty) object).getOkColorHEX();
-		return label == null || label.length() == 0 ?
-			getString("_UI_ValidationStyleProperty_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_ValidationStyleProperty_type") : //$NON-NLS-1$
 			getString("_UI_ValidationStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -644,12 +607,10 @@ public class ValidationStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTValidationStyleProperty.class))
-		{
+		switch (notification.getFeatureID(VTValidationStyleProperty.class)) {
 		case VTValidationPackage.VALIDATION_STYLE_PROPERTY__OK_COLOR_HEX:
 		case VTValidationPackage.VALIDATION_STYLE_PROPERTY__OK_FOREGROUND_COLOR_HEX:
 		case VTValidationPackage.VALIDATION_STYLE_PROPERTY__OK_IMAGE_URL:
@@ -685,8 +646,7 @@ public class ValidationStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -698,8 +658,7 @@ public class ValidationStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

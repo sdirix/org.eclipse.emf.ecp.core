@@ -19,7 +19,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 
 /**
- * A Strategy is a registry/ruleset which allows to identify if a notification is relevant for an {@link ChangeObserver}.
+ * A Strategy is a registry/ruleset which allows to identify if a notification is relevant for an
+ * {@link ChangeObserver}.
  *
  * @author jfaltermeier
  *

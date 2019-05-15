@@ -341,10 +341,8 @@ public class FontPropertiesItemProviderAdapterFactory extends FontPropertiesAdap
 			 */
 			@Override
 			public Object caseStyle(VTStyle object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VTTemplatePackage.Literals.STYLE__PROPERTIES,
-						VTFontPropertiesFactory.eINSTANCE.createFontPropertiesStyleProperty()));
+				newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.STYLE__PROPERTIES,
+					VTFontPropertiesFactory.eINSTANCE.createFontPropertiesStyleProperty()));
 
 				return null;
 			}

@@ -31,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @model
  * @generated
  */
-public interface VViewProxy extends VContainedElement
-{
+public interface VViewProxy extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

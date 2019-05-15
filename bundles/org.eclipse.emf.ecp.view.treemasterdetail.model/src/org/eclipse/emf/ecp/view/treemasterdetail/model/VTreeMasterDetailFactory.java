@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage
  * @generated
  */
-public interface VTreeMasterDetailFactory extends EFactory
-{
+public interface VTreeMasterDetailFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

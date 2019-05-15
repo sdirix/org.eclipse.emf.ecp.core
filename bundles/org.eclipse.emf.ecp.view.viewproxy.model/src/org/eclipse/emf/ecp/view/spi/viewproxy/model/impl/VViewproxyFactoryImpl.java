@@ -29,8 +29,7 @@ import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage;
  *
  * @generated
  */
-public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFactory
-{
+public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -38,18 +37,14 @@ public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFac
 	 *
 	 * @generated
 	 */
-	public static VViewproxyFactory init()
-	{
-		try
-		{
+	public static VViewproxyFactory init() {
+		try {
 			final VViewproxyFactory theViewproxyFactory = (VViewproxyFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VViewproxyPackage.eNS_URI);
-			if (theViewproxyFactory != null)
-			{
+			if (theViewproxyFactory != null) {
 				return theViewproxyFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VViewproxyFactoryImpl();
@@ -62,8 +57,7 @@ public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFac
 	 *
 	 * @generated
 	 */
-	public VViewproxyFactoryImpl()
-	{
+	public VViewproxyFactoryImpl() {
 		super();
 	}
 
@@ -74,10 +68,8 @@ public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFac
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VViewproxyPackage.VIEW_PROXY:
 			return createViewProxy();
 		default:
@@ -92,8 +84,7 @@ public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFac
 	 * @generated
 	 */
 	@Override
-	public VViewProxy createViewProxy()
-	{
+	public VViewProxy createViewProxy() {
 		final VViewProxyImpl viewProxy = new VViewProxyImpl();
 		return viewProxy;
 	}
@@ -105,8 +96,7 @@ public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFac
 	 * @generated
 	 */
 	@Override
-	public VViewproxyPackage getViewproxyPackage()
-	{
+	public VViewproxyPackage getViewproxyPackage() {
 		return (VViewproxyPackage) getEPackage();
 	}
 
@@ -118,8 +108,7 @@ public class VViewproxyFactoryImpl extends EFactoryImpl implements VViewproxyFac
 	 * @generated
 	 */
 	@Deprecated
-	public static VViewproxyPackage getPackage()
-	{
+	public static VViewproxyPackage getPackage() {
 		return VViewproxyPackage.eINSTANCE;
 	}
 

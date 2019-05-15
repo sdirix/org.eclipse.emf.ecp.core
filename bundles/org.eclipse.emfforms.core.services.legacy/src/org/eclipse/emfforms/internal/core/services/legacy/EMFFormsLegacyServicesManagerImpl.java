@@ -61,7 +61,6 @@ public class EMFFormsLegacyServicesManagerImpl implements EMFFormsLegacyServices
 		this.reportService = reportService;
 	}
 
-	
 	/**
 	 * Called by OSGi when the component is ready to be activated.
 	 *

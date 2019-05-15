@@ -54,8 +54,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public GroupedGridAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VGroupedGridPackage.eINSTANCE;
 		}
 	}
@@ -72,12 +71,10 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -90,57 +87,47 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected GroupedGridSwitch<Adapter> modelSwitch =
-		new GroupedGridSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseGroupedGrid(VGroupedGrid object)
-			{
-				return createGroupedGridAdapter();
-			}
+	protected GroupedGridSwitch<Adapter> modelSwitch = new GroupedGridSwitch<Adapter>() {
+		@Override
+		public Adapter caseGroupedGrid(VGroupedGrid object) {
+			return createGroupedGridAdapter();
+		}
 
-			@Override
-			public Adapter caseGroup(VGroup object)
-			{
-				return createGroupAdapter();
-			}
+		@Override
+		public Adapter caseGroup(VGroup object) {
+			return createGroupAdapter();
+		}
 
-			@Override
-			public Adapter caseRow(VRow object)
-			{
-				return createRowAdapter();
-			}
+		@Override
+		public Adapter caseRow(VRow object) {
+			return createRowAdapter();
+		}
 
-			@Override
-			public Adapter caseSpan(VSpan object)
-			{
-				return createSpanAdapter();
-			}
+		@Override
+		public Adapter caseSpan(VSpan object) {
+			return createSpanAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseAttachment(VAttachment object)
-			{
-				return createAttachmentAdapter();
-			}
+		@Override
+		public Adapter caseAttachment(VAttachment object) {
+			return createAttachmentAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -232,8 +219,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -249,8 +235,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -266,8 +251,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VAttachment
 	 * @generated
 	 */
-	public Adapter createAttachmentAdapter()
-	{
+	public Adapter createAttachmentAdapter() {
 		return null;
 	}
 

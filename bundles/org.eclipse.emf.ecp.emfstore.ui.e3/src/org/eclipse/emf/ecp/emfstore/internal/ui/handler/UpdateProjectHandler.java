@@ -34,7 +34,7 @@ public class UpdateProjectHandler extends AbstractHandler {
 
 		final InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event))
-			.getFirstElement();
+				.getFirstElement();
 		UpdateProjectHelper.update(project, HandlerUtil.getActiveShell(event));
 
 		return null;

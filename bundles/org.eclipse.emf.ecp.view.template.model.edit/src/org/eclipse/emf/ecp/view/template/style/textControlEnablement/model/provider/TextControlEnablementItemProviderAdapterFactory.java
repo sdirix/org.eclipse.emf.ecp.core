@@ -342,10 +342,8 @@ public class TextControlEnablementItemProviderAdapterFactory extends TextControl
 			 */
 			@Override
 			public Object caseStyle(VTStyle object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VTTemplatePackage.Literals.STYLE__PROPERTIES,
-						VTTextControlEnablementFactory.eINSTANCE.createTextControlEnablementStyleProperty()));
+				newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.STYLE__PROPERTIES,
+					VTTextControlEnablementFactory.eINSTANCE.createTextControlEnablementStyleProperty()));
 
 				return null;
 			}

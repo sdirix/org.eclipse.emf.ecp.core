@@ -86,7 +86,7 @@ public class VTTextControlEnablementPackageImpl extends EPackageImpl implements 
 		// Obtain or create and register package
 		final VTTextControlEnablementPackageImpl theTextControlEnablementPackage = (VTTextControlEnablementPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTTextControlEnablementPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTTextControlEnablementPackageImpl());
+				: new VTTextControlEnablementPackageImpl());
 
 		isInited = true;
 
@@ -212,7 +212,8 @@ public class VTTextControlEnablementPackageImpl extends EPackageImpl implements 
 		initEAttribute(
 			getTextControlEnablementStyleProperty_RenderDisableAsEditable(),
 			ecorePackage.getEBoolean(),
-			"RenderDisableAsEditable", "false", 0, 1, VTTextControlEnablementStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"RenderDisableAsEditable", "false", 0, 1, VTTextControlEnablementStyleProperty.class, !IS_TRANSIENT, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

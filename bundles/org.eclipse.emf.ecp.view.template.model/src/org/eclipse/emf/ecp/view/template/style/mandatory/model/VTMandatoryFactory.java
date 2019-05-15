@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage
  * @generated
  */
-public interface VTMandatoryFactory extends EFactory
-{
+public interface VTMandatoryFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

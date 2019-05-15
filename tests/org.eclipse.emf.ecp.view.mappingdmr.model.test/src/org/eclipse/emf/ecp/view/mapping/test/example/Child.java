@@ -21,7 +21,8 @@ package org.eclipse.emf.ecp.view.mapping.test.example;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.mapping.test.example.Child#getIntermediateTarget <em>Intermediate Target</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.mapping.test.example.Child#getIntermediateTarget <em>Intermediate
+ * Target</em>}</li>
  * </ul>
  * </p>
  *

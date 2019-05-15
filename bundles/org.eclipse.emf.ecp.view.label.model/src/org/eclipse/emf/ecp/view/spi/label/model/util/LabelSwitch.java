@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage
  * @generated
  */
-public class LabelSwitch<T> extends Switch<T>
-{
+public class LabelSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -53,10 +52,8 @@ public class LabelSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public LabelSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public LabelSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VLabelPackage.eINSTANCE;
 		}
 	}
@@ -71,8 +68,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -86,10 +82,8 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VLabelPackage.LABEL: {
 			final VLabel label = (VLabel) theEObject;
 			T result = caseLabel(label);
@@ -121,8 +115,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseLabel(VLabel object)
-	{
+	public T caseLabel(VLabel object) {
 		return null;
 	}
 
@@ -138,8 +131,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -155,8 +147,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -173,8 +164,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

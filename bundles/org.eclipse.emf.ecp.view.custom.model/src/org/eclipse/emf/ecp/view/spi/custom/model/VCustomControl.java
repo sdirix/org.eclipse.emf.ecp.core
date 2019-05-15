@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * @generated
  * @since 1.3
  */
-public interface VCustomControl extends VControl
-{
+public interface VCustomControl extends VControl {
 	/**
 	 * Returns the value of the '<em><b>Bundle Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

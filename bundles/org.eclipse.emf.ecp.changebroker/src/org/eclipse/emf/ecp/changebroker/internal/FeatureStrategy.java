@@ -34,6 +34,7 @@ public class FeatureStrategy implements Strategy {
 
 	/**
 	 * Registers an observer.
+	 * 
 	 * @param observer the observer
 	 * @param feature the feature
 	 */

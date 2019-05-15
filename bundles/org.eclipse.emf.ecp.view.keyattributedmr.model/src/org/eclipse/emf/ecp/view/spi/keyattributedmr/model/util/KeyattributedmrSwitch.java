@@ -49,8 +49,7 @@ public class KeyattributedmrSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public KeyattributedmrSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VKeyattributedmrPackage.eINSTANCE;
 		}
 	}
@@ -79,8 +78,7 @@ public class KeyattributedmrSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE: {
 			final VKeyAttributeDomainModelReference keyAttributeDomainModelReference = (VKeyAttributeDomainModelReference) theEObject;
 			T result = caseKeyAttributeDomainModelReference(keyAttributeDomainModelReference);

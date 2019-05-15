@@ -48,8 +48,7 @@ public class DynamicContainmentItemItemProvider
 	 *
 	 * @generated
 	 */
-	public DynamicContainmentItemItemProvider(AdapterFactory adapterFactory)
-	{
+	public DynamicContainmentItemItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -61,8 +60,7 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -79,11 +77,9 @@ public class DynamicContainmentItemItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addDomainModelPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addDomainModelPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DynamicContainmentItem_domainModel_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentItem_domainModel_feature",
@@ -105,9 +101,8 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	protected void addBaseItemIndexPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DynamicContainmentItem_baseItemIndex_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentItem_baseItemIndex_feature",
@@ -131,8 +126,7 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
@@ -148,8 +142,7 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -164,8 +157,7 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/DynamicContainmentItem"));
 	}
 
@@ -177,12 +169,10 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((DynamicContainmentItem) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_DynamicContainmentItem_type") :
-			getString("_UI_DynamicContainmentItem_type") + " " + label;
+		return label == null || label.length() == 0 ? getString("_UI_DynamicContainmentItem_type")
+			: getString("_UI_DynamicContainmentItem_type") + " " + label;
 	}
 
 	/**
@@ -194,8 +184,7 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DynamicContainmentItem.class)) {
@@ -219,24 +208,17 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS,
-				ModelFactory.eINSTANCE.createDynamicContainmentItem()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS,
+			ModelFactory.eINSTANCE.createDynamicContainmentItem()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
-				VCategorizationFactory.eINSTANCE.createCategorizationElement()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
+			VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
-				VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
+			VViewFactory.eINSTANCE.createControl()));
 	}
 
 	/**
@@ -247,8 +229,7 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

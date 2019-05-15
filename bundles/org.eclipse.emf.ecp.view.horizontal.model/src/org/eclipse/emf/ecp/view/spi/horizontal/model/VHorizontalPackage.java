@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VHorizontalPackage extends EPackage
-{
+public interface VHorizontalPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -200,8 +199,7 @@ public interface VHorizontalPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '
 		 * {@link org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl <em>Layout</em>}' class.

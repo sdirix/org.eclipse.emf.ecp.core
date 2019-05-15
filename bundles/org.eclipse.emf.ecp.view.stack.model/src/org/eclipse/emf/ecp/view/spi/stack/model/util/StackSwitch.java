@@ -37,8 +37,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage
  * @generated
  */
-public class StackSwitch<T> extends Switch<T>
-{
+public class StackSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -55,10 +54,8 @@ public class StackSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public StackSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public StackSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VStackPackage.eINSTANCE;
 		}
 	}
@@ -73,8 +70,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -88,10 +84,8 @@ public class StackSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VStackPackage.STACK_LAYOUT: {
 			final VStackLayout stackLayout = (VStackLayout) theEObject;
 			T result = caseStackLayout(stackLayout);
@@ -137,8 +131,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStackLayout(VStackLayout object)
-	{
+	public T caseStackLayout(VStackLayout object) {
 		return null;
 	}
 
@@ -154,8 +147,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStackItem(VStackItem object)
-	{
+	public T caseStackItem(VStackItem object) {
 		return null;
 	}
 
@@ -171,8 +163,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -188,8 +179,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -205,8 +195,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainer(VContainer object)
-	{
+	public T caseContainer(VContainer object) {
 		return null;
 	}
 
@@ -223,8 +212,7 @@ public class StackSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

@@ -54,8 +54,7 @@ public class DynamicTreeModelService implements ViewModelService {
 		final VElement viewModel = context.getViewModel();
 		if (DynamicContainmentTree.class.isInstance(viewModel)) {
 			updateViewModel((DynamicContainmentTree) viewModel, context);
-		}
-		else {
+		} else {
 			final TreeIterator<EObject> treeIterator = viewModel.eAllContents();
 			while (treeIterator.hasNext()) {
 				final EObject eObject = treeIterator.next();

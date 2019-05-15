@@ -24,9 +24,11 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix DMR</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix
+ * DMR</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target DMR</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target
+ * DMR</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,8 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
  */
-public interface VIndexDomainModelReference extends VFeaturePathDomainModelReference
-{
+public interface VIndexDomainModelReference extends VFeaturePathDomainModelReference {
 	/**
 	 * Returns the value of the '<em><b>Prefix DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

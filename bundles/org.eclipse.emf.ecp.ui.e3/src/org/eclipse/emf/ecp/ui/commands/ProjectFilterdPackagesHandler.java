@@ -31,15 +31,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
  *
  * @author Eugen Neufeld
  */
-public class ProjectFilterdPackagesHandler extends AbstractHandler
-{
+public class ProjectFilterdPackagesHandler extends AbstractHandler {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException
-	{
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		final IStructuredSelection ssel = (IStructuredSelection) selection;
 

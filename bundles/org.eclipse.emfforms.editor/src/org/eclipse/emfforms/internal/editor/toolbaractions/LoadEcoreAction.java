@@ -127,8 +127,9 @@ public class LoadEcoreAction extends Action {
 						// To support Xcore resources, we need a resource with a URI that helps determine the
 						// containing project
 						//
-						final Resource dummyResource = domain == null ? null : resourceSet
-							.createResource(domain.getResourceSet().getResources().get(0).getURI());
+						final Resource dummyResource = domain == null ? null
+							: resourceSet
+								.createResource(domain.getResourceSet().getResources().get(0).getURI());
 
 						final StringBuffer uris = new StringBuffer();
 						final Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin
@@ -183,8 +184,9 @@ public class LoadEcoreAction extends Action {
 					// To support Xcore resources, we need a resource with a URI that helps determine the
 					// containing project
 					//
-					final Resource dummyResource = domain == null ? null : resourceSet.createResource(domain
-						.getResourceSet().getResources().get(0).getURI());
+					final Resource dummyResource = domain == null ? null
+						: resourceSet.createResource(domain
+							.getResourceSet().getResources().get(0).getURI());
 
 					final StringBuffer uris = new StringBuffer();
 					final Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin

@@ -138,8 +138,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 */
 	public TestEnum createTestEnumFromString(EDataType eDataType, String initialValue) {
 		final TestEnum result = TestEnum.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}

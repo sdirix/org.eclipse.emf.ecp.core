@@ -38,7 +38,7 @@ public class ExportProjectHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event))
-			.getFirstElement();
+				.getFirstElement();
 		final Shell activeShell = HandlerUtil.getActiveShell(event);
 		ExportProjectHelper.exportProject(project, activeShell);
 		return null;

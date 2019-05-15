@@ -29,8 +29,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
  *
  * @generated
  */
-public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeMasterDetailPackage
-{
+public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeMasterDetailPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -53,8 +52,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * @see #init()
 	 * @generated
 	 */
-	private VTreeMasterDetailPackageImpl()
-	{
+	private VTreeMasterDetailPackageImpl() {
 		super(eNS_URI, VTreeMasterDetailFactory.eINSTANCE);
 	}
 
@@ -79,8 +77,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VTreeMasterDetailPackage init()
-	{
+	public static VTreeMasterDetailPackage init() {
 		if (isInited) {
 			return (VTreeMasterDetailPackage) EPackage.Registry.INSTANCE.getEPackage(VTreeMasterDetailPackage.eNS_URI);
 		}
@@ -88,7 +85,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 		// Obtain or create and register package
 		final VTreeMasterDetailPackageImpl theTreeMasterDetailPackage = (VTreeMasterDetailPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTreeMasterDetailPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTreeMasterDetailPackageImpl());
+				: new VTreeMasterDetailPackageImpl());
 
 		isInited = true;
 
@@ -116,8 +113,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * @generated
 	 */
 	@Override
-	public EClass getTreeMasterDetail()
-	{
+	public EClass getTreeMasterDetail() {
 		return treeMasterDetailEClass;
 	}
 
@@ -128,8 +124,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * @generated
 	 */
 	@Override
-	public EReference getTreeMasterDetail_DetailView()
-	{
+	public EReference getTreeMasterDetail_DetailView() {
 		return (EReference) treeMasterDetailEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -140,8 +135,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * @generated
 	 */
 	@Override
-	public VTreeMasterDetailFactory getTreeMasterDetailFactory()
-	{
+	public VTreeMasterDetailFactory getTreeMasterDetailFactory() {
 		return (VTreeMasterDetailFactory) getEFactoryInstance();
 	}
 
@@ -161,8 +155,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -189,8 +182,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -218,7 +210,8 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 			getTreeMasterDetail_DetailView(),
 			theViewPackage.getView(),
 			null,
-			"detailView", null, 0, 1, VTreeMasterDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"detailView", null, 0, 1, VTreeMasterDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

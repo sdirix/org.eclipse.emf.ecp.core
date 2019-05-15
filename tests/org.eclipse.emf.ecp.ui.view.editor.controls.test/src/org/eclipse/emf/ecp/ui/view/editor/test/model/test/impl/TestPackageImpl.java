@@ -100,9 +100,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new TestPackageImpl());
 
 		isInited = true;
 

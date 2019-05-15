@@ -39,8 +39,7 @@ public class ObservingWritableValue extends WritableValue implements IObserving 
 	 * @param initialValue The initial value
 	 * @param valueType The value type
 	 */
-	public ObservingWritableValue(Realm realm, Object initialValue, Object valueType)
-	{
+	public ObservingWritableValue(Realm realm, Object initialValue, Object valueType) {
 		super(realm, initialValue, valueType);
 	}
 
@@ -49,8 +48,7 @@ public class ObservingWritableValue extends WritableValue implements IObserving 
 	 *
 	 * @param observingWritableValue The ObservingWritableValue.
 	 */
-	public ObservingWritableValue(ObservingWritableValue observingWritableValue)
-	{
+	public ObservingWritableValue(ObservingWritableValue observingWritableValue) {
 		super(observingWritableValue.getRealm(), observingWritableValue.getValue(), observingWritableValue
 			.getValueType());
 	}

@@ -113,7 +113,8 @@ public class MappingDmrSegmentGenerator_ITest {
 			.filter(service -> MappingDmrSegmentGenerator.class.equals(service.getClass())).findFirst();
 		assertTrue(generator.isPresent());
 
-		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference();
+		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE
+			.createMappingDomainModelReference();
 		mappingDmr.setDomainModelEFeature(TestPackage.Literals.C__ECLASS_TO_A);
 		mappingDmr.setMappedClass(TestPackage.Literals.A);
 		final VFeaturePathDomainModelReference targetDmr = VViewFactory.eINSTANCE
@@ -140,7 +141,8 @@ public class MappingDmrSegmentGenerator_ITest {
 			.filter(service -> MappingDmrSegmentGenerator.class.equals(service.getClass())).findFirst();
 		assertTrue(generator.isPresent());
 
-		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference();
+		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE
+			.createMappingDomainModelReference();
 		when(emfFormsSegmentGenerator.generateSegments(any(VDomainModelReference.class)))
 			.thenReturn(Collections.emptyList());
 		generator.get().generateSegments(mappingDmr);

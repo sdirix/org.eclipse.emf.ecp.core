@@ -41,8 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TreeMasterDetailItemProvider extends ContainedElementItemProvider implements IEditingDomainItemProvider,
-	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
-{
+	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -61,8 +60,7 @@ public class TreeMasterDetailItemProvider extends ContainedElementItemProvider i
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -80,8 +78,7 @@ public class TreeMasterDetailItemProvider extends ContainedElementItemProvider i
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
 		Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VTreeMasterDetailPackage.Literals.TREE_MASTER_DETAIL__DETAIL_VIEW);
 		}
@@ -126,8 +123,7 @@ public class TreeMasterDetailItemProvider extends ContainedElementItemProvider i
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_TreeMasterDetail_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_TreeMasterDetail_type") : //$NON-NLS-1$
 			getString("_UI_TreeMasterDetail_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -143,8 +139,7 @@ public class TreeMasterDetailItemProvider extends ContainedElementItemProvider i
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTreeMasterDetail.class))
-		{
+		switch (notification.getFeatureID(VTreeMasterDetail.class)) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -164,10 +159,8 @@ public class TreeMasterDetailItemProvider extends ContainedElementItemProvider i
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VTreeMasterDetailPackage.Literals.TREE_MASTER_DETAIL__DETAIL_VIEW,
-				VViewFactory.eINSTANCE.createView()));
+		newChildDescriptors.add(createChildParameter(VTreeMasterDetailPackage.Literals.TREE_MASTER_DETAIL__DETAIL_VIEW,
+			VViewFactory.eINSTANCE.createView()));
 	}
 
 }

@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage;
  *
  * @generated
  */
-public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
-{
+public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -63,8 +62,7 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 *
 	 * @generated
 	 */
-	protected VViewProxyImpl()
-	{
+	protected VViewProxyImpl() {
 		super();
 	}
 
@@ -75,8 +73,7 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VViewproxyPackage.Literals.VIEW_PROXY;
 	}
 
@@ -87,8 +84,7 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public String getId()
-	{
+	public String getId() {
 		return id;
 	}
 
@@ -99,8 +95,7 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public void setId(String newId)
-	{
+	public void setId(String newId) {
 		final String oldId = id;
 		id = newId;
 		if (eNotificationRequired()) {
@@ -115,10 +110,8 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VViewproxyPackage.VIEW_PROXY__ID:
 			return getId();
 		}
@@ -132,10 +125,8 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VViewproxyPackage.VIEW_PROXY__ID:
 			setId((String) newValue);
 			return;
@@ -150,10 +141,8 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VViewproxyPackage.VIEW_PROXY__ID:
 			setId(ID_EDEFAULT);
 			return;
@@ -168,10 +157,8 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VViewproxyPackage.VIEW_PROXY__ID:
 			return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 		}
@@ -185,8 +172,7 @@ public class VViewProxyImpl extends VContainedElementImpl implements VViewProxy
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

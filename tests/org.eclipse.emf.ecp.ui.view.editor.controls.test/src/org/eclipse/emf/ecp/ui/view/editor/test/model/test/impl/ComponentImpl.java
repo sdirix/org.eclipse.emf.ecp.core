@@ -30,7 +30,8 @@ import org.eclipse.emf.ecp.ui.view.editor.test.model.test.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.ui.view.editor.test.model.test.impl.ComponentImpl#getComponent <em>Component</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.editor.test.model.test.impl.ComponentImpl#getComponent
+ * <em>Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -123,8 +124,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPONENT__COMPONENT, newComponent,
 				newComponent));
 		}

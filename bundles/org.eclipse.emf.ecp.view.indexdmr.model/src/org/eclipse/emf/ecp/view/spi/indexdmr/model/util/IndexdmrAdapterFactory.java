@@ -31,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage
  * @generated
  */
-public class IndexdmrAdapterFactory extends AdapterFactoryImpl
-{
+public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -49,10 +48,8 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public IndexdmrAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public IndexdmrAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VIndexdmrPackage.eINSTANCE;
 		}
 	}
@@ -68,14 +65,11 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -88,33 +82,27 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected IndexdmrSwitch<Adapter> modelSwitch =
-		new IndexdmrSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseIndexDomainModelReference(VIndexDomainModelReference object)
-			{
-				return createIndexDomainModelReferenceAdapter();
-			}
+	protected IndexdmrSwitch<Adapter> modelSwitch = new IndexdmrSwitch<Adapter>() {
+		@Override
+		public Adapter caseIndexDomainModelReference(VIndexDomainModelReference object) {
+			return createIndexDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainModelReference(VDomainModelReference object)
-			{
-				return createDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
+			return createDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-			{
-				return createFeaturePathDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+			return createFeaturePathDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -126,8 +114,7 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -144,8 +131,7 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
 	 * @generated
 	 */
-	public Adapter createIndexDomainModelReferenceAdapter()
-	{
+	public Adapter createIndexDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -161,8 +147,7 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createDomainModelReferenceAdapter()
-	{
+	public Adapter createDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -179,8 +164,7 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
 	 * @generated
 	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
-	{
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -193,8 +177,7 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

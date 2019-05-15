@@ -32,7 +32,7 @@ public interface ModelQuickFix {
 	 *
 	 * @param diagnostic - the diagnostic of the problem
 	 * @return the priority of the fix, higher priority will be preferred
-	 * */
+	 */
 	double isApplicable(Diagnostic diagnostic);
 
 	/**

@@ -92,7 +92,8 @@ public interface ChangeBroker {
 	void unsubsribe(EMFObserver observer);
 
 	/**
-	 * Stops notifying all {@link ChangeObserver ChangeObserver}. {@link ReadOnlyChangeObserver ReadOnlyEMFObservers} will
+	 * Stops notifying all {@link ChangeObserver ChangeObserver}. {@link ReadOnlyChangeObserver ReadOnlyEMFObservers}
+	 * will
 	 * still
 	 * be notified.
 	 */
@@ -106,7 +107,8 @@ public interface ChangeBroker {
 	void continueNotification();
 
 	/**
-	 * Stops notifying all {@link ChangeObserver ChangeObserver}. {@link ReadOnlyChangeObserver ReadOnlyEMFObservers} will
+	 * Stops notifying all {@link ChangeObserver ChangeObserver}. {@link ReadOnlyChangeObserver ReadOnlyEMFObservers}
+	 * will
 	 * still
 	 * be notified. The notifications will we blocked until {@link #continueNotification(Object)} has been called with
 	 * <b>all</b> blocking elements. Using the same blocker multiple times has no effect.

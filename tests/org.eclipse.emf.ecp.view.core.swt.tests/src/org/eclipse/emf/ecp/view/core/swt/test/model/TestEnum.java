@@ -119,12 +119,11 @@ public enum TestEnum implements Enumerator {
 	 * 
 	 * @generated
 	 */
-	private static final TestEnum[] VALUES_ARRAY =
-		new TestEnum[] {
-			A,
-			B,
-			C,
-		};
+	private static final TestEnum[] VALUES_ARRAY = new TestEnum[] {
+		A,
+		B,
+		C,
+	};
 
 	/**
 	 * A public read-only list of all the '<em><b>Enum</b></em>' enumerators.

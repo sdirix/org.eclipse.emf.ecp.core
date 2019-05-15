@@ -46,8 +46,7 @@ public class DiffmergeAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public DiffmergeAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VDiffmergePackage.eINSTANCE;
 		}
 	}
@@ -63,12 +62,10 @@ public class DiffmergeAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -80,23 +77,19 @@ public class DiffmergeAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected DiffmergeSwitch<Adapter> modelSwitch = new DiffmergeSwitch<Adapter>()
-	{
+	protected DiffmergeSwitch<Adapter> modelSwitch = new DiffmergeSwitch<Adapter>() {
 		@Override
-		public Adapter caseDiffAttachment(VDiffAttachment object)
-		{
+		public Adapter caseDiffAttachment(VDiffAttachment object) {
 			return createDiffAttachmentAdapter();
 		}
 
 		@Override
-		public Adapter caseAttachment(VAttachment object)
-		{
+		public Adapter caseAttachment(VAttachment object) {
 			return createAttachmentAdapter();
 		}
 
 		@Override
-		public Adapter defaultCase(EObject object)
-		{
+		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};

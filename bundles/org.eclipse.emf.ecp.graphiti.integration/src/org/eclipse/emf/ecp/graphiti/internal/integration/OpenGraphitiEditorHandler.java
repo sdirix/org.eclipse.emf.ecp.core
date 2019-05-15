@@ -109,7 +109,8 @@ public class OpenGraphitiEditorHandler extends AbstractHandler {
 			if (!loadExisting) {
 				editor.getDiagramBehavior().executeFeature(
 					new LoadProjectFeature(dtp.getFeatureProvider(),
-						selectedProject), context);
+						selectedProject),
+					context);
 			}
 		} catch (final PartInitException e) {
 			System.out.println("Error");

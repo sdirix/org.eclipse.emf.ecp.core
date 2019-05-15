@@ -39,8 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  *
  * @generated
  */
-public class VLabelImpl extends VContainedElementImpl implements VLabel
-{
+public class VLabelImpl extends VContainedElementImpl implements VLabel {
 	/**
 	 * The default value of the '{@link #getStyle() <em>Style</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -83,8 +82,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 *
 	 * @generated
 	 */
-	protected VLabelImpl()
-	{
+	protected VLabelImpl() {
 		super();
 	}
 
@@ -95,8 +93,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VLabelPackage.Literals.LABEL;
 	}
 
@@ -107,8 +104,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public VLabelStyle getStyle()
-	{
+	public VLabelStyle getStyle() {
 		return style;
 	}
 
@@ -119,8 +115,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public void setStyle(VLabelStyle newStyle)
-	{
+	public void setStyle(VLabelStyle newStyle) {
 		final VLabelStyle oldStyle = style;
 		style = newStyle == null ? STYLE_EDEFAULT : newStyle;
 		if (eNotificationRequired()) {
@@ -137,8 +132,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getDomainModelReference()
-	{
+	public VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
 	}
 
@@ -151,12 +145,10 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
-		NotificationChain msgs)
-	{
+		NotificationChain msgs) {
 		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VLabelPackage.LABEL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
 			if (msgs == null) {
@@ -177,10 +169,8 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
-	{
-		if (newDomainModelReference != domainModelReference)
-		{
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
+		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -194,8 +184,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VLabelPackage.LABEL__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
 		}
@@ -208,10 +197,8 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VLabelPackage.LABEL__DOMAIN_MODEL_REFERENCE:
 			return basicSetDomainModelReference(null, msgs);
 		}
@@ -225,10 +212,8 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VLabelPackage.LABEL__STYLE:
 			return getStyle();
 		case VLabelPackage.LABEL__DOMAIN_MODEL_REFERENCE:
@@ -244,10 +229,8 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VLabelPackage.LABEL__STYLE:
 			setStyle((VLabelStyle) newValue);
 			return;
@@ -265,10 +248,8 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VLabelPackage.LABEL__STYLE:
 			setStyle(STYLE_EDEFAULT);
 			return;
@@ -286,10 +267,8 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VLabelPackage.LABEL__STYLE:
 			return style != STYLE_EDEFAULT;
 		case VLabelPackage.LABEL__DOMAIN_MODEL_REFERENCE:
@@ -305,8 +284,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

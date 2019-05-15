@@ -25,8 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
  *
  * @generated
  */
-public final class DynamicTreeEditPlugin extends EMFPlugin
-{
+public final class DynamicTreeEditPlugin extends EMFPlugin {
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
@@ -52,8 +51,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 *
 	 * @generated
 	 */
-	public DynamicTreeEditPlugin()
-	{
+	public DynamicTreeEditPlugin() {
 		super(new ResourceLocator[] {
 			CategorizationEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
@@ -69,8 +67,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getPluginResourceLocator()
-	{
+	public ResourceLocator getPluginResourceLocator() {
 		return plugin;
 	}
 
@@ -82,8 +79,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 * @return the singleton instance.
 	 * @generated
 	 */
-	public static Implementation getPlugin()
-	{
+	public static Implementation getPlugin() {
 		return plugin;
 	}
 
@@ -94,8 +90,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 *
 	 * @generated
 	 */
-	public static class Implementation extends EclipsePlugin
-	{
+	public static class Implementation extends EclipsePlugin {
 		/**
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
@@ -103,8 +98,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 		 *
 		 * @generated
 		 */
-		public Implementation()
-		{
+		public Implementation() {
 			super();
 
 			// Remember the static instance.

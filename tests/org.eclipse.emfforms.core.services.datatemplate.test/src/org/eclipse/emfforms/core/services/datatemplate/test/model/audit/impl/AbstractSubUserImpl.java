@@ -29,6 +29,7 @@ public abstract class AbstractSubUserImpl extends UserImpl implements AbstractSu
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected AbstractSubUserImpl() {
@@ -38,6 +39,7 @@ public abstract class AbstractSubUserImpl extends UserImpl implements AbstractSu
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -45,4 +47,4 @@ public abstract class AbstractSubUserImpl extends UserImpl implements AbstractSu
 		return AuditPackage.Literals.ABSTRACT_SUB_USER;
 	}
 
-} //AbstractSubUserImpl
+} // AbstractSubUserImpl

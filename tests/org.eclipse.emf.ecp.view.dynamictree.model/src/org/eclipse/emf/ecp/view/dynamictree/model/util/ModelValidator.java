@@ -117,7 +117,8 @@ public class ModelValidator extends EObjectValidator {
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		switch (classifierID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE:
 			return validateDynamicContainmentTree((DynamicContainmentTree) value, diagnostics, context);
@@ -167,7 +168,8 @@ public class ModelValidator extends EObjectValidator {
 	 *
 	 * @generated
 	 */
-	public boolean validateTestElement(TestElement testElement, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateTestElement(TestElement testElement, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(testElement, diagnostics, context)) {
 			return false;
 		}

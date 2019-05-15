@@ -36,8 +36,7 @@ public class ECPTutorialToolBehaviorProvider extends DefaultToolBehaviorProvider
 
 	@Override
 	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
-		final ICustomFeature customFeature =
-			new ECPDoubleClickFeature(getFeatureProvider());
+		final ICustomFeature customFeature = new ECPDoubleClickFeature(getFeatureProvider());
 		// canExecute() tests especially if the context contains a EClass
 		if (customFeature.canExecute(context)) {
 			return customFeature;

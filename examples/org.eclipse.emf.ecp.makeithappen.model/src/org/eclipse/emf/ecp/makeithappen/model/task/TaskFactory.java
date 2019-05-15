@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage
  * @generated
  */
-public interface TaskFactory extends EFactory
-{
+public interface TaskFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

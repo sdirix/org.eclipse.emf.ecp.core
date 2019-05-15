@@ -47,8 +47,7 @@ public class HorizontalLayoutItemProvider
 	 *
 	 * @generated
 	 */
-	public HorizontalLayoutItemProvider(AdapterFactory adapterFactory)
-	{
+	public HorizontalLayoutItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,10 +59,8 @@ public class HorizontalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -78,8 +75,7 @@ public class HorizontalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/HorizontalLayout")); //$NON-NLS-1$
 	}
 
@@ -91,14 +87,12 @@ public class HorizontalLayoutItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VHorizontalLayout) object).getName();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_HorizontalLayout_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_HorizontalLayout_type") : //$NON-NLS-1$
 			getString("_UI_HorizontalLayout_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -111,8 +105,7 @@ public class HorizontalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -126,14 +119,11 @@ public class HorizontalLayoutItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CONTAINER__CHILDREN,
-				VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+			VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 	}
 
 }

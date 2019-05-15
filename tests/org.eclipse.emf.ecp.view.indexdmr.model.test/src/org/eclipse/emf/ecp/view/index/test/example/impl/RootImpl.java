@@ -123,8 +123,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.ROOT__INTERMEDIATE, newIntermediate,
 				newIntermediate));
 		}

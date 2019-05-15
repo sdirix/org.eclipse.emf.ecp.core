@@ -36,8 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @model
  * @generated
  */
-public interface VStackLayout extends VContainedElement
-{
+public interface VStackLayout extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

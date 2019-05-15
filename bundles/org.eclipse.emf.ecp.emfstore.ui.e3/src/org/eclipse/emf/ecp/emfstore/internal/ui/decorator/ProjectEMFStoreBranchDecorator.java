@@ -84,7 +84,8 @@ public class ProjectEMFStoreBranchDecorator implements ILabelDecorator, ESShareO
 			try {
 				versSpec = localProject.getBaseVersion();
 				return text
-					+ " [" + versSpec.getBranch() + Messages.ProjectEMFStoreBranchDecorator_Version + versSpec.getIdentifier() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+					+ " [" + versSpec.getBranch() + Messages.ProjectEMFStoreBranchDecorator_Version //$NON-NLS-1$
+					+ versSpec.getIdentifier() + "]"; //$NON-NLS-1$
 			} catch (final NullPointerException e) {
 				// possible npe because share is async. -> shareobserver
 			}

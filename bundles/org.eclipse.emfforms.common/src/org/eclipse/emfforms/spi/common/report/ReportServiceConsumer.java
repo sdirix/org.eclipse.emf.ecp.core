@@ -13,7 +13,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.common.report;
 
-
 /**
  * Common base types for any {@link AbstractReport} consumer that may
  * be added to the {@link ReportService} in order to be notified.

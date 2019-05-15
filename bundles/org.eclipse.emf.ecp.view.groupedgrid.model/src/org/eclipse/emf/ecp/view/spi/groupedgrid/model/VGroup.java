@@ -34,8 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  * @since 1.2
  */
-public interface VGroup extends EObject
-{
+public interface VGroup extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Rows</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow}.

@@ -223,8 +223,8 @@ public class NumericalControl extends AbstractTextControl {
 					formatedNumber = format.format(number);
 				}
 				// if (number.toString().contains("E") //$NON-NLS-1$
-				// || ((String) value).matches("0*" + formatedNumber + "\\"  //$NON-NLS-1$  //$NON-NLS-2$
-				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {  //$NON-NLS-1$
+				// || ((String) value).matches("0*" + formatedNumber + "\\" //$NON-NLS-1$ //$NON-NLS-2$
+				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) { //$NON-NLS-1$
 				//
 				// }
 				// return revertToOldValue(value);
@@ -248,9 +248,11 @@ public class NumericalControl extends AbstractTextControl {
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
 				LocalizationServiceHelper.getString(getClass(),
-					DepricatedControlMessageKeys.NumericalControl_InvalidNumber), null,
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumber),
+				null,
 				LocalizationServiceHelper.getString(getClass(),
-					DepricatedControlMessageKeys.NumericalControl_InvalidNumberWillBeUnset), MessageDialog.ERROR,
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumberWillBeUnset),
+				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {

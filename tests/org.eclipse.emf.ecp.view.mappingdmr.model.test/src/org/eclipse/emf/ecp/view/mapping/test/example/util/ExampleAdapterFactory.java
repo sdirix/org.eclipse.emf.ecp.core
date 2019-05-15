@@ -89,53 +89,52 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected ExampleSwitch<Adapter> modelSwitch =
-		new ExampleSwitch<Adapter>() {
-			@Override
-			public Adapter caseRoot(Root object) {
-				return createRootAdapter();
-			}
+	protected ExampleSwitch<Adapter> modelSwitch = new ExampleSwitch<Adapter>() {
+		@Override
+		public Adapter caseRoot(Root object) {
+			return createRootAdapter();
+		}
 
-			@Override
-			public Adapter caseIntermediate(Intermediate object) {
-				return createIntermediateAdapter();
-			}
+		@Override
+		public Adapter caseIntermediate(Intermediate object) {
+			return createIntermediateAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(Container object) {
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(Container object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseAbstractChild(AbstractChild object) {
-				return createAbstractChildAdapter();
-			}
+		@Override
+		public Adapter caseAbstractChild(AbstractChild object) {
+			return createAbstractChildAdapter();
+		}
 
-			@Override
-			public Adapter caseChild(Child object) {
-				return createChildAdapter();
-			}
+		@Override
+		public Adapter caseChild(Child object) {
+			return createChildAdapter();
+		}
 
-			@Override
-			public Adapter caseIntermediateTarget(IntermediateTarget object) {
-				return createIntermediateTargetAdapter();
-			}
+		@Override
+		public Adapter caseIntermediateTarget(IntermediateTarget object) {
+			return createIntermediateTargetAdapter();
+		}
 
-			@Override
-			public Adapter caseTarget(Target object) {
-				return createTargetAdapter();
-			}
+		@Override
+		public Adapter caseTarget(Target object) {
+			return createTargetAdapter();
+		}
 
-			@Override
-			public Adapter caseEClassToAdditionMap(Map.Entry<EClass, AbstractChild> object) {
-				return createEClassToAdditionMapAdapter();
-			}
+		@Override
+		public Adapter caseEClassToAdditionMap(Map.Entry<EClass, AbstractChild> object) {
+			return createEClassToAdditionMapAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

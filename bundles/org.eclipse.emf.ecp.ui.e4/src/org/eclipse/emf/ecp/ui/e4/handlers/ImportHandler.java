@@ -47,8 +47,7 @@ public class ImportHandler {
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional ECPProject ecpProject) {
 		if (eObject != null) {
 			ECPImportHandlerHelper.importElement(shell, eObject);
-		}
-		else if (ecpProject != null) {
+		} else if (ecpProject != null) {
 			ECPImportHandlerHelper.importElement(shell, ecpProject);
 		}
 	}

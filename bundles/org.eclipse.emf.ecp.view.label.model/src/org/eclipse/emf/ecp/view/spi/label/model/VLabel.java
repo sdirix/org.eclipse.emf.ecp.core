@@ -25,7 +25,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.label.model.VLabel#getStyle <em>Style</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.label.model.VLabel#getDomainModelReference <em>Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.label.model.VLabel#getDomainModelReference <em>Domain Model
+ * Reference</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,8 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @model
  * @generated
  */
-public interface VLabel extends VContainedElement
-{
+public interface VLabel extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Style</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle}.

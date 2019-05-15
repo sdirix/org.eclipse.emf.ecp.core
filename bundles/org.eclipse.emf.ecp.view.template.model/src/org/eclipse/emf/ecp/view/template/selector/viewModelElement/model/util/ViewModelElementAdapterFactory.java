@@ -48,8 +48,7 @@ public class ViewModelElementAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public ViewModelElementAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VTViewModelElementPackage.eINSTANCE;
 		}
 	}
@@ -66,12 +65,10 @@ public class ViewModelElementAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -84,27 +81,22 @@ public class ViewModelElementAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected ViewModelElementSwitch<Adapter> modelSwitch =
-		new ViewModelElementSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseViewModelElementSelector(VTViewModelElementSelector object)
-			{
-				return createViewModelElementSelectorAdapter();
-			}
+	protected ViewModelElementSwitch<Adapter> modelSwitch = new ViewModelElementSwitch<Adapter>() {
+		@Override
+		public Adapter caseViewModelElementSelector(VTViewModelElementSelector object) {
+			return createViewModelElementSelectorAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleSelector(VTStyleSelector object)
-			{
-				return createStyleSelectorAdapter();
-			}
+		@Override
+		public Adapter caseStyleSelector(VTStyleSelector object) {
+			return createStyleSelectorAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

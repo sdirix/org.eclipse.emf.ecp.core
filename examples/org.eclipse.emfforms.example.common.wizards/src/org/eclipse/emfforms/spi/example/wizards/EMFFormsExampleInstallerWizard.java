@@ -260,7 +260,8 @@ public class EMFFormsExampleInstallerWizard extends ExampleInstallerWizard {
 	}
 
 	/**
-	 * In contrast to the {@link AbstractExampleInstallerWizard}, the EMFFormsExampleInstallerWizard only installs projects if
+	 * In contrast to the {@link AbstractExampleInstallerWizard}, the EMFFormsExampleInstallerWizard only installs
+	 * projects if
 	 * they do not already exist in the workspace.
 	 *
 	 * @param progressMonitor the progress monitor

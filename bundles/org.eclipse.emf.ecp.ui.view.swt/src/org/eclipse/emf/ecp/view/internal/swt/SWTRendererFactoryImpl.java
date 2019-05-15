@@ -105,7 +105,8 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 				.getConfigurationElements()) {
 				try {
 					final Class<AbstractSWTRenderer<VElement>> renderer = loadClass(configurationElement
-						.getContributor().getName(), configurationElement
+						.getContributor().getName(),
+						configurationElement
 							.getAttribute("renderer")); //$NON-NLS-1$
 
 					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
@@ -148,7 +149,8 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 				.getConfigurationElements()) {
 				try {
 					final Class<AbstractAdditionalSWTRenderer<VElement>> renderer = loadClass(configurationElement
-						.getContributor().getName(), configurationElement
+						.getContributor().getName(),
+						configurationElement
 							.getAttribute("renderer")); //$NON-NLS-1$
 					final ECPAdditionalRendererTester tester = (ECPAdditionalRendererTester) configurationElement
 						.createExecutableExtension("tester"); //$NON-NLS-1$

@@ -32,7 +32,8 @@ import org.eclipse.emf.ecp.view.mapping.test.example.ExamplePackage;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.mapping.test.example.impl.EClassToAdditionMapImpl#getTypedKey <em>Key</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.mapping.test.example.impl.EClassToAdditionMapImpl#getTypedValue <em>Value</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.mapping.test.example.impl.EClassToAdditionMapImpl#getTypedValue
+ * <em>Value</em>}</li>
  * </ul>
  * </p>
  *

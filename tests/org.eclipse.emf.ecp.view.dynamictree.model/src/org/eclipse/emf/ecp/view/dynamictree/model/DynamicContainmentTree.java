@@ -27,10 +27,12 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain
+ * Model</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference <em>Child Reference
  * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To Root</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To
+ * Root</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite
  * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems <em>Items</em>}</li>
@@ -41,8 +43,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @model
  * @generated
  */
-public interface DynamicContainmentTree extends VCategory
-{
+public interface DynamicContainmentTree extends VCategory {
 	/**
 	 * Returns the value of the '<em><b>Domain Model</b></em>' reference.
 	 * <!-- begin-user-doc -->

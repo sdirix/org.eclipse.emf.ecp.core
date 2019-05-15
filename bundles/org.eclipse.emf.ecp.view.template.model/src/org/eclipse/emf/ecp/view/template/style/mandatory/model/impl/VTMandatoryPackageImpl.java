@@ -29,8 +29,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
  *
  * @generated
  */
-public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryPackage
-{
+public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -53,8 +52,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 * @see #init()
 	 * @generated
 	 */
-	private VTMandatoryPackageImpl()
-	{
+	private VTMandatoryPackageImpl() {
 		super(eNS_URI, VTMandatoryFactory.eINSTANCE);
 	}
 
@@ -79,8 +77,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VTMandatoryPackage init()
-	{
+	public static VTMandatoryPackage init() {
 		if (isInited) {
 			return (VTMandatoryPackage) EPackage.Registry.INSTANCE.getEPackage(VTMandatoryPackage.eNS_URI);
 		}
@@ -88,7 +85,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 		// Obtain or create and register package
 		final VTMandatoryPackageImpl theMandatoryPackage = (VTMandatoryPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTMandatoryPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VTMandatoryPackageImpl());
+				.get(eNS_URI) : new VTMandatoryPackageImpl());
 
 		isInited = true;
 
@@ -116,8 +113,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 * @generated
 	 */
 	@Override
-	public EClass getMandatoryStyleProperty()
-	{
+	public EClass getMandatoryStyleProperty() {
 		return mandatoryStylePropertyEClass;
 	}
 
@@ -128,8 +124,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 * @generated
 	 */
 	@Override
-	public EAttribute getMandatoryStyleProperty_HighliteMandatoryFields()
-	{
+	public EAttribute getMandatoryStyleProperty_HighliteMandatoryFields() {
 		return (EAttribute) mandatoryStylePropertyEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -140,8 +135,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 * @generated
 	 */
 	@Override
-	public EAttribute getMandatoryStyleProperty_MandatoryMarker()
-	{
+	public EAttribute getMandatoryStyleProperty_MandatoryMarker() {
 		return (EAttribute) mandatoryStylePropertyEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -152,8 +146,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 * @generated
 	 */
 	@Override
-	public VTMandatoryFactory getMandatoryFactory()
-	{
+	public VTMandatoryFactory getMandatoryFactory() {
 		return (VTMandatoryFactory) getEFactoryInstance();
 	}
 
@@ -173,8 +166,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -202,8 +194,7 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -231,11 +222,13 @@ public class VTMandatoryPackageImpl extends EPackageImpl implements VTMandatoryP
 		initEAttribute(
 			getMandatoryStyleProperty_HighliteMandatoryFields(),
 			ecorePackage.getEBoolean(),
-			"highliteMandatoryFields", "true", 0, 1, VTMandatoryStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"highliteMandatoryFields", "true", 0, 1, VTMandatoryStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$ //$NON-NLS-2$
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getMandatoryStyleProperty_MandatoryMarker(),
 			ecorePackage.getEString(),
-			"mandatoryMarker", "*", 0, 1, VTMandatoryStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"mandatoryMarker", "*", 0, 1, VTMandatoryStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

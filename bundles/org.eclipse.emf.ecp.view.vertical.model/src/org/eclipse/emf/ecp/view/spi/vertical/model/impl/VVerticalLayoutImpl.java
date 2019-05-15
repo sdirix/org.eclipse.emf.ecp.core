@@ -29,16 +29,14 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  *
  * @generated
  */
-public class VVerticalLayoutImpl extends VContainedContainerImpl implements VVerticalLayout
-{
+public class VVerticalLayoutImpl extends VContainedContainerImpl implements VVerticalLayout {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected VVerticalLayoutImpl()
-	{
+	protected VVerticalLayoutImpl() {
 		super();
 	}
 
@@ -49,8 +47,7 @@ public class VVerticalLayoutImpl extends VContainedContainerImpl implements VVer
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VVerticalPackage.Literals.VERTICAL_LAYOUT;
 	}
 

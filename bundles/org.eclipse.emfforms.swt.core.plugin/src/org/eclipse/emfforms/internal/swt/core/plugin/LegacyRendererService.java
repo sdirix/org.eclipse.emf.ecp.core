@@ -92,7 +92,8 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 				.getConfigurationElements()) {
 				try {
 					final Class<AbstractSWTRenderer<VElement>> renderer = loadClass(configurationElement
-						.getContributor().getName(), configurationElement
+						.getContributor().getName(),
+						configurationElement
 							.getAttribute("renderer")); //$NON-NLS-1$
 
 					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();

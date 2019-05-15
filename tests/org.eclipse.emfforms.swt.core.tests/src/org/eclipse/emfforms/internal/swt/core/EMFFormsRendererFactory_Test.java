@@ -207,7 +207,8 @@ public class EMFFormsRendererFactory_Test {
 	public void testAddAdditionalRendererService() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		when(rendererService.isApplicable(vElement, viewModelContext)).thenReturn(true);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> mockedResults = new ArrayList<AbstractAdditionalSWTRenderer<VElement>>();
 		mockedResults
@@ -229,7 +230,8 @@ public class EMFFormsRendererFactory_Test {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testRemoveAdditionalRendererService() {
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		rendererFactory.addEMFFormsAdditionalRendererService(rendererService);
 		rendererFactory.removeEMFFormsAdditionalRendererService(rendererService);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = rendererFactory
@@ -248,7 +250,8 @@ public class EMFFormsRendererFactory_Test {
 	@Test
 	public void testGetAdditionalRendererInstanceNoFittingServices() {
 		final VElement vElement = mock(VElement.class);
-		final EMFFormsAdditionalRendererService<VElement> rendererService1 = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService1 = mock(
+			EMFFormsAdditionalRendererService.class);
 		when(rendererService1.isApplicable(Matchers.same(vElement), Matchers.any(ViewModelContext.class))).thenReturn(
 			false);
 		final AbstractAdditionalSWTRenderer<VElement> renderer1 = mock(AbstractAdditionalSWTRenderer.class);

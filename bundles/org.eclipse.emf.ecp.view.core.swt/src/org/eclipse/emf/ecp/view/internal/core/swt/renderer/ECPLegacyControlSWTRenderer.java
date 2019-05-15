@@ -68,7 +68,8 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 	 */
 	public ECPLegacyControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VTVIEW_TEMPLATEPROVIDER);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
+			VTVIEW_TEMPLATEPROVIDER);
 	}
 
 	private SWTControl control;

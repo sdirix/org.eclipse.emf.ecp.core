@@ -25,8 +25,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @generated
  * @since 1.2
  */
-public interface VGroupedGridFactory extends EFactory
-{
+public interface VGroupedGridFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

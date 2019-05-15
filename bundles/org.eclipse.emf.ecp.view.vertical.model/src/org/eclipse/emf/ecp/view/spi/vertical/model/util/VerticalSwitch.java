@@ -39,8 +39,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
  */
-public class VerticalSwitch<T> extends Switch<T>
-{
+public class VerticalSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -57,10 +56,8 @@ public class VerticalSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public VerticalSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public VerticalSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VVerticalPackage.eINSTANCE;
 		}
 	}
@@ -75,8 +72,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -90,10 +86,8 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VVerticalPackage.VERTICAL_LAYOUT: {
 			final VVerticalLayout verticalLayout = (VVerticalLayout) theEObject;
 			T result = caseVerticalLayout(verticalLayout);
@@ -131,8 +125,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVerticalLayout(VVerticalLayout object)
-	{
+	public T caseVerticalLayout(VVerticalLayout object) {
 		return null;
 	}
 
@@ -148,8 +141,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -165,8 +157,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -182,8 +173,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainer(VContainer object)
-	{
+	public T caseContainer(VContainer object) {
 		return null;
 	}
 
@@ -201,8 +191,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedContainer(VContainedContainer object)
-	{
+	public T caseContainedContainer(VContainedContainer object) {
 		return null;
 	}
 
@@ -219,8 +208,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

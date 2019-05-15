@@ -40,8 +40,7 @@ public class DomainIntermediateItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -49,8 +48,7 @@ public class DomainIntermediateItemProvider
 	 *
 	 * @generated
 	 */
-	public DomainIntermediateItemProvider(AdapterFactory adapterFactory)
-	{
+	public DomainIntermediateItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -62,8 +60,7 @@ public class DomainIntermediateItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -79,11 +76,9 @@ public class DomainIntermediateItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addTestElementContainerPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addTestElementContainerPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DomainIntermediate_testElementContainer_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_DomainIntermediate_testElementContainer_feature",
@@ -105,8 +100,7 @@ public class DomainIntermediateItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/DomainIntermediate"));
 	}
 
@@ -118,8 +112,7 @@ public class DomainIntermediateItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		return getString("_UI_DomainIntermediate_type");
 	}
 
@@ -132,8 +125,7 @@ public class DomainIntermediateItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -147,8 +139,7 @@ public class DomainIntermediateItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -160,8 +151,7 @@ public class DomainIntermediateItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

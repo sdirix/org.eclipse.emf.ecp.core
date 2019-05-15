@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * @model
  * @generated
  */
-public interface VTMandatoryStyleProperty extends VTStyleProperty
-{
+public interface VTMandatoryStyleProperty extends VTStyleProperty {
 	/**
 	 * Returns the value of the '<em><b>Highlite Mandatory Fields</b></em>' attribute.
 	 * The default value is <code>"true"</code>.

@@ -31,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
  *
  * @generated
  */
-public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory
-{
+public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -40,18 +39,14 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 *
 	 * @generated
 	 */
-	public static VHorizontalFactory init()
-	{
-		try
-		{
+	public static VHorizontalFactory init() {
+		try {
 			final VHorizontalFactory theHorizontalFactory = (VHorizontalFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VHorizontalPackage.eNS_URI);
-			if (theHorizontalFactory != null)
-			{
+			if (theHorizontalFactory != null) {
 				return theHorizontalFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VHorizontalFactoryImpl();
@@ -64,8 +59,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 *
 	 * @generated
 	 */
-	public VHorizontalFactoryImpl()
-	{
+	public VHorizontalFactoryImpl() {
 		super();
 	}
 
@@ -76,10 +70,8 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VHorizontalPackage.HORIZONTAL_LAYOUT:
 			return createHorizontalLayout();
 		default:
@@ -94,8 +86,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Override
-	public VHorizontalLayout createHorizontalLayout()
-	{
+	public VHorizontalLayout createHorizontalLayout() {
 		final VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
 		return horizontalLayout;
 	}
@@ -107,8 +98,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Override
-	public VHorizontalPackage getHorizontalPackage()
-	{
+	public VHorizontalPackage getHorizontalPackage() {
 		return (VHorizontalPackage) getEPackage();
 	}
 
@@ -120,8 +110,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Deprecated
-	public static VHorizontalPackage getPackage()
-	{
+	public static VHorizontalPackage getPackage() {
 		return VHorizontalPackage.eINSTANCE;
 	}
 

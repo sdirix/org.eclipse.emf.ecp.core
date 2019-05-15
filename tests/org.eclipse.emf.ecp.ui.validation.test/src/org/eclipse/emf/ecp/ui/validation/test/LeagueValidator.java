@@ -97,7 +97,8 @@ public class LeagueValidator extends ECPValidator {
 		return false;
 	}
 
-	private boolean validateAll(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	private boolean validateAll(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		final League league = (League) eObject;
 		final EList<Player> players = league.getPlayers();
 		final List<Diagnostic> childDiagnostics = new ArrayList<Diagnostic>();

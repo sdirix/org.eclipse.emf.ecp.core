@@ -33,7 +33,7 @@ public final class Assert<T> {
 	 * @param object the object that will be checked
 	 * @param <T> the type of the object the <code>Assert</code> class verifies.
 	 * @return a new instance of the <code>Assert</code> class.
-	 * */
+	 */
 	public static <T> Assert<T> create(T object) {
 		return new Assert<T>(object);
 	}

@@ -62,8 +62,8 @@ public class DynamicContainmentTreeSWTBot_PTest extends ECPCommonSWTBotTest {
 		// used for validation
 		final VControl childNameControl = VViewFactory.eINSTANCE.createControl();
 
-		final DynamicContainmentTreeDomainModelReference reference =
-			ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference();
+		final DynamicContainmentTreeDomainModelReference reference = ModelFactory.eINSTANCE
+			.createDynamicContainmentTreeDomainModelReference();
 		final VFeaturePathDomainModelReference rootRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 
 		rootRef.getDomainModelEReferencePath().addAll(tree.getPathToRoot());
@@ -72,8 +72,7 @@ public class DynamicContainmentTreeSWTBot_PTest extends ECPCommonSWTBotTest {
 		reference.setPathFromRoot(rootRef);
 		reference.setPathFromBase(createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Name()));
 
-		childNameControl.setDomainModelReference(reference
-			);
+		childNameControl.setDomainModelReference(reference);
 		tree.setChildComposite(childNameControl);
 
 		final VControl viewControl = VViewFactory.eINSTANCE.createControl();

@@ -44,8 +44,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class ModelItemProviderAdapterFactory extends ModelAdapterFactory implements ComposeableAdapterFactory,
-	IChangeNotifier, IDisposable
-{
+	IChangeNotifier, IDisposable {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -80,8 +79,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 *
 	 * @generated
 	 */
-	public ModelItemProviderAdapterFactory()
-	{
+	public ModelItemProviderAdapterFactory() {
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -107,8 +105,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDynamicContainmentTreeAdapter()
-	{
+	public Adapter createDynamicContainmentTreeAdapter() {
 		if (dynamicContainmentTreeItemProvider == null) {
 			dynamicContainmentTreeItemProvider = new DynamicContainmentTreeItemProvider(this);
 		}
@@ -134,8 +131,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDynamicContainmentItemAdapter()
-	{
+	public Adapter createDynamicContainmentItemAdapter() {
 		if (dynamicContainmentItemItemProvider == null) {
 			dynamicContainmentItemItemProvider = new DynamicContainmentItemItemProvider(this);
 		}
@@ -161,8 +157,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createTestElementAdapter()
-	{
+	public Adapter createTestElementAdapter() {
 		if (testElementItemProvider == null) {
 			testElementItemProvider = new TestElementItemProvider(this);
 		}
@@ -188,8 +183,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDomainRootAdapter()
-	{
+	public Adapter createDomainRootAdapter() {
 		if (domainRootItemProvider == null) {
 			domainRootItemProvider = new DomainRootItemProvider(this);
 		}
@@ -215,8 +209,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDomainIntermediateAdapter()
-	{
+	public Adapter createDomainIntermediateAdapter() {
 		if (domainIntermediateItemProvider == null) {
 			domainIntermediateItemProvider = new DomainIntermediateItemProvider(this);
 		}
@@ -242,8 +235,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createTestElementContainerAdapter()
-	{
+	public Adapter createTestElementContainerAdapter() {
 		if (testElementContainerItemProvider == null) {
 			testElementContainerItemProvider = new TestElementContainerItemProvider(this);
 		}
@@ -287,8 +279,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public ComposeableAdapterFactory getRootAdapterFactory()
-	{
+	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
@@ -300,8 +291,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
-	{
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -312,8 +302,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object type)
-	{
+	public boolean isFactoryForType(Object type) {
 		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
@@ -325,8 +314,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(Notifier notifier, Object type)
-	{
+	public Adapter adapt(Notifier notifier, Object type) {
 		return super.adapt(notifier, this);
 	}
 
@@ -337,8 +325,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Object adapt(Object object, Object type)
-	{
+	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
 			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
@@ -357,8 +344,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void addListener(INotifyChangedListener notifyChangedListener)
-	{
+	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
 
@@ -370,8 +356,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void removeListener(INotifyChangedListener notifyChangedListener)
-	{
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
 
@@ -383,8 +368,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void fireNotifyChanged(Notification notification)
-	{
+	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
 		if (parentAdapterFactory != null) {
@@ -400,8 +384,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public void dispose()
-	{
+	public void dispose() {
 		if (dynamicContainmentTreeItemProvider != null) {
 			dynamicContainmentTreeItemProvider.dispose();
 		}

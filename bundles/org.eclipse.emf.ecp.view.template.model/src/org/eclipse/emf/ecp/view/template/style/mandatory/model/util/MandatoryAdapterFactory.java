@@ -30,8 +30,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
  * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage
  * @generated
  */
-public class MandatoryAdapterFactory extends AdapterFactoryImpl
-{
+public class MandatoryAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -48,10 +47,8 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public MandatoryAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public MandatoryAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VTMandatoryPackage.eINSTANCE;
 		}
 	}
@@ -67,14 +64,11 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -87,27 +81,22 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected MandatorySwitch<Adapter> modelSwitch =
-		new MandatorySwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseMandatoryStyleProperty(VTMandatoryStyleProperty object)
-			{
-				return createMandatoryStylePropertyAdapter();
-			}
+	protected MandatorySwitch<Adapter> modelSwitch = new MandatorySwitch<Adapter>() {
+		@Override
+		public Adapter caseMandatoryStyleProperty(VTMandatoryStyleProperty object) {
+			return createMandatoryStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleProperty(VTStyleProperty object)
-			{
-				return createStylePropertyAdapter();
-			}
+		@Override
+		public Adapter caseStyleProperty(VTStyleProperty object) {
+			return createStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -119,8 +108,7 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -137,8 +125,7 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty
 	 * @generated
 	 */
-	public Adapter createMandatoryStylePropertyAdapter()
-	{
+	public Adapter createMandatoryStylePropertyAdapter() {
 		return null;
 	}
 
@@ -154,8 +141,7 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
 	 * @generated
 	 */
-	public Adapter createStylePropertyAdapter()
-	{
+	public Adapter createStylePropertyAdapter() {
 		return null;
 	}
 
@@ -168,8 +154,7 @@ public class MandatoryAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

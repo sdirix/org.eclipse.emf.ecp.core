@@ -100,7 +100,7 @@ public class TestTMDPackageImpl extends EPackageImpl implements TestTMDPackage {
 		// Obtain or create and register package
 		final TestTMDPackageImpl theTestTMDPackage = (TestTMDPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof TestTMDPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new TestTMDPackageImpl());
+				.get(eNS_URI) : new TestTMDPackageImpl());
 
 		isInited = true;
 
@@ -280,12 +280,14 @@ public class TestTMDPackageImpl extends EPackageImpl implements TestTMDPackage {
 		initEAttribute(
 			getRoot_Name(),
 			ecorePackage.getEString(),
-			"name", null, 1, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"name", null, 1, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getRoot_Children(),
 			getChildLevel1(),
 			null,
-			"children", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"children", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(
 			childLevel1EClass,
@@ -293,12 +295,14 @@ public class TestTMDPackageImpl extends EPackageImpl implements TestTMDPackage {
 		initEAttribute(
 			getChildLevel1_Name(),
 			ecorePackage.getEString(),
-			"name", null, 1, 1, ChildLevel1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"name", null, 1, 1, ChildLevel1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getChildLevel1_Children(),
 			getChildLevel2(),
 			null,
-			"children", null, 0, -1, ChildLevel1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"children", null, 0, -1, ChildLevel1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(
 			childLevel2EClass,
@@ -306,7 +310,8 @@ public class TestTMDPackageImpl extends EPackageImpl implements TestTMDPackage {
 		initEAttribute(
 			getChildLevel2_Name(),
 			ecorePackage.getEString(),
-			"name", null, 1, 1, ChildLevel2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"name", null, 1, 1, ChildLevel2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

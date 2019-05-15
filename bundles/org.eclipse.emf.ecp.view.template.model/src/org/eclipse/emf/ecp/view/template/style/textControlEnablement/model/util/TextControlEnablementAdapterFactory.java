@@ -81,23 +81,22 @@ public class TextControlEnablementAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected TextControlEnablementSwitch<Adapter> modelSwitch =
-		new TextControlEnablementSwitch<Adapter>() {
-			@Override
-			public Adapter caseTextControlEnablementStyleProperty(VTTextControlEnablementStyleProperty object) {
-				return createTextControlEnablementStylePropertyAdapter();
-			}
+	protected TextControlEnablementSwitch<Adapter> modelSwitch = new TextControlEnablementSwitch<Adapter>() {
+		@Override
+		public Adapter caseTextControlEnablementStyleProperty(VTTextControlEnablementStyleProperty object) {
+			return createTextControlEnablementStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleProperty(VTStyleProperty object) {
-				return createStylePropertyAdapter();
-			}
+		@Override
+		public Adapter caseStyleProperty(VTStyleProperty object) {
+			return createStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

@@ -115,7 +115,8 @@ public class TestValidator extends EObjectValidator {
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		switch (classifierID) {
 		case TestPackage.LIBRARY:
 			return validateLibrary((Library) value, diagnostics, context);

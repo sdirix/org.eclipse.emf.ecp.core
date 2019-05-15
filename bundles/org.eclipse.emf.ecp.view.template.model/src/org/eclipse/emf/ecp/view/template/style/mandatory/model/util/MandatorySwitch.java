@@ -34,8 +34,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
  * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage
  * @generated
  */
-public class MandatorySwitch<T> extends Switch<T>
-{
+public class MandatorySwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -52,10 +51,8 @@ public class MandatorySwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public MandatorySwitch()
-	{
-		if (modelPackage == null)
-		{
+	public MandatorySwitch() {
+		if (modelPackage == null) {
 			modelPackage = VTMandatoryPackage.eINSTANCE;
 		}
 	}
@@ -70,8 +67,7 @@ public class MandatorySwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -85,10 +81,8 @@ public class MandatorySwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY: {
 			final VTMandatoryStyleProperty mandatoryStyleProperty = (VTMandatoryStyleProperty) theEObject;
 			T result = caseMandatoryStyleProperty(mandatoryStyleProperty);
@@ -117,8 +111,7 @@ public class MandatorySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseMandatoryStyleProperty(VTMandatoryStyleProperty object)
-	{
+	public T caseMandatoryStyleProperty(VTMandatoryStyleProperty object) {
 		return null;
 	}
 
@@ -134,8 +127,7 @@ public class MandatorySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStyleProperty(VTStyleProperty object)
-	{
+	public T caseStyleProperty(VTStyleProperty object) {
 		return null;
 	}
 
@@ -152,8 +144,7 @@ public class MandatorySwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

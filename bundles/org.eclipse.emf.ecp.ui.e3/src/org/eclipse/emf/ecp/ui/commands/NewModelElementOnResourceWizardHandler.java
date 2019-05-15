@@ -31,14 +31,12 @@ import org.eclipse.ui.handlers.HandlerUtil;
  *
  * @author Eugen Neufeld
  */
-public class NewModelElementOnResourceWizardHandler extends AbstractHandler
-{
+public class NewModelElementOnResourceWizardHandler extends AbstractHandler {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object execute(final ExecutionEvent event) throws ExecutionException
-	{
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		final IStructuredSelection ssel = (IStructuredSelection) selection;
 		if (ssel.getFirstElement() instanceof Resource) {

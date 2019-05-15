@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage
  * @generated
  */
-public class StackAdapterFactory extends AdapterFactoryImpl
-{
+public class StackAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -51,10 +50,8 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public StackAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public StackAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VStackPackage.eINSTANCE;
 		}
 	}
@@ -70,14 +67,11 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -90,45 +84,37 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected StackSwitch<Adapter> modelSwitch =
-		new StackSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseStackLayout(VStackLayout object)
-			{
-				return createStackLayoutAdapter();
-			}
+	protected StackSwitch<Adapter> modelSwitch = new StackSwitch<Adapter>() {
+		@Override
+		public Adapter caseStackLayout(VStackLayout object) {
+			return createStackLayoutAdapter();
+		}
 
-			@Override
-			public Adapter caseStackItem(VStackItem object)
-			{
-				return createStackItemAdapter();
-			}
+		@Override
+		public Adapter caseStackItem(VStackItem object) {
+			return createStackItemAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(VContainer object)
-			{
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(VContainer object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -140,8 +126,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -157,8 +142,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout
 	 * @generated
 	 */
-	public Adapter createStackLayoutAdapter()
-	{
+	public Adapter createStackLayoutAdapter() {
 		return null;
 	}
 
@@ -174,8 +158,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackItem
 	 * @generated
 	 */
-	public Adapter createStackItemAdapter()
-	{
+	public Adapter createStackItemAdapter() {
 		return null;
 	}
 
@@ -191,8 +174,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -208,8 +190,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -225,8 +206,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
 		return null;
 	}
 
@@ -239,8 +219,7 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

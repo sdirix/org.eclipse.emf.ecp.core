@@ -84,7 +84,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 		// Obtain or create and register package
 		final VDiffmergePackageImpl theDiffmergePackage = (VDiffmergePackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VDiffmergePackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VDiffmergePackageImpl());
+				.get(eNS_URI) : new VDiffmergePackageImpl());
 
 		isInited = true;
 
@@ -122,8 +122,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	@Override
-	public EAttribute getDiffAttachment_TotalNumberOfDiffs()
-	{
+	public EAttribute getDiffAttachment_TotalNumberOfDiffs() {
 		return (EAttribute) diffAttachmentEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -134,8 +133,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	@Override
-	public EAttribute getDiffAttachment_MergedDiffs()
-	{
+	public EAttribute getDiffAttachment_MergedDiffs() {
 		return (EAttribute) diffAttachmentEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -217,11 +215,13 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 		initEAttribute(
 			getDiffAttachment_TotalNumberOfDiffs(),
 			ecorePackage.getEInt(),
-			"totalNumberOfDiffs", "0", 1, 1, VDiffAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"totalNumberOfDiffs", "0", 1, 1, VDiffAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getDiffAttachment_MergedDiffs(),
 			ecorePackage.getEInt(),
-			"mergedDiffs", "0", 0, 1, VDiffAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"mergedDiffs", "0", 0, 1, VDiffAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -126,8 +126,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 					// EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
 					// .toInternalAPI())));
 					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
-						.getProvider(EMFStoreProvider.NAME))).getRepository(usersession.getServer()
-						)));
+						.getProvider(EMFStoreProvider.NAME))).getRepository(usersession.getServer())));
 			}
 		});
 	}

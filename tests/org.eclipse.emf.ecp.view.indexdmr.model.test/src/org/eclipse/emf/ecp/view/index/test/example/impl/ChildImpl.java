@@ -87,7 +87,8 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget, NotificationChain msgs) {
+	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget,
+		NotificationChain msgs) {
 		final IntermediateTarget oldIntermediateTarget = intermediateTarget;
 		intermediateTarget = newIntermediateTarget;
 		if (eNotificationRequired()) {
@@ -124,8 +125,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__INTERMEDIATE_TARGET,
 				newIntermediateTarget, newIntermediateTarget));
 		}

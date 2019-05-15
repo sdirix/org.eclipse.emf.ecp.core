@@ -47,7 +47,8 @@ public interface Container extends EObject {
 	 * @return the value of the '<em>Children</em>' map.
 	 * @see org.eclipse.emf.ecp.view.mapping.test.example.ExamplePackage#getContainer_Children()
 	 * @model mapType=
-	 *        "org.eclipse.emf.ecp.view.mapping.test.example.EClassToAdditionMap<org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecp.view.mapping.test.example.AbstractChild>"
+	 *        "org.eclipse.emf.ecp.view.mapping.test.example.EClassToAdditionMap<org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emf.ecp.view.mapping.test.example.AbstractChild>"
 	 * @generated
 	 */
 	EMap<EClass, AbstractChild> getChildren();

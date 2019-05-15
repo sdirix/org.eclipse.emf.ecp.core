@@ -127,8 +127,7 @@ public final class ECPImportHandlerHelper {
 							editingDomain.getCommandStack().execute(
 								new AddCommand(editingDomain, (EObject) parentObject, ref, EcoreUtil
 									.copy(eObjectImport)));
-						}
-						else {
+						} else {
 							editingDomain.getCommandStack().execute(
 								new SetCommand(editingDomain, (EObject) parentObject, ref, EcoreUtil
 									.copy(eObjectImport)));
@@ -137,8 +136,7 @@ public final class ECPImportHandlerHelper {
 						break;
 					}
 				}
-			}
-			else if (parentObject instanceof ECPProject) {
+			} else if (parentObject instanceof ECPProject) {
 				final EditingDomain editingDomain = ((ECPProject) parentObject).getEditingDomain();
 				editingDomain.getCommandStack().execute(new ChangeCommand(eObjectImport) {
 

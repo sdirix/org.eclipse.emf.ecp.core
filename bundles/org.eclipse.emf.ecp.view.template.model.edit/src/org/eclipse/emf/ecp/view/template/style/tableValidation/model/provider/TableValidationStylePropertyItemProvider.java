@@ -88,13 +88,12 @@ public class TableValidationStylePropertyItemProvider
 	 */
 	protected void addColumnWidthPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TableValidationStyleProperty_columnWidth_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TableValidationStyleProperty_columnWidth_feature", "_UI_TableValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_TableValidationStyleProperty_columnWidth_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TableValidationStyleProperty_type"), //$NON-NLS-1$
 				VTTableValidationPackage.Literals.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH,
 				true,
 				false,
@@ -113,13 +112,12 @@ public class TableValidationStylePropertyItemProvider
 	 */
 	protected void addColumnNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TableValidationStyleProperty_columnName_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TableValidationStyleProperty_columnName_feature", "_UI_TableValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_TableValidationStyleProperty_columnName_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TableValidationStyleProperty_type"), //$NON-NLS-1$
 				VTTableValidationPackage.Literals.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME,
 				true,
 				false,
@@ -138,13 +136,12 @@ public class TableValidationStylePropertyItemProvider
 	 */
 	protected void addImagePathPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TableValidationStyleProperty_imagePath_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TableValidationStyleProperty_imagePath_feature", "_UI_TableValidationStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_TableValidationStyleProperty_imagePath_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TableValidationStyleProperty_type"), //$NON-NLS-1$
 				VTTableValidationPackage.Literals.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH,
 				true,
 				false,
@@ -176,8 +173,7 @@ public class TableValidationStylePropertyItemProvider
 	@Override
 	public String getText(Object object) {
 		final String label = ((VTTableValidationStyleProperty) object).getColumnName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_TableValidationStyleProperty_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_TableValidationStyleProperty_type") : //$NON-NLS-1$
 			getString("_UI_TableValidationStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

@@ -81,23 +81,22 @@ public class FontPropertiesAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected FontPropertiesSwitch<Adapter> modelSwitch =
-		new FontPropertiesSwitch<Adapter>() {
-			@Override
-			public Adapter caseFontPropertiesStyleProperty(VTFontPropertiesStyleProperty object) {
-				return createFontPropertiesStylePropertyAdapter();
-			}
+	protected FontPropertiesSwitch<Adapter> modelSwitch = new FontPropertiesSwitch<Adapter>() {
+		@Override
+		public Adapter caseFontPropertiesStyleProperty(VTFontPropertiesStyleProperty object) {
+			return createFontPropertiesStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleProperty(VTStyleProperty object) {
-				return createStylePropertyAdapter();
-			}
+		@Override
+		public Adapter caseStyleProperty(VTStyleProperty object) {
+			return createStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

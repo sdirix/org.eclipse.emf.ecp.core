@@ -125,7 +125,8 @@ public class SaveLoad_PTest {
 		assertTrue(context2.isControlMerged(vControlHeight));
 	}
 
-	private Player createPlayer(String name, Gender gender, double height, boolean professional, int numberOfVictories) {
+	private Player createPlayer(String name, Gender gender, double height, boolean professional,
+		int numberOfVictories) {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 		player.setName(name);
 		player.setGender(gender);

@@ -241,8 +241,7 @@ public class BookImpl extends EObjectImpl implements Book {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS, newWriters, newWriters));
 		}
 	}

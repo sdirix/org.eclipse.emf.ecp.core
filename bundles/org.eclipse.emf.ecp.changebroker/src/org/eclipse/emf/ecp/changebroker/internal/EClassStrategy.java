@@ -34,6 +34,7 @@ public class EClassStrategy implements Strategy {
 
 	/**
 	 * Registers an observer.
+	 * 
 	 * @param observer the observer
 	 * @param eClass the eclass
 	 */

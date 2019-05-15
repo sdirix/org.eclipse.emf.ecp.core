@@ -34,7 +34,7 @@ public class CreateBranchHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event))
-			.getFirstElement();
+				.getFirstElement();
 		CreateBranchHelper.createBranch(project, HandlerUtil.getActiveShell(event));
 		return null;
 	}

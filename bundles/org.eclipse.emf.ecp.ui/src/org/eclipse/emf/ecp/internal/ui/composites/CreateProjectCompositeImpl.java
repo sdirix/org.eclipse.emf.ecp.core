@@ -124,7 +124,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 		provider = providers.get(0);
 		final Label labelName = new Label(composite, SWT.NONE);
 		labelName.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		labelName.setText(Messages.UICreateProject_ProjectName + ":"); //$//$NON-NLS-1$
+		labelName.setText(Messages.UICreateProject_ProjectName + ":"); // $//$NON-NLS-1$
 
 		final Text textProjectName = new Text(composite, SWT.BORDER | SWT.SINGLE);
 		textProjectName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));

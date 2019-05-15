@@ -107,8 +107,8 @@ public class PackageDependencyIterator implements Iterator<Set<String>> {
 		final Set<Set<PackageTreeNode>> allCircles = new LinkedHashSet<Set<PackageTreeNode>>();
 		for (final PackageTreeNode nodeToAllocate : unvisitedNodes) {
 			// get existing circle set from map or create new set
-			final Set<PackageTreeNode> circle = nodeToCircleMap.containsKey(nodeToAllocate) ?
-				nodeToCircleMap.get(nodeToAllocate)
+			final Set<PackageTreeNode> circle = nodeToCircleMap.containsKey(nodeToAllocate)
+				? nodeToCircleMap.get(nodeToAllocate)
 				: new LinkedHashSet<PackageTreeNode>();
 
 			// if new set, fill map

@@ -242,6 +242,7 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 
 	/**
 	 * Sets the copy text marker for the given {@code cell} and {@code value}.
+	 * 
 	 * @param cell the {@link ViewerCell}.
 	 * @param value the {@link Object} value.
 	 */

@@ -136,8 +136,9 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 */
 	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
-		return parentAdapterFactory == null ? this : parentAdapterFactory
-			.getRootAdapterFactory();
+		return parentAdapterFactory == null ? this
+			: parentAdapterFactory
+				.getRootAdapterFactory();
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class DICustomControlSWT extends ECPAbstractCustomControlSWT {
 	 * @param pojo the pojo custom control
 	 * @param eclipseContext the eclipse context
 	 */
-	/* package */DICustomControlSWT(Object pojo, IEclipseContext eclipseContext) {
+	/* package */ DICustomControlSWT(Object pojo, IEclipseContext eclipseContext) {
 		super();
 		this.pojo = pojo;
 		this.eclipseContext = eclipseContext;

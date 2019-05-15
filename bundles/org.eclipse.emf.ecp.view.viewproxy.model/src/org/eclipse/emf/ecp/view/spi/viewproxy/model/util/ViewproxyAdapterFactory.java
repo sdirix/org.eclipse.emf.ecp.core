@@ -31,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage;
  * @see org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage
  * @generated
  */
-public class ViewproxyAdapterFactory extends AdapterFactoryImpl
-{
+public class ViewproxyAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -49,10 +48,8 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public ViewproxyAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public ViewproxyAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VViewproxyPackage.eINSTANCE;
 		}
 	}
@@ -68,14 +65,11 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -88,33 +82,27 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected ViewproxySwitch<Adapter> modelSwitch =
-		new ViewproxySwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseViewProxy(VViewProxy object)
-			{
-				return createViewProxyAdapter();
-			}
+	protected ViewproxySwitch<Adapter> modelSwitch = new ViewproxySwitch<Adapter>() {
+		@Override
+		public Adapter caseViewProxy(VViewProxy object) {
+			return createViewProxyAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -126,8 +114,7 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -143,8 +130,7 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewProxy
 	 * @generated
 	 */
-	public Adapter createViewProxyAdapter()
-	{
+	public Adapter createViewProxyAdapter() {
 		return null;
 	}
 
@@ -160,8 +146,7 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -177,8 +162,7 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -191,8 +175,7 @@ public class ViewproxyAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

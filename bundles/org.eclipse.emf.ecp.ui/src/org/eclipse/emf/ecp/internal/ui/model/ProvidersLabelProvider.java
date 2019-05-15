@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Display;
  * @author Eike Stepper
  */
 public class ProvidersLabelProvider extends ECPLabelProvider implements IColorProvider,
-ResolveListener<InternalProvider> {
+	ResolveListener<InternalProvider> {
 	private static final Image PROVIDER = Activator.getImage("icons/provider.gif"); //$NON-NLS-1$
 
 	private static final Image PROVIDER_DISABLED = Activator.getImage("icons/provider_disabled.gif"); //$NON-NLS-1$

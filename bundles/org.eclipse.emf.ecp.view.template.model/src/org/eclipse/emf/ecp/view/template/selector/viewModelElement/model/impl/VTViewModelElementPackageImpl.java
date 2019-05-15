@@ -88,7 +88,7 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 		// Obtain or create and register package
 		final VTViewModelElementPackageImpl theViewModelElementPackage = (VTViewModelElementPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTViewModelElementPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTViewModelElementPackageImpl());
+				: new VTViewModelElementPackageImpl());
 
 		isInited = true;
 
@@ -139,8 +139,7 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 	 * @generated
 	 */
 	@Override
-	public EReference getViewModelElementSelector_Attribute()
-	{
+	public EReference getViewModelElementSelector_Attribute() {
 		return (EReference) viewModelElementSelectorEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -151,8 +150,7 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 	 * @generated
 	 */
 	@Override
-	public EAttribute getViewModelElementSelector_AttributeValue()
-	{
+	public EAttribute getViewModelElementSelector_AttributeValue() {
 		return (EAttribute) viewModelElementSelectorEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -254,21 +252,25 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 		initEAttribute(
 			getViewModelElementSelector_SelectSubclasses(),
 			ecorePackage.getEBoolean(),
-			"selectSubclasses", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"selectSubclasses", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getViewModelElementSelector_ClassType(),
 			theEcorePackage.getEClass(),
 			null,
-			"classType", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"classType", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getViewModelElementSelector_Attribute(),
 			theEcorePackage.getEAttribute(),
 			null,
-			"attribute", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"attribute", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getViewModelElementSelector_AttributeValue(),
 			ecorePackage.getEJavaObject(),
-			"attributeValue", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"attributeValue", null, 0, 1, VTViewModelElementSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

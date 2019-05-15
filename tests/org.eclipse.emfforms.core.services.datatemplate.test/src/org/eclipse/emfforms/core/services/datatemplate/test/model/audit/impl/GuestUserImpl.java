@@ -28,6 +28,7 @@ public class GuestUserImpl extends UserImpl implements GuestUser {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected GuestUserImpl() {
@@ -37,6 +38,7 @@ public class GuestUserImpl extends UserImpl implements GuestUser {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

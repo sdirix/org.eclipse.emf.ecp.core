@@ -48,8 +48,7 @@ public final class TreeMasterDetailEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public TreeMasterDetailEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});

@@ -38,8 +38,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface TaskPackage extends EPackage
-{
+public interface TaskPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -761,8 +760,7 @@ public interface TaskPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.makeithappen.model.task.impl.TaskImpl
 		 * <em>Task</em>}' class.

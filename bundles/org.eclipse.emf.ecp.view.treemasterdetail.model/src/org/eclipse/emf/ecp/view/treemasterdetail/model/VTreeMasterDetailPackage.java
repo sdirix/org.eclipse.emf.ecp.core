@@ -34,8 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VTreeMasterDetailPackage extends EPackage
-{
+public interface VTreeMasterDetailPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -213,8 +212,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '
 		 * {@link org.eclipse.emf.ecp.view.treemasterdetail.model.impl.VTreeMasterDetailImpl

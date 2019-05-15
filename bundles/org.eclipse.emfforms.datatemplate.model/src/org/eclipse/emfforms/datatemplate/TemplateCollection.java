@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emfforms.datatemplate.TemplateCollection#getTemplates <em>Templates</em>}</li>
+ * <li>{@link org.eclipse.emfforms.datatemplate.TemplateCollection#getTemplates <em>Templates</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.datatemplate.DataTemplatePackage#getTemplateCollection()
@@ -42,6 +42,7 @@ public interface TemplateCollection extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Templates</em>' containment reference list.
 	 * @see org.eclipse.emfforms.datatemplate.DataTemplatePackage#getTemplateCollection_Templates()
 	 * @model containment="true"

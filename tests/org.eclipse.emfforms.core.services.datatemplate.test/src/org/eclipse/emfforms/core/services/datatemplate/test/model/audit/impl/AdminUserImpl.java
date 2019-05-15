@@ -28,6 +28,7 @@ public class AdminUserImpl extends RegisteredUserImpl implements AdminUser {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected AdminUserImpl() {
@@ -37,6 +38,7 @@ public class AdminUserImpl extends RegisteredUserImpl implements AdminUser {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

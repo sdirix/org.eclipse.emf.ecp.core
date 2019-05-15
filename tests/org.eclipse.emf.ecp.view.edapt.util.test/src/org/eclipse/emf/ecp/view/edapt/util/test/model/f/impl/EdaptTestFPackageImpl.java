@@ -112,31 +112,40 @@ public class EdaptTestFPackageImpl extends EPackageImpl implements EdaptTestFPac
 		// Obtain or create and register interdependencies
 		final EdaptTestAPackageImpl theAPackage = (EdaptTestAPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestAPackage.eNS_URI) instanceof EdaptTestAPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestAPackage.eNS_URI) : EdaptTestAPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestAPackage.eNS_URI)
+				: EdaptTestAPackage.eINSTANCE);
 		final EdaptTestBPackageImpl theBPackage = (EdaptTestBPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestBPackage.eNS_URI) instanceof EdaptTestBPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestBPackage.eNS_URI) : EdaptTestBPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestBPackage.eNS_URI)
+				: EdaptTestBPackage.eINSTANCE);
 		final EdaptTestCPackageImpl theCPackage = (EdaptTestCPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestCPackage.eNS_URI) instanceof EdaptTestCPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestCPackage.eNS_URI) : EdaptTestCPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestCPackage.eNS_URI)
+				: EdaptTestCPackage.eINSTANCE);
 		final EdaptTestDPackageImpl theDPackage = (EdaptTestDPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestDPackage.eNS_URI) instanceof EdaptTestDPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestDPackage.eNS_URI) : EdaptTestDPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestDPackage.eNS_URI)
+				: EdaptTestDPackage.eINSTANCE);
 		final EdaptTestEPackageImpl theEPackage = (EdaptTestEPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestEPackage.eNS_URI) instanceof EdaptTestEPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestEPackage.eNS_URI) : EdaptTestEPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestEPackage.eNS_URI)
+				: EdaptTestEPackage.eINSTANCE);
 		final EdaptTestWPackageImpl theWPackage = (EdaptTestWPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestWPackage.eNS_URI) instanceof EdaptTestWPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestWPackage.eNS_URI) : EdaptTestWPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestWPackage.eNS_URI)
+				: EdaptTestWPackage.eINSTANCE);
 		final EdaptTestXPackageImpl theXPackage = (EdaptTestXPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestXPackage.eNS_URI) instanceof EdaptTestXPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestXPackage.eNS_URI) : EdaptTestXPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestXPackage.eNS_URI)
+				: EdaptTestXPackage.eINSTANCE);
 		final EdaptTestYPackageImpl theYPackage = (EdaptTestYPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestYPackage.eNS_URI) instanceof EdaptTestYPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestYPackage.eNS_URI) : EdaptTestYPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestYPackage.eNS_URI)
+				: EdaptTestYPackage.eINSTANCE);
 		final EdaptTestZPackageImpl theZPackage = (EdaptTestZPackageImpl) (EPackage.Registry.INSTANCE
 			.getEPackage(EdaptTestZPackage.eNS_URI) instanceof EdaptTestZPackageImpl
-				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestZPackage.eNS_URI) : EdaptTestZPackage.eINSTANCE);
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestZPackage.eNS_URI)
+				: EdaptTestZPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theFPackage.createPackageContents();

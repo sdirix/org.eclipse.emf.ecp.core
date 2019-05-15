@@ -86,8 +86,7 @@ public class ReferencePattern extends AbstractConnectionPattern {
 						if (list.contains(target)) {
 							continue;
 						}
-					}
-					else if (source.eGet(eReference).equals(target)) {
+					} else if (source.eGet(eReference).equals(target)) {
 						continue;
 					}
 				}
@@ -156,8 +155,7 @@ public class ReferencePattern extends AbstractConnectionPattern {
 					if (objects.contains(eObject)) {
 						continue;
 					}
-				}
-				else {
+				} else {
 					final Object object = source.eGet(eReference);
 					if (eObject.equals(object)) {
 						continue;

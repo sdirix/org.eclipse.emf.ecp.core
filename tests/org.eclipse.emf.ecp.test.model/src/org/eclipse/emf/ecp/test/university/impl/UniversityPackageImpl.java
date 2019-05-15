@@ -483,7 +483,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 			source,
 			new String[] {
 				"constraints", "UniqueItemById NameNotEmpty" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+			});
 	}
 
 	/**
@@ -499,17 +499,17 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 			source,
 			new String[] {
 				"group", "#staff" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+			});
 		addAnnotation(getStaff_Assistants(),
 			source,
 			new String[] {
 				"group", "#staff" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+			});
 		addAnnotation(getStaff_Staff(),
 			source,
 			new String[] {
 				"kind", "group" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+			});
 	}
 
 } // UniversityPackageImpl

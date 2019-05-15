@@ -45,8 +45,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  *
  * @generated
  */
-public class VStackLayoutImpl extends VContainedElementImpl implements VStackLayout
-{
+public class VStackLayoutImpl extends VContainedElementImpl implements VStackLayout {
 	/**
 	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
 	 * reference.
@@ -87,8 +86,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 *
 	 * @generated
 	 */
-	protected VStackLayoutImpl()
-	{
+	protected VStackLayoutImpl() {
 		super();
 	}
 
@@ -99,8 +97,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VStackPackage.Literals.STACK_LAYOUT;
 	}
 
@@ -111,8 +108,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getDomainModelReference()
-	{
+	public VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
 	}
 
@@ -123,12 +119,10 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
-		NotificationChain msgs)
-	{
+		NotificationChain msgs) {
 		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
 			if (msgs == null) {
@@ -147,10 +141,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
-	{
-		if (newDomainModelReference != domainModelReference)
-		{
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
+		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -164,8 +156,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
 		}
@@ -178,10 +169,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public EList<VStackItem> getStackItems()
-	{
-		if (stackItems == null)
-		{
+	public EList<VStackItem> getStackItems() {
+		if (stackItems == null) {
 			stackItems = new EObjectContainmentEList<VStackItem>(VStackItem.class, this,
 				VStackPackage.STACK_LAYOUT__STACK_ITEMS);
 		}
@@ -195,14 +184,11 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public VStackItem getTopElement()
-	{
-		if (topElement != null && topElement.eIsProxy())
-		{
+	public VStackItem getTopElement() {
+		if (topElement != null && topElement.eIsProxy()) {
 			final InternalEObject oldTopElement = (InternalEObject) topElement;
 			topElement = (VStackItem) eResolveProxy(oldTopElement);
-			if (topElement != oldTopElement)
-			{
+			if (topElement != oldTopElement) {
 				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VStackPackage.STACK_LAYOUT__TOP_ELEMENT,
 						oldTopElement, topElement));
@@ -218,8 +204,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 *
 	 * @generated
 	 */
-	public VStackItem basicGetTopElement()
-	{
+	public VStackItem basicGetTopElement() {
 		return topElement;
 	}
 
@@ -230,8 +215,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public void setTopElement(VStackItem newTopElement)
-	{
+	public void setTopElement(VStackItem newTopElement) {
 		final VStackItem oldTopElement = topElement;
 		topElement = newTopElement;
 		if (eNotificationRequired()) {
@@ -247,10 +231,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE:
 			return basicSetDomainModelReference(null, msgs);
 		case VStackPackage.STACK_LAYOUT__STACK_ITEMS:
@@ -266,10 +248,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE:
 			return getDomainModelReference();
 		case VStackPackage.STACK_LAYOUT__STACK_ITEMS:
@@ -291,10 +271,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) newValue);
 			return;
@@ -316,10 +294,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) null);
 			return;
@@ -340,10 +316,8 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE:
 			return domainModelReference != null;
 		case VStackPackage.STACK_LAYOUT__STACK_ITEMS:

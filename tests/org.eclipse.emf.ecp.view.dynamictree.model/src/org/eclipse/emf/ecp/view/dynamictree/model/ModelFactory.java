@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage
  * @generated
  */
-public interface ModelFactory extends EFactory
-{
+public interface ModelFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

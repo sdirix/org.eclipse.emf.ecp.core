@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage
  * @generated
  */
@@ -38,6 +39,7 @@ public class TestSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected static TestPackage modelPackage;
@@ -46,6 +48,7 @@ public class TestSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public TestSwitch() {
@@ -58,6 +61,7 @@ public class TestSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -68,22 +72,26 @@ public class TestSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
+	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case TestPackage.SIMPLE_TEST_OBJECT: {
-				SimpleTestObject simpleTestObject = (SimpleTestObject)theEObject;
-				T result = caseSimpleTestObject(simpleTestObject);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			default: return defaultCase(theEObject);
+		case TestPackage.SIMPLE_TEST_OBJECT: {
+			SimpleTestObject simpleTestObject = (SimpleTestObject) theEObject;
+			T result = caseSimpleTestObject(simpleTestObject);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		default:
+			return defaultCase(theEObject);
 		}
 	}
 
@@ -93,6 +101,7 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Simple Test Object</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -108,6 +117,7 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
@@ -118,4 +128,4 @@ public class TestSwitch<T> extends Switch<T> {
 		return null;
 	}
 
-} //TestSwitch
+} // TestSwitch

@@ -41,19 +41,16 @@ public class CustomReflectiveItemProvider extends ReflectiveItemProvider
 	}
 
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		super.getPropertyDescriptors(object);
 
 		for (final EStructuralFeature eFeature : ((EObject) object).eClass().getEAllStructuralFeatures()) {
 			if (eFeature instanceof EReference && ((EReference) eFeature).isContainment()) {
-				itemPropertyDescriptors.add
-					(new ItemPropertyDescriptor
-					(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				itemPropertyDescriptors.add(
+					new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 						getFeatureText(eFeature),
-						getResourceLocator().getString
-							("_UI_Property_description", //$NON-NLS-1$
-								new Object[] { getFeatureText(eFeature), eFeature.getEType().getName() }),
+						getResourceLocator().getString("_UI_Property_description", //$NON-NLS-1$
+							new Object[] { getFeatureText(eFeature), eFeature.getEType().getName() }),
 						eFeature,
 						eFeature.isChangeable(),
 						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));

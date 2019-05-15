@@ -48,8 +48,7 @@ public class DiffmergeSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public DiffmergeSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VDiffmergePackage.eINSTANCE;
 		}
 	}
@@ -78,8 +77,7 @@ public class DiffmergeSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case VDiffmergePackage.DIFF_ATTACHMENT: {
 			final VDiffAttachment diffAttachment = (VDiffAttachment) theEObject;
 			T result = caseDiffAttachment(diffAttachment);

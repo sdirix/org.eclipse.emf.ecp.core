@@ -34,8 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VViewproxyPackage extends EPackage
-{
+public interface VViewproxyPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -212,8 +211,7 @@ public interface VViewproxyPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.viewproxy.model.impl.VViewProxyImpl
 		 * <em>View Proxy</em>}' class.

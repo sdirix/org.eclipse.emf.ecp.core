@@ -72,7 +72,8 @@ public abstract class ECPValidator implements EValidator {
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
 	@Override
-	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		return true;
 	}
 

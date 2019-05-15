@@ -40,7 +40,7 @@ public class BeanValidationProvider_Test {
 		assertEquals(1, validate.size());
 		assertEquals(driverEMF, validate.get(0).getData().get(0));
 		assertEquals(CarPackage.eINSTANCE.getDriver_Age(), validate.get(0)
-				.getData().get(1));
+			.getData().get(1));
 	}
 
 	@Test
@@ -74,6 +74,6 @@ public class BeanValidationProvider_Test {
 		assertEquals(1, validate.size());
 		assertEquals(driverEMF, validate.get(0).getData().get(0));
 		assertEquals(CarPackage.eINSTANCE.getDriver_Age(), validate.get(0)
-				.getData().get(1));
+			.getData().get(1));
 	}
 }

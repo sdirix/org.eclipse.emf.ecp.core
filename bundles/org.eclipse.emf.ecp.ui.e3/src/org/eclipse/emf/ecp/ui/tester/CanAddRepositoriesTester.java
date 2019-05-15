@@ -35,10 +35,8 @@ public class CanAddRepositoriesTester extends PropertyTester {
 	 */
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		for (final ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders())
-		{
-			if (provider.hasCreateRepositorySupport())
-			{
+		for (final ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
+			if (provider.hasCreateRepositorySupport()) {
 				return expectedValue.equals(true);
 			}
 		}

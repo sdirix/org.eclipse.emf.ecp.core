@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage
  * @generated
  */
-public interface VStackFactory extends EFactory
-{
+public interface VStackFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

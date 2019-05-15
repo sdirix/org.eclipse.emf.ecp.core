@@ -40,7 +40,7 @@ public class ModelClassFilter extends ECPViewerFilter {
 		if (element instanceof EClass) {
 			return ((EClass) element).getName().toLowerCase().contains(getSearchTerm().toLowerCase())
 				|| EPackage.class.isInstance(parentElement)
-				&& ((EPackage) parentElement).getName().toLowerCase().contains(getSearchTerm().toLowerCase());
+					&& ((EPackage) parentElement).getName().toLowerCase().contains(getSearchTerm().toLowerCase());
 		} else if (element instanceof EPackage) {
 			final EPackage ePackage = (EPackage) element;
 			final Object[] children = ((ITreeContentProvider) ((TreeViewer) viewer).getContentProvider())

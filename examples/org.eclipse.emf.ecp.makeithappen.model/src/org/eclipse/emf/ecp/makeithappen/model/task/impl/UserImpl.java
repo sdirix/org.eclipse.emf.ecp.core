@@ -57,8 +57,7 @@ import org.eclipse.emf.ecp.makeithappen.model.task.User;
  *
  * @generated
  */
-public class UserImpl extends MinimalEObjectImpl.Container implements User
-{
+public class UserImpl extends MinimalEObjectImpl.Container implements User {
 	/**
 	 * The default value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -296,8 +295,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 *
 	 * @generated
 	 */
-	protected UserImpl()
-	{
+	protected UserImpl() {
 		super();
 	}
 
@@ -308,8 +306,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TaskPackage.Literals.USER;
 	}
 
@@ -320,8 +317,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public String getFirstName()
-	{
+	public String getFirstName() {
 		return firstName;
 	}
 
@@ -332,12 +328,12 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setFirstName(String newFirstName)
-	{
+	public void setFirstName(String newFirstName) {
 		final String oldFirstName = firstName;
 		firstName = newFirstName;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TaskPackage.USER__FIRST_NAME, oldFirstName, firstName));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TaskPackage.USER__FIRST_NAME, oldFirstName, firstName));
 		}
 	}
 
@@ -348,8 +344,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public String getLastName()
-	{
+	public String getLastName() {
 		return lastName;
 	}
 
@@ -360,8 +355,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setLastName(String newLastName)
-	{
+	public void setLastName(String newLastName) {
 		final String oldLastName = lastName;
 		lastName = newLastName;
 		if (eNotificationRequired()) {
@@ -376,8 +370,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public Gender getGender()
-	{
+	public Gender getGender() {
 		return gender;
 	}
 
@@ -388,8 +381,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setGender(Gender newGender)
-	{
+	public void setGender(Gender newGender) {
 		final Gender oldGender = gender;
 		gender = newGender == null ? GENDER_EDEFAULT : newGender;
 		if (eNotificationRequired()) {
@@ -404,8 +396,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public boolean isActive()
-	{
+	public boolean isActive() {
 		return active;
 	}
 
@@ -416,8 +407,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setActive(boolean newActive)
-	{
+	public void setActive(boolean newActive) {
 		final boolean oldActive = active;
 		active = newActive;
 		if (eNotificationRequired()) {
@@ -432,8 +422,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public Date getTimeOfRegistration()
-	{
+	public Date getTimeOfRegistration() {
 		return timeOfRegistration;
 	}
 
@@ -444,8 +433,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setTimeOfRegistration(Date newTimeOfRegistration)
-	{
+	public void setTimeOfRegistration(Date newTimeOfRegistration) {
 		final Date oldTimeOfRegistration = timeOfRegistration;
 		timeOfRegistration = newTimeOfRegistration;
 		if (eNotificationRequired()) {
@@ -461,8 +449,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public double getWeight()
-	{
+	public double getWeight() {
 		return weight;
 	}
 
@@ -473,8 +460,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setWeight(double newWeight)
-	{
+	public void setWeight(double newWeight) {
 		final double oldWeight = weight;
 		weight = newWeight;
 		if (eNotificationRequired()) {
@@ -489,8 +475,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public int getHeigth()
-	{
+	public int getHeigth() {
 		return heigth;
 	}
 
@@ -501,8 +486,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setHeigth(int newHeigth)
-	{
+	public void setHeigth(int newHeigth) {
 		final int oldHeigth = heigth;
 		heigth = newHeigth;
 		if (eNotificationRequired()) {
@@ -517,8 +501,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public Nationality getNationality()
-	{
+	public Nationality getNationality() {
 		return nationality;
 	}
 
@@ -529,8 +512,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setNationality(Nationality newNationality)
-	{
+	public void setNationality(Nationality newNationality) {
 		final Nationality oldNationality = nationality;
 		nationality = newNationality == null ? NATIONALITY_EDEFAULT : newNationality;
 		if (eNotificationRequired()) {
@@ -546,8 +528,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public XMLGregorianCalendar getDateOfBirth()
-	{
+	public XMLGregorianCalendar getDateOfBirth() {
 		return dateOfBirth;
 	}
 
@@ -558,8 +539,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setDateOfBirth(XMLGregorianCalendar newDateOfBirth)
-	{
+	public void setDateOfBirth(XMLGregorianCalendar newDateOfBirth) {
 		final XMLGregorianCalendar oldDateOfBirth = dateOfBirth;
 		dateOfBirth = newDateOfBirth;
 		if (eNotificationRequired()) {
@@ -575,8 +555,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public String getEmail()
-	{
+	public String getEmail() {
 		return email;
 	}
 
@@ -587,8 +566,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void setEmail(String newEmail)
-	{
+	public void setEmail(String newEmail) {
 		final String oldEmail = email;
 		email = newEmail;
 		if (eNotificationRequired()) {
@@ -603,10 +581,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public EList<Task> getTasks()
-	{
-		if (tasks == null)
-		{
+	public EList<Task> getTasks() {
+		if (tasks == null) {
 			tasks = new EObjectWithInverseResolvingEList<Task>(Task.class, this, TaskPackage.USER__TASKS,
 				TaskPackage.TASK__ASSIGNEE);
 		}
@@ -621,10 +597,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case TaskPackage.USER__TASKS:
 			return ((InternalEList<InternalEObject>) (InternalEList<?>) getTasks()).basicAdd(otherEnd, msgs);
 		}
@@ -638,10 +612,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case TaskPackage.USER__TASKS:
 			return ((InternalEList<?>) getTasks()).basicRemove(otherEnd, msgs);
 		}
@@ -655,10 +627,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TaskPackage.USER__FIRST_NAME:
 			return getFirstName();
 		case TaskPackage.USER__LAST_NAME:
@@ -693,10 +663,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TaskPackage.USER__FIRST_NAME:
 			setFirstName((String) newValue);
 			return;
@@ -742,10 +710,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TaskPackage.USER__FIRST_NAME:
 			setFirstName(FIRST_NAME_EDEFAULT);
 			return;
@@ -790,10 +756,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TaskPackage.USER__FIRST_NAME:
 			return FIRST_NAME_EDEFAULT == null ? firstName != null : !FIRST_NAME_EDEFAULT.equals(firstName);
 		case TaskPackage.USER__LAST_NAME:
@@ -803,8 +767,9 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 		case TaskPackage.USER__ACTIVE:
 			return active != ACTIVE_EDEFAULT;
 		case TaskPackage.USER__TIME_OF_REGISTRATION:
-			return TIME_OF_REGISTRATION_EDEFAULT == null ? timeOfRegistration != null : !TIME_OF_REGISTRATION_EDEFAULT
-				.equals(timeOfRegistration);
+			return TIME_OF_REGISTRATION_EDEFAULT == null ? timeOfRegistration != null
+				: !TIME_OF_REGISTRATION_EDEFAULT
+					.equals(timeOfRegistration);
 		case TaskPackage.USER__WEIGHT:
 			return weight != WEIGHT_EDEFAULT;
 		case TaskPackage.USER__HEIGTH:
@@ -828,8 +793,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

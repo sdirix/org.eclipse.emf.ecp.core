@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage
  * @generated
  */
-public interface VViewproxyFactory extends EFactory
-{
+public interface VViewproxyFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

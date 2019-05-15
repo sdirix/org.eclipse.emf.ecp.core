@@ -53,7 +53,7 @@ import org.eclipse.net4j.util.AdapterUtil;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver>implements
+public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver> implements
 	ECPProjectManager, ECPRepositoriesChangedObserver {
 
 	private static final String PROJECT_FOLDERNAME = "projects"; //$NON-NLS-1$

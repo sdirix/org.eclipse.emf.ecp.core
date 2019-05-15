@@ -109,11 +109,11 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 		}
 		try {
 			rendererInstance.init();
-                  // BEGIN SUPRESS CATCH EXCEPTION
+			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final RuntimeException e) {
 			throw new EMFFormsNoRendererException(e);
 		}
-          	  // END SUPRESS CATCH EXCEPTION
+		// END SUPRESS CATCH EXCEPTION
 		return rendererInstance;
 	}
 

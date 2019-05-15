@@ -112,7 +112,8 @@ public class ShareWizard extends Wizard {
 					provider,
 					repositoryComposite.getRepositoryName(),
 					repositoryComposite.getRepositoryLabel() == null ? "" : repositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
-					repositoryComposite.getRepositoryDescription() == null ? "" : repositoryComposite.getRepositoryDescription(), //$NON-NLS-1$
+					repositoryComposite.getRepositoryDescription() == null ? "" //$NON-NLS-1$
+						: repositoryComposite.getRepositoryDescription(),
 					repositoryComposite.getProperties());
 		}
 		return true;

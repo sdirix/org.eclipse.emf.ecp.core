@@ -80,7 +80,8 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	}
 
 	@Override
-	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
+	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
+		ECPProperties projectProperties) {
 		return null;
 	}
 

@@ -86,8 +86,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 			}
 			if (cls.isInstance(renderable)) {
 				result.add((T) renderable);
-			}
-			else {
+			} else {
 				EObject parent = renderable.eContainer();
 				while (parent != null) {
 					if (cls.isInstance(parent)) {

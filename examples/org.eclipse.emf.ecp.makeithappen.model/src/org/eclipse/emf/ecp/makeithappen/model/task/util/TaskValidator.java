@@ -128,9 +128,9 @@ public class TaskValidator extends EObjectValidator {
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case TaskPackage.TASK:
 			return validateTask((Task) value, diagnostics, context);
 		case TaskPackage.USER:
@@ -233,7 +233,8 @@ public class TaskValidator extends EObjectValidator {
 	 *
 	 * @generated
 	 */
-	public boolean validateNationality(Nationality nationality, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateNationality(Nationality nationality, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		return true;
 	}
 

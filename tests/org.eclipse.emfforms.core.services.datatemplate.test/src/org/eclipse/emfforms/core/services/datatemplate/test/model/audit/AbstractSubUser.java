@@ -13,7 +13,6 @@
  */
 package org.eclipse.emfforms.core.services.datatemplate.test.model.audit;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Abstract Sub User</b></em>'.

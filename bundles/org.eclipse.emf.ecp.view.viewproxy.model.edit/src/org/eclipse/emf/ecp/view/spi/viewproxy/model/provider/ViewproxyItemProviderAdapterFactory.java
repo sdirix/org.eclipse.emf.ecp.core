@@ -126,8 +126,7 @@ public class ViewproxyItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createViewProxyAdapter() {
-		if (viewProxyItemProvider == null)
-		{
+		if (viewProxyItemProvider == null) {
 			viewProxyItemProvider = new ViewProxyItemProvider(this);
 		}
 
@@ -185,11 +184,9 @@ public class ViewproxyItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -260,8 +257,7 @@ public class ViewproxyItemProviderAdapterFactory extends
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -331,10 +327,8 @@ public class ViewproxyItemProviderAdapterFactory extends
 			 */
 			@Override
 			public Object caseView(VView object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						VViewproxyFactory.eINSTANCE.createViewProxy()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					VViewproxyFactory.eINSTANCE.createViewProxy()));
 
 				return null;
 			}
@@ -346,10 +340,8 @@ public class ViewproxyItemProviderAdapterFactory extends
 			 */
 			@Override
 			public Object caseContainer(VContainer object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VViewproxyFactory.eINSTANCE.createViewProxy()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					VViewproxyFactory.eINSTANCE.createViewProxy()));
 
 				return null;
 			}

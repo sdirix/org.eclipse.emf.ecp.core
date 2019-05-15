@@ -49,7 +49,8 @@ public class GenderValidator2 extends ECPValidator {
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
 	@Override
-	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		diagnostics.add(createDiagnostic(Diagnostic.CANCEL, "source", 0, "Cancel", new Object[] { value }, context));
 		return false;
 	}

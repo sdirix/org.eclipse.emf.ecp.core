@@ -38,8 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
  *
  * @generated
  */
-public class VCustomControlImpl extends VControlImpl implements VCustomControl
-{
+public class VCustomControlImpl extends VControlImpl implements VCustomControl {
 	/**
 	 * The default value of the '{@link #getBundleName() <em>Bundle Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -90,8 +89,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 *
 	 * @generated
 	 */
-	protected VCustomControlImpl()
-	{
+	protected VCustomControlImpl() {
 		super();
 	}
 
@@ -102,8 +100,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCustomPackage.Literals.CUSTOM_CONTROL;
 	}
 
@@ -114,8 +111,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public String getBundleName()
-	{
+	public String getBundleName() {
 		return bundleName;
 	}
 
@@ -126,8 +122,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public void setBundleName(String newBundleName)
-	{
+	public void setBundleName(String newBundleName) {
 		final String oldBundleName = bundleName;
 		bundleName = newBundleName;
 		if (eNotificationRequired()) {
@@ -143,8 +138,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public String getClassName()
-	{
+	public String getClassName() {
 		return className;
 	}
 
@@ -155,8 +149,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public void setClassName(String newClassName)
-	{
+	public void setClassName(String newClassName) {
 		final String oldClassName = className;
 		className = newClassName;
 		if (eNotificationRequired()) {
@@ -172,10 +165,8 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_CONTROL__BUNDLE_NAME:
 			return getBundleName();
 		case VCustomPackage.CUSTOM_CONTROL__CLASS_NAME:
@@ -191,10 +182,8 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_CONTROL__BUNDLE_NAME:
 			setBundleName((String) newValue);
 			return;
@@ -212,10 +201,8 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_CONTROL__BUNDLE_NAME:
 			setBundleName(BUNDLE_NAME_EDEFAULT);
 			return;
@@ -233,10 +220,8 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_CONTROL__BUNDLE_NAME:
 			return BUNDLE_NAME_EDEFAULT == null ? bundleName != null : !BUNDLE_NAME_EDEFAULT.equals(bundleName);
 		case VCustomPackage.CUSTOM_CONTROL__CLASS_NAME:
@@ -252,8 +237,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

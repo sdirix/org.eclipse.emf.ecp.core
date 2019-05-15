@@ -272,7 +272,9 @@ public class EMFSimpleProjectWizard extends Wizard implements INewWizard {
 			URIConverter.INSTANCE.createOutputStream(
 				URI.createPlatformResourceURI("/"
 					+ genModelContainerPath.segment(0)
-					+ "/META-INF/MANIFEST.MF", true), null), false,
+					+ "/META-INF/MANIFEST.MF", true),
+				null),
+			false,
 			"UTF-8");
 		manifest.println("Manifest-Version: 1.0");
 		manifest.println("Bundle-ManifestVersion: 2");

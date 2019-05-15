@@ -26,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Eugen Neufeld
  */
 @Component
-public class EMFFormsSpreadsheetCustomControlRendererService implements EMFFormsSpreadsheetRendererService<VCustomControl> {
+public class EMFFormsSpreadsheetCustomControlRendererService
+	implements EMFFormsSpreadsheetRendererService<VCustomControl> {
 
 	/**
 	 * {@inheritDoc}

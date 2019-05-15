@@ -156,24 +156,20 @@ public class DynamicContainmentTreeDomainModelReferenceItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
 				ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
 				ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
@@ -189,9 +185,9 @@ public class DynamicContainmentTreeDomainModelReferenceItemProvider
 		final Object childFeature = feature;
 		final Object childObject = child;
 
-		final boolean qualify =
-			childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT ||
-				childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE;
+		final boolean qualify = childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT
+			||
+			childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE;
 
 		if (qualify) {
 			return getString("_UI_CreateChild_text2",

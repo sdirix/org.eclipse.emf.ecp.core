@@ -107,9 +107,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new TestPackageImpl());
 
 		isInited = true;
 
@@ -120,14 +121,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		theTestPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theTestPackage,
-				new EValidator.Descriptor() {
-					@Override
-					public EValidator getEValidator() {
-						return TestValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theTestPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return TestValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theTestPackage.freeze();

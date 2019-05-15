@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
  *
  * @generated
  */
-public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
-{
+public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -44,8 +43,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 *
 	 * @generated
 	 */
-	public static ModelFactory init()
-	{
+	public static ModelFactory init() {
 		try {
 			final ModelFactory theModelFactory = (ModelFactory) EPackage.Registry.INSTANCE
 				.getEFactory(ModelPackage.eNS_URI);
@@ -65,8 +63,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 *
 	 * @generated
 	 */
-	public ModelFactoryImpl()
-	{
+	public ModelFactoryImpl() {
 		super();
 	}
 
@@ -77,8 +74,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
+	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE:
 			return createDynamicContainmentTree();
@@ -106,8 +102,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public DynamicContainmentTree createDynamicContainmentTree()
-	{
+	public DynamicContainmentTree createDynamicContainmentTree() {
 		final DynamicContainmentTreeImpl dynamicContainmentTree = new DynamicContainmentTreeImpl();
 		return dynamicContainmentTree;
 	}
@@ -119,8 +114,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public DynamicContainmentItem createDynamicContainmentItem()
-	{
+	public DynamicContainmentItem createDynamicContainmentItem() {
 		final DynamicContainmentItemImpl dynamicContainmentItem = new DynamicContainmentItemImpl();
 		return dynamicContainmentItem;
 	}
@@ -132,8 +126,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public TestElement createTestElement()
-	{
+	public TestElement createTestElement() {
 		final TestElementImpl testElement = new TestElementImpl();
 		return testElement;
 	}
@@ -145,8 +138,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public DomainRoot createDomainRoot()
-	{
+	public DomainRoot createDomainRoot() {
 		final DomainRootImpl domainRoot = new DomainRootImpl();
 		return domainRoot;
 	}
@@ -158,8 +150,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public DomainIntermediate createDomainIntermediate()
-	{
+	public DomainIntermediate createDomainIntermediate() {
 		final DomainIntermediateImpl domainIntermediate = new DomainIntermediateImpl();
 		return domainIntermediate;
 	}
@@ -171,8 +162,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public TestElementContainer createTestElementContainer()
-	{
+	public TestElementContainer createTestElementContainer() {
 		final TestElementContainerImpl testElementContainer = new TestElementContainerImpl();
 		return testElementContainer;
 	}
@@ -196,8 +186,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Override
-	public ModelPackage getModelPackage()
-	{
+	public ModelPackage getModelPackage() {
 		return (ModelPackage) getEPackage();
 	}
 
@@ -209,8 +198,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static ModelPackage getPackage()
-	{
+	public static ModelPackage getPackage() {
 		return ModelPackage.eINSTANCE;
 	}
 

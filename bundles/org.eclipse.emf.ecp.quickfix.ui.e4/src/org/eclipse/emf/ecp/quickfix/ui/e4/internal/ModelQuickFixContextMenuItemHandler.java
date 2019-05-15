@@ -73,7 +73,8 @@ public class ModelQuickFixContextMenuItemHandler {
 				childStatuses.toArray(new Status[] {}),
 				e.getLocalizedMessage(), e);
 
-			ErrorDialog.openError(null, Messages._UI_ModelQuickFixExceptionDialog_title, Messages._UI_ModelQuickFixExceptionDialog_message,
+			ErrorDialog.openError(null, Messages._UI_ModelQuickFixExceptionDialog_title,
+				Messages._UI_ModelQuickFixExceptionDialog_message,
 				status);
 		}
 		return;

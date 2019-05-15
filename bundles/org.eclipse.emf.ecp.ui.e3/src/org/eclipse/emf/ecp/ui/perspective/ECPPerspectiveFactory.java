@@ -22,12 +22,10 @@ import org.eclipse.ui.IPerspectiveFactory;
 /**
  * @author Eugen Neufeld
  */
-public class ECPPerspectiveFactory implements IPerspectiveFactory
-{
+public class ECPPerspectiveFactory implements IPerspectiveFactory {
 
 	@Override
-	public void createInitialLayout(IPageLayout layout)
-	{
+	public void createInitialLayout(IPageLayout layout) {
 		final String editorArea = layout.getEditorArea();
 		layout.addView(ModelExplorerView.ID, IPageLayout.LEFT, 0.25f, editorArea);
 		layout.addView(ModelRepositoriesView.ID, IPageLayout.BOTTOM, 0.75f, editorArea);

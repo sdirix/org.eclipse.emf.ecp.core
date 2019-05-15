@@ -38,8 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class StackItemItemProvider
-	extends ContainerItemProvider
-{
+	extends ContainerItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -47,8 +46,7 @@ public class StackItemItemProvider
 	 *
 	 * @generated
 	 */
-	public StackItemItemProvider(AdapterFactory adapterFactory)
-	{
+	public StackItemItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,10 +58,8 @@ public class StackItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addValuePropertyDescriptor(object);
@@ -78,11 +74,9 @@ public class StackItemItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addValuePropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_StackItem_value_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_StackItem_value_feature", "_UI_StackItem_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -103,8 +97,7 @@ public class StackItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/StackItem")); //$NON-NLS-1$
 	}
 
@@ -116,14 +109,12 @@ public class StackItemItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VStackItem) object).getName();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_StackItem_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_StackItem_type") : //$NON-NLS-1$
 			getString("_UI_StackItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -136,12 +127,10 @@ public class StackItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VStackItem.class))
-		{
+		switch (notification.getFeatureID(VStackItem.class)) {
 		case VStackPackage.STACK_ITEM__VALUE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -158,14 +147,11 @@ public class StackItemItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CONTAINER__CHILDREN,
-				VStackFactory.eINSTANCE.createStackLayout()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+			VStackFactory.eINSTANCE.createStackLayout()));
 	}
 
 }

@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
  */
-public class VerticalAdapterFactory extends AdapterFactoryImpl
-{
+public class VerticalAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -53,10 +52,8 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public VerticalAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public VerticalAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VVerticalPackage.eINSTANCE;
 		}
 	}
@@ -72,14 +69,11 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -92,45 +86,37 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected VerticalSwitch<Adapter> modelSwitch =
-		new VerticalSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseVerticalLayout(VVerticalLayout object)
-			{
-				return createVerticalLayoutAdapter();
-			}
+	protected VerticalSwitch<Adapter> modelSwitch = new VerticalSwitch<Adapter>() {
+		@Override
+		public Adapter caseVerticalLayout(VVerticalLayout object) {
+			return createVerticalLayoutAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(VContainer object)
-			{
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(VContainer object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedContainer(VContainedContainer object)
-			{
-				return createContainedContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainedContainer(VContainedContainer object) {
+			return createContainedContainerAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -142,8 +128,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -159,8 +144,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout
 	 * @generated
 	 */
-	public Adapter createVerticalLayoutAdapter()
-	{
+	public Adapter createVerticalLayoutAdapter() {
 		return null;
 	}
 
@@ -176,8 +160,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -193,8 +176,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -210,8 +192,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
 		return null;
 	}
 
@@ -229,8 +210,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
 	 * @generated
 	 */
-	public Adapter createContainedContainerAdapter()
-	{
+	public Adapter createContainedContainerAdapter() {
 		return null;
 	}
 
@@ -243,8 +223,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

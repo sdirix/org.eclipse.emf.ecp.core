@@ -24,8 +24,7 @@ import org.eclipse.emf.ecp.view.template.model.provider.TemplateEditPlugin;
  *
  * @generated
  */
-public final class ValidationStyleEditPlugin extends EMFPlugin
-{
+public final class ValidationStyleEditPlugin extends EMFPlugin {
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
@@ -51,10 +50,8 @@ public final class ValidationStyleEditPlugin extends EMFPlugin
 	 *
 	 * @generated
 	 */
-	public ValidationStyleEditPlugin()
-	{
-		super(new ResourceLocator[]
-		{
+	public ValidationStyleEditPlugin() {
+		super(new ResourceLocator[] {
 			TemplateEditPlugin.INSTANCE,
 		});
 	}
@@ -68,8 +65,7 @@ public final class ValidationStyleEditPlugin extends EMFPlugin
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getPluginResourceLocator()
-	{
+	public ResourceLocator getPluginResourceLocator() {
 		return plugin;
 	}
 
@@ -81,8 +77,7 @@ public final class ValidationStyleEditPlugin extends EMFPlugin
 	 * @return the singleton instance.
 	 * @generated
 	 */
-	public static Implementation getPlugin()
-	{
+	public static Implementation getPlugin() {
 		return plugin;
 	}
 
@@ -93,8 +88,7 @@ public final class ValidationStyleEditPlugin extends EMFPlugin
 	 *
 	 * @generated
 	 */
-	public static class Implementation extends EclipsePlugin
-	{
+	public static class Implementation extends EclipsePlugin {
 		/**
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
@@ -102,8 +96,7 @@ public final class ValidationStyleEditPlugin extends EMFPlugin
 		 *
 		 * @generated
 		 */
-		public Implementation()
-		{
+		public Implementation() {
 			super();
 
 			// Remember the static instance.

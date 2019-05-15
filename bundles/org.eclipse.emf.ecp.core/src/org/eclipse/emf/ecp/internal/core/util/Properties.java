@@ -118,7 +118,8 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * org.eclipse.emf.ecp.internal.core.util.Registry#notifyObservers(org.eclipse.emf.ecp.core.util.observer.ECPObserver
+	 * org.eclipse.emf.ecp.internal.core.util.Registry#notifyObservers(org.eclipse.emf.ecp.core.util.observer.
+	 * ECPObserver
 	 * , ELEMENT[], ELEMENT[])
 	 */
 	@Override

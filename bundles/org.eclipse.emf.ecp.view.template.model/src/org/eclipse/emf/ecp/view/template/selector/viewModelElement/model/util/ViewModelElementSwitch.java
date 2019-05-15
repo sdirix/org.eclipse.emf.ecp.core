@@ -52,8 +52,7 @@ public class ViewModelElementSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public ViewModelElementSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VTViewModelElementPackage.eINSTANCE;
 		}
 	}
@@ -83,8 +82,7 @@ public class ViewModelElementSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR: {
 			final VTViewModelElementSelector viewModelElementSelector = (VTViewModelElementSelector) theEObject;
 			T result = caseViewModelElementSelector(viewModelElementSelector);

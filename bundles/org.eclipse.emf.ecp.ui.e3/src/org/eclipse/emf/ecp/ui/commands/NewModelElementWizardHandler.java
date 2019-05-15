@@ -31,14 +31,12 @@ import org.eclipse.ui.handlers.HandlerUtil;
  *
  * @author Eugen Neufeld
  */
-public class NewModelElementWizardHandler extends AbstractHandler
-{
+public class NewModelElementWizardHandler extends AbstractHandler {
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object execute(final ExecutionEvent event) throws ExecutionException
-	{
+	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		final IStructuredSelection ssel = (IStructuredSelection) selection;
 		ECPHandlerHelper.addModelElement((ECPProject) ssel.getFirstElement(), HandlerUtil.getActiveShell(event), true);

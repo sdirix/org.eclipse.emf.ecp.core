@@ -129,9 +129,10 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		}
 
 		// Obtain or create and register package
-		final ExamplePackageImpl theExamplePackage = (ExamplePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new ExamplePackageImpl());
+		final ExamplePackageImpl theExamplePackage = (ExamplePackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new ExamplePackageImpl());
 
 		isInited = true;
 

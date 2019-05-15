@@ -38,7 +38,8 @@ public interface EMFFormsSpreadsheetRendererFactory {
 	 * 
 	 * @param spreadsheetRendererService The EMFFormsSpreadsheetRendererService to remove
 	 */
-	void removeEMFFormsSpreadsheetRendererService(EMFFormsSpreadsheetRendererService<VElement> spreadsheetRendererService);
+	void removeEMFFormsSpreadsheetRendererService(
+		EMFFormsSpreadsheetRendererService<VElement> spreadsheetRendererService);
 
 	/**
 	 * Returns the renderer which fits the provided {@link VElement} and {@link ViewModelContext} the most.

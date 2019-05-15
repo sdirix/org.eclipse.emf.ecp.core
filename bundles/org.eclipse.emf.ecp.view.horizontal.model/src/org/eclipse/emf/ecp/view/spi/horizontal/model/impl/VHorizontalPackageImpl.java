@@ -30,8 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalPackage
-{
+public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -54,8 +53,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 * @see #init()
 	 * @generated
 	 */
-	private VHorizontalPackageImpl()
-	{
+	private VHorizontalPackageImpl() {
 		super(eNS_URI, VHorizontalFactory.eINSTANCE);
 	}
 
@@ -80,8 +78,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VHorizontalPackage init()
-	{
+	public static VHorizontalPackage init() {
 		if (isInited) {
 			return (VHorizontalPackage) EPackage.Registry.INSTANCE.getEPackage(VHorizontalPackage.eNS_URI);
 		}
@@ -89,8 +86,8 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 		// Obtain or create and register package
 		final VHorizontalPackageImpl theHorizontalPackage = (VHorizontalPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VHorizontalPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VHorizontalPackageImpl());
+				.get(eNS_URI)
+				: new VHorizontalPackageImpl());
 
 		isInited = true;
 
@@ -118,8 +115,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 * @generated
 	 */
 	@Override
-	public EClass getHorizontalLayout()
-	{
+	public EClass getHorizontalLayout() {
 		return horizontalLayoutEClass;
 	}
 
@@ -130,8 +126,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 * @generated
 	 */
 	@Override
-	public VHorizontalFactory getHorizontalFactory()
-	{
+	public VHorizontalFactory getHorizontalFactory() {
 		return (VHorizontalFactory) getEFactoryInstance();
 	}
 
@@ -151,8 +146,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -178,8 +172,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}

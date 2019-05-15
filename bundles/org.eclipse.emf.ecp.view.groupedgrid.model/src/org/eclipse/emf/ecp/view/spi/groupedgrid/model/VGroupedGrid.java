@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @generated
  * @since 1.2
  */
-public interface VGroupedGrid extends VContainedElement
-{
+public interface VGroupedGrid extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Groups</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup}.

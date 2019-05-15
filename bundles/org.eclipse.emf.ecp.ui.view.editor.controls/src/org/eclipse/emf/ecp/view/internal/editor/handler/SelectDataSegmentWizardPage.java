@@ -131,8 +131,7 @@ public class SelectDataSegmentWizardPage extends WizardPage {
 						result.add(eClassifier);
 					}
 				}
-			}
-			else {
+			} else {
 				for (final EReference ref : eClass.getEAllReferences()) {
 					if (!ref.isMany() && ref.isContainment()) {
 						result.add(ref);

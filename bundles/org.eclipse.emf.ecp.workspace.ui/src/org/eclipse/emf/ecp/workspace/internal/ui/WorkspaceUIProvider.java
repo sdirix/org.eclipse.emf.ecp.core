@@ -63,13 +63,15 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 	}
 
 	@Override
-	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
+	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
+		ECPProperties projectProperties) {
 		// Suppress default properties composite
 		return null;
 	}
 
 	@Override
-	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties) {
+	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
+		ECPProperties projectProperties) {
 		return new NewWorkspaceProjectComposite(parent, observer, projectProperties);
 	}
 }

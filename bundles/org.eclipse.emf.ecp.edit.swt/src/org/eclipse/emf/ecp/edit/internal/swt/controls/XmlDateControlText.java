@@ -170,8 +170,7 @@ public class XmlDateControlText extends AbstractTextControl {
 			}
 			if (dialogX + dialogSize.x > displayBounds.width) {
 				dialogX = dialogX - dialogSize.x;
-			}
-			else if (dialogX - dialogSize.x < displayBounds.x) {
+			} else if (dialogX - dialogSize.x < displayBounds.x) {
 				dialogX = buttonLocation.x - okButton.getSize().x;
 			}
 			dialog.setLocation(dialogX, dialogY);
@@ -244,7 +243,8 @@ public class XmlDateControlText extends AbstractTextControl {
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
 				LocalizationServiceHelper.getString(getClass(),
-					DepricatedControlMessageKeys.XmlDateControlText_InvalidNumber), null,
+					DepricatedControlMessageKeys.XmlDateControlText_InvalidNumber),
+				null,
 				LocalizationServiceHelper.getString(getClass(),
 					DepricatedControlMessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset),
 				MessageDialog.ERROR,

@@ -13,7 +13,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.common.locale;
 
-
 /**
  * EMF Forms locale change listener.
  *

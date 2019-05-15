@@ -34,7 +34,7 @@ public class UndoLastOperationHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event))
-			.getFirstElement();
+				.getFirstElement();
 		UndoLastOperationHelper.undo(project, HandlerUtil.getActiveShell(event));
 		return null;
 	}

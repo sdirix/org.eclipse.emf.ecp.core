@@ -64,13 +64,11 @@ public class ECPRepositoryView {
 							if (structuredSelection.size() == 1) {
 								selectionService
 									.setSelection(structuredSelection.getFirstElement());
-							}
-							else {
+							} else {
 								selectionService
 									.setSelection(structuredSelection.toList());
 							}
-						}
-						else {
+						} else {
 							selectionService.setSelection(null);
 						}
 					}

@@ -82,28 +82,27 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected TestSwitch<Adapter> modelSwitch =
-		new TestSwitch<Adapter>() {
-			@Override
-			public Adapter caseComponent(Component object) {
-				return createComponentAdapter();
-			}
+	protected TestSwitch<Adapter> modelSwitch = new TestSwitch<Adapter>() {
+		@Override
+		public Adapter caseComponent(Component object) {
+			return createComponentAdapter();
+		}
 
-			@Override
-			public Adapter caseComposite(Composite object) {
-				return createCompositeAdapter();
-			}
+		@Override
+		public Adapter caseComposite(Composite object) {
+			return createCompositeAdapter();
+		}
 
-			@Override
-			public Adapter caseComponent2(Component2 object) {
-				return createComponent2Adapter();
-			}
+		@Override
+		public Adapter caseComponent2(Component2 object) {
+			return createComponent2Adapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

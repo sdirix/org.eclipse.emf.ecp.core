@@ -38,16 +38,13 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 	 * @generated
 	 */
 	public static VKeyattributedmrFactory init() {
-		try
-		{
+		try {
 			final VKeyattributedmrFactory theKeyattributedmrFactory = (VKeyattributedmrFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VKeyattributedmrPackage.eNS_URI);
-			if (theKeyattributedmrFactory != null)
-			{
+			if (theKeyattributedmrFactory != null) {
 				return theKeyattributedmrFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VKeyattributedmrFactoryImpl();
@@ -71,8 +68,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID())
-		{
+		switch (eClass.getClassifierID()) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE:
 			return createKeyAttributeDomainModelReference();
 		default:

@@ -26,7 +26,8 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain
+ * Model</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems <em>Items</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index
@@ -38,8 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @model
  * @generated
  */
-public interface DynamicContainmentItem extends VCategorizableElement
-{
+public interface DynamicContainmentItem extends VCategorizableElement {
 	/**
 	 * Returns the value of the '<em><b>Domain Model</b></em>' reference.
 	 * <!-- begin-user-doc -->

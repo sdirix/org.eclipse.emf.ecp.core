@@ -104,8 +104,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI) : new TestPackageImpl());
 
 		isInited = true;
 
@@ -274,15 +275,18 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEAttribute(
 			getSimpleTestObject_Date(),
 			ecorePackage.getEDate(),
-			"date", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"date", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getSimpleTestObject_XmlDate(),
 			getXMLDate(),
-			"xmlDate", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"xmlDate", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getSimpleTestObject_MyEnum(),
 			getTestEnum(),
-			"myEnum", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"myEnum", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(testEnumEEnum, TestEnum.class, "TestEnum"); //$NON-NLS-1$

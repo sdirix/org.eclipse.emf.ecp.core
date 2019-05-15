@@ -28,6 +28,7 @@ public class RegisteredUserImpl extends UserImpl implements RegisteredUser {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected RegisteredUserImpl() {
@@ -37,6 +38,7 @@ public class RegisteredUserImpl extends UserImpl implements RegisteredUser {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

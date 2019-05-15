@@ -35,9 +35,8 @@ public class ECPDiagramTypeProvider extends AbstractDiagramTypeProvider {
 	@Override
 	public IToolBehaviorProvider[] getAvailableToolBehaviorProviders() {
 		if (toolBehaviorProviders == null) {
-			toolBehaviorProviders =
-				new IToolBehaviorProvider[] { new ECPTutorialToolBehaviorProvider(
-					this) };
+			toolBehaviorProviders = new IToolBehaviorProvider[] { new ECPTutorialToolBehaviorProvider(
+				this) };
 		}
 		return toolBehaviorProviders;
 	}

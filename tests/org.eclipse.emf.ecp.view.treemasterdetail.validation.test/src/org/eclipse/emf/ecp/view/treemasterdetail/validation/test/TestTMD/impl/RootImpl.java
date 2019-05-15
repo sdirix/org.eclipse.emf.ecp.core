@@ -212,8 +212,9 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case TestTMDPackage.ROOT__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
-				.equals(name);
+			return NAME_EDEFAULT == null ? name != null
+				: !NAME_EDEFAULT
+					.equals(name);
 		case TestTMDPackage.ROOT__CHILDREN:
 			return children != null && !children.isEmpty();
 		}

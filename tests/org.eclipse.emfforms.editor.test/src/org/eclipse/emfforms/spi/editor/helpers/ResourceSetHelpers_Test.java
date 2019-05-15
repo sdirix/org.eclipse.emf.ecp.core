@@ -25,28 +25,30 @@ public class ResourceSetHelpers_Test {
 	}
 
 	public static <T> Predicate<T> not(Predicate<T> t) {
-	    return t.negate();
+		return t.negate();
 	}
-	
+
 	@Test
 	public void testCreateResourceSet() {
 		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack());
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+			new BasicCommandStack());
 		ResourceSet rs = ResourceSetHelpers.createResourceSet(editingDomain);
 
 		Map<URI, URI> uriMap = rs.getURIConverter().getURIMap();
 		Map<URI, URI> platformURIMap = EcorePlugin.computePlatformURIMap(true);
-		List<URI> listNotFoundKeys = platformURIMap.keySet().stream().filter(not(uriMap::containsKey)).collect(Collectors.toList());
+		List<URI> listNotFoundKeys = platformURIMap.keySet().stream().filter(not(uriMap::containsKey))
+			.collect(Collectors.toList());
 		assertTrue(listNotFoundKeys.isEmpty());
-		
-		List<URI> listNotFoundValues = platformURIMap.keySet().stream().filter(u -> uriMap.get(u)!=platformURIMap.get(u)).collect(Collectors.toList());
+
+		List<URI> listNotFoundValues = platformURIMap.keySet().stream()
+			.filter(u -> uriMap.get(u) != platformURIMap.get(u)).collect(Collectors.toList());
 		assertTrue(listNotFoundValues.isEmpty());
-		
-		
+
 		assertTrue(rs.getLoadOptions().containsKey(XMLResource.OPTION_DEFER_IDREF_RESOLUTION));
 		assertEquals(rs.getLoadOptions().get(XMLResource.OPTION_DEFER_IDREF_RESOLUTION), Boolean.TRUE);
-		
+
 		adapterFactory.dispose();
 	}
 

@@ -44,7 +44,8 @@ public class PropertiesDialog extends TitleAreaDialog {
 
 	private final ECPProperties properties;
 
-	public PropertiesDialog(Shell parentShell, String title, String message, boolean editable, ECPProperties properties) {
+	public PropertiesDialog(Shell parentShell, String title, String message, boolean editable,
+		ECPProperties properties) {
 		super(parentShell);
 		setShellStyle(SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
 

@@ -90,8 +90,9 @@ public final class ImportProjectHelper {
 
 					@Override
 					public String isValid(String newText) {
-						return ECPUtil.getECPProjectManager().getProject(newText) == null ? null : String.format(
-							"A project with the name %s already exists.", newText); //$NON-NLS-1$
+						return ECPUtil.getECPProjectManager().getProject(newText) == null ? null
+							: String.format(
+								"A project with the name %s already exists.", newText); //$NON-NLS-1$
 					}
 				});
 			final int result = id.open();

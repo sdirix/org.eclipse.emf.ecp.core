@@ -65,8 +65,7 @@ public class UserItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addFirstNamePropertyDescriptor(object);
@@ -92,9 +91,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addFirstNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_firstName_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_firstName_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -115,9 +113,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addLastNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_lastName_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_lastName_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -138,9 +135,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addGenderPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_gender_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_gender_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -161,9 +157,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addActivePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_active_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_active_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -185,9 +180,7 @@ public class UserItemProvider
 	 */
 	protected void addTimeOfRegistrationPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_timeOfRegistration_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_timeOfRegistration_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -208,9 +201,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addDateOfBirthPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_dateOfBirth_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_dateOfBirth_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -231,9 +223,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addEmailPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_email_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_email_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -254,9 +245,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addWeightPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_weight_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_weight_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -277,9 +267,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addHeigthPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_heigth_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_heigth_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -300,9 +289,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addNationalityPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_nationality_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_nationality_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -323,9 +311,8 @@ public class UserItemProvider
 	 * @generated
 	 */
 	protected void addTasksPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_tasks_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_User_tasks_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -391,8 +378,7 @@ public class UserItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(User.class))
-		{
+		switch (notification.getFeatureID(User.class)) {
 		case TaskPackage.USER__FIRST_NAME:
 		case TaskPackage.USER__LAST_NAME:
 		case TaskPackage.USER__GENDER:

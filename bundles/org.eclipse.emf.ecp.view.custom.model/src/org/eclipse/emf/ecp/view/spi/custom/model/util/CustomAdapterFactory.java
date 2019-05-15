@@ -52,8 +52,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public CustomAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VCustomPackage.eINSTANCE;
 		}
 	}
@@ -70,12 +69,10 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -88,51 +85,42 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected CustomSwitch<Adapter> modelSwitch =
-		new CustomSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseCustomControl(VCustomControl object)
-			{
-				return createCustomControlAdapter();
-			}
+	protected CustomSwitch<Adapter> modelSwitch = new CustomSwitch<Adapter>() {
+		@Override
+		public Adapter caseCustomControl(VCustomControl object) {
+			return createCustomControlAdapter();
+		}
 
-			@Override
-			public Adapter caseCustomDomainModelReference(VCustomDomainModelReference object)
-			{
-				return createCustomDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseCustomDomainModelReference(VCustomDomainModelReference object) {
+			return createCustomDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseControl(VControl object)
-			{
-				return createControlAdapter();
-			}
+		@Override
+		public Adapter caseControl(VControl object) {
+			return createControlAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainModelReference(VDomainModelReference object)
-			{
-				return createDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
+			return createDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -162,8 +150,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
 	 */
-	public Adapter createCustomControlAdapter()
-	{
+	public Adapter createCustomControlAdapter() {
 		return null;
 	}
 
@@ -181,8 +168,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * @generated
 	 */
-	public Adapter createCustomDomainModelReferenceAdapter()
-	{
+	public Adapter createCustomDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -216,8 +202,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -235,8 +220,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -254,8 +238,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
 	 */
-	public Adapter createControlAdapter()
-	{
+	public Adapter createControlAdapter() {
 		return null;
 	}
 

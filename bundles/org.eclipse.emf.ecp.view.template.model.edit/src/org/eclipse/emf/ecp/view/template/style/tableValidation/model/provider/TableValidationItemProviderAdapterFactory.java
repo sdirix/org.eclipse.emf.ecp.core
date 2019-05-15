@@ -341,10 +341,8 @@ public class TableValidationItemProviderAdapterFactory extends TableValidationAd
 			 */
 			@Override
 			public Object caseStyle(VTStyle object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VTTemplatePackage.Literals.STYLE__PROPERTIES,
-						VTTableValidationFactory.eINSTANCE.createTableValidationStyleProperty()));
+				newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.STYLE__PROPERTIES,
+					VTTableValidationFactory.eINSTANCE.createTableValidationStyleProperty()));
 
 				return null;
 			}

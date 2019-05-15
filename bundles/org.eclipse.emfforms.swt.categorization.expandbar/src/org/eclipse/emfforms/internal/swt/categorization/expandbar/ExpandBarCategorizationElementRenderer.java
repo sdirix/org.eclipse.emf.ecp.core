@@ -402,8 +402,9 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 				}
 				catItem.dispose();
 			} else {
-				int index=Math.min(expandBar.getChildren().length, getVElement().getCategorizations().indexOf(categorization));
-				catItem = createExpandItem(adapterFactory, categorization,index );
+				int index = Math.min(expandBar.getChildren().length,
+					getVElement().getCategorizations().indexOf(categorization));
+				catItem = createExpandItem(adapterFactory, categorization, index);
 			}
 		}
 	}

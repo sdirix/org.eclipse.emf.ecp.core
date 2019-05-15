@@ -48,8 +48,7 @@ public final class KeyattributedmrEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public KeyattributedmrEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});

@@ -27,7 +27,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Menu;
 
 /**
- * GenModel Editor-specific customization for the {@link org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite TreeMasterDetailComposite}.
+ * GenModel Editor-specific customization for the
+ * {@link org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite TreeMasterDetailComposite}.
  *
  * @author Martin Fleck
  */

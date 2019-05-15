@@ -32,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
  * @generated
  * @since 1.2
  */
-public interface VSpan extends VAttachment
-{
+public interface VSpan extends VAttachment {
 	/**
 	 * Returns the value of the '<em><b>Horizontal Span</b></em>' attribute.
 	 * <!-- begin-user-doc -->

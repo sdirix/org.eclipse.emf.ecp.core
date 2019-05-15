@@ -32,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * @model
  * @generated
  */
-public interface VTreeMasterDetail extends VContainedElement
-{
+public interface VTreeMasterDetail extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Detail View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

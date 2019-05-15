@@ -121,7 +121,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 					getViewModelContext());
 			} catch (final EMFFormsNoRendererException ex) {
 				getReportService().report(new StatusReport(
-					new Status(IStatus.INFO, "org.eclipse.emf.ecp.view.horizontal.ui.swt",//$NON-NLS-1$
+					new Status(IStatus.INFO, "org.eclipse.emf.ecp.view.horizontal.ui.swt", //$NON-NLS-1$
 						String.format("No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
 				continue;
 			}

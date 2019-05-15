@@ -31,8 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface DomainRoot extends EObject
-{
+public interface DomainRoot extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Intermediate</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

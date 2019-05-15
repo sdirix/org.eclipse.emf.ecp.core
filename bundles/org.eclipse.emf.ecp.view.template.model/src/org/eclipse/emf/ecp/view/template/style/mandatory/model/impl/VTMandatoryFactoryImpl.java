@@ -29,8 +29,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
  *
  * @generated
  */
-public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryFactory
-{
+public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -38,18 +37,14 @@ public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryF
 	 *
 	 * @generated
 	 */
-	public static VTMandatoryFactory init()
-	{
-		try
-		{
+	public static VTMandatoryFactory init() {
+		try {
 			final VTMandatoryFactory theMandatoryFactory = (VTMandatoryFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTMandatoryPackage.eNS_URI);
-			if (theMandatoryFactory != null)
-			{
+			if (theMandatoryFactory != null) {
 				return theMandatoryFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTMandatoryFactoryImpl();
@@ -62,8 +57,7 @@ public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryF
 	 *
 	 * @generated
 	 */
-	public VTMandatoryFactoryImpl()
-	{
+	public VTMandatoryFactoryImpl() {
 		super();
 	}
 
@@ -74,10 +68,8 @@ public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryF
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY:
 			return createMandatoryStyleProperty();
 		default:
@@ -92,8 +84,7 @@ public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryF
 	 * @generated
 	 */
 	@Override
-	public VTMandatoryStyleProperty createMandatoryStyleProperty()
-	{
+	public VTMandatoryStyleProperty createMandatoryStyleProperty() {
 		final VTMandatoryStylePropertyImpl mandatoryStyleProperty = new VTMandatoryStylePropertyImpl();
 		return mandatoryStyleProperty;
 	}
@@ -105,8 +96,7 @@ public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryF
 	 * @generated
 	 */
 	@Override
-	public VTMandatoryPackage getMandatoryPackage()
-	{
+	public VTMandatoryPackage getMandatoryPackage() {
 		return (VTMandatoryPackage) getEPackage();
 	}
 
@@ -118,8 +108,7 @@ public class VTMandatoryFactoryImpl extends EFactoryImpl implements VTMandatoryF
 	 * @generated
 	 */
 	@Deprecated
-	public static VTMandatoryPackage getPackage()
-	{
+	public static VTMandatoryPackage getPackage() {
 		return VTMandatoryPackage.eINSTANCE;
 	}
 

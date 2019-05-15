@@ -34,7 +34,7 @@ public class UndoLastCommandHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event))
-			.getFirstElement();
+				.getFirstElement();
 		if (project == null) {
 			return null;
 		}

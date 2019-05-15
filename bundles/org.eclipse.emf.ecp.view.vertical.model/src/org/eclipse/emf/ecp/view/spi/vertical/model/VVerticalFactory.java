@@ -26,8 +26,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
  */
-public interface VVerticalFactory extends EFactory
-{
+public interface VVerticalFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

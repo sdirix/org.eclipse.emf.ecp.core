@@ -36,35 +36,30 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
 	/**
 	 * Default constructor.
 	 */
-	public ModelRepositoriesView()
-	{
+	public ModelRepositoriesView() {
 		super(ID);
 	}
 
 	@Override
-	public void dispose()
-	{
+	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(this);
 		super.dispose();
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
-	{
+	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
 	}
 
 	@Override
-	protected TreeViewer createViewer(Composite parent)
-	{
+	protected TreeViewer createViewer(Composite parent) {
 		final TreeViewer viewer = ECPViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
 		ECPUtil.getECPObserverBus().register(this);
 		return viewer;
 	}
 
 	@Override
-	protected void fillLocalToolBar(IToolBarManager manager)
-	{
+	protected void fillLocalToolBar(IToolBarManager manager) {
 		super.fillLocalToolBar(manager);
 	}
 }

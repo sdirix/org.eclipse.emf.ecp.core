@@ -72,11 +72,11 @@ public final class RenderingConfiguration {
 					if (RENDERING_RESULT_ROW_FACTORY.equalsIgnoreCase(e2.getName())) {
 						final RenderingResultRowFactory<?> rrrf = (RenderingResultRowFactory<?>) e2
 							.createExecutableExtension(CLASS_ATTRIBUTE);
-						final Class<?> clazz = (Class<?>) ((ParameterizedType) rrrf.getClass().getGenericInterfaces()[0])
-							.getActualTypeArguments()[0];
+						final Class<?> clazz = (Class<?>) ((ParameterizedType) rrrf.getClass()
+							.getGenericInterfaces()[0])
+								.getActualTypeArguments()[0];
 						rowFactories.put(clazz, rrrf);
-					}
-					else if (RENDERING_LAYOUT_HELPER.equalsIgnoreCase(e2.getName())) {
+					} else if (RENDERING_LAYOUT_HELPER.equalsIgnoreCase(e2.getName())) {
 						final LayoutHelper<?> layoutHelper = (LayoutHelper<?>) e2
 							.createExecutableExtension(CLASS_ATTRIBUTE);
 						final Class<?> clazz = (Class<?>) ((ParameterizedType) layoutHelper.getClass()

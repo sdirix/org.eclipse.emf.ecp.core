@@ -33,7 +33,8 @@ import org.eclipse.emf.ecp.ui.view.editor.test.model.test.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.ui.view.editor.test.model.test.impl.Component2Impl#getComposites <em>Composites</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.editor.test.model.test.impl.Component2Impl#getComposites
+ * <em>Composites</em>}</li>
  * </ul>
  * </p>
  *

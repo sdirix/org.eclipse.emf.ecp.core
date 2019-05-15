@@ -141,8 +141,9 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 		this.listener.remove(listener);
 
 		/* Add to new */
-		final Set<EClassifier> currentlyRegisteredClassifiers = listenerToClassifierMap.containsKey(listener) ? listenerToClassifierMap
-			.get(listener)
+		final Set<EClassifier> currentlyRegisteredClassifiers = listenerToClassifierMap.containsKey(listener)
+			? listenerToClassifierMap
+				.get(listener)
 			: new LinkedHashSet<EClassifier>();
 
 		final Set<EClassifier> classifiersToRemove = new LinkedHashSet<EClassifier>();

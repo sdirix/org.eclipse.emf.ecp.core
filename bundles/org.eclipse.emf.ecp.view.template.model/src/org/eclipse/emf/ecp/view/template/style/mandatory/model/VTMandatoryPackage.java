@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * @model kind="package"
  * @generated
  */
-public interface VTMandatoryPackage extends EPackage
-{
+public interface VTMandatoryPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -192,8 +191,7 @@ public interface VTMandatoryPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '
 		 * {@link org.eclipse.emf.ecp.view.template.style.mandatory.model.impl.VTMandatoryStylePropertyImpl

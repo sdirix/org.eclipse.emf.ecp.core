@@ -95,7 +95,8 @@ public interface VTTextControlEnablementPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_CONTROL_ENABLEMENT_STYLE_PROPERTY__RENDER_DISABLE_AS_EDITABLE = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 0;
+	int TEXT_CONTROL_ENABLEMENT_STYLE_PROPERTY__RENDER_DISABLE_AS_EDITABLE = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The number of structural features of the '<em>Style Property</em>' class.

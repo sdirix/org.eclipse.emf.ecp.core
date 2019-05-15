@@ -234,7 +234,8 @@ public class EMFUndoRedoActionBarContributor
 		}
 
 		final ISelectionProvider selectionProvider = activeEditor instanceof ISelectionProvider
-			? (ISelectionProvider) activeEditor : activeEditor.getEditorSite().getSelectionProvider();
+			? (ISelectionProvider) activeEditor
+			: activeEditor.getEditorSite().getSelectionProvider();
 
 		if (selectionProvider != null) {
 			if (validateAction != null) {
@@ -258,7 +259,8 @@ public class EMFUndoRedoActionBarContributor
 		}
 
 		final ISelectionProvider selectionProvider = activeEditor instanceof ISelectionProvider
-			? (ISelectionProvider) activeEditor : activeEditor.getEditorSite().getSelectionProvider();
+			? (ISelectionProvider) activeEditor
+			: activeEditor.getEditorSite().getSelectionProvider();
 
 		if (selectionProvider != null) {
 
@@ -273,12 +275,14 @@ public class EMFUndoRedoActionBarContributor
 
 	public void update() {
 		final ISelectionProvider selectionProvider = activeEditor instanceof ISelectionProvider
-			? (ISelectionProvider) activeEditor : activeEditor.getEditorSite().getSelectionProvider();
+			? (ISelectionProvider) activeEditor
+			: activeEditor.getEditorSite().getSelectionProvider();
 
 		if (selectionProvider != null) {
 			final ISelection selection = selectionProvider.getSelection();
 			final IStructuredSelection structuredSelection = selection instanceof IStructuredSelection
-				? (IStructuredSelection) selection : StructuredSelection.EMPTY;
+				? (IStructuredSelection) selection
+				: StructuredSelection.EMPTY;
 
 			if (validateAction != null) {
 				validateAction.updateSelection(structuredSelection);

@@ -29,8 +29,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @model
  * @generated
  */
-public enum Nationality implements Enumerator
-{
+public enum Nationality implements Enumerator {
 	/**
 	 * The '<em><b>German</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -227,17 +226,15 @@ public enum Nationality implements Enumerator
 	 *
 	 * @generated
 	 */
-	private static final Nationality[] VALUES_ARRAY =
-		new Nationality[]
-		{
-			GERMAN,
-			FRENCH,
-			UK,
-			US,
-			SPANISH,
-			ITALIAN,
-			RUSSIAN,
-		};
+	private static final Nationality[] VALUES_ARRAY = new Nationality[] {
+		GERMAN,
+		FRENCH,
+		UK,
+		US,
+		SPANISH,
+		ITALIAN,
+		RUSSIAN,
+	};
 
 	/**
 	 * A public read-only list of all the '<em><b>Nationality</b></em>' enumerators.
@@ -255,13 +252,10 @@ public enum Nationality implements Enumerator
 	 *
 	 * @generated
 	 */
-	public static Nationality get(String literal)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static Nationality get(String literal) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final Nationality result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal))
-			{
+			if (result.toString().equals(literal)) {
 				return result;
 			}
 		}
@@ -275,13 +269,10 @@ public enum Nationality implements Enumerator
 	 *
 	 * @generated
 	 */
-	public static Nationality getByName(String name)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static Nationality getByName(String name) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final Nationality result = VALUES_ARRAY[i];
-			if (result.getName().equals(name))
-			{
+			if (result.getName().equals(name)) {
 				return result;
 			}
 		}
@@ -295,10 +286,8 @@ public enum Nationality implements Enumerator
 	 *
 	 * @generated
 	 */
-	public static Nationality get(int value)
-	{
-		switch (value)
-		{
+	public static Nationality get(int value) {
+		switch (value) {
 		case GERMAN_VALUE:
 			return GERMAN;
 		}
@@ -336,8 +325,7 @@ public enum Nationality implements Enumerator
 	 *
 	 * @generated
 	 */
-	private Nationality(int value, String name, String literal)
-	{
+	private Nationality(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -350,8 +338,7 @@ public enum Nationality implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public int getValue()
-	{
+	public int getValue() {
 		return value;
 	}
 
@@ -362,8 +349,7 @@ public enum Nationality implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -374,8 +360,7 @@ public enum Nationality implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getLiteral()
-	{
+	public String getLiteral() {
 		return literal;
 	}
 
@@ -387,8 +372,7 @@ public enum Nationality implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return literal;
 	}
 

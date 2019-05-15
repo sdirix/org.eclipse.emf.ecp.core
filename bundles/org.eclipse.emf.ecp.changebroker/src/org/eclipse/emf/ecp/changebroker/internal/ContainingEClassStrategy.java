@@ -33,6 +33,7 @@ public class ContainingEClassStrategy implements Strategy {
 
 	/**
 	 * Registers an observer.
+	 * 
 	 * @param observer the observer
 	 * @param eClass the containing eclass
 	 */

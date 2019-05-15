@@ -214,8 +214,9 @@ public class ChildLevel1Impl extends MinimalEObjectImpl.Container implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case TestTMDPackage.CHILD_LEVEL1__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
-				.equals(name);
+			return NAME_EDEFAULT == null ? name != null
+				: !NAME_EDEFAULT
+					.equals(name);
 		case TestTMDPackage.CHILD_LEVEL1__CHILDREN:
 			return children != null && !children.isEmpty();
 		}

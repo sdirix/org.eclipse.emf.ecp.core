@@ -134,8 +134,9 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 			return validationLabel;
 		}
 		if (cell.getColumn() == 2) {
-			final VFeaturePathDomainModelReference controlFeature = (VFeaturePathDomainModelReference) getResolvedDomainModelReference(VCustomPackage.eINSTANCE
-				.getCustomControl_BundleName());
+			final VFeaturePathDomainModelReference controlFeature = (VFeaturePathDomainModelReference) getResolvedDomainModelReference(
+				VCustomPackage.eINSTANCE
+					.getCustomControl_BundleName());
 			setTextControl(getControl(SWTControl.class, controlFeature).createControl(parent));
 			return getTextControl();
 		}

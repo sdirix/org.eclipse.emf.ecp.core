@@ -338,8 +338,9 @@ public final class ECPHandlerHelper {
 			final ECPRepository ecpRepository = ECPUtil.getECPRepositoryManager().addRepository(
 				addRepositoryComposite.getProvider(), addRepositoryComposite.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
-				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
-					.getRepositoryDescription(),
+				addRepositoryComposite.getRepositoryDescription() == null ? "" //$NON-NLS-1$
+					: addRepositoryComposite
+						.getRepositoryDescription(),
 				addRepositoryComposite.getProperties());
 			return ecpRepository;
 		}

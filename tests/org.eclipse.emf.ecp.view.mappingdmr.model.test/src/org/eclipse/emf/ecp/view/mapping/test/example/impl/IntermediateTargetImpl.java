@@ -123,8 +123,7 @@ public class IntermediateTargetImpl extends MinimalEObjectImpl.Container impleme
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.INTERMEDIATE_TARGET__TARGET,
 				newTarget, newTarget));
 		}

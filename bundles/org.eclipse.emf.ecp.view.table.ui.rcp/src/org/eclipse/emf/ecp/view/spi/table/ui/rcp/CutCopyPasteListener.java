@@ -85,7 +85,8 @@ public class CutCopyPasteListener implements KeyListener, ISelectionChangedListe
 	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
 		final IStructuredSelection currentSelection = event.getSelection() instanceof IStructuredSelection
-			? (IStructuredSelection) event.getSelection() : new StructuredSelection();
+			? (IStructuredSelection) event.getSelection()
+			: new StructuredSelection();
 		cutAction.selectionChanged(currentSelection);
 		copyAction.selectionChanged(currentSelection);
 	}

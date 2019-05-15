@@ -41,12 +41,12 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TaskItemProvider
-extends ItemProviderAdapter
-implements
-IEditingDomainItemProvider,
-ITreeItemContentProvider,
-IItemLabelProvider,
-IItemPropertySource {
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -67,8 +67,7 @@ IItemPropertySource {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
@@ -88,9 +87,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Task_name_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Task_name_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -111,9 +109,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Task_description_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Task_description_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -134,9 +131,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addAssigneePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Task_assignee_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Task_assignee_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -157,9 +153,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addDueDatePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Task_dueDate_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Task_dueDate_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -180,9 +175,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addDonePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Task_done_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Task_done_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -206,8 +200,7 @@ IItemPropertySource {
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(TaskPackage.Literals.TASK__SUB_TASKS);
 		}
@@ -256,9 +249,8 @@ IItemPropertySource {
 	@Override
 	public String getText(Object object) {
 		final String label = ((Task) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Task_type") : //$NON-NLS-1$
-				getString("_UI_Task_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_Task_type") : //$NON-NLS-1$
+			getString("_UI_Task_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -273,8 +265,7 @@ IItemPropertySource {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Task.class))
-		{
+		switch (notification.getFeatureID(Task.class)) {
 		case TaskPackage.TASK__NAME:
 		case TaskPackage.TASK__DESCRIPTION:
 		case TaskPackage.TASK__DUE_DATE:
@@ -300,10 +291,8 @@ IItemPropertySource {
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-		(createChildParameter
-			(TaskPackage.Literals.TASK__SUB_TASKS,
-				TaskFactory.eINSTANCE.createTask()));
+		newChildDescriptors.add(createChildParameter(TaskPackage.Literals.TASK__SUB_TASKS,
+			TaskFactory.eINSTANCE.createTask()));
 	}
 
 	/**

@@ -32,8 +32,7 @@ public final class EcoreHelpers {
 	 * @param feature The feature to check
 	 * @return true, if the provided feature is generic
 	 */
-	public static boolean isGenericFeature(Object feature)
-	{
+	public static boolean isGenericFeature(Object feature) {
 		return feature == EcorePackage.Literals.ECLASS__EGENERIC_SUPER_TYPES ||
 			feature == EcorePackage.Literals.ECLASSIFIER__ETYPE_PARAMETERS ||
 			feature == EcorePackage.Literals.EOPERATION__EGENERIC_EXCEPTIONS ||

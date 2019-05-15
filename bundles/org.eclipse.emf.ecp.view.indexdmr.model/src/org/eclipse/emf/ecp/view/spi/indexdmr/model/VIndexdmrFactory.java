@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage
  * @generated
  */
-public interface VIndexdmrFactory extends EFactory
-{
+public interface VIndexdmrFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

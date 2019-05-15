@@ -84,28 +84,27 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected TestSwitch<Adapter> modelSwitch =
-		new TestSwitch<Adapter>() {
-			@Override
-			public Adapter caseLibrary(Library object) {
-				return createLibraryAdapter();
-			}
+	protected TestSwitch<Adapter> modelSwitch = new TestSwitch<Adapter>() {
+		@Override
+		public Adapter caseLibrary(Library object) {
+			return createLibraryAdapter();
+		}
 
-			@Override
-			public Adapter caseWriter(Writer object) {
-				return createWriterAdapter();
-			}
+		@Override
+		public Adapter caseWriter(Writer object) {
+			return createWriterAdapter();
+		}
 
-			@Override
-			public Adapter caseBook(Book object) {
-				return createBookAdapter();
-			}
+		@Override
+		public Adapter caseBook(Book object) {
+			return createBookAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

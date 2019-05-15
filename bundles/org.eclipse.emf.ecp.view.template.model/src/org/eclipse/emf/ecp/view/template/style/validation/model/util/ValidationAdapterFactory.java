@@ -81,23 +81,22 @@ public class ValidationAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected ValidationSwitch<Adapter> modelSwitch =
-		new ValidationSwitch<Adapter>() {
-			@Override
-			public Adapter caseValidationStyleProperty(VTValidationStyleProperty object) {
-				return createValidationStylePropertyAdapter();
-			}
+	protected ValidationSwitch<Adapter> modelSwitch = new ValidationSwitch<Adapter>() {
+		@Override
+		public Adapter caseValidationStyleProperty(VTValidationStyleProperty object) {
+			return createValidationStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleProperty(VTStyleProperty object) {
-				return createStylePropertyAdapter();
-			}
+		@Override
+		public Adapter caseStyleProperty(VTStyleProperty object) {
+			return createStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

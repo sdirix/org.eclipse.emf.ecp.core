@@ -42,8 +42,7 @@ import org.eclipse.emf.ecp.makeithappen.model.task.UserGroup;
  *
  * @generated
  */
-public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserGroup
-{
+public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserGroup {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -83,8 +82,7 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 *
 	 * @generated
 	 */
-	protected UserGroupImpl()
-	{
+	protected UserGroupImpl() {
 		super();
 	}
 
@@ -95,8 +93,7 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TaskPackage.Literals.USER_GROUP;
 	}
 
@@ -107,8 +104,7 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -119,8 +115,7 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public void setName(String newName)
-	{
+	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
 		if (eNotificationRequired()) {
@@ -135,10 +130,8 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public EList<User> getUsers()
-	{
-		if (users == null)
-		{
+	public EList<User> getUsers() {
+		if (users == null) {
 			users = new EObjectContainmentEList<User>(User.class, this, TaskPackage.USER_GROUP__USERS);
 		}
 		return users;
@@ -151,10 +144,8 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case TaskPackage.USER_GROUP__USERS:
 			return ((InternalEList<?>) getUsers()).basicRemove(otherEnd, msgs);
 		}
@@ -168,10 +159,8 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TaskPackage.USER_GROUP__NAME:
 			return getName();
 		case TaskPackage.USER_GROUP__USERS:
@@ -188,10 +177,8 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TaskPackage.USER_GROUP__NAME:
 			setName((String) newValue);
 			return;
@@ -210,10 +197,8 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TaskPackage.USER_GROUP__NAME:
 			setName(NAME_EDEFAULT);
 			return;
@@ -231,10 +216,8 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TaskPackage.USER_GROUP__NAME:
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case TaskPackage.USER_GROUP__USERS:
@@ -250,8 +233,7 @@ public class UserGroupImpl extends MinimalEObjectImpl.Container implements UserG
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

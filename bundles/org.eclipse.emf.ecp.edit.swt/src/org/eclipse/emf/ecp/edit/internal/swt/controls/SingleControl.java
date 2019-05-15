@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Control;
 @Deprecated
 public abstract class SingleControl extends SWTControl {
 
-	//	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+	// private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private ControlDecoration controlDecoration;
 
 	// private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);

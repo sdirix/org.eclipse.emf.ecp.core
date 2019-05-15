@@ -131,7 +131,8 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 	/**
 	 * @author Eike Stepper
 	 */
-	public static class ExtensionDescriptor<ELEMENT extends InternalRegistryElement> extends ElementDescriptor<ELEMENT> {
+	public static class ExtensionDescriptor<ELEMENT extends InternalRegistryElement>
+		extends ElementDescriptor<ELEMENT> {
 		private final String type;
 
 		private final IConfigurationElement configurationElement;

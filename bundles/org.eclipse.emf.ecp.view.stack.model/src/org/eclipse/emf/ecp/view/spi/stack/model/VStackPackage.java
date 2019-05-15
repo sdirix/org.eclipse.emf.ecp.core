@@ -35,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VStackPackage extends EPackage
-{
+public interface VStackPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -386,8 +385,7 @@ public interface VStackPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackLayoutImpl
 		 * <em>Layout</em>}' class.

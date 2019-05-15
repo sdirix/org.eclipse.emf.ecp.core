@@ -46,8 +46,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface User extends EObject
-{
+public interface User extends EObject {
 	/**
 	 * Returns the value of the '<em><b>First Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

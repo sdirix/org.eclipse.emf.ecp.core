@@ -31,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
  * @model
  * @generated
  */
-public interface VStackItem extends VContainer
-{
+public interface VStackItem extends VContainer {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
