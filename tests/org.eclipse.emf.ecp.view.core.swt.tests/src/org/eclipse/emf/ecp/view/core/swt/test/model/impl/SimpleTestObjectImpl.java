@@ -32,12 +32,12 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getDate <em>Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getXmlDate <em>Xml Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getMyEnum <em>My Enum</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -292,7 +292,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (date: "); //$NON-NLS-1$
 		result.append(date);
 		result.append(", xmlDate: "); //$NON-NLS-1$

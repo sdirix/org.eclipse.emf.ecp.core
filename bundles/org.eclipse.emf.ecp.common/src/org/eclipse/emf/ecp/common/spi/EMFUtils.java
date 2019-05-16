@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 
 /**
  * Util class for basic EMF.
@@ -146,5 +148,26 @@ public final class EMFUtils {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Tries to adapt the given EObject to the given class. This is done with help of the EObject's
+	 * AdapterFactoryEditingDomain.
+	 *
+	 * @param <A> The adapter type
+	 * @param object The {@link EObject} to adapt
+	 * @param adapter The adapter class
+	 * @return The adapted EObject or nothing if the EObjects AdapterFactoryEditingDomain could not be determined or the
+	 *         EObject could not be adapted to the target type.
+	 * @since 1.21
+	 */
+	public static <A> Optional<A> adapt(EObject object, Class<A> adapter) {
+		return Optional.ofNullable(object)
+			.map(AdapterFactoryEditingDomain::getEditingDomainFor)
+			.filter(AdapterFactoryEditingDomain.class::isInstance)
+			.map(AdapterFactoryEditingDomain.class::cast)
+			.map(AdapterFactoryEditingDomain::getAdapterFactory)
+			.map(factory -> factory.adapt(object, adapter))
+			.map(adapter::cast);
 	}
 }

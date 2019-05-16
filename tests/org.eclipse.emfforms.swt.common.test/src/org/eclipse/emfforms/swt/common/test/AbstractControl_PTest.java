@@ -73,6 +73,8 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 	private AbstractControlSWTRenderer<C> renderer;
 	private EMFFormsLabelProvider labelProvider;
 
+	private EObject eObject;
+
 	protected Resource createResource() {
 		final Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> extToFactoryMap = registry
@@ -97,6 +99,7 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 
 	protected void mockControl(EObject eObject,
 		final EStructuralFeature eStructuralFeature) throws DatabindingFailedException {
+		this.eObject = eObject;
 		final VDomainModelReference domainModelReference = Mockito
 			.mock(VDomainModelReference.class);
 		final Setting setting = mock(Setting.class);
@@ -137,7 +140,7 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 		setvControl((C) Mockito.mock(VControl.class));
 		mockControl();
 		setContext(Mockito.mock(ViewModelContext.class));
-		when(getContext().getDomainModel()).thenReturn(mock(EObject.class));
+		when(getContext().getDomainModel()).thenReturn(eObject);
 		setShell(new Shell(Display.getDefault(), SWT.NONE));
 	}
 

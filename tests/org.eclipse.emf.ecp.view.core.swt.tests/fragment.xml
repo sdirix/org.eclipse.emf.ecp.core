@@ -20,12 +20,25 @@
 
 <plugin>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
+    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated test -->
       <package
             uri="http://eclipse.org/emf/ecp/core/test"
             class="org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage"
             genModel="model/test.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated test -->
+      <factory
+            uri="http://eclipse.org/emf/ecp/core/test"
+            class="org.eclipse.emf.ecp.view.core.swt.test.model.provider.TestItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
    </extension>
 
 </plugin>
