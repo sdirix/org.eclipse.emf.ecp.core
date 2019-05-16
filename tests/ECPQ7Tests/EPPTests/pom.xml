@@ -94,7 +94,7 @@
 								</features>
 							</injection>
 							<injection>
-								<site>http://download.eclipse.org/releases/2019-03</site>
+								<site>http://download.eclipse.org/releases/${eclipse-name}</site>
 								<features>
 									<feature>org.eclipse.net4j.sdk.feature.group</feature>
 									<feature>org.eclipse.emf.cdo.epp.feature.group</feature>
