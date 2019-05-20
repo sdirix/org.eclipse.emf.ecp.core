@@ -86,5 +86,11 @@
       </changes>
     </changes>
   </releases>
-  <releases xmi:id="_zD2uPnrjEemfTuAHmald_w"/>
+  <releases xmi:id="_zD2uPnrjEemfTuAHmald_w" date="2019-05-20T11:46:03.263+0200" label="170">
+    <changes xsi:type="history:Add" xmi:id="_DAslYHrkEemfTuAHmald_w" featureName="eSuperTypes">
+      <element href="section.ecore#//Section"/>
+      <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//HasTooltip"/>
+    </changes>
+  </releases>
+  <releases xmi:id="_FNxg8HrkEemfTuAHmald_w"/>
 </history:History>

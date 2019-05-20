@@ -139,5 +139,11 @@
       </changes>
     </changes>
   </releases>
-  <releases xmi:id="_bImPFXrjEemfTuAHmald_w"/>
+  <releases xmi:id="_bImPFXrjEemfTuAHmald_w" date="2019-05-20T11:43:12.057+0200" label="170">
+    <changes xsi:type="history:Add" xmi:id="_pXFt8HrjEemfTuAHmald_w" featureName="eSuperTypes">
+      <element href="group.ecore#//Group"/>
+      <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//HasTooltip"/>
+    </changes>
+  </releases>
+  <releases xmi:id="_rtBqkHrjEemfTuAHmald_w"/>
 </history:History>

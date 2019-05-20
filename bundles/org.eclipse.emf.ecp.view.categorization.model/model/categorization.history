@@ -231,5 +231,11 @@
       </changes>
     </changes>
   </releases>
-  <releases xmi:id="_wQ-Mf3riEemfTuAHmald_w"/>
+  <releases xmi:id="_wQ-Mf3riEemfTuAHmald_w" date="2019-05-20T11:39:38.654+0200" label="170">
+    <changes xsi:type="history:Add" xmi:id="_Kf5-YHrjEemfTuAHmald_w" featureName="eSuperTypes">
+      <element href="categorization.ecore#//CategorizableElement"/>
+      <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//HasTooltip"/>
+    </changes>
+  </releases>
+  <releases xmi:id="_L53a8HrjEemfTuAHmald_w"/>
 </history:History>
