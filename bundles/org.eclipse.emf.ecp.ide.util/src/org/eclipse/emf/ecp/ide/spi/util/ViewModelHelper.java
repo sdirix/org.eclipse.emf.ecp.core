@@ -13,16 +13,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.spi.util;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
@@ -40,11 +42,15 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap.ValueListIterator;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.emf.ecp.ide.internal.Activator;
+import org.eclipse.emf.ecp.internal.ide.util.messages.Messages;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 
 /**
  * Helper class for view model objects.
@@ -141,28 +147,7 @@ public final class ViewModelHelper {
 	 * @throws IOException in case an error occurs while loading the view
 	 */
 	public static VView loadView(IFile file, Collection<String> registeredEcores) throws IOException {
-		final String path = file.getLocation().toString();
-		final VView view = loadView(path);
-		registerReferencedEcores(view, registeredEcores);
-		if (view != null && !viewIsResolved(view)) {
-			EcoreUtil.resolveAll(view);
-		}
-		return view;
-	}
-
-	private static void registerReferencedEcores(VView view, Collection<String> registeredEcores)
-		throws IOException {
-		if (view == null || view.getEcorePaths() == null) {
-			return;
-		}
-		for (final String ecorePath : view.getEcorePaths()) {
-			if (ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath) == null) {
-				throw new FileNotFoundException(ecorePath);
-			}
-
-			EcoreHelper.registerEcore(ecorePath);
-			registeredEcores.add(ecorePath);
-		}
+		return new ViewLoader().loadView(file, registeredEcores);
 	}
 
 	/**
@@ -173,19 +158,6 @@ public final class ViewModelHelper {
 	 */
 	public static boolean viewIsResolved(VView view) {
 		return !view.getRootEClass().eIsProxy();
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	private static VView loadView(String path) {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final URI fileURI = URI.createFileURI(path);
-		final Resource resource = resourceSet.getResource(fileURI, true);
-		if (resource != null) {
-			return (VView) resource.getContents().get(0);
-		}
-		return null;
 	}
 
 	/**
@@ -234,5 +206,84 @@ public final class ViewModelHelper {
 			return ecorePaths;
 		}
 		return Collections.emptyList();
+	}
+
+	/**
+	 * Helper class for encapsulating view loading functionality.
+	 */
+	public static class ViewLoader {
+		public VView loadView(IFile file, Collection<String> registeredEcores) throws IOException {
+			final String path = getPath(file);
+			final VView view = loadView(path);
+			registerReferencedEcores(view, path, registeredEcores);
+			if (view != null && !viewIsResolved(view)) {
+				EcoreUtil.resolveAll(view);
+			}
+			return view;
+		}
+
+		protected String getPath(IFile file) {
+			return file.getLocation().toString();
+		}
+
+		protected VView loadView(String path) {
+			final ResourceSet resourceSet = new ResourceSetImpl();
+			final URI fileURI = URI.createFileURI(path);
+			final Resource resource = resourceSet.getResource(fileURI, true);
+			if (resource != null) {
+				return (VView) resource.getContents().get(0);
+			}
+			return null;
+		}
+
+		protected void registerReferencedEcores(VView view, String viewLocation, Collection<String> registeredEcores)
+			throws IOException {
+			if (view == null || view.getEcorePaths() == null) {
+				return;
+			}
+			for (final String ecorePath : view.getEcorePaths()) {
+				if (!ecoreExistsInWorkspace(ecorePath)) {
+					final String message = MessageFormat.format(Messages.ViewModelHelper_couldNotFindEcorePath_message,
+						ecorePath, getViewNameAndLocation(view, viewLocation));
+					getReportService()
+						.report(new AbstractReport(message, IStatus.WARNING));
+					continue;
+				}
+				registerEcore(ecorePath);
+				registeredEcores.add(ecorePath);
+			}
+		}
+
+		protected String getViewNameAndLocation(VView view, String viewLocation) {
+			return getViewName(view)
+				.map(viewName -> MessageFormat.format(Messages.ViewModelHelper_couldNotFindEcorePath_nameAndLocation,
+					viewName, viewLocation))
+				.orElse(viewLocation);
+		}
+
+		protected Optional<String> getViewName(VView view) {
+			if (view.getLabel() != null && !view.getLabel().isEmpty()) {
+				return Optional.of(view.getLabel());
+			}
+			if (view.getName() != null && !view.getName().isEmpty()) {
+				return Optional.of(view.getName());
+			}
+			if (view.getRootEClass() != null && view.getRootEClass().getName() != null) {
+				return Optional.of(view.getRootEClass().getName());
+			}
+			return Optional.empty();
+		}
+
+		protected boolean ecoreExistsInWorkspace(String ecorePath) {
+			return ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath) != null;
+		}
+
+		protected ReportService getReportService() {
+			return Activator.getDefault().getReportService();
+		}
+
+		protected void registerEcore(String ecorePath) throws IOException {
+			EcoreHelper.registerEcore(ecorePath);
+		}
 	}
 }
